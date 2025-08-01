@@ -1,0 +1,42 @@
+import React from "react";
+import * as Icons from "@/components/ui/icon";
+import { Text20, Description16 } from "@/components/ui/typography";
+
+export default function HomeTokenPair({
+  token,
+  pair,
+  iconName,
+}: {
+  token: string;
+  pair: string;
+  iconName: string;
+}) {
+  const Icon = (
+    Icons as Record<
+      string,
+      React.ComponentType<{ width: number; height: number; className?: string }>
+    >
+  )[iconName];
+
+  return (
+    <div className="flex items-center gap-2.5 z-1">
+      {Icon ? (
+        <Icon
+          width={38}
+          height={38}
+          className="w-[22px] sm:w-[38px] h-[22px] sm:h-[38px]"
+        />
+      ) : (
+        <div className="w-[22px] sm:w-[38px] h-[22px] sm:h-[38px] bg-gray-500/20 rounded-full" />
+      )}
+      <div className="flex flex-col justify-center items-start gap-0.5">
+        <Text20 className="text-[12px] sm:text-[20px] tracking-[-0.4px]">
+          {token}
+        </Text20>
+        <Description16 className="text-[10px] sm:text-[16px] tracking-[-0.32px]">
+          {pair}
+        </Description16>
+      </div>
+    </div>
+  );
+}

@@ -20,7 +20,7 @@ export default function Navbar({ className }: { className?: string }) {
     >
       <NavbarSheet />
       <div className="flex-[1_0_0] xl:hidden">
-        <Link href="/">
+        <Link href="/home">
           <IconLogo1Small width={96} height={25} className="shrink-0" />
         </Link>
       </div>
