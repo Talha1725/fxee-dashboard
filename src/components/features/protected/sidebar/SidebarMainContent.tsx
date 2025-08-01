@@ -27,7 +27,7 @@ export default function SidebarMainContent() {
         title: "Home",
         icon: IconHome,
         iconFill: IconHomeFill,
-        href: "/",
+        href: "/home",
       },
       {
         title: "Dashboard",
