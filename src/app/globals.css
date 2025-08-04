@@ -65,13 +65,14 @@ body {
 
 :root {
   --radius: 0.625rem;
-  --background: #0d0d0d;
-  --foreground: #fff;
+  /* Light theme (default) */
+  --background: #ffffff;
+  --foreground: #0d0d0d;
   --danger: #ea4335;
   --warning: #f59d31;
-  --card: oklch(1 0 0);
+  --card: oklch(0.985 0 0);
   --card-foreground: oklch(0.145 0 0);
-  --popover: rgba(255, 255, 255, 0.4);
+  --popover: rgba(0, 0, 0, 0.1);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
@@ -290,13 +291,14 @@ body {
 }
 
 .dark {
+  /* Dark theme */
   --background: #0d0d0d;
-  --foreground: #000000;
+  --foreground: #ffffff;
   --danger: #ea4335;
   --warning: #f59d31;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: rgba(255, 255, 255, 0.8);
+  --popover: rgba(255, 255, 255, 0.1);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -327,6 +329,40 @@ body {
   --blue: #0276db;
   --score30: #e13e3e;
   --score80: #ffb145;
+  
+  /* Dark theme gradients */
+  --dark-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  --card-dark-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  --dark-radial-gradient: radial-gradient(
+    126.8% 109.9% at 95.59% 0%,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  
+  /* Light theme gradients */
+  --dark-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
+  --card-dark-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
+  --dark-radial-gradient: radial-gradient(
+    126.8% 109.9% at 95.59% 0%,
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
   --popover-gradient: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.02) 0%,
