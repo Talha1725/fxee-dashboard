@@ -12,6 +12,7 @@ export default function SignupInputs() {
         <Input
           placeholder="John Doe"
           icon={<IconUser height={20} width={20} />}
+          className="h-10 mt-1"
         />
       </SignInputContainer>
       <SignInputContainer>
@@ -19,6 +20,7 @@ export default function SignupInputs() {
         <Input
           placeholder="hello@example.com"
           icon={<IconEmail height={20} width={20} />}
+          className="h-10 mt-1"
         />
       </SignInputContainer>
       <SignInputContainer>
@@ -27,6 +29,7 @@ export default function SignupInputs() {
           placeholder="• • • • • • • • • • "
           icon={<IconLock height={20} width={20} />}
           isPassword
+          className="h-10 mt-1"
         />
         <SignHintText text="Must contain 1 uppercase letter, 1 number, min. 8 characters." />
       </SignInputContainer>
