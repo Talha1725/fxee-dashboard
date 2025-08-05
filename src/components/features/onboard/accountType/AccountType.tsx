@@ -8,8 +8,8 @@ export default function AccountType() {
   return (
     <OnboardContentContainer>
       <OnboardContentHeader
-        title="Pricing"
-        description="Select Subscription Plan"
+        title="Account Type"
+        description="Select Account Type"
       />
       <AccountTypePlan />
     </OnboardContentContainer>
