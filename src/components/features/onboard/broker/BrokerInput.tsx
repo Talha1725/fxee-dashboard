@@ -10,7 +10,8 @@ export default function BrokerInput() {
     <SignInputContainer>
       <SignLabel label="API Key" required />
       <Input
-        placeholder="Enter your API key"
+          className="h-10 mt-1"
+          placeholder="Enter your API key"
         isPassword={true}
         icon={<IconKey height={20} width={20} />}
       />

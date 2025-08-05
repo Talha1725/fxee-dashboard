@@ -58,7 +58,7 @@ export default function BrokerSelection() {
             setSelectedExchange={setSelectedExchange}
           />
           {index !== exchanges.length - 1 && (
-            <Separator className="sm:w-[380px] w-[300px] bg-white/30" />
+            <Separator className="sm:w-[380px] w-[300px] dark:bg-white/30 bg-transparent" />
           )}
         </React.Fragment>
       ))}

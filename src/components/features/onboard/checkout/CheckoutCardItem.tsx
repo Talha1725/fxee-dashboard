@@ -3,6 +3,7 @@ import React from "react";
 import { Text18, Title24 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { IconFlashlight } from "@/components/ui/icon";
 
 export default function CheckoutCardItem({
   selectedPaymentMethod,
@@ -19,15 +20,22 @@ export default function CheckoutCardItem({
   return (
     <div
       className={cn(
-        `not-only:flex items-center gap-4 self-stretch rounded-[10px] border dark:border-white/30 border-black/30 ${theme === "dark" ? "bg-dark-secondary-gradient" : ""} cursor-pointer transition-all duration-300`,
+        `not-only:flex items-center gap-4 self-stretch rounded-[10px] border dark:border-white/30 border-black/30 ${
+          theme === "dark" ? "bg-dark-secondary-gradient" : ""
+        } cursor-pointer transition-all duration-300`,
         selectedPaymentMethod === title &&
-          `border-none border-green-gradient ${theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"}`
+          `border-none border-green-gradient ${
+            theme === "dark"
+              ? "bg-green-radial-gradient"
+              : "bg-light-green-gradient"
+          }`
       )}
       onClick={() => setSelectedPaymentMethod(title)}
     >
       <div className="flex flex-col gap-4 flex-[1_0_0] self-stretch">
         {title === "Crypto" && selectedPaymentMethod === title && (
-          <div className="w-full flex justify-center items-center gap-[5px] px-2.5 py-[5px] self-stretch bg-popular-gradient rounded-t-[10px]">
+          <div className="w-full flex justify-center items-center gap-[5px] px-2.5 py-[5px] self-stretch bg-popular-gradient rounded-t-[10px] text-white">
+            <IconFlashlight width={24} height={24} />
             Enjoy a 20% discount when paying with cryptocurrency
           </div>
         )}
@@ -57,7 +65,9 @@ export default function CheckoutCardItem({
                 `$${price}`
               )}
             </Title24>
-            <Text18 className="dark:text-white/80 text-black/80 font-normal">/month</Text18>
+            <Text18 className="dark:text-white/80 text-black/80 font-normal">
+              /month
+            </Text18>
           </div>
         </div>
       </div>
