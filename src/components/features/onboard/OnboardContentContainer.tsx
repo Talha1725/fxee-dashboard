@@ -12,7 +12,7 @@ export default function OnboardContentContainer({
   return (
     <div
       className={cn(
-        "w-full mt-23 sm:mt-26 mb-10 flex flex-col items-center justify-center gap-10",
+        "w-full mt-23 sm:mt-26 mb-10 flex flex-col items-center justify-center gap-10 px-4",
         className
       )}
     >

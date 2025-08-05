@@ -5,14 +5,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap rounded-md text-sm font-regular font-medium hover:bg-white/10 hover:cursor-pointer transition-all shrink-0 [&_svg]:shrink-0 outline-none border disabled:opacity-20 disabled:cursor-not-allowed disabled:pointer-event-none",
+  "flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap rounded-md text-sm font-regular font-medium hover:cursor-pointer transition-all shrink-0 [&_svg]:shrink-0 outline-none border disabled:opacity-20 disabled:cursor-not-allowed disabled:pointer-event-none",
   {
     variants: {
       variant: {
         default:
           "bg-dark-gradient text-foreground shadow-subtle border-white/30",
         fancy:
-          "bg-picton-blue shadow-picton border-none hover:bg-picton-blue-80",
+          "bg-picton-blue shadow-picton border-none hover:bg-picton-blue-80 text-white z-50",
         ghost: "bg-dark-gradient border-none",
         danger: "bg-danger-red border-none",
         green: "bg-green-linear border-none",

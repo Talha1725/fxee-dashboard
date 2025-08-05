@@ -1,34 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 import NavbarSwitchContainer from "@/components/features/protected/navbar/NavbarSwitchContainer";
 import NavbarSwitchToggleItem from "@/components/features/protected/navbar/NavbarSwitchToggleItem";
 import { IconMoon, IconSun } from "@/components/ui/icon";
+import { useTheme } from "@/lib/contexts/ThemeContext";
+import { THEMES } from "@/lib/constants";
 
 export default function NavbarThemeSwitch() {
-  const [activeTab, setActiveTab] = useState("light");
+  const { theme, setTheme } = useTheme();
+
+  // Don't render until theme is loaded
+  if (!theme) return null;
 
   return (
     <NavbarSwitchContainer>
       <NavbarSwitchToggleItem
-        isActive={activeTab === "light"}
-        onClick={() => setActiveTab("light")}
+        isActive={theme === THEMES.LIGHT}
+        onClick={() => setTheme(THEMES.LIGHT)}
       >
         <IconSun
           width={20}
           height={20}
-          color={activeTab === "light" ? "black" : "white"}
+          color={theme === THEMES.LIGHT ? "black" : "white"}
         />
       </NavbarSwitchToggleItem>
       <NavbarSwitchToggleItem
-        isActive={activeTab === "dark"}
-        onClick={() => setActiveTab("dark")}
+        isActive={theme === THEMES.DARK}
+        onClick={() => setTheme(THEMES.DARK)}
       >
         <IconMoon
           width={20}
           height={20}
-          color={activeTab === "dark" ? "black" : "white"}
+          color={theme === THEMES.DARK ? "black" : "white"}
         />
       </NavbarSwitchToggleItem>
     </NavbarSwitchContainer>

@@ -19,7 +19,7 @@ export default function OnboardSummaryItem({
           {value}
         </TextSuccess>
       ) : (
-        <Text16 className="tracking-[-0.096px]">{value}</Text16>
+        <Text16 className="tracking-[-0.096px] text-black dark:text-white">{value}</Text16>
       )}
     </div>
   );

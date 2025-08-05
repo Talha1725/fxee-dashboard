@@ -7,8 +7,8 @@ import { SUBSCRIPTION_PLANS } from "@/lib/constants";
 
 export default function OnboardSelectedPlan() {
   return (
-    <OnboardSelectedPlanContainer>
-      <Title24>Selected Subscription Plan</Title24>
+    <OnboardSelectedPlanContainer className="bg-white dark:bg-white/5 z-50">
+      <Title24 className="text-black dark:text-white">Selected Subscription Plan</Title24>
       <SubscriptionPlanCard
         key={SUBSCRIPTION_PLANS[3].type}
         title={SUBSCRIPTION_PLANS[3].title}
@@ -19,6 +19,7 @@ export default function OnboardSelectedPlan() {
         onClick={() => {}}
         selected={true}
         className="pt-4"
+        alignLeft={true}
       />
     </OnboardSelectedPlanContainer>
   );

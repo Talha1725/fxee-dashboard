@@ -31,7 +31,7 @@ export default function LandingPricingPlan({
     >
       <div className="flex flex-col justify-between items-center gap-6 flex-[1_0_0] self-stretch">
         <div className="flex flex-col items-start gap-6 self-stretch">
-          <p className="h-[40px] text-white/40 text-[12px] font-space-grotesk font-[700] tracking-[0.36px] uppercase">
+          <p className="h-[40px] dark:text-white/40 text-black/40 text-[12px] font-space-grotesk font-[700] tracking-[0.36px] uppercase">
             {item.fitfor}
           </p>
           <div className="flex items-center gap-2.5 self-stretch">

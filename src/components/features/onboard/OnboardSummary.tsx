@@ -16,8 +16,8 @@ export default function OnboardSummary({
 }) {
   const router = useRouter();
   return (
-    <OnboardCardContainer>
-      <Title24>Summary</Title24>
+    <OnboardCardContainer className="bg-white dark:bg-white/5 z-50">
+      <Title24 className="text-black dark:text-white">Summary</Title24>
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <OnboardSummaryItem title="Plan" value="VIP Plan $399/month" />
         <OnboardSummaryItem title="Cost" value="$399.00" />
@@ -41,8 +41,8 @@ export default function OnboardSummary({
           />
         </div>
       </div>
-      <Text18 className="text-right w-full">
-        Total <Title24>{!isCrypto ? "$449.00" : "$399.20"}</Title24>
+      <Text18 className="text-right w-full flex justify-end gap-1 items-end leading-1 my-4">
+        Total <Title24 className="text-nowrap text-black dark:text-white">{!isCrypto ? "$449.00" : "$399.20"}</Title24>
       </Text18>
       <Button
         variant="fancy"

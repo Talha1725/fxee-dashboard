@@ -1,21 +1,22 @@
 import SignInputContainer from "@/components/features/sign/SignInputContainer";
 import SignLabel from "@/components/features/sign/SignLabel";
-import { IconEmail, IconLock } from "@/components/ui/icon";
+import { IconLock } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 
-export default function SigninInputs() {
+export default function SignResetPasswordInputs() {
   return (
-    <div className="flex flex-col items-center gap-3 self-stretch">
+    <div className="flex flex-col items-center gap-3 self-stretch z-50">
       <SignInputContainer>
-        <SignLabel label="Email Address" required />
+        <SignLabel label="New Password" required />
         <Input
-          placeholder="hello@example.com"
-          icon={<IconEmail height={20} width={20} />}
+          placeholder="• • • • • • • • • •"
+          icon={<IconLock height={20} width={20} />}
+          isPassword
           className="h-10 mt-1"
         />
       </SignInputContainer>
       <SignInputContainer>
-        <SignLabel label="Password" required />
+        <SignLabel label="Confirm New Password" required />
         <Input
           placeholder="• • • • • • • • • •"
           icon={<IconLock height={20} width={20} />}
@@ -25,4 +26,4 @@ export default function SigninInputs() {
       </SignInputContainer>
     </div>
   );
-}
+} 

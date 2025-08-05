@@ -8,6 +8,7 @@ import SubscriptionPlanItem from "@/components/features/onboard/subscription/Sub
 import OnboardPopularPattern from "@/components/features/onboard/OnboardPopularPattern";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function AccountTypePlanCard({
   item,
@@ -20,11 +21,12 @@ export default function AccountTypePlanCard({
 }) {
   const isPopular = item.title !== "Virtual Trading Environment";
   const router = useRouter();
+  const {theme} = useTheme()
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center gap-4 flex-[1_0_0] self-stretch px-6 pt-[50px] pb-6 rounded-2xl border border-white/30 bg-dark-radial-gradient",
-        isPopular && "bg-green-radial-gradient border-blue"
+        `relative flex flex-col items-center gap-4 flex-[1_0_0] self-stretch px-6 pt-[50px] pb-6 rounded-2xl dark:border border-white/30 ${theme === "dark" ? "bg-dark-radial-gradient" : "bg-blue-gradient"} z-50`,
+        isPopular && `${theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"} border-green-gradient`
       )}
     >
       {isPopular && <OnboardPopularPattern title="Most Popular" />}
@@ -35,7 +37,7 @@ export default function AccountTypePlanCard({
           onClick={() => {
             router.push("/onboard/6");
           }}
-          className="w-full"
+          className={`w-full ${isPopular ? "" : "border-black/20 dark:border-white/20"}`}
         >
           Select
         </Button>

@@ -17,7 +17,7 @@ export default function CopyTradingAccount({
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center gap-4 self-stretch flex-[1_0_0] p-6 rounded-[16px] border border-white/3 bg-dark-radial-gradient transition-all duration-300",
+        "relative flex flex-col items-center gap-4 self-stretch flex-[1_0_0] p-6 rounded-[16px] border border-white/3 bg-dark-radial-gradient transition-all duration-300 z-50",
         isSelected &&
           "border-none border-green-gradient bg-green-radial-gradient"
       )}

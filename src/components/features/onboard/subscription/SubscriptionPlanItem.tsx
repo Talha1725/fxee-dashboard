@@ -14,7 +14,7 @@ export default function SubscriptionPlanItem({ item }: { item: string }) {
             <IconCheckCircle width={20} height={20} className="shrink-0" />
           )}
           {index !== 0 && <div className="w-[20px]" />}
-          <Text14 className="font-normal">{line}</Text14>
+          <Text14 className="font-normal text-black dark:text-white">{line}</Text14>
         </div>
       ))}
     </div>

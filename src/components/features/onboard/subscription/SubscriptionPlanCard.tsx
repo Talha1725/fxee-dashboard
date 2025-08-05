@@ -7,6 +7,7 @@ import SubscriptionPlanItem from "@/components/features/onboard/subscription/Sub
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { IconCheck } from "@/components/ui/icon";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface SubscriptionPlanCardProps {
   title: string;
@@ -17,6 +18,7 @@ interface SubscriptionPlanCardProps {
   onClick: () => void;
   selected: boolean;
   className?: string;
+  alignLeft?: boolean;
 }
 
 export default function SubscriptionPlanCard({
@@ -28,19 +30,21 @@ export default function SubscriptionPlanCard({
   onClick,
   selected,
   className,
+  alignLeft,
 }: SubscriptionPlanCardProps) {
+  const { theme } = useTheme();
   return (
     <div
       className={cn(
-        "flex flex-col items-center self-stretch flex-[1_0_0] gap-4 pt-[50px] px-4 pb-4 rounded-2xl relative",
+        "flex flex-col items-center self-stretch flex-[1_0_0] gap-4 pt-[50px] px-4 pb-4 rounded-2xl relative z-50",
         className,
         title === "Pro"
-          ? "bg-green-radial-gradient border-green-gradient"
-          : "bg-dark-radial-gradient border border-white/30"
+          ? `${theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"} border-green-gradient`
+          : `${theme === "dark" ? "bg-dark-radial-gradient" : "bg-blue-gradient"} dark:border border-white/30`
       )}
     >
       {title === "Pro" && <OnboardPopularPattern title="Most Popular" />}
-      <SubscriptionCardContainer fitfor={fitfor}>
+      <SubscriptionCardContainer fitfor={fitfor} alignLeft={alignLeft}>
         <SubscriptionPlanHeader
           title={title}
           price={`$${price}/month`}
@@ -49,7 +53,7 @@ export default function SubscriptionPlanCard({
         <Button
           onClick={onClick}
           variant={title === "Pro" || selected ? "fancy" : "default"}
-          className="w-full"
+          className={`w-full ${title !== "Pro" ? "border-black/20 dark:border-white/20" : ""}`}
         >
           {selected ? "Selected" : "Select"}
           {selected && <IconCheck width={20} height={20} />}
@@ -61,7 +65,7 @@ export default function SubscriptionPlanCard({
         </div>
         {title === "Pro" && (
           <div className="absolute bottom-0 right-0 left-0">
-            <div className="h-[4px] w-[214px] rounded-r bg-popular-gradient mx-auto"></div>
+            <div className="h-[4px] w-[214px] rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient mx-auto"></div>
           </div>
         )}
       </SubscriptionCardContainer>

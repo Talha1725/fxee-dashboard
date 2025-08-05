@@ -12,7 +12,7 @@ export default function OnboardContentHeader({
 }) {
   return (
     <div className="flex flex-col items-center gap-5 shrink-0 self-stretch">
-      <div className="flex jsutify-center items-center gap-2 p-2.5 bg-dark-gradient rounded-[10px] border border-white/30">
+      <div className="flex jsutify-center items-center gap-2 py-1 px-2 bg-dark-gradient rounded-[10px] border border-white/30 dark:bg-white/5 bg-[#7474741A]">
         <IconLogo2 />
         <Text18>{title}</Text18>
       </div>

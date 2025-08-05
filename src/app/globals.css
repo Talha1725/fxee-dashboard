@@ -65,13 +65,14 @@ body {
 
 :root {
   --radius: 0.625rem;
-  --background: #0d0d0d;
-  --foreground: #fff;
+  /* Light theme (default) */
+  --background: #ffffff;
+  --foreground: #0d0d0d;
   --danger: #ea4335;
   --warning: #f59d31;
-  --card: oklch(1 0 0);
+  --card: oklch(0.985 0 0);
   --card-foreground: oklch(0.145 0 0);
-  --popover: rgba(255, 255, 255, 0.4);
+  --popover: rgba(0, 0, 0, 0.1);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
@@ -119,10 +120,15 @@ body {
     rgba(255, 255, 255, 0.04) 0%,
     rgba(255, 255, 255, 0.02) 100%
   );
+  --button-light-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
   --button-grey-gradient: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.07) 100%
+    rgba(255, 255, 255, 0.096) 100%
   );
   --card-dark-gradient: linear-gradient(
     180deg,
@@ -290,13 +296,14 @@ body {
 }
 
 .dark {
+  /* Dark theme */
   --background: #0d0d0d;
-  --foreground: #000000;
+  --foreground: #ffffff;
   --danger: #ea4335;
   --warning: #f59d31;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: rgba(255, 255, 255, 0.8);
+  --popover: rgba(255, 255, 255, 0.1);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -327,6 +334,40 @@ body {
   --blue: #0276db;
   --score30: #e13e3e;
   --score80: #ffb145;
+
+  /* Dark theme gradients */
+  --dark-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  --card-dark-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  --dark-radial-gradient: radial-gradient(
+    126.8% 109.9% at 95.59% 0%,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+
+  /* Light theme gradients */
+  --dark-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
+  --card-dark-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
+  --dark-radial-gradient: radial-gradient(
+    126.8% 109.9% at 95.59% 0%,
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(0, 0, 0, 0.01) 100%
+  );
   --popover-gradient: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.02) 0%,
@@ -475,6 +516,29 @@ body {
   .bg-dark-gradient {
     background: var(--button-gradient);
   }
+  .bg-light-gradient {
+    background: var(--button-light-gradient);
+  }
+  .bg-blue-gradient {
+    background: linear-gradient(
+        29.31deg,
+        rgba(255, 255, 255, 0) 150.99%,
+        rgba(255, 255, 255, 0.4) 102.63%
+      ),
+      linear-gradient(180deg, #dbe6ff 0%, #e8efff 39.1%, #ffffff 100%);
+  }
+  .bg-light-green-gradient {
+    background: radial-gradient(
+        99.93% 99.93% at 50.06% 0.07%,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.95) 74.01%,
+        #ffffff 100%
+      ),
+      linear-gradient(29deg, #0276db 13.99%, #3edc81 102.63%);
+  }
+  .bg-dark-secondary-gradient {
+    background:linear-gradient(359deg, #fff0 13.99%, #ffffff17 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #16161699 0%, #1616169e 74.01%, #1616168c 100%);
+  }
   .font-space-grotesk {
     font-family: var(--font-space-grotesk), sans-serif;
   }
@@ -503,7 +567,17 @@ body {
     background: var(--danger-red);
   }
   .bg-dark-radial-gradient {
-    background: var(--dark-radial-gradient);
+    background: linear-gradient(
+        12deg,
+        rgba(255, 255, 255, 0) 59.99%,
+        rgba(255, 255, 255, 0.4) 183.63%
+      ),
+      radial-gradient(
+        99.93% 99.93% at 50.06% 0.07%,
+        rgba(22, 22, 22, 0.6) 0%,
+        rgba(22, 22, 22, 0.945) 74.01%,
+        rgb(22, 22, 22) 100%
+      );
   }
   .bg-green-radial-gradient {
     background: var(--green-radial-gradient);

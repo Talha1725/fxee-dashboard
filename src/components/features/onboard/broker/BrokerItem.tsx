@@ -22,7 +22,7 @@ export default function BrokerItem({
     <div className="flex justify-between items-center self-stretch">
       <div className="flex items-center gap-2.5">
         {exchange.icon}
-        <p className="text-white text-[16px] font-regular font-normal">
+        <p className="dark:text-white text-black/80 text-[16px] font-regular font-normal">
           {exchange.name}
         </p>
       </div>
@@ -31,9 +31,9 @@ export default function BrokerItem({
         className="cursor-pointer"
       >
         {selectedExchange === exchange.id ? (
-          <IconRadioSelected width={20} height={20} />
+          <IconRadioSelected width={20} height={20} className="dark:fill-black fill-white" />
         ) : (
-          <IconRadio width={20} height={20} />
+          <IconRadio width={20} height={20} className="dark:fill-none fill-white" />
         )}
       </div>
     </div>

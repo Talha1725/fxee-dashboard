@@ -4,6 +4,7 @@ import LandingButton from "@/components/features/landing/LandingButton";
 import LandingNavbarLink from "@/components/features/landing/landingNavbar/LandingNavbarLink";
 import { IconMenu } from "@/components/ui/icon";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface NavbarResponsiveClientProps {
   navLinks: { href: string; label: string }[];
@@ -20,6 +21,7 @@ export default function LandingNavbarResponsiveClient({
             {link.label}
           </LandingNavbarLink>
         ))}
+        <ThemeToggle variant="minimal" size="sm" className="border-white/20" />
       </div>
       <LandingButton
         color="white"
@@ -44,6 +46,9 @@ export default function LandingNavbarResponsiveClient({
                   {link.label}
                 </LandingNavbarLink>
               ))}
+              <div className="pt-2">
+                <ThemeToggle variant="default" size="sm" />
+              </div>
             </div>
           </SheetContent>
         </Sheet>

@@ -35,8 +35,8 @@ export default function OnboardBreadcrumbItem({
             <Link
               href={item.href ?? "/"}
               className={cn(
-                "select-none text-white/80 text-[16px] font-regular font-normal liga leading-5 tracking-[-0.096px]",
-                item.step === currentStep && "text-white"
+                "select-none dark:text-white/80 text-[16px] font-regular font-normal liga leading-5 tracking-[-0.096px]",
+                item.step === currentStep && "dark:text-white text-black"
               )}
             >
               {item.label}

@@ -23,13 +23,13 @@ function Input({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const baseInputStyles =
-    "bg-transparent outline-none placeholder:text-white/60 text-sm md:text-md font-regular disabled:cursor-not-allowed disabled:opacity-50";
+    "bg-transparent outline-none dark:placeholder:text-white/60 text-sm md:text-md font-regular disabled:cursor-not-allowed disabled:opacity-50";
 
   if (icon || isPassword || backIcon) {
     return (
       <div
         className={cn(
-          "border-white/30 flex items-center justify-between gap-2 self-stretch rounded-md border bg-dark-gradient px-[10px] pl-3 pr-[10px] shadow-subtle transition-[color,box-shadow]",
+          "dark:border-white/30 border-black/5 flex items-center justify-between gap-2 self-stretch rounded-md border bg-dark-gradient px-[10px] pl-3 pr-[10px] shadow-subtle transition-[color,box-shadow]",
           "focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[2px]",
           "has-[input:invalid]:ring-destructive/20 dark:has-[input:invalid]:ring-destructive/40 has-[input:invalid]:border-destructive",
           className
@@ -44,13 +44,13 @@ function Input({
         />
         {isPassword && (
           <div
-            className="text-white/60 cursor-pointer"
+            className="text-black/60 dark:text-white/60 cursor-pointer"
             onClick={() => setIsPasswordVisible(!isPasswordVisible)}
           >
             {isPasswordVisible ? (
-              <IconEyeOff height={20} width={20} />
+              <IconEyeOff height={20} width={20} className="dark:text-white/60 !text-black/60" />
             ) : (
-              <IconEye height={20} width={20} />
+              <IconEye height={20} width={20} className="dark:text-white/60 !text-black/60" />
             )}
           </div>
         )}
