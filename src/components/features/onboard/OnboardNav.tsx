@@ -28,7 +28,7 @@ export default function OnboardNav({
       {isOnboard && <OnboardStepIndicator step={step} />}
      
       <div className="hidden md:flex justify-end items-center gap-2 shrink-0 self-stretch">
-        <p className="text-white/80 liga font-regular text-sm leading-5 font-normal tracking-[-0.084px] select-none">
+        <p className="dark:text-white/80 text-black/80 liga font-regular text-sm leading-5 font-normal tracking-[-0.084px] select-none">
           © 2024 FXEE.AI
         </p>
       </div>

@@ -529,12 +529,15 @@ body {
   }
   .bg-light-green-gradient {
     background: radial-gradient(
-      99.93% 99.93% at 50.06% 0.07%,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0.95) 74.01%,
-      #ffffff 100%
-    ),
-    linear-gradient(29deg, #0276db 13.99%, #3edc81 102.63%);
+        99.93% 99.93% at 50.06% 0.07%,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.95) 74.01%,
+        #ffffff 100%
+      ),
+      linear-gradient(29deg, #0276db 13.99%, #3edc81 102.63%);
+  }
+  .bg-dark-secondary-gradient {
+    background:linear-gradient(359deg, #fff0 13.99%, #ffffff17 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #16161699 0%, #1616169e 74.01%, #1616168c 100%);
   }
   .font-space-grotesk {
     font-family: var(--font-space-grotesk), sans-serif;

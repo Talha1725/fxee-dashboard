@@ -2,6 +2,7 @@ import React from "react";
 
 import { Text18, Title24 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function CheckoutCardItem({
   selectedPaymentMethod,
@@ -14,12 +15,13 @@ export default function CheckoutCardItem({
   title: string;
   price: string;
 }) {
+  const { theme } = useTheme();
   return (
     <div
       className={cn(
-        "flex items-center gap-4 self-stretch rounded-[10px] border border-white/30 bg-dark-radial-gradient cursor-pointer transition-all duration-300",
+        `not-only:flex items-center gap-4 self-stretch rounded-[10px] border dark:border-white/30 border-black/30 ${theme === "dark" ? "bg-dark-secondary-gradient" : ""} cursor-pointer transition-all duration-300`,
         selectedPaymentMethod === title &&
-          "border-none border-green-gradient bg-green-radial-gradient"
+          `border-none border-green-gradient ${theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"}`
       )}
       onClick={() => setSelectedPaymentMethod(title)}
     >
@@ -45,7 +47,7 @@ export default function CheckoutCardItem({
           ></div>
           <Text18 className="flex-[1_0_0]">Pay with {title}</Text18>
           <div className="self-stretch flex flex-col items-end">
-            <Title24>
+            <Title24 className="text-black dark:text-white">
               {title === "Crypto" ? (
                 <React.Fragment>
                   <span className="line-through">${price}</span>{" "}
@@ -55,13 +57,13 @@ export default function CheckoutCardItem({
                 `$${price}`
               )}
             </Title24>
-            <Text18>/month</Text18>
+            <Text18 className="dark:text-white/80 text-black/80 font-normal">/month</Text18>
           </div>
         </div>
       </div>
       {selectedPaymentMethod === title && (
         <div className="absolute bottom-0 right-[16px] left-[16px]">
-          <div className="h-[4px] w-full rounded-r bg-popular-gradient"></div>
+          <div className="h-[4px] w-full rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient"></div>
         </div>
       )}
     </div>
