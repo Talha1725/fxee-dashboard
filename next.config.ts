@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
     // reactCompiler: true,
     // Fix for client reference manifest issues
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    // Ensure proper handling of client components
+    serverComponentsExternalPackages: [],
   },
   // Ensure proper handling of client components
   webpack: (config, { isServer }) => {
