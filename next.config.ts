@@ -14,12 +14,29 @@ const nextConfig: NextConfig = {
   },
   serverExternalPackages: [],
   experimental: {
-    serverComponentsExternalPackages: [],
+    // Disable React Compiler for now to avoid build issues
+    // reactCompiler: true,
+    // Fix for client reference manifest issues
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
+  // Ensure proper handling of client components
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
   },
 };
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+// Temporarily disable bundle analyzer to fix build issues
+// const withBundleAnalyzer = require("@next/bundle-analyzer")({
+//   enabled: process.env.ANALYZE === "true",
+// });
 
-export default withBundleAnalyzer(nextConfig);
+// export default withBundleAnalyzer(nextConfig);
+export default nextConfig;
