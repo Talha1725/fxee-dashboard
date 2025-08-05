@@ -7,7 +7,7 @@ export default function SignFormHeader({ isSignup }: { isSignup: boolean }) {
       <Title32 className="text-center [font-feature-settings:'liga'_off,'calt'_off]">
         {isSignup ? "Create a new account" : "Login to your account"}
       </Title32>
-      <Description14 className="text-center leading-6 tracking-[-0.176px]">
+      <Description14 className="text-center">
         {isSignup
           ? "Enter your details to register."
           : "Enter your details to login."}

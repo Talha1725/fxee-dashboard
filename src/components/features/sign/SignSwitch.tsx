@@ -10,7 +10,7 @@ export default function SignSwitch({ isSignup }: { isSignup: boolean }) {
           {isSignup ? "Don't have an account?" : "Already have an account?"}{" "}
           <Link href={isSignup ? "/signin" : "/signup"}>
             <span className="bg-picton-blue bg-clip-text text-transparent font-bold">
-              {isSignup ? "Sign In" : "Sign Up"}
+              {isSignup ? "Sign In" : "Register"}
             </span>
           </Link>
         </p>
