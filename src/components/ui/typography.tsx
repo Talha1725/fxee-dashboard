@@ -63,7 +63,7 @@ export const Title32 = ({ children, className }: TypographyProps) => {
   return (
     <h3
       className={cn(
-        "text-white liga font-regular text-[24px] sm:text-[32px] tracking-[-0.48px] sm:tracking-[-0.64px] font-medium select-none",
+        "dark:text-white liga font-regular text-[24px] sm:text-[32px] tracking-[-0.48px] sm:tracking-[-0.64px] font-medium select-none",
         className
       )}
     >
@@ -247,7 +247,7 @@ export const Description14 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/60 text-[12px] sm:text-[14px] font-regular font-normal tracking-[-0.24px] sm:tracking-[-0.28px] select-none",
+        "text-black/60 dark:text-white/60 text-[12px] sm:text-[14px] font-regular font-normal tracking-[-0.24px] sm:tracking-[-0.28px] select-none",
         className
       )}
     >

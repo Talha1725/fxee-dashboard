@@ -7,7 +7,7 @@ import { IconLogo3 } from "@/components/ui/icon";
 
 export default function SignHeroImage() {
   return (
-    <div className="hidden lg:flex flex-col items-start self-stretch flex-[1_0_0] shrink-0 p-2">
+    <div className="hidden lg:flex flex-col items-start self-stretch flex-[1_0_0] shrink-0 p-2 z-50">
       <div className="flex justify-center items-start flex-[1_0_0] self-stretch rounded-3xl">
         <div
           className="flex justify-center items-start flex-[1_0_0] self-stretch relative rounded-3xl !bg-cover !bg-center"

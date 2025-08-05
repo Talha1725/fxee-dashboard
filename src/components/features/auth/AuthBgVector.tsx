@@ -5,7 +5,7 @@ import AuthBgVectorImage from "@/public/images/auth-bg-vector.png";
 
 const AuthBgVector = React.memo(function AuthBgVector() {
   return (
-    <div className="fixed w-full bottom-0 pointer-events-none -z-10">
+    <div className="fixed w-full bottom-0 pointer-events-none z-10">
       <div className="relative w-full h-[700px]">
         <Image
           src={AuthBgVectorImage}

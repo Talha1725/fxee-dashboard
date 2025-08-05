@@ -6,7 +6,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen overflow-x-hidden">
+    <div className="relative dark:bg-black bg-[#ecf3f8] flex flex-col items-center justify-center min-h-screen overflow-x-hidden">
       <AuthBgVector />
       {children}
     </div>

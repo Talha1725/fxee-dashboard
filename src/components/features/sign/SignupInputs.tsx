@@ -6,7 +6,7 @@ import { IconEmail, IconLock, IconUser } from "@/components/ui/icon";
 
 export default function SignupInputs() {
   return (
-    <div className="flex flex-col items-center gap-3 self-stretch">
+    <div className="flex flex-col items-center gap-3 self-stretch z-50">
       <SignInputContainer>
         <SignLabel label="Full Name" required />
         <Input
