@@ -1,5 +1,5 @@
-import Home from "@/components/features/protected/home/Home";
+import { redirect } from "next/navigation";
 
 export default function DashboardRootPage() {
-  return <Home />;
+  redirect("/home");
 } 
