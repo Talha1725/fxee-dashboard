@@ -33,10 +33,8 @@ const nextConfig: NextConfig = {
   },
 };
 
-// Temporarily disable bundle analyzer to fix build issues
-// const withBundleAnalyzer = require("@next/bundle-analyzer")({
-//   enabled: process.env.ANALYZE === "true",
-// });
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
-// export default withBundleAnalyzer(nextConfig);
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
