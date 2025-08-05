@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
     qualities: [100],
   },
   serverExternalPackages: [],
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
