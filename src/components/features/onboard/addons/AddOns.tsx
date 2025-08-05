@@ -7,7 +7,7 @@ import AddOnsPlan from "@/components/features/onboard/addons/AddOnsPlan";
 export default function AddOns() {
   return (
     <OnboardContentContainer>
-      <OnboardContentHeader title="Add-ons" description="Select Add-ons" />
+      <OnboardContentHeader title="Add-ons" description="Select Add-Ons" />
       <AddOnsPlan />
     </OnboardContentContainer>
   );

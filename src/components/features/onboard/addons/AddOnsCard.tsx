@@ -4,10 +4,10 @@ import { Title24 } from "@/components/ui/typography";
 
 export default function AddOnsCard() {
   return (
-    <OnboardCardContainer>
+    <OnboardCardContainer className="bg-white dark:bg-white/5 z-50">
       <div className="flex flex-col items-start gap-2.5 self-stretch">
-        <Title24>Add-Ons</Title24>
-        <p className="text-white/80 liga font-regular text-[14px] font-normal tracking-[-0.28px] select-none">
+        <Title24 className="text-black dark:text-white">Add-Ons</Title24>
+        <p className="dark:text-white/80 text-black/80 liga font-regular text-[14px] font-normal tracking-[-0.28px] select-none">
           Enhance, Expand, and Optimize Your Trading Experience
         </p>
       </div>

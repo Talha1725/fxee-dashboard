@@ -6,7 +6,7 @@ import { THEMES, STORAGE_KEYS } from "@/lib/constants";
 type Theme = typeof THEMES.LIGHT | typeof THEMES.DARK;
 
 interface ThemeContextType {
-  theme: Theme;
+  theme: Theme | null;
   toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
 }
@@ -14,7 +14,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(THEMES.DARK);
+  const [theme, setThemeState] = useState<Theme | null>(null);
 
   useEffect(() => {
     // Get theme from localStorage on mount
@@ -22,22 +22,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (savedTheme && Object.values(THEMES).includes(savedTheme)) {
       setThemeState(savedTheme);
     } else {
-      // Default to dark theme
-      setThemeState(THEMES.DARK);
+      // Default to light theme if no saved preference
+      setThemeState(THEMES.LIGHT);
     }
   }, []);
 
   useEffect(() => {
     // Update document class and localStorage when theme changes
-    const root = document.documentElement;
-    
-    if (theme === THEMES.DARK) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
+    if (theme) {
+      const root = document.documentElement;
+      
+      if (theme === THEMES.DARK) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+      
+      localStorage.setItem(STORAGE_KEYS.THEME, theme);
     }
-    
-    localStorage.setItem(STORAGE_KEYS.THEME, theme);
   }, [theme]);
 
   const setTheme = (newTheme: Theme) => {
@@ -45,7 +47,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
-    setThemeState(prev => prev === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK);
+    setThemeState(prev => {
+      if (!prev) return THEMES.LIGHT;
+      return prev === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK;
+    });
   };
 
   return (

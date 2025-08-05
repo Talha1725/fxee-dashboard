@@ -18,6 +18,7 @@ interface SubscriptionPlanCardProps {
   onClick: () => void;
   selected: boolean;
   className?: string;
+  alignLeft?: boolean;
 }
 
 export default function SubscriptionPlanCard({
@@ -29,6 +30,7 @@ export default function SubscriptionPlanCard({
   onClick,
   selected,
   className,
+  alignLeft,
 }: SubscriptionPlanCardProps) {
   const { theme } = useTheme();
   return (
@@ -42,7 +44,7 @@ export default function SubscriptionPlanCard({
       )}
     >
       {title === "Pro" && <OnboardPopularPattern title="Most Popular" />}
-      <SubscriptionCardContainer fitfor={fitfor}>
+      <SubscriptionCardContainer fitfor={fitfor} alignLeft={alignLeft}>
         <SubscriptionPlanHeader
           title={title}
           price={`$${price}/month`}

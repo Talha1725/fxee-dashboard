@@ -11,6 +11,9 @@ import { THEMES } from "@/lib/constants";
 export default function NavbarThemeSwitch() {
   const { theme, setTheme } = useTheme();
 
+  // Don't render until theme is loaded
+  if (!theme) return null;
+
   return (
     <NavbarSwitchContainer>
       <NavbarSwitchToggleItem
