@@ -65,6 +65,7 @@ body {
 
 :root {
   --radius: 0.625rem;
+  --font-space-grotesk: 'Space Grotesk', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   /* Light theme (default) */
   --background: #ffffff;
   --foreground: #0d0d0d;
@@ -540,7 +541,7 @@ body {
     background:linear-gradient(359deg, #fff0 13.99%, #ffffff17 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #16161699 0%, #1616169e 74.01%, #1616168c 100%);
   }
   .font-space-grotesk {
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--font-space-grotesk), 'Space Grotesk', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   }
   .bg-button-grey-gradient {
     background: var(--button-grey-gradient);

@@ -6,8 +6,9 @@ import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-space-grotesk",
+  display: "swap",
 });
 
 const satoshiRegular = localFont({
