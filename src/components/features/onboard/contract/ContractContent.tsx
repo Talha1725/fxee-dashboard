@@ -13,7 +13,7 @@ export default function ContractContent() {
   const router = useRouter();
 
   return (
-    <div className="w-full max-w-[1080px] flex items-start gap-5">
+    <div className="w-full max-w-[1080px] flex flex-col lg:flex-row lg:items-start gap-5">
       <div className="flex flex-col gap-5 items-start flex-[1_0_0]">
         <OnboardCardContainer className="bg-white dark:bg-white/5 z-50">
           <OnboardSummaryItem
@@ -55,7 +55,7 @@ export default function ContractContent() {
           />
         </OnboardCardContainer>
       </div>
-      <OnboardCardContainer className="flex-[1_0_0] self-start bg-white dark:bg-white/5 z-50">
+      <OnboardCardContainer className="flex-[1_0_0] self-start bg-white dark:bg-white/5 z-50 w-full lg:w-auto">
         <Title24 className="text-black dark:text-white">Client’s Details Confirmation</Title24>
         <OnboardSummaryItem title="Name" value="Noah Merriby" />
         <OnboardSummaryItem title="Email" value="noah@gmail.com" />
