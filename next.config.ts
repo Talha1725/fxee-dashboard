@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     qualities: [100],
   },
+  serverExternalPackages: [],
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

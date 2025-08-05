@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+// Fallback for Space Grotesk without Google Fonts
+const spaceGrotesk = {
   variable: "--font-space-grotesk",
-  display: "swap",
-});
+};
 
 const satoshiRegular = localFont({
   src: "./fonts/Satoshi-Variable.woff2",
