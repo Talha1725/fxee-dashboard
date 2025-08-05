@@ -155,7 +155,7 @@ export const Text18 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[16px] sm:text-[18px] font-medium tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
+        "dark:text-white liga font-regular text-[16px] sm:text-[18px] font-medium tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
         className
       )}
     >

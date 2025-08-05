@@ -35,7 +35,7 @@ export default function SubscriptionPlan({
           />
         ))}
       </div>
-      <p className="w-full text-center text-white/80 liga font-regular text-[16px] font-normal tracking-[-0.32px]">
+      <p className="w-full text-center dark:text-white/80 text-black/80 liga font-regular text-[16px] font-normal tracking-[-0.32px] z-50">
         Prices exclude any applicable taxes.
       </p>
     </div>

@@ -10,7 +10,7 @@ export default function AccountTypePlan() {
           <AccountTypePlanCard key={item.title} item={item} />
         ))}
       </div>
-      <p className="text-[16px] text-white/80 liga font-regular font-normal">
+      <p className="text-[16px] text-white/80 liga font-regular font-normal z-50">
         Prices exclude any applicable taxes.
       </p>
     </div>

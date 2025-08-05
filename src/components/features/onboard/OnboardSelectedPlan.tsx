@@ -2,10 +2,14 @@
 
 import OnboardSelectedPlanContainer from "@/components/features/onboard/OnboardSelectedPlanContainer";
 import SubscriptionPlanCard from "@/components/features/onboard/subscription/SubscriptionPlanCard";
+import { Button } from "@/components/ui/button";
 import { Title24 } from "@/components/ui/typography";
 import { SUBSCRIPTION_PLANS } from "@/lib/constants";
+import { ChevronLeftIcon } from "lucide-react";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function OnboardSelectedPlan() {
+  const { theme } = useTheme();
   return (
     <OnboardSelectedPlanContainer>
       <Title24>Selected Subscription Plan</Title24>

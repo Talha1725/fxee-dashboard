@@ -12,7 +12,7 @@ export default function SubscriptionCardContainer({
       <div className="flex flex-col items-start gap-5 self-stretch">
         {children}
       </div>
-      <p className="text-white/80 liga font-regular text-[14px] text-center font-normal self-stretch">
+      <p className="dark:text-white/80 text-black/80 liga font-regular text-[14px] text-center font-normal self-stretch">
         {fitfor}
       </p>
     </div>

@@ -7,7 +7,7 @@ import { Description14 } from "@/components/ui/typography";
 export default function SignKeepLoggedin() {
   return (
     <Label className="flex items-center gap-2 flex-[1_0_0]">
-      <Checkbox className="bg-white dark:bg-[#0E121B] border-black data-[state=checked]:bg-dark-gradient data-[state=checked]:border-picton-blue" />
+      <Checkbox className="bg-white dark:bg-black border-black dark:border-white data-[state=checked]:bg-dark-gradient data-[state=checked]:border-picton-blue" />
       <Description14 className="leading-5 tracking-[-0.084px]">
         Keep me logged in
       </Description14>

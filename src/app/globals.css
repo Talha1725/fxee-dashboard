@@ -120,7 +120,11 @@ body {
     rgba(255, 255, 255, 0.04) 0%,
     rgba(255, 255, 255, 0.02) 100%
   );
-  --button-light-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+  --button-light-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
   --button-grey-gradient: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.14) 0%,
@@ -330,7 +334,7 @@ body {
   --blue: #0276db;
   --score30: #e13e3e;
   --score80: #ffb145;
-  
+
   /* Dark theme gradients */
   --dark-gradient: linear-gradient(
     180deg,
@@ -347,7 +351,7 @@ body {
     rgba(255, 255, 255, 0.03) 0%,
     rgba(255, 255, 255, 0.01) 100%
   );
-  
+
   /* Light theme gradients */
   --dark-gradient: linear-gradient(
     180deg,
@@ -515,6 +519,23 @@ body {
   .bg-light-gradient {
     background: var(--button-light-gradient);
   }
+  .bg-blue-gradient {
+    background: linear-gradient(
+        29.31deg,
+        rgba(255, 255, 255, 0) 150.99%,
+        rgba(255, 255, 255, 0.4) 102.63%
+      ),
+      linear-gradient(180deg, #dbe6ff 0%, #e8efff 39.1%, #ffffff 100%);
+  }
+  .bg-light-green-gradient {
+    background: radial-gradient(
+      99.93% 99.93% at 50.06% 0.07%,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.95) 74.01%,
+      #ffffff 100%
+    ),
+    linear-gradient(29deg, #0276db 13.99%, #3edc81 102.63%);
+  }
   .font-space-grotesk {
     font-family: var(--font-space-grotesk), sans-serif;
   }
@@ -543,7 +564,17 @@ body {
     background: var(--danger-red);
   }
   .bg-dark-radial-gradient {
-    background: var(--dark-radial-gradient);
+    background: linear-gradient(
+        12deg,
+        rgba(255, 255, 255, 0) 59.99%,
+        rgba(255, 255, 255, 0.4) 183.63%
+      ),
+      radial-gradient(
+        99.93% 99.93% at 50.06% 0.07%,
+        rgba(22, 22, 22, 0.6) 0%,
+        rgba(22, 22, 22, 0.945) 74.01%,
+        rgb(22, 22, 22) 100%
+      );
   }
   .bg-green-radial-gradient {
     background: var(--green-radial-gradient);
