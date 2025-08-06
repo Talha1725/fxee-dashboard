@@ -17,24 +17,26 @@ export default function NavbarThemeSwitch() {
   return (
     <NavbarSwitchContainer>
       <NavbarSwitchToggleItem
-        isActive={theme === THEMES.LIGHT}
-        onClick={() => setTheme(THEMES.LIGHT)}
-      >
-        <IconSun
-          width={20}
-          height={20}
-          color={theme === THEMES.LIGHT ? "black" : "white"}
-        />
-      </NavbarSwitchToggleItem>
-      <NavbarSwitchToggleItem
         isActive={theme === THEMES.DARK}
         onClick={() => setTheme(THEMES.DARK)}
       >
         <IconMoon
           width={20}
           height={20}
-          color={theme === THEMES.DARK ? "black" : "white"}
+          color={theme === "light" ? "#1D1D1DCC" : "black"}
         />
+        <p className="font-satoshi-medium">Dark</p>
+      </NavbarSwitchToggleItem>
+      <NavbarSwitchToggleItem
+        isActive={theme === THEMES.LIGHT}
+        onClick={() => setTheme(THEMES.LIGHT)}
+      >
+        <IconSun
+          width={20}
+          height={20}
+          color={theme === "light"? "white" : "#FFFFFF99"}
+        />
+        <p className="font-satoshi-medium">Light</p>
       </NavbarSwitchToggleItem>
     </NavbarSwitchContainer>
   );

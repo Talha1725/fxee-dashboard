@@ -17,6 +17,7 @@ import {
   IconTradeDown,
   IconTradeUp,
 } from "@/components/ui/icon";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface TableRowItemProps {
   currency: string;
@@ -32,6 +33,7 @@ const TableRowItem = ({
   changePercent,
   isUp,
 }: TableRowItemProps) => {
+  const { theme } = useTheme();
   return (
     <TableRow className="hover:bg-transparent border-none">
       <TableCell>
@@ -41,17 +43,17 @@ const TableRowItem = ({
         </div>
       </TableCell>
       <TableCell>{last}</TableCell>
-      <TableCell className={`${isUp ? "text-green" : "text-danger"}`}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {change}
       </TableCell>
-      <TableCell className={`${isUp ? "text-green" : "text-danger"}`}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {changePercent}%
       </TableCell>
       <TableCell className="text-right">
         {isUp ? (
-          <IconTradeUp width={16} height={16} color="#3EDC81" />
+          <IconTradeUp width={16} height={16} color={theme === "dark" ? "#3EDC81" : "#079744"} />
         ) : (
-          <IconTradeDown width={16} height={16} color="#FF453A" />
+          <IconTradeDown width={16} height={16} color={theme === "dark" ? "#FF453A" : "#FF453A"} />
         )}
       </TableCell>
     </TableRow>
@@ -74,10 +76,10 @@ const TableRowItemCrypto = ({
         </div>
       </TableCell>
       <TableCell>{last}</TableCell>
-      <TableCell className={`${isUp ? "text-green" : "text-danger"}`}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {change}
       </TableCell>
-      <TableCell className={`${isUp ? "text-green" : "text-danger"}`}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {changePercent}%
       </TableCell>
       <TableCell className="text-right">
@@ -95,7 +97,7 @@ export default function HomeTopPicksBody() {
   return (
     <Table>
       <TableHeader>
-        <TableRow className="hover:bg-transparent">
+        <TableRow className="hover:bg-transparent font-satoshi-medium">
           <TableHead>Symbol</TableHead>
           <TableHead>Last</TableHead>
           <TableHead>Change</TableHead>
@@ -103,12 +105,12 @@ export default function HomeTopPicksBody() {
           <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="font-satoshi">
         <TableRow className="hover:bg-transparent border-none">
           <TableCell colSpan={5}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
-              <Text14>Forex</Text14>
-              <IconChevronDown width={16} height={16} />
+              <Text14 className="dark:text-white text-black">Forex</Text14>
+              <IconChevronDown width={16} height={16} className="rotate-180" />
             </div>
           </TableCell>
         </TableRow>
@@ -143,8 +145,8 @@ export default function HomeTopPicksBody() {
         <TableRow className="hover:bg-transparent border-none">
           <TableCell colSpan={5}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
-              <Text14>Crypto</Text14>
-              <IconChevronDown width={16} height={16} />
+              <Text14 className="dark:text-white text-black">Crypto</Text14>
+              <IconChevronDown width={16} height={16} className="rotate-180" />
             </div>
           </TableCell>
         </TableRow>

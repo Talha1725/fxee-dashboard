@@ -23,19 +23,19 @@ export default function HomeNewsBodyItem({
         <div className="flex items-center gap-2.5 self-stretch">
           <div className="flex items-center gap-[5px]">
             <CurrencyToCountryFlagConverter currency={currency} />
-            <Text14 className="text-white/40 shrink-0">{time}minutes ago</Text14>
+            <Text14 className="dark:text-white/40 text-black/40 shrink-0">{time}minutes Ago</Text14>
             <IconCircle width={2} height={2} />
-            <Text14 className="text-white/40 shrink-0">{readTime}min read</Text14>
+            <Text14 className="dark:text-white/40 text-black/40 shrink-0">{readTime}min read</Text14>
             <IconCircle width={2} height={2} />
-            <Text14 className="shrink-0">{source}</Text14>
+            <Text14 className="shrink-0 dark:text-white text-black">{source}</Text14>
           </div>
         </div>
-        <Text16>
+        <Text16 className="dark:text-white text-black">
           AUD/USD: Australian Dollar Strengthens Amid Optimism Over China’s
           Economic Recovery
         </Text16>
       </div>
-      <IconChevronRight width={20} height={20} className="shrink-0" />
+      <IconChevronRight width={20} height={20} className="shrink-0 dark:text-white/40 text-black/40" />
     </div>
   );
 }

@@ -16,6 +16,12 @@ const satoshiRegular = localFont({
   display: "swap",
 });
 
+const satoshiMedium = localFont({
+  src: "./fonts/Satoshi-Medium.otf",
+  variable: "--font-satoshi-medium",
+  display: "swap",
+});
+
 const satoshiBold = localFont({
   src: "./fonts/Satoshi-Bold.woff2",
   variable: "--font-satoshi-bold",
@@ -41,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${satoshiRegular.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} antialiased`}
+        className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} antialiased`}
       >
         <ThemeProvider>
           {children}

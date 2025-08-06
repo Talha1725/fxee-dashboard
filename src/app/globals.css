@@ -64,7 +64,9 @@ body {
 
 :root {
   --radius: 0.625rem;
-  --font-space-grotesk: 'Space Grotesk', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-space-grotesk: "Space Grotesk", "Inter", "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   /* Light theme (default) */
   --background: #ffffff;
   --foreground: #0d0d0d;
@@ -122,9 +124,10 @@ body {
   );
   --button-light-gradient: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.04) 0%,
-    rgba(0, 0, 0, 0.02) 100%
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.04) 100%
   );
+
   --button-grey-gradient: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.14) 0%,
@@ -537,19 +540,39 @@ body {
       linear-gradient(29deg, #0276db 13.99%, #3edc81 102.63%);
   }
   .bg-dark-secondary-gradient {
-    background:linear-gradient(359deg, #fff0 13.99%, #ffffff17 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #16161699 0%, #1616169e 74.01%, #1616168c 100%);
+    background: linear-gradient(359deg, #fff0 13.99%, #ffffff17 102.63%),
+      radial-gradient(
+        99.93% 99.93% at 50.06% 0.07%,
+        #16161699 0%,
+        #1616169e 74.01%,
+        #1616168c 100%
+      );
   }
   .font-space-grotesk {
-    font-family: var(--font-space-grotesk), 'Space Grotesk', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font-space-grotesk), "Space Grotesk", "Inter", "Segoe UI",
+      "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
   }
   .font-satoshi-regular {
-    font-family: var(--font-satoshi-regular), 'Satoshi', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font-satoshi-regular), "Satoshi", "Inter", "Segoe UI",
+      "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
+  }
+  .font-satoshi-medium {
+    font-family: var(--font-satoshi-medium), "Satoshi Medium", "Satoshi",
+      "Inter", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+      "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-weight: 500;
   }
   .font-satoshi-bold {
-    font-family: var(--font-satoshi-bold), 'Satoshi', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font-satoshi-bold), "Satoshi", "Inter", "Segoe UI",
+      "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
   }
   .font-satoshi {
-    font-family: var(--font-satoshi-regular), 'Satoshi', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font-satoshi-regular), "Satoshi", "Inter", "Segoe UI",
+      "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
   }
   .bg-button-grey-gradient {
     background: var(--button-grey-gradient);
@@ -565,6 +588,20 @@ body {
   }
   .bg-card-green-gradient {
     background: var(--card-green-gradient);
+  }
+  .bg-card-green-gradient-light {
+    background: linear-gradient(
+        17.18deg,
+        rgba(12, 145, 67, 0.829) 14.37%,
+        rgba(2, 100, 187, 0.897) 82.05%
+      ),
+      linear-gradient(
+        236.84deg,
+        rgba(15, 15, 15, 0.377) 5.53%,
+        rgba(15, 15, 15, 0.397153) 56.04%,
+        rgba(15, 15, 15, 0.449044) 75.37%,
+        rgba(15, 15, 15, 0.54) 96.4%
+      );
   }
   .bg-card-dashboard-main-gradient {
     background: var(--card-dashboard-main-gradient);

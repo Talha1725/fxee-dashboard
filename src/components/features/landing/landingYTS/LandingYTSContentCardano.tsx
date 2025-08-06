@@ -30,7 +30,7 @@ export default function LandingYTSContentCardano() {
           icon={<IconShield width={20} height={20} />}
         />
         <HomeTradesItemBadge
-          text="8 Minutes ago"
+          text="8 Minutes Ago"
           icon={<IconZap width={20} height={20} />}
         />
         <HomeTradesItemBadge

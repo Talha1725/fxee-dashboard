@@ -35,7 +35,7 @@ export default function Navbar({ className }: { className?: string }) {
       <NavbarActions />
       <Separator
         orientation="vertical"
-        className="opacity-10 sm:block hidden"
+        className="opacity-100 sm:block hidden"
       />
       <NavbarProfile />
     </div>

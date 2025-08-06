@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
@@ -11,21 +13,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function NavbarActions() {
+  const { theme } = useTheme();
   return (
     <div className="hidden sm:flex items-center gap-1">
-      <Button variant="ghost">
+      <Button variant="ghost" className={`${theme === "light" && "bg-light-gradient"}`} >
         <IconSearch width={20} height={20} />
       </Button>
-      <Button variant="ghost">
+      <Button variant="ghost" className={`${theme === "light" && "bg-light-gradient"}`}>
         <IconNotification width={20} height={20} />
       </Button>
-      <Select>
-        <SelectTrigger className="border-none bg-dark-gradient cursor-pointer">
+      <Select value="uk">
+        <SelectTrigger className="border-none bg-none bg-dark-gradient cursor-pointer shadow-none">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="min-w-[40px]">
+        <SelectContent className="min-w-[40px] dark:bg-black bg-white">
           <SelectGroup>
             <SelectItem value="uk">
               <IconUK width={20} height={20} />

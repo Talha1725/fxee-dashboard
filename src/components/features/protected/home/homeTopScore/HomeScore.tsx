@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import ProtectedCardContainer from "@/components/features/protected/ProtectedCardContainer";
@@ -6,16 +8,18 @@ import HomeScorePie from "@/components/features/protected/home/homeTopScore/Home
 import HomeScoreItem from "@/components/features/protected/home/homeTopScore/HomeScoreItem";
 import { Text18 } from "@/components/ui/typography";
 import { Separator } from "@/components/ui/separator";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function HomeScore() {
+  const { theme } = useTheme();
   return (
-    <ProtectedCardContainer className="bg-card-main-gradient db:max-w-[397px] h-[471px] flex flex-col items-center">
+    <ProtectedCardContainer className={`border-black/5 ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"} db:max-w-[397px] h-[471px] flex flex-col items-center`}>
       <div className="flex flex-col self-stretch gap-2">
-        <Text18>Consistency Score</Text18>
+        <Text18 className="font-satoshi-medium">Consistency Score</Text18>
       </div>
       <HomeScorePie score={66} />
       <HomeScoreColor />
-      <Separator className="w-full bg-white/5" />
+      <Separator className="w-full bg-white/5 hidden dark:block" />
       <div className="flex flex-col items-start self-stretch overflow-y-scroll scrollbar-hide">
         <HomeScoreItem currency="USD/GBP" score={1050} change={2.03} isUp />
         <HomeScoreItem

@@ -12,35 +12,35 @@ export default function HomeNewsBody() {
         readTime={2}
         source="TradingView"
       />
-      <Separator className="bg-white/5" />
+      <Separator className="dark:bg-white/5 bg-black/2" />
       <HomeNewsBodyItem
         currency="JPY/USD"
         time={5}
         readTime={2}
         source="TradingView"
       />
-      <Separator className="bg-white/5" />
+      <Separator className="dark:bg-white/5 bg-black/2" />
       <HomeNewsBodyItem
         currency="EUR/USD"
         time={5}
         readTime={2}
         source="TradingView"
       />
-      <Separator className="bg-white/5" />
+      <Separator className="dark:bg-white/5 bg-black/2" />
       <HomeNewsBodyItem
         currency="GBP/USD"
         time={5}
         readTime={2}
         source="TradingView"
       />
-      <Separator className="bg-white/5" />
+      <Separator className="dark:bg-white/5 bg-black/2" />
       <HomeNewsBodyItem
         currency="CAD/USD"
         time={5}
         readTime={2}
         source="TradingView"
       />
-      <Separator className="bg-white/5" />
+      <Separator className="dark:bg-white/5 bg-black/2" />
       <HomeNewsBodyItem
         currency="AUD/USD"
         time={5}
