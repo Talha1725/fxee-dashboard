@@ -10,7 +10,9 @@ export default function ProtectedLayout({
 }) {
   return (
     <div className="flex items-start p-2.5 w-full min-h-screen rounded-[10px] bg-center bg-cover bg-no-repeat bg-[#ecf3f8] dark:bg-background">
-      <Sidebar className="hidden xl:block" />
+      <div className="xl:relative xl:left-0 absolute left-[-100%]">
+        <Sidebar />
+      </div>
       <ProtectedContainer>{children}</ProtectedContainer>
     </div>
   );
