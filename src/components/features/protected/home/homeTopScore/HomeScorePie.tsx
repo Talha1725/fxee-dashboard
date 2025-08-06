@@ -102,7 +102,7 @@ export default function HomeScorePie({ score }: { score: number }) {
   }, [score, isMobile]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center font-satoshi-medium">
       <svg ref={svgRef} className="drop-shadow-sm"></svg>
     </div>
   );

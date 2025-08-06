@@ -29,7 +29,7 @@ export default function LandingYTSContentBTC() {
           icon={<IconShield width={20} height={20} />}
         />
         <HomeTradesItemBadge
-          text="4 Minutes ago"
+          text="4 Minutes Ago"
           icon={<IconZap width={20} height={20} />}
         />
         <HomeTradesItemBadge

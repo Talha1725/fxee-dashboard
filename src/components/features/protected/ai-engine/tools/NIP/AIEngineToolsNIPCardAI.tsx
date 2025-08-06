@@ -41,7 +41,7 @@ export default function AIEngineToolsNIPCardAI() {
               icon={<IconAIBrain width={20} height={20} />}
             />
             <AIEngineToolsNIPCardAIBadge
-              text="4 Minutes ago"
+              text="4 Minutes Ago"
               icon={<IconTime width={20} height={20} />}
             />
           </div>

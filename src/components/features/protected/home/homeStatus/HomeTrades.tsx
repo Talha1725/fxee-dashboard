@@ -1,24 +1,28 @@
+"use client";
 import React from "react";
 
 import ProtectedCardContainer from "@/components/features/protected/ProtectedCardContainer";
 import HomeTradesItem from "@/components/features/protected/home/homeStatus/HomeTradesItem";
 import { Separator } from "@/components/ui/separator";
 import { Text18 } from "@/components/ui/typography";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function HomeTrades() {
+  const { theme } = useTheme();
+
   return (
-    <ProtectedCardContainer className="flex-[1_0_0] self-stretch bg-card-green-gradient border-none overflow-x-hidden">
+    <ProtectedCardContainer className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"} border-none overflow-x-hidden`}>
       <div className="flex self-stretch">
-        <Text18>AI Recommended Trades</Text18>
+        <Text18 className="font-satoshi-medium text-white">AI Recommended Trades</Text18>
       </div>
       <div className="flex items-start gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide">
-        <HomeTradesItem />
+        <HomeTradesItem long={true} />
         <Separator orientation="vertical" className="h-full bg-white/5" />
-        <HomeTradesItem />
+        <HomeTradesItem long={false} />
         <Separator orientation="vertical" className="h-full bg-white/5" />
-        <HomeTradesItem />
+        <HomeTradesItem long={true} />
         <Separator orientation="vertical" className="h-full bg-white/5" />
-        <HomeTradesItem />
+        <HomeTradesItem long={false} />
       </div>
     </ProtectedCardContainer>
   );

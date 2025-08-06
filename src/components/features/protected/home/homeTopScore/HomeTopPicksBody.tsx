@@ -95,7 +95,7 @@ export default function HomeTopPicksBody() {
   return (
     <Table>
       <TableHeader>
-        <TableRow className="hover:bg-transparent">
+        <TableRow className="hover:bg-transparent font-satoshi-medium">
           <TableHead>Symbol</TableHead>
           <TableHead>Last</TableHead>
           <TableHead>Change</TableHead>
@@ -103,7 +103,7 @@ export default function HomeTopPicksBody() {
           <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="font-satoshi">
         <TableRow className="hover:bg-transparent border-none">
           <TableCell colSpan={5}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">

@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Text18 } from "@/components/ui/typography";
 
-export default function HomeTradesItem() {
+export default function HomeTradesItem({long=false}:{long?:boolean}) {
   return (
     <div className="flex flex-col items-start gap-5 self-stretch shadow-subtle w-[280px] shrink-0">
       <HomeTokenPair token="XAU" pair="XAU/USD" iconName="IconCryptoXau" />
@@ -21,7 +21,7 @@ export default function HomeTradesItem() {
           icon={<IconShield width={20} height={20} />}
         />
         <HomeTradesItemBadge
-          text="4 Minutes ago"
+          text="4 Minutes Ago"
           icon={<IconZap width={20} height={20} />}
         />
         <HomeTradesItemBadge
@@ -29,16 +29,16 @@ export default function HomeTradesItem() {
           icon={<IconTradeDown width={20} height={20} color="#FE5749" />}
         />
       </div>
-      <Text18 className="flex-[1_0_0] self-stretch">
+      <Text18 className="flex-[1_0_0] self-stretch font-satoshi-medium text-white">
         Bearish outlook on gold; current market trends indicate a possible
         downturn approaching!
       </Text18>
       <div className="flex items-start self-stretch gap-2.5">
-        <Button variant="danger" size="default" className="flex-[1_0_0]">
-          <p>Short</p>
+        <Button variant={long?"green":"danger"} size="default" className="text-white flex-[1_0_0] font-satoshi-medium">
+          <p>{long?"Long":"Short"}</p>
           <IconTradeDown width={20} height={20} color="#FFF" />
         </Button>
-        <Button variant="grey" size="default" className="flex-[1_0_0]">
+        <Button variant="grey" size="default" className="flex-[1_0_0] font-satoshi-medium text-white/80">
           <p>Skip</p>
           <IconCancel width={20} height={20} />
         </Button>

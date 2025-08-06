@@ -11,7 +11,7 @@ export default function HomeScore() {
   return (
     <ProtectedCardContainer className="bg-card-main-gradient db:max-w-[397px] h-[471px] flex flex-col items-center">
       <div className="flex flex-col self-stretch gap-2">
-        <Text18>Consistency Score</Text18>
+        <Text18 className="font-satoshi-medium">Consistency Score</Text18>
       </div>
       <HomeScorePie score={66} />
       <HomeScoreColor />

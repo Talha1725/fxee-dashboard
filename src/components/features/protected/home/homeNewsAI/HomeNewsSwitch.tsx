@@ -16,7 +16,7 @@ export default function HomeNewsSwitch() {
         isActive={activeTab === "top"}
         onClick={() => setActiveTab("top")}
       >
-        <Text14 className={cn(activeTab === "top" && "text-[#111]")}>
+        <Text14 className={cn(activeTab === "top" && "dark:!text-[#111] !text-white font-satoshi-medium") + "dark:text-white text-black"}>
           Top
         </Text14>
       </NavbarSwitchToggleItem>
@@ -24,7 +24,7 @@ export default function HomeNewsSwitch() {
         isActive={activeTab === "latest"}
         onClick={() => setActiveTab("latest")}
       >
-        <Text14 className={cn(activeTab === "latest" && "text-[#111]")}>
+        <Text14 className={cn(activeTab === "latest" && "!text-white dark:!text-[#111] font-satoshi-medium") + "dark:text-white text-black"}>
           Latest
         </Text14>
       </NavbarSwitchToggleItem>

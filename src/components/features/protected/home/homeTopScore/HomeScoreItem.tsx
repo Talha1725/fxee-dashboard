@@ -21,9 +21,9 @@ export default function HomeScoreItem({
     <div className="flex justify-between items-center self-stretch py-1.5 px-0 border-b border-white/5">
       <div className="flex items-center gap-2.5">
         <CurrencyToCountryFlagConverter currency={currency} />
-        <Text14 className="shrink-0">{currency}</Text14>
+        <Text14 className="shrink-0 font-satoshi-medium">{currency}</Text14>
       </div>
-      <div className="flex justify-end items-center gap-2.5">
+      <div className="flex justify-end items-center gap-2.5 font-satoshi">
         <Text14 className="w-[65px] overflow-hidden">{score}</Text14>
         <Text14
           className={cn(
