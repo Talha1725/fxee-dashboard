@@ -33,44 +33,51 @@ export default function BrokerPlan({
   if (qrSection) {
     return (
       <>
-      <OnboardCardContainer
-        className={`w-full max-w-[420px] gap-4 ${
-          theme === "dark" ? "bg-dark-radial-gradient" : "bg-white"
-        } mx-auto z-50`}
-      >
-        <div className="flex flex-col justify-center w-full border-b border-transparent dark:border-white/10 dark:pb-3">
-          <div>
-            {" "}
-            <SignLabel label="Crypto type dropdown" required />
-            <Select>
-              <SelectTrigger className="w-[100%] h-8 mt-3 bg-gray-100 border-transparent dark:border-white/10 dark:bg-white/5">
-                <SelectValue placeholder="Select a crypto type" />
-              </SelectTrigger>
-              <SelectContent className="dark:bg-black bg-white">
-                <SelectItem value="light" className="dark:text-white text-black">Crypto</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-        </div>
-        <div className="flex flex-col justify-center w-full border-b border-transparent dark:border-white/10 dark:pb-3">
-          <div className="flex justify-center w-full">
-            <div className="w-[200px] h-[200px] mx-auto border rounded-sm dark:border-white/10 p-2">
-              <Image src={qrCode} alt="QR Code" width={200} height={200} />
+        <OnboardCardContainer
+          className={`w-full max-w-[420px] gap-4 ${
+            theme === "dark" ? "bg-dark-radial-gradient" : "bg-white"
+          } mx-auto z-50`}
+        >
+          <div className="flex flex-col justify-center w-full border-b border-transparent dark:border-white/10 dark:pb-3">
+            <div>
+              {" "}
+              <SignLabel label="Crypto type dropdown" required />
+              <Select>
+                <SelectTrigger className="w-[100%] h-8 mt-3 bg-gray-100 border-transparent dark:border-white/10 dark:bg-white/5">
+                  <SelectValue placeholder="Select a crypto type" />
+                </SelectTrigger>
+                <SelectContent className="dark:bg-black bg-white">
+                  <SelectItem
+                    value="light"
+                    className="dark:text-white text-black"
+                  >
+                    Crypto
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-            <p className="text-center dark:text-white font-satoshi mt-3">Scan QR Code for wallet address</p>
+          <div className="flex flex-col justify-center w-full border-b border-transparent dark:border-white/10 dark:pb-3">
+            <div className="flex justify-center w-full">
+              <div className="w-[200px] h-[200px] mx-auto border rounded-sm dark:border-white/10 p-2">
+                <Image src={qrCode} alt="QR Code" width={200} height={200} />
+              </div>
             </div>
-            <div className="flex justify-between w-full font-satoshi">
-              <p className="text-center dark:text-white/80 text-black/80">Wallet Address</p>
-              <p className="dark:text-white font-semibold">xhdjfhu83763bxbx61</p>
-            </div>
-          
-      </OnboardCardContainer>
+            <p className="text-center dark:text-white font-satoshi mt-3">
+              Scan QR Code for wallet address
+            </p>
+          </div>
+          <div className="flex justify-between w-full font-satoshi">
+            <p className="text-center dark:text-white/80 text-black/80">
+              Wallet Address
+            </p>
+            <p className="dark:text-white font-semibold">xhdjfhu83763bxbx61</p>
+          </div>
+        </OnboardCardContainer>
         <Button variant="fancy" className="w-full max-w-[420px] mt-3">
-        Copy Wallet Address
-      </Button>
-     </>
+          Fund Account{" "}
+        </Button>
+      </>
     );
   }
 
