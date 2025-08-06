@@ -10,6 +10,7 @@ interface InputProps extends React.ComponentProps<"input"> {
   icon?: React.ReactNode;
   isPassword?: boolean;
   backIcon?: React.ReactNode;
+  InputStyles?: string;
 }
 
 function Input({
@@ -18,6 +19,7 @@ function Input({
   icon,
   isPassword,
   backIcon,
+  InputStyles,
   ...props
 }: InputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -39,7 +41,7 @@ function Input({
         <input
           type={isPassword && !isPasswordVisible ? "password" : "text"}
           data-slot="input"
-          className={cn("flex-1 shrink-0", baseInputStyles)}
+          className={cn("flex-1 shrink-0", baseInputStyles, InputStyles)}
           {...props}
         />
         {isPassword && (

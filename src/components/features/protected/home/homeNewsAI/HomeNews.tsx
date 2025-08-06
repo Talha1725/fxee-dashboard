@@ -10,7 +10,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 export default function HomeNews() {
   const { theme } = useTheme();
   return (
-    <ProtectedCardContainer className={` h-[471px] border-black/5 overflow-x-hidden ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"}`}>
+    <ProtectedCardContainer className={`h-[471px] border-black/5 overflow-x-hidden ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"}`}>
       <HomeNewsHead />
       <HomeNewsBody />
     </ProtectedCardContainer>

@@ -3140,6 +3140,7 @@ export function IconAsteroid({ width, height, ...props }: IconProps) {
 }
 
 export function IconAIBrain({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -3151,7 +3152,7 @@ export function IconAIBrain({ width, height, ...props }: IconProps) {
     >
       <path
         d="M5.61629 3.55607C5.2265 3.55596 4.84369 3.6595 4.50711 3.85608C4.17052 4.05267 3.89227 4.33522 3.70086 4.67478C3.50946 5.01434 3.4118 5.39869 3.41788 5.78843C3.42397 6.17817 3.53358 6.55928 3.7355 6.8927C3.234 6.9896 2.78189 7.25806 2.45678 7.652C2.13168 8.04594 1.95386 8.54078 1.95386 9.05154C1.95386 9.56231 2.13168 10.0571 2.45678 10.4511C2.78189 10.845 3.234 11.1135 3.7355 11.2104M5.61629 3.55607C5.61629 3.07027 5.80927 2.60437 6.15278 2.26086C6.49629 1.91735 6.96219 1.72437 7.44799 1.72437C7.93379 1.72437 8.39969 1.91735 8.7432 2.26086C9.08671 2.60437 9.27969 3.07027 9.27969 3.55607M5.61629 3.55607C5.61629 4.1554 5.90423 4.68733 6.34897 5.02143M3.7355 11.2104C3.53377 11.5438 3.42431 11.9248 3.41832 12.3145C3.41233 12.7041 3.51003 13.0883 3.70141 13.4278C3.89279 13.7672 4.17097 14.0497 4.50745 14.2462C4.84393 14.4428 5.22661 14.5463 5.61629 14.5463C5.61629 15.0321 5.80927 15.498 6.15278 15.8415C6.49629 16.185 6.96219 16.378 7.44799 16.378C7.93379 16.378 8.39969 16.185 8.7432 15.8415C9.08671 15.498 9.27969 15.0321 9.27969 14.5463M3.7355 11.2104C3.99844 10.7751 4.40419 10.4444 4.88361 10.2748M9.27969 3.55607V14.5463M9.27969 3.55607C9.27969 3.07027 9.47268 2.60437 9.81619 2.26086C10.1597 1.91735 10.6256 1.72437 11.1114 1.72437C11.5972 1.72437 12.0631 1.91735 12.4066 2.26086C12.7501 2.60437 12.9431 3.07027 12.9431 3.55607C13.3329 3.55596 13.7157 3.6595 14.0523 3.85608C14.3889 4.05267 14.6671 4.33522 14.8585 4.67478C15.0499 5.01434 15.1476 5.39869 15.1415 5.78843C15.1354 6.17817 15.0258 6.55928 14.8239 6.8927M9.27969 14.5463C9.27969 15.0321 9.47268 15.498 9.81619 15.8415C10.1597 16.185 10.6256 16.378 11.1114 16.378C11.5972 16.378 12.0631 16.185 12.4066 15.8415C12.7501 15.498 12.9431 15.0321 12.9431 14.5463M12.9431 14.5463C13.3328 14.5463 13.7155 14.4428 14.0519 14.2462C14.3884 14.0497 14.6666 13.7672 14.858 13.4278C15.0494 13.0883 15.1471 12.7041 15.1411 12.3145C15.1351 11.9248 15.0256 11.5438 14.8239 11.2104C15.3254 11.1135 15.7775 10.845 16.1026 10.4511C16.4277 10.0571 16.6055 9.56231 16.6055 9.05154C16.6055 8.54078 16.4277 8.04594 16.1026 7.652C15.7775 7.25806 15.3254 6.9896 14.8239 6.8927M12.9431 14.5463C12.9431 13.947 12.6552 13.415 12.2104 13.0809M14.8239 6.8927C14.5607 7.32745 14.155 7.65757 13.6758 7.82687"
-        stroke="white"
+        stroke={theme ==="dark" ? "white" : "black"}
         strokeWidth="1.09902"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -4113,6 +4114,7 @@ export function IconSend({
   opacity = 0.6,
   ...props
 }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4125,12 +4127,12 @@ export function IconSend({
       <g opacity={opacity}>
         <path
           d="M15.5291 13.9683L16.9591 9.67661C18.2091 5.92828 18.8341 4.05411 17.8441 3.06494C16.8541 2.07578 14.9807 2.69994 11.2316 3.94994L6.94072 5.37994C3.91572 6.38827 2.40322 6.89328 1.97406 7.63244C1.77356 7.97801 1.66797 8.37043 1.66797 8.76994C1.66797 9.16946 1.77356 9.56188 1.97406 9.90744C2.40322 10.6474 3.91572 11.1516 6.94072 12.1608C7.42739 12.3224 7.66989 12.4033 7.87322 12.5391C8.06989 12.6708 8.23906 12.8399 8.37072 13.0366C8.50656 13.2399 8.58739 13.4824 8.74906 13.9683C9.75739 16.9933 10.2624 18.5066 11.0016 18.9366C11.3472 19.1373 11.7398 19.2429 12.1395 19.2429C12.5392 19.2429 12.9317 19.1373 13.2774 18.9366C14.0166 18.5066 14.5199 16.9941 15.5291 13.9683Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
         />
         <path
           d="M13.512 8.28307C13.6266 8.16581 13.6905 8.00821 13.69 7.84425C13.6895 7.68029 13.6246 7.52309 13.5093 7.40655C13.3939 7.29001 13.2374 7.22346 13.0735 7.22125C12.9095 7.21904 12.7512 7.28134 12.6328 7.39473L13.512 8.28307ZM8.88698 12.8564L13.512 8.28307L12.6328 7.39473L8.00781 11.9681L8.88698 12.8564Z"
-          fill="white"
+          fill={theme === "dark" ? "white" : "black"}
         />
       </g>
     </svg>
@@ -5282,8 +5284,8 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
       <path
         d="M0 186.026C8.37833 181.837 5.51892 180.136 19.0417 178.029C42.1822 174.423 31.4203 138.868 54.84 138.803C72.2305 138.755 71.3571 113.161 88.3533 109.479C106.096 105.635 115.177 129.284 132.53 123.951C145.805 119.871 144.669 101.477 158.427 99.5773C169.566 98.0391 174.282 108.309 185.466 109.479C229.874 114.126 180.125 4.81034 224.692 2.0839C270.363 -0.710056 228.639 67.1734 274.2 71.3956C293.505 73.1847 296.667 94.8052 319.138 95.3881C333.684 95.7655 333.255 122.21 347.701 123.951C368.272 126.43 360.146 144.492 380.833 145.658C397.209 146.581 399.121 110.249 410.538 109.479C425.893 108.443 419.246 122.153 434.531 123.951C444.404 125.112 457 97.6731 457 97.6731"
         stroke="url(#paint1_linear_1350_95920)"
-        stroke-width="3.80833"
-        stroke-linecap="round"
+        strokeWidth="3.80833"
+        strokeLinecap="round"
       />
       <path
         opacity="0.5"
@@ -5297,7 +5299,7 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
           cy="74.4423"
           r="11.0442"
           stroke="url(#paint3_linear_1350_95920)"
-          stroke-width="8.37833"
+          strokeWidth="8.37833"
         />
       </g>
       <path
@@ -5337,9 +5339,9 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
           width="68.5501"
           height="68.5499"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -5372,8 +5374,8 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
           y2="298.372"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3EDC81" />
-          <stop offset="1" stop-color="#3EDC81" stop-opacity="0" />
+          <stop stopColor="#3EDC81" />
+          <stop offset="1" stopColor="#3EDC81" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1350_95920"
@@ -5383,8 +5385,8 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
           y2="186.026"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3EDC81" />
-          <stop offset="1" stop-color="#2AC86D" />
+          <stop stopColor="#3EDC81" />
+          <stop offset="1" stopColor="#2AC86D" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_1350_95920"
@@ -5394,10 +5396,10 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
           y2="298.372"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0104167" stop-color="#3EDC81" stop-opacity="0" />
-          <stop offset="0.28125" stop-color="#3EDC81" />
-          <stop offset="0.666667" stop-color="#20BE63" />
-          <stop offset="0.984375" stop-color="#20BE63" stop-opacity="0" />
+          <stop offset="0.0104167" stopColor="#3EDC81" stopOpacity="0" />
+          <stop offset="0.28125" stopColor="#3EDC81" />
+          <stop offset="0.666667" stopColor="#20BE63" />
+          <stop offset="0.984375" stopColor="#20BE63" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_1350_95920"
@@ -5407,8 +5409,8 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
           y2="89.6757"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3EDC81" />
-          <stop offset="1" stop-color="#20BE63" />
+          <stop stopColor="#3EDC81" />
+          <stop offset="1" stopColor="#20BE63" />
         </linearGradient>
       </defs>
     </svg>

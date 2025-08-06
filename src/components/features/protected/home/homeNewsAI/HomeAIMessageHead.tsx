@@ -17,7 +17,7 @@ export default function HomeAIMessageHead() {
           <Text18 className="font-satoshi-medium">
             FXEE <span className="text-green">AI</span>
           </Text18>
-          <Text12 className="dark:text-white/80 font-satoshi">Analyzing market patterns...</Text12>
+          <Text12 className="text-black/80 dark:text-white/80 font-satoshi">Analyzing market patterns...</Text12>
         </div>
       </div>
       <div className="flex items-center gap-2">
