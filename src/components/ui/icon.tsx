@@ -3210,6 +3210,7 @@ export function IconAIScan({ width, height, ...props }: IconProps) {
 }
 
 export function IconChevronDown({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -3219,10 +3220,10 @@ export function IconChevronDown({ width, height, ...props }: IconProps) {
       fill="none"
       {...props}
     >
-      <g opacity="0.4">
+      <g opacity="1">
         <path
           d="M18.3469 15.0654C18.3469 15.0654 13.9279 9.06543 12.3469 9.06543C10.7659 9.06543 6.34692 15.0654 6.34692 15.0654"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
