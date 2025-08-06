@@ -474,7 +474,7 @@ export const NavbarTitle = ({ children, className }: TypographyProps) => {
   return (
     <div
       className={cn(
-        "text-white liga font-regular text-[24px] font-medium tracking-[-0.264px] select-none",
+        "dark:text-white font-satoshi-medium text-[24px] tracking-[-0.264px] select-none",
         className
       )}
     >

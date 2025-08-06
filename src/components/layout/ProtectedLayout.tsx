@@ -9,7 +9,7 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-start p-2.5 w-full min-h-screen rounded-[10px] bg-center bg-cover bg-no-repeat bg-background">
+    <div className="flex items-start p-2.5 w-full min-h-screen rounded-[10px] bg-center bg-cover bg-no-repeat bg-[#ecf3f8] dark:bg-background">
       <Sidebar className="hidden xl:block" />
       <ProtectedContainer>{children}</ProtectedContainer>
     </div>

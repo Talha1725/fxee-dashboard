@@ -120,11 +120,8 @@ body {
     rgba(255, 255, 255, 0.04) 0%,
     rgba(255, 255, 255, 0.02) 100%
   );
-  --button-light-gradient: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.04) 0%,
-    rgba(0, 0, 0, 0.02) 100%
-  );
+  --button-light-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.04) 100%);
+
   --button-grey-gradient: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.14) 0%,
@@ -544,6 +541,10 @@ body {
   }
   .font-satoshi-regular {
     font-family: var(--font-satoshi-regular), 'Satoshi', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+  .font-satoshi-medium {
+    font-family: var(--font-satoshi-medium), 'Satoshi Medium', 'Satoshi', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
   }
   .font-satoshi-bold {
     font-family: var(--font-satoshi-bold), 'Satoshi', 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
