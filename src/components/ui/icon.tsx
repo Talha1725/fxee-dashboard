@@ -1088,7 +1088,7 @@ export function IconRadio({ width, height, ...props }: IconProps) {
         <g filter="url(#filter0_d_37_5472)">
           <path
             d="M3.7666 10.5C3.7666 6.91015 6.67675 4 10.2666 4C13.8565 4 16.7666 6.91015 16.7666 10.5C16.7666 14.0899 13.8565 17 10.2666 17C6.67675 17 3.7666 14.0899 3.7666 10.5Z"
-            fill={`${theme === "dark" ? "#000000A1" : "white"}`}
+            fill={`${theme === "dark" ? "#000000A1" : "#EDF2FF"}`}
           />
         </g>
       </g>
@@ -1177,6 +1177,7 @@ export function IconRadioSelected({ width, height, ...props }: IconProps) {
 }
 
 export function IconKey({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -1188,7 +1189,7 @@ export function IconKey({ width, height, ...props }: IconProps) {
     >
       <path
         d="M9.33507 10.3711L15.2218 4.48438L16.2823 5.54487L15.2218 6.60612L17.0773 8.46162L16.0168 9.52287L14.1606 7.66662L13.1001 8.72712L14.6908 10.3179L13.6303 11.3791L12.0396 9.78762L10.3956 11.4316C10.9059 12.2071 11.1106 13.1443 10.97 14.062C10.8294 14.9796 10.3536 15.8126 9.63452 16.3997C8.91544 16.9869 8.00418 17.2866 7.07695 17.2409C6.14972 17.1951 5.27238 16.8072 4.61457 16.1521C3.95534 15.4954 3.56384 14.617 3.51616 13.6876C3.46848 12.7583 3.76803 11.8445 4.35658 11.1237C4.94513 10.4029 5.78065 9.9267 6.70074 9.78762C7.62083 9.64854 8.55977 9.85651 9.33507 10.3711ZM8.85732 15.0909C9.07581 14.8842 9.25065 14.6359 9.3715 14.3605C9.49236 14.0851 9.55679 13.7883 9.56097 13.4875C9.56515 13.1868 9.50901 12.8883 9.39585 12.6097C9.2827 12.3311 9.11483 12.0779 8.90218 11.8653C8.68952 11.6526 8.43639 11.4847 8.15775 11.3716C7.87911 11.2584 7.58061 11.2023 7.2799 11.2065C6.97919 11.2107 6.68237 11.2751 6.40698 11.3959C6.13159 11.5168 5.88323 11.6916 5.67657 11.9101C5.26671 12.3345 5.03993 12.9028 5.04505 13.4928C5.05018 14.0827 5.28681 14.647 5.70398 15.0642C6.12115 15.4814 6.68547 15.718 7.27542 15.7231C7.86536 15.7283 8.43371 15.5015 8.85807 15.0916L8.85732 15.0909Z"
-        fill="white"
+        fill={`${theme === "dark" ? "white" : "black"}`}
         fillOpacity="0.6"
       />
     </svg>
@@ -2283,6 +2284,7 @@ export function IconNotification({ width, height, ...props }: IconProps) {
 }
 
 export function IconArrowDown({ width, height, ...props }: IconProps) {
+  const {theme} = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -2295,7 +2297,7 @@ export function IconArrowDown({ width, height, ...props }: IconProps) {
       <g opacity="0.4">
         <path
           d="M15 7.5C15 7.5 11.3175 12.5 10 12.5C8.6825 12.5 5 7.5 5 7.5"
-          stroke="white"
+          stroke={theme === "dark" ? "white":"black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
