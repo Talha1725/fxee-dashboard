@@ -15,15 +15,15 @@ export default function Dashboard() {
           <DashboardWidget currency="BTC/ETH" />
         </div>
         <div>
-        <HomeTrades />
+        <HomeTrades className="bg-card-green-gradient" />
         <div className="w-full mt-5">
           <Select>
-            <SelectTrigger className="w-full rounded-xl !bg-white/2">
-              <SelectValue placeholder="Select a currency" />
-              <SelectContent>
-                <SelectItem value="BTC/ETH">BTC/ETH</SelectItem>
-                <SelectItem value="BTC/USDT">BTC/USDT</SelectItem>
-                <SelectItem value="BTC/USDC">BTC/USDC</SelectItem>
+            <SelectTrigger className="w-full rounded-xl dark:!bg-white/2 !bg-black/2">
+              <SelectValue placeholder="Select a currency" defaultValue="Seasonal" className="dark:text-white text-black" />
+              <SelectContent className="dark:bg-black !bg-white dark:text-white text-black">
+                <SelectItem value="Seasonal" className="dark:text-white text-black">Seasonal</SelectItem>
+                <SelectItem value="Trending" className="dark:text-white text-black">Trending</SelectItem>
+                <SelectItem value="Popular" className="dark:text-white text-black">Popular</SelectItem>
               </SelectContent>
             </SelectTrigger>
           </Select>

@@ -4219,6 +4219,7 @@ export function IconAlignLeft({ width, height, ...props }: IconProps) {
 }
 
 export function IconCardPT({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4231,19 +4232,19 @@ export function IconCardPT({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81508)">
         <path
           d="M6.41406 6.99935C6.41406 7.15406 6.47552 7.30243 6.58492 7.41183C6.69431 7.52122 6.84269 7.58268 6.9974 7.58268C7.15211 7.58268 7.30048 7.52122 7.40987 7.41183C7.51927 7.30243 7.58073 7.15406 7.58073 6.99935C7.58073 6.84464 7.51927 6.69627 7.40987 6.58687C7.30048 6.47747 7.15211 6.41602 6.9974 6.41602C6.84269 6.41602 6.69431 6.47747 6.58492 6.58687C6.47552 6.69627 6.41406 6.84464 6.41406 6.99935Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "#3EDC81" : "#079744"}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M4.08594 7.00065C4.08594 7.57751 4.257 8.14142 4.57748 8.62106C4.89797 9.10071 5.35349 9.47454 5.88644 9.6953C6.4194 9.91606 7.00584 9.97382 7.57162 9.86127C8.1374 9.74873 8.6571 9.47095 9.065 9.06305C9.4729 8.65514 9.75069 8.13544 9.86323 7.56966C9.97577 7.00389 9.91801 6.41744 9.69725 5.88449C9.4765 5.35154 9.10266 4.89602 8.62302 4.57553C8.14337 4.25504 7.57947 4.08398 7.0026 4.08398"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "#3EDC81" : "#079744"}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M3.66797 11.0583C4.3185 11.5921 5.08785 11.9618 5.91117 12.1361C6.73448 12.3105 7.58764 12.2843 8.39873 12.0599C9.20982 11.8354 9.95507 11.4193 10.5717 10.8465C11.1883 10.2738 11.6581 9.56117 11.9417 8.76881C12.2252 7.97644 12.3141 7.12752 12.2009 6.29361C12.0876 5.45969 11.7756 4.66522 11.291 3.97715C10.8065 3.28908 10.1636 2.72758 9.41659 2.33998C8.6696 1.95238 7.84037 1.75003 6.9988 1.75"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "#3EDC81" : "#079744"}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -4258,6 +4259,7 @@ export function IconCardPT({ width, height, ...props }: IconProps) {
 }
 
 export function IconAddOns({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4270,7 +4272,7 @@ export function IconAddOns({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81549)">
         <path
           d="M2.33333 4.08333H4.08333C4.23804 4.08333 4.38642 4.02187 4.49581 3.91248C4.60521 3.80308 4.66667 3.65471 4.66667 3.5V2.91667C4.66667 2.60725 4.78958 2.3105 5.00838 2.09171C5.22717 1.87292 5.52391 1.75 5.83333 1.75C6.14275 1.75 6.4395 1.87292 6.65829 2.09171C6.87708 2.3105 7 2.60725 7 2.91667V3.5C7 3.65471 7.06146 3.80308 7.17085 3.91248C7.28025 4.02187 7.42862 4.08333 7.58333 4.08333H9.33333C9.48804 4.08333 9.63642 4.14479 9.74581 4.25419C9.85521 4.36358 9.91667 4.51196 9.91667 4.66667V6.41667C9.91667 6.57138 9.97812 6.71975 10.0875 6.82915C10.1969 6.93854 10.3453 7 10.5 7H11.0833C11.3928 7 11.6895 7.12292 11.9083 7.34171C12.1271 7.5605 12.25 7.85725 12.25 8.16667C12.25 8.47609 12.1271 8.77283 11.9083 8.99162C11.6895 9.21042 11.3928 9.33333 11.0833 9.33333H10.5C10.3453 9.33333 10.1969 9.39479 10.0875 9.50419C9.97812 9.61358 9.91667 9.76196 9.91667 9.91667V11.6667C9.91667 11.8214 9.85521 11.9697 9.74581 12.0791C9.63642 12.1885 9.48804 12.25 9.33333 12.25H7.58333C7.42862 12.25 7.28025 12.1885 7.17085 12.0791C7.06146 11.9697 7 11.8214 7 11.6667V11.0833C7 10.7739 6.87708 10.4772 6.65829 10.2584C6.4395 10.0396 6.14275 9.91667 5.83333 9.91667C5.52391 9.91667 5.22717 10.0396 5.00838 10.2584C4.78958 10.4772 4.66667 10.7739 4.66667 11.0833V11.6667C4.66667 11.8214 4.60521 11.9697 4.49581 12.0791C4.38642 12.1885 4.23804 12.25 4.08333 12.25H2.33333C2.17862 12.25 2.03025 12.1885 1.92085 12.0791C1.81146 11.9697 1.75 11.8214 1.75 11.6667V9.91667C1.75 9.76196 1.81146 9.61358 1.92085 9.50419C2.03025 9.39479 2.17862 9.33333 2.33333 9.33333H2.91667C3.22609 9.33333 3.52283 9.21042 3.74162 8.99162C3.96042 8.77283 4.08333 8.47609 4.08333 8.16667C4.08333 7.85725 3.96042 7.5605 3.74162 7.34171C3.52283 7.12292 3.22609 7 2.91667 7H2.33333C2.17862 7 2.03025 6.93854 1.92085 6.82915C1.81146 6.71975 1.75 6.57138 1.75 6.41667V4.66667C1.75 4.51196 1.81146 4.36358 1.92085 4.25419C2.03025 4.14479 2.17862 4.08333 2.33333 4.08333Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "#3EDC81" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4286,6 +4288,7 @@ export function IconAddOns({ width, height, ...props }: IconProps) {
 }
 
 export function IconLineChart({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4298,14 +4301,14 @@ export function IconLineChart({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81559)">
         <path
           d="M3.33594 15.834H16.6693"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M3.33594 12.5L6.66927 7.5L10.0026 9.16667L13.3359 5L16.6693 8.33333"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4321,6 +4324,7 @@ export function IconLineChart({ width, height, ...props }: IconProps) {
 }
 
 export function IconFibo({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4333,21 +4337,21 @@ export function IconFibo({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81565)">
         <path
           d="M14.1641 3.33333C14.1641 3.11232 14.2519 2.90036 14.4081 2.74408C14.5644 2.5878 14.7764 2.5 14.9974 2.5H16.6641C16.8851 2.5 17.097 2.5878 17.2533 2.74408C17.4096 2.90036 17.4974 3.11232 17.4974 3.33333V5C17.4974 5.22101 17.4096 5.43298 17.2533 5.58926C17.097 5.74554 16.8851 5.83333 16.6641 5.83333H14.9974C14.7764 5.83333 14.5644 5.74554 14.4081 5.58926C14.2519 5.43298 14.1641 5.22101 14.1641 5V3.33333Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M2.5 15.0003C2.5 14.7793 2.5878 14.5673 2.74408 14.4111C2.90036 14.2548 3.11232 14.167 3.33333 14.167H5C5.22101 14.167 5.43298 14.2548 5.58926 14.4111C5.74554 14.5673 5.83333 14.7793 5.83333 15.0003V16.667C5.83333 16.888 5.74554 17.1 5.58926 17.2562C5.43298 17.4125 5.22101 17.5003 5 17.5003H3.33333C3.11232 17.5003 2.90036 17.4125 2.74408 17.2562C2.5878 17.1 2.5 16.888 2.5 16.667V15.0003Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M14.1641 4.16602C8.64156 4.16602 4.16406 8.64352 4.16406 14.166"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4363,6 +4367,7 @@ export function IconFibo({ width, height, ...props }: IconProps) {
 }
 
 export function IconScale({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4375,35 +4380,35 @@ export function IconScale({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81572)">
         <path
           d="M5.83594 16.666H14.1693"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M5 5.00033L10 4.16699L15 5.00033"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10 2.5V16.6667"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M7.5 10L5 5L2.5 10C2.5 10.663 2.76339 11.2989 3.23223 11.7678C3.70107 12.2366 4.33696 12.5 5 12.5C5.66304 12.5 6.29893 12.2366 6.76777 11.7678C7.23661 11.2989 7.5 10.663 7.5 10Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M17.5 10L15 5L12.5 10C12.5 10.663 12.7634 11.2989 13.2322 11.7678C13.7011 12.2366 14.337 12.5 15 12.5C15.663 12.5 16.2989 12.2366 16.7678 11.7678C17.2366 11.2989 17.5 10.663 17.5 10Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4419,6 +4424,7 @@ export function IconScale({ width, height, ...props }: IconProps) {
 }
 
 export function IconDoc({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4431,28 +4437,28 @@ export function IconDoc({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81597)">
         <path
           d="M13.3359 5.00065H15.8359C16.057 5.00065 16.2689 5.08845 16.4252 5.24473C16.5815 5.40101 16.6693 5.61297 16.6693 5.83398V15.0007C16.6693 15.4427 16.4937 15.8666 16.1811 16.1792C15.8686 16.4917 15.4446 16.6673 15.0026 16.6673M15.0026 16.6673C14.5606 16.6673 14.1367 16.4917 13.8241 16.1792C13.5115 15.8666 13.3359 15.4427 13.3359 15.0007V4.16732C13.3359 3.9463 13.2481 3.73434 13.0919 3.57806C12.9356 3.42178 12.7236 3.33398 12.5026 3.33398H4.16927C3.94826 3.33398 3.7363 3.42178 3.58002 3.57806C3.42374 3.73434 3.33594 3.9463 3.33594 4.16732V14.1673C3.33594 14.8304 3.59933 15.4662 4.06817 15.9351C4.53701 16.4039 5.1729 16.6673 5.83594 16.6673H15.0026Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M6.66406 6.66602H9.9974"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M6.66406 10H9.9974"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M6.66406 13.334H9.9974"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4468,6 +4474,7 @@ export function IconDoc({ width, height, ...props }: IconProps) {
 }
 
 export function IconFingerPrint({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4479,45 +4486,46 @@ export function IconFingerPrint({ width, height, ...props }: IconProps) {
     >
       <path
         d="M8.14756 1.86719C6.52738 2.11132 4.30795 2.79935 2.9541 4.77464C1.7778 6.4836 1.48928 8.7918 2.08852 11.6549C2.42144 13.2085 3.02068 14.407 3.77529 15.3835L4.55209 14.7177C3.90846 13.8743 3.39799 12.8312 3.10946 11.4551C2.5546 8.88058 2.79874 6.8609 3.79748 5.39608C4.95159 3.70931 6.88249 3.11007 8.30292 2.91032C10.8775 2.53302 14.3176 4.131 15.3385 7.10504C16.3816 10.1457 14.8946 13.5858 14.8724 13.6302L15.8268 14.0519C15.8934 13.8965 17.4914 10.2122 16.3151 6.77212C15.0944 3.17665 11.1216 1.4233 8.14756 1.86719Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M14.5391 7.52671C13.9177 5.44045 12.4528 4.4639 11.3431 4.04221C9.501 3.30979 7.48132 3.55393 6.43819 4.17537C5.90552 4.48609 5.26189 5.06314 4.70703 5.83994L5.63919 6.32822C6.06088 5.75117 6.52696 5.32947 6.94865 5.06314C7.74765 4.59706 9.43441 4.39731 10.9436 4.99656C11.8314 5.35167 13.0077 6.12847 13.5182 7.81524C14.5835 11.3219 12.3641 13.4748 12.2753 13.5636L12.9855 14.3182C13.0965 14.2072 15.7598 11.6548 14.5391 7.52671Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M3.35285 3.17662C6.43785 0.357948 11.3206 0.335754 14.6497 3.08785L15.4043 2.35543C11.6757 -0.796155 6.12713 -0.796155 2.64263 2.42202C0.889282 4.02001 0.245647 6.03969 0.0458984 7.72645L1.08903 7.94839C1.24439 6.43918 1.79925 4.59706 3.35285 3.17662Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M9.546 11.1444L10.0343 11.3441L10.5004 11.5439C10.5891 11.3219 11.3881 9.41324 10.6557 8.32572C10.456 8.015 10.0121 7.6377 9.19089 7.6377H9.1687C8.50287 7.6377 7.97021 7.97061 7.65949 8.54766C7.14902 9.47982 7.28219 11.0334 7.9924 12.1431C8.56945 13.0531 9.39064 13.5192 10.3228 13.4748C11.3215 13.4304 12.1427 12.8977 12.5866 11.9878C12.742 11.6549 12.853 11.2776 12.9195 10.8781L11.8986 10.6561C11.8542 10.9668 11.7654 11.2554 11.6545 11.5217C11.3659 12.0987 10.8999 12.4095 10.2784 12.4317C9.59039 12.476 9.12431 11.9878 8.88017 11.5883C8.3919 10.7893 8.25873 9.65737 8.59165 9.05813C8.72481 8.81399 8.92456 8.68083 9.19089 8.68083C9.63478 8.68083 9.76795 8.85838 9.79014 8.90277C10.1231 9.39104 9.76795 10.6117 9.546 11.1444Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M16.1599 3.06555L15.4053 3.79796C17.9798 6.61664 17.314 11.0111 16.9145 13.6966C16.8923 13.8742 16.8701 14.0295 16.8479 14.1849C16.8035 14.4956 16.8035 14.8063 16.8257 15.117L17.8466 14.651C17.8466 14.54 17.8466 14.4512 17.8688 14.3402C17.891 14.1849 17.9132 14.0295 17.9354 13.852C18.4015 10.9667 19.0895 6.23933 16.1599 3.06555Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M6.48276 9.63516C6.57154 8.03717 7.19298 7.03843 8.25831 6.7499C9.36802 6.43918 10.7663 6.97184 11.2323 7.61548C11.6096 8.14814 11.8316 8.88055 11.9204 9.59077L12.9857 9.81271C12.9413 8.81397 12.6306 7.79303 12.0979 7.01623C11.4099 6.01749 9.58996 5.28508 7.99198 5.72896C7.1042 5.9731 5.61719 6.81648 5.46183 9.56857C5.23988 13.5414 8.23611 14.7176 10.8772 15.7608C11.654 16.0715 12.453 16.3822 13.1854 16.7595L14.3617 16.2269C13.4074 15.6276 12.3199 15.2059 11.2545 14.7842C8.61342 13.7633 6.30521 12.8533 6.48276 9.63516Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M5.75056 13.1418C4.70743 11.5438 4.37451 9.92364 4.72962 8.34784C4.8184 7.94835 4.95156 7.57104 5.12912 7.21594L4.19696 6.72766C3.99721 7.14935 3.81966 7.59324 3.70868 8.10371C3.28699 9.94583 3.68649 11.8767 4.88498 13.6967C6.46078 16.1158 8.01438 16.6041 9.81211 17.1812C10.256 17.3143 10.7221 17.4697 11.2325 17.6473L12.5198 17.048C11.632 16.6485 10.833 16.3822 10.1228 16.1602C8.39168 15.6498 7.1266 15.2503 5.75056 13.1418Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M5.26215 15.4723L4.48535 16.1603C5.63945 17.3144 7.08208 18.0912 8.59129 18.868L9.81198 18.3132C9.76759 18.291 9.70101 18.2688 9.65662 18.2244C7.94766 17.381 6.41625 16.6264 5.26215 15.4723Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
       <path
         d="M1.20065 10.7894V10.7228C1.20065 10.7006 1.04529 10.0126 1.04529 9.01381L0.00215714 8.79187C-0.0200371 9.90158 0.135323 10.7228 0.179711 10.9225C0.2241 11.4552 0.889929 16.5599 6.17217 20L7.30408 19.4895C1.66673 16.1826 1.20065 11.0335 1.20065 10.7894Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
       />
     </svg>
   );
 }
 
 export function IconRobot({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4530,63 +4538,63 @@ export function IconRobot({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81659)">
         <path
           d="M5.875 4.99967C5.875 4.55765 6.05059 4.13372 6.36316 3.82116C6.67572 3.5086 7.09964 3.33301 7.54167 3.33301H14.2083C14.6504 3.33301 15.0743 3.5086 15.3868 3.82116C15.6994 4.13372 15.875 4.55765 15.875 4.99967V8.33301C15.875 8.77504 15.6994 9.19896 15.3868 9.51152C15.0743 9.82408 14.6504 9.99967 14.2083 9.99967H7.54167C7.09964 9.99967 6.67572 9.82408 6.36316 9.51152C6.05059 9.19896 5.875 8.77504 5.875 8.33301V4.99967Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10.875 1.66699V3.33366"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M8.375 10V17.5"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M13.375 10V17.5"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M5.03906 13.3327L8.3724 11.666"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M13.375 11.667L16.7083 13.3337"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M8.375 15H13.375"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M9.21094 6.66602V6.67435"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M12.5391 6.66602V6.67435"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4607,6 +4615,7 @@ export function IconRobot({ width, height, ...props }: IconProps) {
 }
 
 export function IconAIPattern({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4619,49 +4628,49 @@ export function IconAIPattern({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81675)">
         <path
           d="M8.25 9.16699C8.25 8.50395 8.51339 7.86807 8.98223 7.39922C9.45107 6.93038 10.087 6.66699 10.75 6.66699C11.413 6.66699 12.0489 6.93038 12.5178 7.39922C12.9866 7.86807 13.25 8.50395 13.25 9.16699C13.25 10.5478 13.76 11.7353 14.0833 12.5003"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10.75 9.16699V10.6253C10.7492 11.5503 11.3008 12.4637 11.5833 13.3337"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M8.25 11.875C8.30667 12.3583 8.54833 12.8633 8.66667 13.3333"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M4.08594 6.66732V5.00065C4.08594 4.55862 4.26153 4.1347 4.57409 3.82214C4.88665 3.50958 5.31058 3.33398 5.7526 3.33398H7.41927"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M4.08594 13.334V15.0007C4.08594 15.4427 4.26153 15.8666 4.57409 16.1792C4.88665 16.4917 5.31058 16.6673 5.7526 16.6673H7.41927"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M14.0859 3.33398H15.7526C16.1946 3.33398 16.6186 3.50958 16.9311 3.82214C17.2437 4.1347 17.4193 4.55862 17.4193 5.00065V6.66732"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M14.0859 16.6673H15.7526C16.1946 16.6673 16.6186 16.4917 16.9311 16.1792C17.2437 15.8666 17.4193 15.4427 17.4193 15.0007V13.334"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4672,7 +4681,7 @@ export function IconAIPattern({ width, height, ...props }: IconProps) {
           <rect
             width="20"
             height="20"
-            fill="white"
+            fill={theme === "dark" ? "white" : "black"}
             transform="translate(0.75)"
           />
         </clipPath>
@@ -4682,6 +4691,7 @@ export function IconAIPattern({ width, height, ...props }: IconProps) {
 }
 
 export function IconBox({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4694,28 +4704,28 @@ export function IconBox({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81688)">
         <path
           d="M10.0026 2.5L16.6693 6.25V13.75L10.0026 17.5L3.33594 13.75V6.25L10.0026 2.5Z"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10 10L16.6667 6.25"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10 10V17.5"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10.0026 10L3.33594 6.25"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4723,7 +4733,7 @@ export function IconBox({ width, height, ...props }: IconProps) {
       </g>
       <defs>
         <clipPath id="clip0_1350_81688">
-          <rect width="20" height="20" fill="white" />
+          <rect width="20" height="20" fill={theme === "dark" ? "white" : "black"} />
         </clipPath>
       </defs>
     </svg>
@@ -4731,6 +4741,7 @@ export function IconBox({ width, height, ...props }: IconProps) {
 }
 
 export function IconTA({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4743,7 +4754,7 @@ export function IconTA({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81701)">
         <path
           d="M8.08073 1.75V5.83333H11.5807L6.91406 12.25V8.16667H3.41406L8.08073 1.75Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4754,7 +4765,7 @@ export function IconTA({ width, height, ...props }: IconProps) {
           <rect
             width="14"
             height="14"
-            fill="white"
+            fill={theme === "dark" ? "white" : "black"}
             transform="translate(0.5)"
           />
         </clipPath>
@@ -4764,6 +4775,7 @@ export function IconTA({ width, height, ...props }: IconProps) {
 }
 
 export function IconWinRate({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4776,14 +4788,14 @@ export function IconWinRate({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81737)">
         <path
           d="M6.3339 1.86686C5.4214 2.0784 4.5821 2.53023 3.90308 3.17547C3.22406 3.82072 2.73003 4.63589 2.47225 5.53642C2.21447 6.43696 2.20232 7.39006 2.43705 8.29688C2.67179 9.20369 3.14487 10.0312 3.80722 10.6935C4.46957 11.3559 5.29707 11.829 6.20388 12.0637C7.1107 12.2984 8.0638 12.2863 8.96434 12.0285C9.86488 11.7707 10.68 11.2767 11.3253 10.5977C11.9705 9.91866 12.4224 9.07936 12.6339 8.16686C12.6339 8.01215 12.5724 7.86378 12.463 7.75438C12.3537 7.64498 12.2053 7.58353 12.0506 7.58353H8.0839C7.77448 7.58353 7.47774 7.46061 7.25894 7.24182C7.04015 7.02302 6.91723 6.72628 6.91723 6.41686V2.33353C6.90999 2.26442 6.88909 2.19743 6.85576 2.13646C6.82243 2.07548 6.77732 2.02173 6.72306 1.97833C6.6688 1.93492 6.60646 1.90271 6.53966 1.88358C6.47285 1.86444 6.40292 1.85876 6.3339 1.86686Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M9.25 2.04199C9.99067 2.30279 10.6634 2.72642 11.2187 3.28167C11.7739 3.83692 12.1975 4.50965 12.4583 5.25033H9.83333C9.67862 5.25033 9.53025 5.18887 9.42085 5.07947C9.31146 4.97007 9.25 4.8217 9.25 4.66699V2.04199Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4794,7 +4806,7 @@ export function IconWinRate({ width, height, ...props }: IconProps) {
           <rect
             width="14"
             height="14"
-            fill="white"
+            fill={theme === "dark" ? "white" : "black"}
             transform="translate(0.5)"
           />
         </clipPath>
@@ -4804,6 +4816,7 @@ export function IconWinRate({ width, height, ...props }: IconProps) {
 }
 
 export function IconAnalysisUsage({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4816,21 +4829,21 @@ export function IconAnalysisUsage({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81778)">
         <path
           d="M2.25 7C2.25 7.68944 2.3858 8.37213 2.64963 9.00909C2.91347 9.64605 3.30018 10.2248 3.78769 10.7123C4.2752 11.1998 4.85395 11.5865 5.49091 11.8504C6.12787 12.1142 6.81056 12.25 7.5 12.25C8.18944 12.25 8.87213 12.1142 9.50909 11.8504C10.146 11.5865 10.7248 11.1998 11.2123 10.7123C11.6998 10.2248 12.0865 9.64605 12.3504 9.00909C12.6142 8.37213 12.75 7.68944 12.75 7C12.75 6.31056 12.6142 5.62787 12.3504 4.99091C12.0865 4.35395 11.6998 3.7752 11.2123 3.28769C10.7248 2.80018 10.146 2.41347 9.50909 2.14963C8.87213 1.8858 8.18944 1.75 7.5 1.75C6.81056 1.75 6.12787 1.8858 5.49091 2.14963C4.85395 2.41347 4.2752 2.80018 3.78769 3.28769C3.30018 3.7752 2.91347 4.35395 2.64963 4.99091C2.3858 5.62787 2.25 6.31056 2.25 7Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M7.5 7.5828L5.75 6.41614"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M7.5 4.66614V7.5828"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4841,7 +4854,7 @@ export function IconAnalysisUsage({ width, height, ...props }: IconProps) {
           <rect
             width="14"
             height="14"
-            fill="white"
+            fill={theme === "dark" ? "white" : "black"}
             transform="translate(0.5)"
           />
         </clipPath>
@@ -4851,6 +4864,7 @@ export function IconAnalysisUsage({ width, height, ...props }: IconProps) {
 }
 
 export function IconPerformanceMetrics({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4863,7 +4877,7 @@ export function IconPerformanceMetrics({ width, height, ...props }: IconProps) {
       <g clipPath="url(#clip0_1350_81815)">
         <path
           d="M9.83333 10.4997C10.1428 10.4997 10.4395 10.6226 10.6583 10.8414C10.8771 11.0602 11 11.3569 11 11.6663C11 11.3569 11.1229 11.0602 11.3417 10.8414C11.5605 10.6226 11.8572 10.4997 12.1667 10.4997C11.8572 10.4997 11.5605 10.3768 11.3417 10.158C11.1229 9.93917 11 9.64243 11 9.33301C11 9.64243 10.8771 9.93917 10.6583 10.158C10.4395 10.3768 10.1428 10.4997 9.83333 10.4997ZM9.83333 3.49967C10.1428 3.49967 10.4395 3.62259 10.6583 3.84138C10.8771 4.06018 11 4.35692 11 4.66634C11 4.35692 11.1229 4.06018 11.3417 3.84138C11.5605 3.62259 11.8572 3.49967 12.1667 3.49967C11.8572 3.49967 11.5605 3.37676 11.3417 3.15797C11.1229 2.93917 11 2.64243 11 2.33301C11 2.64243 10.8771 2.93917 10.6583 3.15797C10.4395 3.37676 10.1428 3.49967 9.83333 3.49967ZM5.75 10.4997C5.75 9.57142 6.11875 8.68118 6.77513 8.0248C7.4315 7.36842 8.32174 6.99967 9.25 6.99967C8.32174 6.99967 7.4315 6.63093 6.77513 5.97455C6.11875 5.31817 5.75 4.42793 5.75 3.49967C5.75 4.42793 5.38125 5.31817 4.72487 5.97455C4.0685 6.63093 3.17826 6.99967 2.25 6.99967C3.17826 6.99967 4.0685 7.36842 4.72487 8.0248C5.38125 8.68118 5.75 9.57142 5.75 10.4997Z"
-          stroke="#3EDC81"
+          stroke={theme === "dark" ? "var(--color-green)" : "#079744"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -4874,7 +4888,7 @@ export function IconPerformanceMetrics({ width, height, ...props }: IconProps) {
           <rect
             width="14"
             height="14"
-            fill="white"
+            fill={theme === "dark" ? "white" : "black"}
             transform="translate(0.5)"
           />
         </clipPath>

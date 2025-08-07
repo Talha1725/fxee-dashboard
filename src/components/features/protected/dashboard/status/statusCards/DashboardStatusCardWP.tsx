@@ -14,11 +14,11 @@ export default function DashboardStatusCardWP() {
       <div className="absolute top-0 right-0 w-[57px] h-[57px]">
         <Image src={Donut84Image} alt="Donut" fill />
       </div>
-      <Text14 className="z-1 font-satoshi-medium">Win Probability</Text14>
+      <Text14 className="z-1 font-satoshi-medium dark:text-white text-black">Win Probability</Text14>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
         <div>
-          <Text20>+5.50%</Text20>
-          <Text12 className="text-white/60 font-satoshi-medium">84% out of 100%</Text12>
+          <Text20 className="dark:text-white text-black font-satoshi-medium">+5.50%</Text20>
+          <Text12 className="dark:text-white/60 text-black/60 font-satoshi-medium">84% out of 100%</Text12>
         </div>
         <DashboardStatusCardFooter title="Yesterday Probability" value={84} />
       </div>

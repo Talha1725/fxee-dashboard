@@ -13,11 +13,11 @@ export default function DashboardStatusCardPT() {
       <div className="absolute top-0 right-0 w-[109px] h-[37px]">
         <Image src={AreaImage} alt="Area" fill />
       </div>
-      <Text14 className="z-1 font-satoshi-medium">Proposed Trade</Text14>
+      <Text14 className="z-1 font-satoshi-medium dark:text-white text-black">Proposed Trade</Text14>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
         <div>
-          <Text16>$58,246.75 → $62,000.00</Text16>
-          <Text12 className="text-white/60 font-satoshi-medium">
+          <Text16 className="dark:text-white text-black font-satoshi-medium">$58,246.75 → $62,000.00</Text16>
+          <Text12 className="dark:text-white/60 text-black/60 font-satoshi-medium">
             Breakout from Bull Flag Pattern
           </Text12>
         </div>

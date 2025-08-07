@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import DashboardStatusDetailCardContainer from "./DashboardStatusDetailCardContainer";
@@ -8,8 +10,10 @@ import DashboardStatusDetailUpgrade from "./DashboardStatusDetailUpgrade";
 import { IconAddOns, IconCardPT } from "@/components/ui/icon";
 import { Text12, Text14, Text16 } from "@/components/ui/typography";
 import { addOnsData, proToolsData } from "@/lib/constants";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function DashboardStatusDetailPT() {
+  const { theme } = useTheme();
   return (
     <DashboardStatusDetailCardContainer className="py-3.5 px-3">
       <div className="flex flex-col items-start gap-5 self-stretch">
@@ -17,7 +21,7 @@ export default function DashboardStatusDetailPT() {
           title="Proposed Trade"
           icon={<IconCardPT width={14} height={14} />}
         />
-        <div className="flex items-center gap-2 self-stretch py-2.5 px-3 rounded-[8px] bg-card-green-gradient">
+        <div className={`flex items-center gap-2 self-stretch py-2.5 px-3 rounded-[8px] ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"}`}>
           <Text14 className="font-satoshi">
             Long BTC/USD on 4H timeframe. Bull flag pattern forming with strong
             support at $56,500. Multiple technical indicators showing bullish
@@ -28,22 +32,22 @@ export default function DashboardStatusDetailPT() {
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <div className="flex items-start gap-2 self-stretch">
           <DashboardStatusDetailSubcardContainer>
-            <Text12 className="text-green font-satoshi-medium">Entry Price</Text12>
-            <Text16 className="font-satoshi-medium">$58,246.75</Text16>
+            <Text12 className="dark:text-green text-[#079744] font-satoshi-medium">Entry Price</Text12>
+            <Text16 className="font-satoshi-medium dark:text-white text-black">$58,246.75</Text16>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer>
             <Text12 className="text-blue font-satoshi-medium">Target</Text12>
-            <Text16 className="font-satoshi-medium">$62,000.00</Text16>
+            <Text16 className="font-satoshi-medium dark:text-white text-black">$62,000.00</Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
         <div className="flex items-start gap-2 self-stretch">
           <DashboardStatusDetailSubcardContainer>
-            <Text12 className="text-danger font-satoshi-medium">Stop Loss</Text12>
-            <Text16 className="font-satoshi-medium">$56,500.00</Text16>
+            <Text12 className="dark:text-danger text-[#FF0000] font-satoshi-medium">Stop Loss</Text12>
+            <Text16 className="font-satoshi-medium dark:text-white text-black">$56,500.00</Text16>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer>
-            <Text12 className="text-green font-satoshi-medium">Risk/Reward</Text12>
-            <Text16 className="font-satoshi-medium">1:1.5</Text16>
+            <Text12 className="dark:text-green text-[#079744] font-satoshi-medium">Risk/Reward</Text12>
+            <Text16 className="font-satoshi-medium dark:text-white text-black">1:1.5</Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
       </div>
