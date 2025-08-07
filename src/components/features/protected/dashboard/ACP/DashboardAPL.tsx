@@ -12,7 +12,7 @@ export default function DashboardAPL() {
           <DashboardHeadBadge>
             <IconPowerService width={14} height={14} />
           </DashboardHeadBadge>
-          <Text16>AI Power Level</Text16>
+          <Text16 className="font-satoshi-medium">AI Power Level</Text16>
         </div>
         <DashboardAPLSlider />
       </div>

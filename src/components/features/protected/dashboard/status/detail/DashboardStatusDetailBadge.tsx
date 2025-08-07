@@ -25,7 +25,7 @@ export default function DashboardStatusDetailBadge({
       )}
     >
       {icon}
-      <Text12>{title}</Text12>
+      <Text12 className="font-satoshi-medium">{title}</Text12>
       {isVip && (
         <div className="flex justify-center items-center py-0.5 px-1.5 gap-2.5 rounded-[2px] bg-green/10">
           <Text10 className="text-green font-[700]">VIP</Text10>
