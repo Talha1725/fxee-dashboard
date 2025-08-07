@@ -128,7 +128,7 @@ export default function DashboardAPLChart({
       .style("opacity", 0)
       .transition()
       .duration(1000)
-      .style("opacity", 1);
+      .style("opacity", 0);
 
     // Add line with smooth animation
     g.append("path")
