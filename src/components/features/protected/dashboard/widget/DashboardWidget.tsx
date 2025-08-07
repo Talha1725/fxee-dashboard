@@ -21,7 +21,7 @@ export default function DashboardWidget({ currency }: { currency: string }) {
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
         <div className="flex justify-between items-center self-stretch">
-          <div className="flex flex-col justify-center items-start py-3 px-4 gap-5 w-[160px] sm:w-[220px] rounded-t-[16px] border-t border-r border-l border-white/5 bg-popover-gradient">
+          <div className="flex flex-col justify-center items-start py-3 px-4 gap-5 w-[160px] sm:w-[220px] rounded-t-[16px] border-t border-r border-l border-white/15 bg-dark-gradient">
             <div className="flex items-center gap-2.5">
               <CurrencyToCryptoPairConverter currency={currency} size={38} />
               <div className="flex flex-col justify-center items-start">
@@ -32,17 +32,18 @@ export default function DashboardWidget({ currency }: { currency: string }) {
           </div>
           <Button variant="popular">
             <IconAIMagic />
-            <Text16>Analyze with AI</Text16>
+            <Text16 className="font-satoshi-medium">Analyze with AI</Text16>
           </Button>
         </div>
-        <div className="self-stretch">
+        <div className="relative self-stretch border border-white/5 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-dark-gradient z-50 pointer-events-none"></div>
           <AdvancedRealTimeChart
             symbol={currency.replace("/", "")}
             interval="60"
             timezone="Etc/UTC"
             theme="dark"
             width="100%"
-            height="400"
+            height="450"
           />
         </div>
       </div>

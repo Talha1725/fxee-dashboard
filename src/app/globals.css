@@ -912,6 +912,10 @@ body {
       drop-shadow(-47px 47px 94px rgba(19, 147, 194, 0.5));
   }
 
+  .tradingview-widget-copyright {
+    display: none;
+  }
+
   /* Safari-specific SVG font fallbacks */
   @supports (-webkit-appearance: none) {
     svg text {

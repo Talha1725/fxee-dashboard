@@ -1,11 +1,15 @@
+"use client";
+
 import DashboardACPHead from "@/components/features/protected/dashboard/ACP/DashboardACPHead";
 import DashboardAPL from "@/components/features/protected/dashboard/ACP/DashboardAPL";
 import DashboardActiveAddons from "./DashboardActiveAddons";
 import DashboardACPDetail from "./DashboardACPDetail";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function DashboardACP() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col items-start gap-4 self-stretch p-5 bg-popover-gradient rounded-[16px] border border-white/5">
+    <div className={`flex flex-col items-start gap-4 self-stretch p-5 rounded-[16px] border border-white/5 ${theme === "dark" ? "bg-dark-gradient" : ""}`}>
       <DashboardACPHead />
       <DashboardAPL />
       <DashboardActiveAddons />

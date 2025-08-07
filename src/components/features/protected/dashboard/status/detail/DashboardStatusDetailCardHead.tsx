@@ -13,7 +13,7 @@ export default function DashboardStatusDetailCardHead({
   return (
     <div className="flex items-center gap-2 self-stretch">
       <DashboardHeadBadge>{icon}</DashboardHeadBadge>
-      <Text16>{title}</Text16>
+      <Text16 className="font-satoshi-medium">{title}</Text16>
     </div>
   );
 }

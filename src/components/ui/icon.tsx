@@ -4179,6 +4179,7 @@ export function IconChevronRight({ width, height, ...props }: IconProps) {
 }
 
 export function IconAdd({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4190,7 +4191,7 @@ export function IconAdd({ width, height, ...props }: IconProps) {
     >
       <path
         d="M10.0026 3.70825V17.0416M3.33594 10.3749H16.6693"
-        stroke="white"
+        stroke={theme === "dark" ? "white" : "black"}
         strokeWidth="1.25"
         strokeLinecap="round"
         strokeLinejoin="round"
