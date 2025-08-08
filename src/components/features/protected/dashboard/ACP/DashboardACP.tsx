@@ -9,7 +9,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 export default function DashboardACP() {
   const { theme } = useTheme();
   return (
-    <div className={`flex flex-col items-start gap-4 self-stretch p-5 rounded-[16px] border border-white/5 ${theme === "dark" ? "bg-dark-gradient" : ""}`}>
+    <div className={`flex flex-col items-start gap-4 self-stretch p-5 rounded-[16px] border border-black/15 dark:border-white/5 ${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`}>
       <DashboardACPHead />
       <DashboardAPL />
       <DashboardActiveAddons />

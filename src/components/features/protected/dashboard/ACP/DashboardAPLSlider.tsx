@@ -11,7 +11,7 @@ export default function DashboardAPLSlider() {
   return (
     <div className="flex items-center gap-2.5 self-stretch">
       <Slider value={value} onValueChange={setValue} max={100} step={1} />
-      <Text12 className="w-5">{value[0]}%</Text12>
+      <Text12 className="w-5 text-black dark:text-white font-satoshi-medium">{value[0]}%</Text12>
     </div>
   );
 }

@@ -28,7 +28,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 export default function DashboardStatusDetailTA() {
   const { theme } = useTheme();
   return (
-    <DashboardStatusDetailCardContainer className="py-3.5 px-3">
+    <DashboardStatusDetailCardContainer className="py-3.5 px-3 bg-[#ECF3F833] dark:bg-white/3">
       <div className="flex flex-col items-start gap-5 self-stretch">
         <DashboardStatusDetailCardHead
           title="Trade Analysis"
