@@ -83,8 +83,8 @@ export default function AIEngineToolsNIPCardAI() {
         }`}
         backIcon={
           <div className="flex items-center gap-3">
-            <IconMic width={20} height={20} className={theme === "dark" ? "opacity-60" : "opacity-60 fill-black dark:fill-white"} />
-            <IconSend width={20} height={20} className={theme === "dark" ? "" : "fill-black dark:fill-white"} />
+            <IconMic width={20} height={20} />
+            <IconSend width={20} height={20} />
           </div>
         }
       />
