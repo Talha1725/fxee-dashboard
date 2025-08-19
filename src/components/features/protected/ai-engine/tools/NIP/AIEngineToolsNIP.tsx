@@ -14,10 +14,14 @@ export default function AIEngineToolsNIP() {
         description="Realtime Market news analysis with sentiment scoring and impact prediction"
         icon={<IconNIP width={14} height={14} />}
       />
-      <div className="flex items-start gap-5 self-stretch">
-        <AIEngineToolsNIPText />
-        <AIEngineToolsNIPCards />
+      
+      <div className="h-[714px] overflow-y-auto">
+        <div className="flex items-start gap-5 self-stretch">
+          <AIEngineToolsNIPText />
+          <AIEngineToolsNIPCards />
+        </div>
       </div>
+      
     </AIEngineToolsCardContainer>
   );
 }

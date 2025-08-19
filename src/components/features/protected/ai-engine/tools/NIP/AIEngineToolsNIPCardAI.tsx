@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import AIEngineToolsNIPCardContainer from "./AIEngineToolsNIPCardContainer";
@@ -16,10 +18,14 @@ import {
 import { Text12, Text14, Text16 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function AIEngineToolsNIPCardAI() {
+  const { theme } = useTheme();
   return (
-    <AIEngineToolsNIPCardContainer className="border-none border-green-gradient bg-green-radial-gradient">
+    <AIEngineToolsNIPCardContainer className={`border-none border-green-gradient ${
+      theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"
+    }`}>
       <AIEngineToolsNIPCardHead
         title="News Impact Predictor"
         icon={<IconNIP width={20} height={20} />}
@@ -56,13 +62,15 @@ export default function AIEngineToolsNIPCardAI() {
             </ul>
           </Text14>
           <Text14>Further upside movement likely</Text14>
-          <div className="flex justify-between items-center self-stretch p-1 pl-4 rounded-[10px] bg-dark-gradient">
+          <div className={`flex justify-between items-center self-stretch p-1 pl-4 rounded-[10px] ${
+            theme === "dark" ? "bg-dark-gradient" : "bg-gradient-to-b from-black/[0.04] to-black/[0.02]"
+          }`}>
             <Text14 className="font-[700]">Not fully priced-in</Text14>
             <Button
               variant="green"
               className="gap-1 py-2 px-2.5 pointer-events-none"
             >
-              <Text14 className="font-[700]">Long</Text14>
+              <Text14 className={`font-[700] ${theme === "dark" ? "text-white" : "text-white"}`}>Long</Text14>
               <IconTradeUp width={20} height={20} color="#FFF" />
             </Button>
           </div>
@@ -70,10 +78,12 @@ export default function AIEngineToolsNIPCardAI() {
       </div>
       <Input
         placeholder="Type Message"
-        className="gap-3 p-3 border-none"
+        className={`gap-3 p-3 ${
+          theme === "dark" ? "border-none" : "border border-[#0000001A]"
+        }`}
         backIcon={
           <div className="flex items-center gap-3">
-            <IconMic width={20} height={20} opacity={0.6} />
+            <IconMic width={20} height={20} />
             <IconSend width={20} height={20} />
           </div>
         }
