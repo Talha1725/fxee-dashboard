@@ -43,7 +43,7 @@ export default function DashboardStatusDetailTA() {
                 <IconTradeUp
                   width={14}
                   height={14}
-                  color="var(--color-green)"
+                  color={theme === "dark" ? "var(--color-green)" : "#079744"}
                 />
                 <Text10 className="dark:text-green text-[#079744] font-satoshi-medium">2.5x% R/R ratio</Text10>
               </div>
@@ -57,7 +57,7 @@ export default function DashboardStatusDetailTA() {
                 <IconTradeDown
                   width={14}
                   height={14}
-                  color="var(--color-danger)"
+                  color={theme === "dark" ? "var(--color-danger)" : "#EA4335"}
                 />
                 <Text10 className="dark:text-danger text-[#FF0000]">1% account risk</Text10>
               </div>
@@ -73,30 +73,30 @@ export default function DashboardStatusDetailTA() {
         <div className="flex items-center gap-1 self-stretch">
           <DashboardStatusDetailSubcardContainer className="py-3 px-3">
             <Text12 className="font-satoshi-medium dark:text-white text-black">Wins</Text12>
-            <Text16 className="dark:text-green text-[#079744]">142</Text16>
+            <Text16 className="dark:text-green text-[#079744] font-satoshi-medium">142</Text16>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer className="py-3 px-3">
             <Text12 className="font-satoshi-medium dark:text-white text-black">Losses</Text12>
-            <Text16 className="dark:text-danger text-[#FF0000]">40</Text16>
+            <Text16 className="dark:text-danger text-[#FF0000] font-satoshi-medium">40</Text16>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer className="py-3 px-3">
             <Text12 className="font-satoshi-medium dark:text-white text-black">Avg.RR</Text12>
-            <Text16 className="dark:text-blue text-[#007AFF]">2.1</Text16>
+            <Text16 className="dark:text-blue text-[#007AFF] font-satoshi-medium">2.1</Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
         <DashboardStatusDetailSubcardContainer className="bg-white dark:bg-white/3 min-h-[193px] px-0">
           <div className="inline-flex flex-col items-start gap-1.5 px-2">
 
             <div className="flex items-end gap-1.5 self-stretch">
-              <Text22 className="dark:text-white text-black">78%</Text22>
-              <Text14 className="font-satoshi-medium dark:text-white text-black">Win Rate</Text14>
+              <Text22 className="dark:text-white text-black font-satoshi-medium">78%</Text22>
+              <Text14 className="font-satoshi-medium dark:text-white text-black font-satoshi-medium">Win Rate</Text14>
             </div>
-            <Text14 className="max-w-[216px] font-satoshi dark:text-white text-black">
+            <Text14 className="max-w-[216px] font-satoshi dark:text-white text-black font-satoshi-medium">
               Consistent performance with a high success ratio
             </Text14>
           </div>
           <div className="relative w-full h-full">
-            <DashboardAPLChart height={74} />
+            <DashboardAPLChart height={88} />
           </div>
         </DashboardStatusDetailSubcardContainer>
       </div>
@@ -105,21 +105,21 @@ export default function DashboardStatusDetailTA() {
           title="Analysis Usage"
           icon={<IconAnalysisUsage width={14} height={14} />}
         />
-        <DashboardStatusDetailSubcardContainer className="bg-white/3 gap-3">
+        <DashboardStatusDetailSubcardContainer className="gap-3">
           <div className="inline-flex items-end gap-1.5">
-            <Text22 className="dark:text-white text-black">200</Text22>
-            <Text12 className="dark:text-white text-black">In Total</Text12>
+            <Text22 className="dark:text-white text-black font-satoshi-medium">200</Text22>
+            <Text12 className="dark:text-white text-black font-satoshi-medium">In Total</Text12>
           </div>
           <div className="flex flex-col items-start gap-3.5 self-stretch">
             <div className="flex justify-between items-center self-stretch">
               <div className="flex flex-col items-center">
-                <Text16 className="dark:bg-picton-blue bg-picton-blue text-transparent bg-clip-text">
+                <Text16 className="dark:bg-picton-blue bg-picton-blue text-transparent bg-clip-text font-satoshi-medium">
                   156
                 </Text16>
                 <Text14 className="dark:text-white text-black">Used</Text14>
               </div>
               <div className="flex flex-col items-center">
-                <Text16 className="bg-picton-blue text-transparent bg-clip-text">
+                <Text16 className="bg-picton-blue text-transparent bg-clip-text font-satoshi-medium">
                   44%
                 </Text16>
                 <Text14 className="dark:text-white text-black">Remaining</Text14>

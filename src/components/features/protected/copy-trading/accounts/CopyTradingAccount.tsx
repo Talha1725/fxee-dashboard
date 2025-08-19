@@ -21,7 +21,7 @@ export default function CopyTradingAccount({
       className={cn(
         `relative flex flex-col items-center gap-4 self-stretch flex-[1_0_0] p-6 rounded-[16px] border border-white/3 ${theme==="dark" ? "bg-dark-radial-gradient" : "bg-white"} transition-all duration-300 z-50`,
         isSelected &&
-         `border-none border-green-gradient ${theme==="dark" ? "bg-dark-radial-gradient" : "bg-light-green-gradient"}`
+         `border-none border-green-gradient ${theme==="dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"}`
       )}
     >
       <div className="flex flex-col items-center justify-between gap-5 flex-[1_0_0] self-stretch">

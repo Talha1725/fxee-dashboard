@@ -34,7 +34,7 @@ export default function DashboardWidget({ currency }: { currency: string }) {
           </div>
           <Button variant={theme === "dark" ? "popular" : "darkPopular"}>
             <IconAIMagic />
-            <Text16 className="font-satoshi-medium">Analyze with AI</Text16>
+            <Text16 className="font-satoshi-medium text-white">Analyze with AI</Text16>
           </Button>
         </div>
         <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">

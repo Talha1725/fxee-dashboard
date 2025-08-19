@@ -3,15 +3,15 @@ import React from "react";
 import { Text12, Text18 } from "@/components/ui/typography";
 import { Progress } from "@/components/ui/progress";
 import { IconAIBrain } from "@/components/ui/icon";
-
-import HomeUptrendImage from "@/components/features/protected/home/HomeUptrendImage";
+import agentImage from "@/public/images/ai-agent-avatar.svg"
+import Image from "next/image";
 
 export default function HomeAIMessageHead() {
   return (
     <div className="flex justify-between items-start self-stretch">
-      <div className="flex items-start gap-1">
+      <div className="flex items-start gap-2">
         <div className="w-[54px] h-[54px] flex items-center justify-center">
-          <HomeUptrendImage />
+          <Image src={agentImage} alt="Agent" width={54} height={54} />
         </div>
         <div className="flex flex-col items-start gap-0.5">
           <Text18 className="font-satoshi-medium">
