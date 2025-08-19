@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface DataPoint {
   month: string;
@@ -25,6 +26,7 @@ export default function PortfolioChart({
   const gradientIdRef = useRef<string>(`highlightGradient-${Math.random().toString(36).slice(2)}`);
   const areaGradientIdRef = useRef<string>(`areaGradient-${Math.random().toString(36).slice(2)}`);
   const [dimensions, setDimensions] = useState({ width: 400, height });
+  const { theme } = useTheme();
 
   // Sample data with monthly progression
   const defaultData: DataPoint[] = [
@@ -253,7 +255,7 @@ export default function PortfolioChart({
       })
       .attr("y", innerHeight + 25)
       .attr("text-anchor", (d: any) => d._i === 0 ? "start" : (d._i === chartData.length - 1 ? "end" : "middle"))
-      .attr("fill", (d: any) => d.month === highlightMonth ? "#fff" : "#666")
+      .attr("fill", (d: any) => d.month === highlightMonth ? theme ==="dark" ? "#fff" :"#000" : "#666")
       .attr("font-size", "12px")
       .attr("font-weight", (d: any) => d.month === highlightMonth ? "600" : "400")
       .text((d: any) => d.month)
