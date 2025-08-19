@@ -19,7 +19,7 @@ export default function DashboardACPHead() {
         <div className="flex flex-col justify-center items-start gap-1 flex-[1_0_0]">
           <Text16 className="font-satoshi-medium dark:text-white text-black">AI Control Panel</Text16>
           <Text14 className="dark:text-white/80 text-black/80 font-satoshi">
-            View and customize your AI Trading Companion powers
+          View and customize your AI Trading Companion powers
           </Text14>
         </div>
         <Button variant={theme === "dark" ? "white" : "black"} className="py-2.5 px-[25px] transition-all cursor-pointer">

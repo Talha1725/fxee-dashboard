@@ -23,7 +23,7 @@ export default function DashboardACPDetail({
             className={cn(
               "font-satoshi-medium",
               !isGreen
-                ? "bg-picton-blue text-transparent bg-clip-text"
+                ? "bg-gradient-to-b from-[#15B0F8] to-[#0276DB] text-transparent bg-clip-text dark:bg-gradient-to-b dark:from-[#15B0F8] dark:to-[#0276DB] dark:text-transparent dark:bg-clip-text"
                 : "dark:text-green text-[#079744]"
             )}
           >

@@ -4,7 +4,7 @@ import AIEngineStatusTGS from "./AIEngineStatusTGS";
 
 export default function AIEngineStatus() {
   return (
-    <div className="flex flex-col items-start gap-5 self-stretch">
+    <div className="flex flex-col lg:flex-row items-start gap-5 self-stretch w-full min-h-[657px]">
       <DashboardACP />
       <AIEngineStatusTGS />
     </div>
