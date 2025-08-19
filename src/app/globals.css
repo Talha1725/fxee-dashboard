@@ -603,6 +603,23 @@ body {
         rgba(15, 15, 15, 0.54) 96.4%
       );
   }
+  .bg-dark-green-gradient {
+    background: linear-gradient(
+        0deg,
+        rgba(2, 100, 187, 0.897) 16.5%,
+        rgba(12, 145, 67, 0.829) 83.5%
+      ),
+      linear-gradient(
+        236.84deg,
+        rgba(15, 15, 15, 0.377) 5.53%,
+        rgba(15, 15, 15, 0.397153) 56.04%,
+        rgba(15, 15, 15, 0.449044) 75.37%,
+        rgba(15, 15, 15, 0.54) 96.4%
+      );
+  }
+  .bg-black-gradient-light{
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.03) 100%);
+  }
   .bg-card-dashboard-main-gradient {
     background: var(--card-dashboard-main-gradient);
   }
@@ -910,6 +927,10 @@ body {
       drop-shadow(-47px -47px 94px rgba(86, 244, 154, 0.5))
       drop-shadow(47px -47px 94px rgba(62, 220, 129, 0.5))
       drop-shadow(-47px 47px 94px rgba(19, 147, 194, 0.5));
+  }
+
+  .tradingview-widget-copyright {
+    display: none;
   }
 
   /* Safari-specific SVG font fallbacks */

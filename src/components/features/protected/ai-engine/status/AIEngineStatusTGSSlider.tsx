@@ -18,11 +18,11 @@ export default function AIEngineStatusTGSSlider({
   const [sliderValue, setSliderValue] = useState(0);
 
   return (
-    <div className="flex flex-col items-start gap-2.5 py-3.5 px-3 self-stretch flex-[1_0_0] rounded-[10px] border border-white/2 bg-white/3">
+    <div className="flex flex-col items-start gap-2.5 py-3.5 px-3 self-stretch flex-[1_0_0] rounded-[10px] border border-white/2 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
       <div className="flex items-center gap-2.5 self-stretch">
-        <Text14 className="flex-[1_0_0]">{title}</Text14>
+        <Text14 className="flex-[1_0_0] text-white dark:text-white">{title}</Text14>
         <Text12
-          className={cn("text-green", color === "danger" && "text-danger")}
+          className={cn("text-[#3EDC81] dark:text-[#3EDC81]", color === "danger" && "text-[#EA4335] dark:text-[#EA4335]")}
         >
           ${value.toLocaleString()}
         </Text12>
@@ -35,8 +35,8 @@ export default function AIEngineStatusTGSSlider({
         />
         <Text12
           className={cn(
-            "text-green text-right w-9",
-            color === "danger" && "text-danger"
+            "text-[#3EDC81] dark:text-[#3EDC81] text-right w-9",
+            color === "danger" && "text-[#EA4335] dark:text-[#EA4335]"
           )}
         >
           {sliderValue}%

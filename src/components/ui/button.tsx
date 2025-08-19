@@ -18,8 +18,11 @@ const buttonVariants = cva(
         green: "bg-green-linear border-none",
         grey: "bg-button-grey-gradient border-none",
         white: "bg-white text-[#111] border border-white/30 hover:bg-white/80",
+        black: "bg-black text-white border border-white/30 hover:bg-black/80",
         popular:
           "bg-popular-gradient border-transparent border-none shadow-none hover:bg-picton-blue-80",
+        darkPopular:
+          "bg-dark-green-gradient border-transparent border-none shadow-none hover:bg-picton-blue-80",
       },
       size: {
         default: "p-2.5",

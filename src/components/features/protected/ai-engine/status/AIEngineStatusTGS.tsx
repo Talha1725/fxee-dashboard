@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import AIEngineStatusTGSHead from "./AIEngineStatusTGSHead";
@@ -15,18 +16,20 @@ import {
 } from "@/components/ui/icon";
 import { Text14 } from "@/components/ui/typography";
 import { Input } from "@/components/ui/input";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function AIEngineStatusTGS() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col items-center gap-4 p-5 flex-[1_0_0] self-stretch rounded-[16px] border border-white/5 bg-card-green-gradient">
+    <div className={`w-full lg:flex-1 rounded-[16px] p-5 pb-[25px] flex flex-col gap-4 ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"}`}>
       <AIEngineStatusTGSHead />
       <Tabs defaultValue="best_trade" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="custom_goal">
+          <TabsTrigger value="custom_goal" className="text-[#FFFFFFCC] dark:text-[#FFFFFFCC] data-[state=active]:bg-white data-[state=active]:text-black dark:data-[state=active]:bg-white dark:data-[state=active]:text-black [&>svg]:fill-white [&>svg]:stroke-white data-[state=active]:[&>svg]:fill-black data-[state=active]:[&>svg]:stroke-black dark:data-[state=active]:[&>svg]:fill-black dark:data-[state=active]:[&>svg]:stroke-black">
             <IconCustomGoal width={20} height={20} />
             Custom Goal
           </TabsTrigger>
-          <TabsTrigger value="best_trade">
+          <TabsTrigger value="best_trade" className="text-[#FFFFFFCC] dark:text-[#FFFFFFCC] data-[state=active]:bg-white data-[state=active]:text-black dark:data-[state=active]:bg-white dark:data-[state=active]:text-black [&>svg]:fill-white [&>svg]:stroke-white data-[state=active]:[&>svg]:fill-black data-[state=active]:[&>svg]:stroke-black dark:data-[state=active]:[&>svg]:fill-black dark:data-[state=active]:[&>svg]:stroke-black">
             <IconBestTrade width={20} height={20} />
             Best Trade
           </TabsTrigger>
@@ -35,7 +38,7 @@ export default function AIEngineStatusTGS() {
           <div>Custom Goal</div>
         </TabsContent>
         <TabsContent value="best_trade" className="flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row items-center gap-4 self-stretch">
+          <div className="flex flex-col sm:flex-row items-center gap-4 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
             <AIEngineStatusTGSSlider title="Profit Target" value={5000} />
             <AIEngineStatusTGSSlider
               title="Maximum Risk"
@@ -43,23 +46,24 @@ export default function AIEngineStatusTGS() {
               color="danger"
             />
           </div>
-          <div className="flex items-center gap-1 self-stretch">
+          <div className="flex items-center gap-1 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
             <AIEngineStatusTGSDetail
               title="Protentional Profit"
               value="$5,000.00"
+              className="text-[#3EDC81] dark:text-[#3EDC81]"
             />
             <AIEngineStatusTGSDetail
               title="Maximum Loss"
               value="$2,000.00"
-              className="text-danger"
+              className="text-[#EA4335] dark:text-[#EA4335]"
             />
             <AIEngineStatusTGSDetail
               title="Risk/Reward"
               value="1:2.50"
-              className="bg-picton-blue text-transparent bg-clip-text"
+              className="bg-gradient-to-b from-[#15B0F8] to-[#0276DB] text-transparent bg-clip-text dark:bg-gradient-to-b dark:from-[#15B0F8] dark:to-[#0276DB] dark:text-transparent dark:bg-clip-text"
             />
           </div>
-          <div className="flex items-start gap-4 self-stretch">
+          <div className="flex items-start gap-4 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
             <AIEngineStatusTGSCheck
               title="Risk Level"
               switches={[
@@ -83,18 +87,18 @@ export default function AIEngineStatusTGS() {
               ]}
             />
           </div>
-          <div className="flex flex-col sm:flex-row items-start gap-4 self-stretch">
+          <div className="flex flex-col sm:flex-row items-start gap-4 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
             <div className="flex flex-col justify-center items-start gap-2 self-stretch flex-[1_0_0]">
-              <Text14 className="self-stretch">Select Trading Pair</Text14>
+              <Text14 className="self-stretch text-white dark:text-white">Select Trading Pair</Text14>
               <AIEngineStatusTGSPairSelect />
             </div>
             <div className="flex flex-col justify-center items-start gap-2 self-stretch flex-[1_0_0]">
-              <Text14 className="self-stretch">Select Timeframe</Text14>
+              <Text14 className="self-stretch text-white dark:text-white">Select Timeframe</Text14>
               <AIEngineStatusTGSTimeframeSelect />
             </div>
           </div>
           <Input
-            placeholder="Enter your custom goal"
+            placeholder="Enter Trading Goals...."
             className="w-full !p-4 gap-3 border-none"
             backIcon={
               <div className="flex items-center gap-3">

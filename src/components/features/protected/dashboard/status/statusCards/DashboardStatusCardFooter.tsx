@@ -13,8 +13,8 @@ export default function DashboardStatusCardFooter({
 }) {
   return (
     <div className="flex justify-between items-center self-stretch">
-      <Text12 className="text-white/60">{title}</Text12>
-      <div className="flex items-center gap-1">
+      <Text12 className="dark:text-white/60 text-black/60 font-satoshi">{title}</Text12>
+      <div className="flex items-center gap-1 font-satoshi-medium">
         {value > 0 ? (
           <IconTradeUp width={18} height={18} color="var(--green)" />
         ) : (

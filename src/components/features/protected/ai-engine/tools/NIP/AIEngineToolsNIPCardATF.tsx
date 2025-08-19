@@ -1,15 +1,19 @@
+"use client";
+
 import React from "react";
 
 import AIEngineToolsNIPCardContainer from "./AIEngineToolsNIPCardContainer";
 import AIEngineToolsNIPCardHead from "./AIEngineToolsNIPCardHead";
 import { IconATF } from "@/components/ui/icon";
 import { Text14, Text16 } from "@/components/ui/typography";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function AIEngineToolsNIPCardATF() {
+  const { theme } = useTheme();
   return (
-    <AIEngineToolsNIPCardContainer>
+    <AIEngineToolsNIPCardContainer className={theme === "dark" ? "" : "border border-[#0000001A]"}>
       <AIEngineToolsNIPCardHead
-        title="Trend Forecaster"
+        title="AI Trend Forecast"
         icon={<IconATF width={20} height={20} />}
       />
       <div className="flex flex-col items-start gap-0.5 self-stretch">

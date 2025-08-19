@@ -50,7 +50,7 @@ export const Title40 = ({ children, className }: TypographyProps) => {
   return (
     <h2
       className={cn(
-        "text-white liga font-regular text-[32px] sm:text-[40px] font-[700] tracking-[-0.64px] sm:tracking-[-0.8px] select-none",
+        "text-black dark:text-white liga font-regular text-[32px] sm:text-[40px] font-[700] tracking-[-0.64px] sm:tracking-[-0.8px] select-none",
         className
       )}
     >
@@ -63,7 +63,7 @@ export const Title32 = ({ children, className }: TypographyProps) => {
   return (
     <h3
       className={cn(
-        "dark:text-white liga font-regular text-[24px] sm:text-[32px] tracking-[-0.48px] sm:tracking-[-0.64px] font-medium select-none",
+        "text-black dark:text-white liga font-regular text-[24px] sm:text-[32px] tracking-[-0.48px] sm:tracking-[-0.64px] font-medium select-none",
         className
       )}
     >
@@ -76,7 +76,7 @@ export const Title24 = ({ children, className }: TypographyProps) => {
   return (
     <h3
       className={cn(
-        "text-white liga font-regular text-[18px] sm:text-[24px] font-[700] tracking-[-0.36px] sm:tracking-[-0.48px] select-none",
+        "text-black dark:text-white liga font-regular text-[18px] sm:text-[24px] font-[700] tracking-[-0.36px] sm:tracking-[-0.48px] select-none",
         className
       )}
     >
@@ -89,7 +89,7 @@ export const Title22 = ({ children, className }: TypographyProps) => {
   return (
     <h4
       className={cn(
-        "text-white liga font-regular text-[18px] sm:text-[22px] font-[700] tracking-[-0.36px] sm:tracking-[-0.44px] select-none",
+        "text-black dark:text-white liga font-regular text-[18px] sm:text-[22px] font-[700] tracking-[-0.36px] sm:tracking-[-0.44px] select-none",
         className
       )}
     >
@@ -102,7 +102,7 @@ export const Title20 = ({ children, className }: TypographyProps) => {
   return (
     <h4
       className={cn(
-        "text-white liga font-regular text-[18px] sm:text-[20px] font-[700] tracking-[-0.36px] sm:tracking-[-0.4px] select-none",
+        "text-black dark:text-white liga font-regular text-[18px] sm:text-[20px] font-[700] tracking-[-0.36px] sm:tracking-[-0.4px] select-none",
         className
       )}
     >
@@ -116,7 +116,7 @@ export const Text24 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[20px] sm:text-[24px] font-medium tracking-[-0.4px] sm:tracking-[-0.48px] select-none",
+        "text-black dark:text-white liga font-regular text-[20px] sm:text-[24px] font-medium tracking-[-0.4px] sm:tracking-[-0.48px] select-none",
         className
       )}
     >
@@ -129,7 +129,7 @@ export const Text22 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[18px] sm:text-[22px] font-medium tracking-[-0.36px] sm:tracking-[-0.44px] select-none",
+        "text-black dark:text-white liga font-regular text-[18px] sm:text-[22px] font-medium tracking-[-0.36px] sm:tracking-[-0.44px] select-none",
         className
       )}
     >
@@ -142,7 +142,7 @@ export const Text20 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[18px] sm:text-[20px] font-medium tracking-[-0.36px] sm:tracking-[-0.4px] select-none",
+        "text-black dark:text-white liga font-regular text-[18px] sm:text-[20px] font-medium tracking-[-0.36px] sm:tracking-[-0.4px] select-none",
         className
       )}
     >
@@ -155,7 +155,7 @@ export const Text18 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "dark:text-white liga font-regular text-[16px] sm:text-[18px] font-medium tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
+        "text-black dark:text-white liga font-regular text-[16px] sm:text-[18px] font-medium tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
         className
       )}
     >
@@ -168,7 +168,7 @@ export const Text16 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[14px] sm:text-[16px] font-medium tracking-[-0.28px] sm:tracking-[-0.32px] select-none",
+        "text-black dark:text-white liga font-regular text-[14px] sm:text-[16px] font-medium tracking-[-0.28px] sm:tracking-[-0.32px] select-none",
         className
       )}
     >
@@ -181,7 +181,7 @@ export const Text14 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[12px] sm:text-[14px] font-medium tracking-[-0.24px] sm:tracking-[-0.28px] select-none",
+        "text-black dark:text-white liga font-regular text-[12px] sm:text-[14px] font-medium tracking-[-0.24px] sm:tracking-[-0.28px] select-none",
         className
       )}
     >
@@ -194,7 +194,7 @@ export const Text12 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[10px] sm:text-[12px] font-medium tracking-[-0.2px] sm:tracking-[-0.24px] select-none",
+        "text-black dark:text-white liga font-regular text-[10px] sm:text-[12px] font-medium tracking-[-0.2px] sm:tracking-[-0.24px] select-none",
         className
       )}
     >
@@ -207,7 +207,7 @@ export const Text10 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white liga font-regular text-[9px] sm:text-[10px] font-medium tracking-[-0.18px] sm:tracking-[-0.2px] select-none",
+        "text-black dark:text-white liga font-regular text-[9px] sm:text-[10px] font-medium tracking-[-0.18px] sm:tracking-[-0.2px] select-none",
         className
       )}
     >
@@ -221,7 +221,7 @@ export const Description18 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/40 text-[16px] sm:text-[18px] font-regular font-normal tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
+        "text-black/40 dark:text-white/40 text-[16px] sm:text-[18px] font-regular font-normal tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
         className
       )}
     >
@@ -234,7 +234,7 @@ export const Description16 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/40 text-[14px] sm:text-[16px] font-regular font-normal tracking-[-0.28px] sm:tracking-[-0.32px] select-none",
+        "text-black/40 dark:text-white/40 text-[14px] sm:text-[16px] font-regular font-normal tracking-[-0.28px] sm:tracking-[-0.32px] select-none",
         className
       )}
     >
@@ -260,7 +260,7 @@ export const Description12 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/60 text-[10px] sm:text-[12px] font-regular font-normal tracking-[-0.2px] sm:tracking-[-0.24px] select-none",
+        "text-black/60 dark:text-white/60 text-[10px] sm:text-[12px] font-regular font-normal tracking-[-0.2px] sm:tracking-[-0.24px] select-none",
         className
       )}
     >
@@ -274,7 +274,7 @@ export const Body18 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/80 text-[16px] sm:text-[18px] font-regular font-normal tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
+        "text-black/80 dark:text-white/80 text-[16px] sm:text-[18px] font-regular font-normal tracking-[-0.32px] sm:tracking-[-0.36px] select-none",
         className
       )}
     >
@@ -287,7 +287,7 @@ export const Body16 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/80 text-[14px] sm:text-[16px] font-regular font-normal tracking-[-0.28px] sm:tracking-[-0.32px] select-none",
+        "text-black/80 dark:text-white/80 text-[14px] sm:text-[16px] font-regular font-normal tracking-[-0.28px] sm:tracking-[-0.32px] select-none",
         className
       )}
     >
@@ -300,7 +300,7 @@ export const Body14 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/80 text-[12px] sm:text-[14px] font-regular font-normal tracking-[-0.24px] sm:tracking-[-0.28px] select-none",
+        "text-black/80 dark:text-white/80 text-[12px] sm:text-[14px] font-regular font-normal tracking-[-0.24px] sm:tracking-[-0.28px] select-none",
         className
       )}
     >
@@ -313,7 +313,7 @@ export const Body12 = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/80 text-[10px] sm:text-[12px] font-regular font-normal tracking-[-0.2px] sm:tracking-[-0.24px] select-none",
+        "text-black/80 dark:text-white/80 text-[10px] sm:text-[12px] font-regular font-normal tracking-[-0.2px] sm:tracking-[-0.24px] select-none",
         className
       )}
     >
@@ -327,7 +327,7 @@ export const Caption = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/60 text-[12px] font-regular font-normal tracking-[-0.24px] uppercase liga select-none",
+        "text-black/60 dark:text-white/60 text-[12px] font-regular font-normal tracking-[-0.24px] uppercase liga select-none",
         className
       )}
     >
@@ -340,7 +340,7 @@ export const CaptionSmall = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/60 text-[10px] font-regular font-normal tracking-[-0.2px] uppercase liga select-none",
+        "text-black/60 dark:text-white/60 text-[10px] font-regular font-normal tracking-[-0.2px] uppercase liga select-none",
         className
       )}
     >
@@ -354,7 +354,7 @@ export const Label = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white text-[14px] font-regular font-medium liga tracking-[-0.28px] select-none",
+        "text-black dark:text-white text-[14px] font-regular font-medium liga tracking-[-0.28px] select-none",
         className
       )}
     >
@@ -367,7 +367,7 @@ export const LabelSmall = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white text-[12px] font-regular font-medium liga tracking-[-0.24px] select-none",
+        "text-black dark:text-white text-[12px] font-regular font-medium liga tracking-[-0.24px] select-none",
         className
       )}
     >
@@ -460,7 +460,7 @@ export const TextMuted = ({ children, className }: TypographyProps) => {
   return (
     <span
       className={cn(
-        "text-white/40 liga font-regular font-normal select-none",
+        "text-black/40 dark:text-white/40 liga font-regular font-normal select-none",
         className
       )}
     >
@@ -474,7 +474,7 @@ export const NavbarTitle = ({ children, className }: TypographyProps) => {
   return (
     <div
       className={cn(
-        "dark:text-white font-satoshi-medium text-[24px] tracking-[-0.264px] select-none",
+        "text-black dark:text-white font-satoshi-medium text-[24px] tracking-[-0.264px] select-none",
         className
       )}
     >
@@ -487,7 +487,7 @@ export const SidebarItem = ({ children, className }: TypographyProps) => {
   return (
     <span
       className={cn(
-        "text-white text-[16px] liga font-creato font-medium tracking-[-0.096px] select-none",
+        "text-black dark:text-white text-[16px] liga font-creato font-medium tracking-[-0.096px] select-none",
         className
       )}
     >
@@ -514,7 +514,7 @@ export const TextFlow = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white text-[20px] font-space-grotesk font-[700] tracking-[-0.6px] uppercase shrink-0 select-none",
+        "text-black dark:text-white text-[20px] font-space-grotesk font-[700] tracking-[-0.6px] uppercase shrink-0 select-none",
         className
       )}
     >
@@ -527,7 +527,7 @@ export const PricingText = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white text-[32px] sm:text-[40px] font-regular font-[700] tracking-[-0.64px] sm:tracking-[-0.8px] select-none",
+        "text-black dark:text-white text-[32px] sm:text-[40px] font-regular font-[700] tracking-[-0.64px] sm:tracking-[-0.8px] select-none",
         className
       )}
     >
@@ -540,7 +540,7 @@ export const ReviewText = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-white/90 text-[24px] sm:text-[32px] font-satoshi font-[700] tracking-[-0.48px] sm:tracking-[-0.64px] select-none",
+        "text-black/90 dark:text-white/90 text-[24px] sm:text-[32px] font-satoshi font-[700] tracking-[-0.48px] sm:tracking-[-0.64px] select-none",
         className
       )}
     >

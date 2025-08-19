@@ -7,11 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import { Text18 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
-export default function HomeTrades() {
+export default function HomeTrades({className}: {className?: string}) {
   const { theme } = useTheme();
 
   return (
-    <ProtectedCardContainer className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"} border-none overflow-x-hidden`}>
+    <ProtectedCardContainer className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"} border-none overflow-x-hidden ${className}`}>
       <div className="flex self-stretch">
         <Text18 className="font-satoshi-medium text-white">AI Recommended Trades</Text18>
       </div>
