@@ -96,7 +96,7 @@ export default function DashboardStatusDetailTA() {
             </Text14>
           </div>
           <div className="relative w-full h-full">
-            <DashboardAPLChart height={74} />
+            <DashboardAPLChart height={88} />
           </div>
         </DashboardStatusDetailSubcardContainer>
       </div>
@@ -105,7 +105,7 @@ export default function DashboardStatusDetailTA() {
           title="Analysis Usage"
           icon={<IconAnalysisUsage width={14} height={14} />}
         />
-        <DashboardStatusDetailSubcardContainer className="bg-white/3 gap-3">
+        <DashboardStatusDetailSubcardContainer className="gap-3">
           <div className="inline-flex items-end gap-1.5">
             <Text22 className="dark:text-white text-black">200</Text22>
             <Text12 className="dark:text-white text-black">In Total</Text12>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import ProtectedContentContainer from "../ProtectedContentContainer";
 import CopyTradingAccounts from "./accounts/CopyTradingAccounts";
@@ -12,9 +12,11 @@ import { Text14, Text16, Text24 } from "@/components/ui/typography";
 
 export default function CopyTrading() {
   const { theme } = useTheme();
+  const [showDetails, setShowDetails] = useState(false);
   return (
     <ProtectedContentContainer className="sm:gap-10">
       {/* Account Details */}
+      {showDetails &&
       <div className="flex w-full justify-center items-center">
         <div
           className={`w-full md:w-[70%] lg:w-[50%] p-4 md:p-6 rounded-[16px] border border-white/3 ${
@@ -118,9 +120,9 @@ export default function CopyTrading() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
       
-      <CopyTradingAccounts />
+      <CopyTradingAccounts setShowDetails={setShowDetails} />
       <CopyTradingBenefits />
       <CopyTradingHowTo />
     </ProtectedContentContainer>

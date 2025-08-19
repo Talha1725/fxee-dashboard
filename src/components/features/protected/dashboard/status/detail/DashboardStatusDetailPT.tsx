@@ -22,7 +22,7 @@ export default function DashboardStatusDetailPT() {
           icon={<IconCardPT width={14} height={14} />}
         />
         <div className={`flex items-center gap-2 self-stretch py-2.5 px-3 rounded-[8px] ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"}`}>
-          <Text14 className="font-satoshi">
+          <Text14 className="font-satoshi text-white">
             Long BTC/USD on 4H timeframe. Bull flag pattern forming with strong
             support at $56,500. Multiple technical indicators showing bullish
             convergence. Volume increasing on recent candles.

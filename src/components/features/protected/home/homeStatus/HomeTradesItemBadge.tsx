@@ -11,7 +11,7 @@ export default function HomeTradesItemBadge({
   return (
     <div className="flex justify-center items-center gap-1 p-1.5 sm:p-2.5 bg-card-weak-gradient rounded-[10px]">
       {icon}
-      <Text14 className="font-satoshi-medium">{text}</Text14>
+      <Text14 className="font-satoshi-medium text-white">{text}</Text14>
     </div>
   );
 }
