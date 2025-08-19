@@ -11,8 +11,8 @@ export default function CopyTradingHowToItem({
   return (
     <li>
       <div className="flex flex-col items-start gap-[5px] self-stretch">
-        <Text16>{title}</Text16>
-        <Text16 className="font-[400] flex-[1_0_0]">{description}</Text16>
+        <Text16 className="text-black dark:text-white font-satoshi-medium">{title}</Text16>
+        <Text16 className="font-[400] flex-[1_0_0] text-black dark:text-white font-satoshi">{description}</Text16>
       </div>
     </li>
   );
