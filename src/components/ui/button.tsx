@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-dark-gradient text-foreground shadow-subtle border-white/30",
+          "bg-dark-gradient text-foreground shadow-subtle dark:border-white/30 border-black/30",
         fancy:
           "bg-picton-blue shadow-picton border-none hover:bg-picton-blue-80 text-white z-50",
         ghost: "bg-dark-gradient border-none",
