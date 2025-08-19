@@ -81,8 +81,8 @@ export default function DashboardStatusDetailTA() {
             <Text16 className="text-blue">2.1</Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
-        <DashboardStatusDetailSubcardContainer className="bg-white/3 min-h-[193px]">
-          <div className="inline-flex flex-col items-start gap-1.5">
+        <DashboardStatusDetailSubcardContainer className="bg-white/3 min-h-[193px] p-0 overflow-hidden">
+          <div className="inline-flex flex-col items-start gap-1.5 py-3.5 px-3 sm:mb-0 mb-3">
             <div className="flex items-end gap-1.5 self-stretch">
               <Text22>78%</Text22>
               <Text14>Win Rate</Text14>
@@ -92,7 +92,7 @@ export default function DashboardStatusDetailTA() {
             </Text14>
           </div>
           <div className="relative w-full h-full">
-            <DashboardAPLChart />
+            <DashboardAPLChart height={74} />
           </div>
         </DashboardStatusDetailSubcardContainer>
       </div>
