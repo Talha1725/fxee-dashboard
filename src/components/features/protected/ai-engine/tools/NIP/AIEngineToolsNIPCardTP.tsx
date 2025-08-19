@@ -36,8 +36,8 @@ export default function AIEngineToolsNIPCardTP() {
         icon={<IconAIScan width={20} height={20} />}
       />
       <div className="flex flex-col items-start gap-0.5 self-stretch">
-        {TP_DATA.map((item) => (
-          <div className="flex items-center gap-2 self-stretch py-1 px-0">
+        {TP_DATA.map((item, index) => (
+          <div key={index} className="flex items-center gap-2 self-stretch py-1 px-0">
             <Text14 className="text-black/80 dark:text-white/80 font-[400] flex-[1_0_0]">
               {item.title}
             </Text14>

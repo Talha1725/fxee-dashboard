@@ -25,6 +25,7 @@ interface TableRowItemProps {
   change: number;
   changePercent: number;
   isUp: boolean;
+  showArrow?: boolean;
 }
 const TableRowItem = ({
   currency,
@@ -32,6 +33,7 @@ const TableRowItem = ({
   change,
   changePercent,
   isUp,
+  showArrow = true,
 }: TableRowItemProps) => {
   const { theme } = useTheme();
   return (
@@ -49,13 +51,15 @@ const TableRowItem = ({
       <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {changePercent}%
       </TableCell>
-      <TableCell className="text-right">
-        {isUp ? (
-          <IconTradeUp width={16} height={16} color={theme === "dark" ? "#3EDC81" : "#079744"} />
-        ) : (
-          <IconTradeDown width={16} height={16} color={theme === "dark" ? "#FF453A" : "#FF453A"} />
-        )}
-      </TableCell>
+      {showArrow && (
+        <TableCell className="text-right">
+          {isUp ? (
+            <IconTradeUp width={16} height={16} color="#3EDC81" />
+          ) : (
+            <IconTradeDown width={16} height={16} color="#FF453A" />
+          )}
+        </TableCell>
+      )}
     </TableRow>
   );
 };
@@ -66,6 +70,7 @@ const TableRowItemCrypto = ({
   change,
   changePercent,
   isUp,
+  showArrow = true,
 }: TableRowItemProps) => {
   return (
     <TableRow className="hover:bg-transparent border-none">
@@ -82,18 +87,24 @@ const TableRowItemCrypto = ({
       <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {changePercent}%
       </TableCell>
-      <TableCell className="text-right">
-        {isUp ? (
-          <IconTradeUp width={16} height={16} color="#3EDC81" />
-        ) : (
-          <IconTradeDown width={16} height={16} color="#FF453A" />
-        )}
-      </TableCell>
+      {showArrow && (
+        <TableCell className="text-right">
+          {isUp ? (
+            <IconTradeUp width={16} height={16} color="#3EDC81" />
+          ) : (
+            <IconTradeDown width={16} height={16} color="#FF453A" />
+          )}
+        </TableCell>
+      )}
     </TableRow>
   );
 };
 
-export default function HomeTopPicksBody() {
+interface HomeTopPicksBodyProps {
+  showArrows?: boolean;
+}
+
+export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBodyProps) {
   return (
     <Table>
       <TableHeader>
@@ -102,12 +113,12 @@ export default function HomeTopPicksBody() {
           <TableHead>Last</TableHead>
           <TableHead>Change</TableHead>
           <TableHead>Change %</TableHead>
-          <TableHead className="text-right"></TableHead>
+          {showArrows && <TableHead className="text-right"></TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody className="font-satoshi">
         <TableRow className="hover:bg-transparent border-none">
-          <TableCell colSpan={5}>
+          <TableCell colSpan={showArrows ? 5 : 4}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
               <Text14 className="dark:text-white text-black">Forex</Text14>
               <IconChevronDown width={16} height={16} className="rotate-180" />
@@ -120,6 +131,7 @@ export default function HomeTopPicksBody() {
           change={0.0012}
           changePercent={0.1}
           isUp={true}
+          showArrow={showArrows}
         />
         <TableRowItem
           currency="GBP/USD"
@@ -127,6 +139,7 @@ export default function HomeTopPicksBody() {
           change={-0.0012}
           changePercent={-0.12}
           isUp={false}
+          showArrow={showArrows}
         />
         <TableRowItem
           currency="EUR/USD"
@@ -134,6 +147,7 @@ export default function HomeTopPicksBody() {
           change={0.0012}
           changePercent={0.1}
           isUp={true}
+          showArrow={showArrows}
         />
         <TableRowItem
           currency="GBP/USD"
@@ -141,9 +155,10 @@ export default function HomeTopPicksBody() {
           change={-0.0012}
           changePercent={-0.12}
           isUp={false}
+          showArrow={showArrows}
         />
         <TableRow className="hover:bg-transparent border-none">
-          <TableCell colSpan={5}>
+          <TableCell colSpan={showArrows ? 5 : 4}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
               <Text14 className="dark:text-white text-black">Crypto</Text14>
               <IconChevronDown width={16} height={16} className="rotate-180" />
@@ -156,6 +171,7 @@ export default function HomeTopPicksBody() {
           change={0.0012}
           changePercent={0.1}
           isUp={true}
+          showArrow={showArrows}
         />
         <TableRowItemCrypto
           currency="ETH"
@@ -163,6 +179,7 @@ export default function HomeTopPicksBody() {
           change={0.0012}
           changePercent={0.1}
           isUp={true}
+          showArrow={showArrows}
         />
       </TableBody>
     </Table>

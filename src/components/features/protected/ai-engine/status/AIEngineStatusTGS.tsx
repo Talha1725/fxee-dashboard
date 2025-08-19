@@ -99,11 +99,11 @@ export default function AIEngineStatusTGS() {
           </div>
           <Input
             placeholder="Enter Trading Goals...."
-            className="w-full !p-4 gap-3 border-none"
+            className="w-full !p-4 gap-3 border-none text-white placeholder:text-white"
             backIcon={
               <div className="flex items-center gap-3">
-                <IconMic width={20} height={20} />
-                <IconSend width={20} height={20} opacity={1} />
+                <IconMic width={20} height={20} className="text-white" />
+                <IconSend width={20} height={20} opacity={1} className="text-white" />
               </div>
             }
           />
