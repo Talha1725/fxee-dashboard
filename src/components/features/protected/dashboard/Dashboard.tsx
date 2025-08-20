@@ -27,6 +27,7 @@ export default function Dashboard() {
             ]}
             className="w-full min-w-0"
           />
+      
         </div>
         </div>
       </div>

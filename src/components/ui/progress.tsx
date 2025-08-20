@@ -36,7 +36,7 @@ function Progress({
     <ProgressPrimitive.Root
       data-slot="progress"
       className={cn(
-        "dark:bg-white/20 bg-black/5 relative h-2 w-full overflow-hidden rounded-full",
+        "dark:bg-white/5 bg-black/5 relative h-2 w-full overflow-hidden rounded-full",
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ function Progress({
       >
         <div className="w-full h-full flex items-center justify-between px-1">
           {Array.from({ length: numDots }).map((_, index) => (
-            <span key={index} className="w-[2px] h-[2px] bg-[#454459] rounded-full -z-10" />
+            <span key={index} className="w-[3px] h-[3px] bg-[#454459] rounded-full dark:opacity-100 opacity-50 -z-10" />
           ))}
         </div>
       </div>
