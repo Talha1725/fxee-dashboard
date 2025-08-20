@@ -5,7 +5,7 @@ import AIEngineToolsCardHead from "../AIEngineToolsCardHead";
 import AIEngineToolsCardContainer from "../AIEngineToolsCardContainer";
 import AIEngineToolsNIPText from "./AIEngineToolsNIPText";
 import AIEngineToolsNIPCards from "./AIEngineToolsNIPCards";
-import { IconNIP, IconAdd, IconBitcoin, IconCircledEnergy, IconZap, IconAIMagic, IconAnalyse } from "@/components/ui/icon";
+import { IconNIP, IconAdd, IconBitcoin, IconAnalyse, IconClock, IconBull, IconConnect } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import dynamic from "next/dynamic";
 import { Text14, Text16, Text20 } from "@/components/ui/typography";
@@ -222,9 +222,9 @@ export default function AIEngineToolsNIP({
                 showActionButton={false}
                 isNIPVersion={true}
                 badges={[
-                  // { text: "Low Risk", icon: <IconShield width={20} height={20} /> },
-                  // { text: "95% Accuracy", icon: <IconTarget width={20} height={20} /> },
-                  // { text: "Real-time", icon: <IconClock width={20} height={20} /> }
+                  { text: "Bullish Bias", icon: <IconBull width={20} height={20} /> },
+                  { text: "89%", icon: <IconConnect width={20} height={20} /> },
+                  { text: "Next 4 Hours ", icon: <IconClock width={20} height={20} /> }
                 ]}
               />
             </div>

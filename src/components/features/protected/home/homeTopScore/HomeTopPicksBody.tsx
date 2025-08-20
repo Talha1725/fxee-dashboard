@@ -19,35 +19,6 @@ import {
 } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
-// Constants for repeated values
-const TABLE_HEAD_CLASSES = "text-[12px] font-satoshi";
-const CHANGE_COLOR_CLASSES = "text-[#079744] dark:text-green";
-const CHANGE_NEGATIVE_COLOR_CLASSES = "text-[#FF453A] dark:text-danger";
-
-// Helper functions
-const getChangeColorClasses = (isUp: boolean) =>
-  isUp ? CHANGE_COLOR_CLASSES : CHANGE_NEGATIVE_COLOR_CLASSES;
-
-const ChangeIcon = ({ isUp }: { isUp: boolean }) =>
-  isUp ? (
-    <IconTradeUp width={16} height={16} color="#3EDC81" />
-  ) : (
-    <IconTradeDown width={16} height={16} color="#FF453A" />
-  );
-
-// Data constants
-const FOREX_DATA = [
-  { currency: "EUR/USD", last: 1.2345, change: 0.0012, changePercent: 0.1, isUp: true },
-  { currency: "GBP/USD", last: 6.2345, change: -0.0012, changePercent: -0.12, isUp: false },
-  { currency: "EUR/USD", last: 1.2345, change: 0.0012, changePercent: 0.1, isUp: true },
-  { currency: "GBP/USD", last: 6.2345, change: -0.0012, changePercent: -0.12, isUp: false },
-];
-
-const CRYPTO_DATA = [
-  { currency: "BTC", last: 1.2345, change: 0.0012, changePercent: 0.1, isUp: true },
-  { currency: "ETH", last: 1.2345, change: 0.0012, changePercent: 0.1, isUp: true },
-];
-
 interface TableRowItemProps {
   currency: string;
   last: number;
@@ -74,15 +45,19 @@ const TableRowItem = ({
         </div>
       </TableCell>
       <TableCell>{last}</TableCell>
-      <TableCell className={getChangeColorClasses(isUp)}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {change}
       </TableCell>
-      <TableCell className={getChangeColorClasses(isUp)}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {changePercent}%
       </TableCell>
       {showArrow && (
         <TableCell className="text-right">
-          <ChangeIcon isUp={isUp} />
+          {isUp ? (
+            <IconTradeUp width={16} height={16} color="#3EDC81" />
+          ) : (
+            <IconTradeDown width={16} height={16} color="#FF453A" />
+          )}
         </TableCell>
       )}
     </TableRow>
@@ -106,15 +81,19 @@ const TableRowItemCrypto = ({
         </div>
       </TableCell>
       <TableCell>{last}</TableCell>
-      <TableCell className={getChangeColorClasses(isUp)}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {change}
       </TableCell>
-      <TableCell className={getChangeColorClasses(isUp)}>
+      <TableCell className={`${isUp ? "text-[#079744] dark:text-green" : "text-[#FF453A] dark:text-danger"}`}>
         {changePercent}%
       </TableCell>
       {showArrow && (
         <TableCell className="text-right">
-          <ChangeIcon isUp={isUp} />
+          {isUp ? (
+            <IconTradeUp width={16} height={16} color="#3EDC81" />
+          ) : (
+            <IconTradeDown width={16} height={16} color="#FF453A" />
+          )}
         </TableCell>
       )}
     </TableRow>
@@ -130,11 +109,11 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent font-satoshi-medium">
-          <TableHead className={TABLE_HEAD_CLASSES}>Symbols</TableHead>
-          <TableHead className={TABLE_HEAD_CLASSES}>Last</TableHead>
-          <TableHead className={TABLE_HEAD_CLASSES}>Chang</TableHead>
-          <TableHead className={TABLE_HEAD_CLASSES}>Chang %</TableHead>
-          {showArrows && <TableHead className={`${TABLE_HEAD_CLASSES} text-right`}></TableHead>}
+          <TableHead className="text-[12px] font-satoshi">Symbols</TableHead>
+          <TableHead className="text-[12px] font-satoshi">Last</TableHead>
+          <TableHead className="text-[12px] font-satoshi">Chang</TableHead>
+          <TableHead className="text-[12px] font-satoshi">Chang %</TableHead>
+          {showArrows && <TableHead className="text-[12px] font-satoshi text-right"></TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody className="font-satoshi">
@@ -146,13 +125,38 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
             </div>
           </TableCell>
         </TableRow>
-        {FOREX_DATA.map((item, index) => (
-          <TableRowItem
-            key={`forex-${index}`}
-            {...item}
-            showArrow={showArrows}
-          />
-        ))}
+        <TableRowItem
+          currency="EUR/USD"
+          last={1.2345}
+          change={0.0012}
+          changePercent={0.1}
+          isUp={true}
+          showArrow={showArrows}
+        />
+        <TableRowItem
+          currency="GBP/USD"
+          last={6.2345}
+          change={-0.0012}
+          changePercent={-0.12}
+          isUp={false}
+          showArrow={showArrows}
+        />
+        <TableRowItem
+          currency="EUR/USD"
+          last={1.2345}
+          change={0.0012}
+          changePercent={0.1}
+          isUp={true}
+          showArrow={showArrows}
+        />
+        <TableRowItem
+          currency="GBP/USD"
+          last={6.2345}
+          change={-0.0012}
+          changePercent={-0.12}
+          isUp={false}
+          showArrow={showArrows}
+        />
         <TableRow className="hover:bg-transparent border-none">
           <TableCell colSpan={showArrows ? 5 : 4}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
@@ -161,13 +165,22 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
             </div>
           </TableCell>
         </TableRow>
-        {CRYPTO_DATA.map((item, index) => (
-          <TableRowItemCrypto
-            key={`crypto-${index}`}
-            {...item}
-            showArrow={showArrows}
-          />
-        ))}
+        <TableRowItemCrypto
+          currency="BTC"
+          last={1.2345}
+          change={0.0012}
+          changePercent={0.1}
+          isUp={true}
+          showArrow={showArrows}
+        />
+        <TableRowItemCrypto
+          currency="ETH"
+          last={1.2345}
+          change={0.0012}
+          changePercent={0.1}
+          isUp={true}
+          showArrow={showArrows}
+        />
       </TableBody>
     </Table>
   );

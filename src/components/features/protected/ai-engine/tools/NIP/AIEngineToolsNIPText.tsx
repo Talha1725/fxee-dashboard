@@ -17,17 +17,17 @@ export default function AIEngineToolsNIPText() {
         BTC/USD: Bitcoin Breaks $104,000 as Crypto Gets a Boost from Trade Deal
         Optimism
       </Text24>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Key points:</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <div className="text-black dark:text-white font-[400]">
+        <Text16 className="font-satoshi-medium">Key points:</Text16>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular">
           <li>Bitcoin crosses $104,000 threshold</li>
           <li>Traders bet China deal is coming</li>
           <li>Bitcoin up 40% since April bottom</li>
         </ul>
       </div>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Bitcoin Clears $104,000</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <div className="text-black dark:text-white font-[400]">
+        <Text16 className="font-satoshi-medium">Bitcoin Clears $104,000</Text16>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular">
           <li>
             Bitcoin (BTCUSD) surged past $104,000 early Friday, notching a fresh
             three-month high as the crypto market rallied on hopes that a
@@ -45,9 +45,9 @@ export default function AIEngineToolsNIPText() {
           </li>
         </ul>
       </div>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Tariffs Out, Risk On</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <div className="text-black dark:text-white font-[400] text-[16px]">
+        <span className="font-satoshi-medium">Tariffs Out, Risk On</span>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular">
           <li>
           The shift in tone jolted markets into risk-on mode. Bitcoin, still the 
           poster child for high-beta assets, was among the first to respond — jumping 
@@ -61,9 +61,9 @@ export default function AIEngineToolsNIPText() {
           </li>
         </ul>
       </div>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Tariffs Out, Risk On</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <div className="text-black dark:text-white font-[400]">
+        <Text16 className="font-satoshi-medium">Tariffs Out, Risk On</Text16>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular">
           <li>
           The shift in tone jolted markets into risk-on mode. Bitcoin, 
           still the poster child for high-beta assets, was among the first to 

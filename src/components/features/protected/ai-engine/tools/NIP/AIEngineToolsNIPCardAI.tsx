@@ -88,7 +88,7 @@ export default function AIEngineToolsNIPCardAI({
             <Text12 className="text-white/80">14:03, 15 Nov</Text12>
           </div>
           {showBadges && (
-            <div className="flex items-start align-content-start gap-2.5 flex-wrap font-satoshi-medium self-stretch">
+            <div className="flex items-start align-content-start gap-2.5 flex-wrap font-satoshi-bold text-[14px] self-stretch">
               {badges.map((badge, index) => (
                 <AIEngineToolsNIPCardAIBadge
                   key={index}
@@ -99,8 +99,8 @@ export default function AIEngineToolsNIPCardAI({
             </div>
           )}
           {showReasoning && (
-            <div className="font-[400]">
-              <Text14 className="font-medium">Reasoning:</Text14>
+            <div className="font-satoshi-medium text-[14px]">
+              <Text14 className="font-satoshi-medium">Reasoning:</Text14>
               <ul className="list-disc list-outside pl-6 mt-2">
                 <li>Break of $104K = psychological and technical breakout</li>
                 <li>
