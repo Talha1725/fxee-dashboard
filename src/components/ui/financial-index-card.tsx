@@ -4,6 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Text14, Text16, Text18, Text24 } from "@/components/ui/typography";
 import { RefreshCcw } from "lucide-react";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface FinancialIndexCardProps {
   symbol: string;
@@ -28,13 +29,15 @@ export default function FinancialIndexCard({
   icon,
   className,
 }: FinancialIndexCardProps) {
+  const { theme } = useTheme();
   const isPositive = change >= 0;
 
   return (
     <div
       className={cn(
-        "w-[336px] h-[176px] rounded-2xl border border-[#0000001A]",
-        "bg-[linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);] dark:bg-[#111]] p-5",
+        "w-[336px] h-[176px] rounded-[16px] border border-black/10",
+        "p-5",
+        `${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`,
         "flex flex-col justify-between",
         "dark:border-white/[0.1]",
         className

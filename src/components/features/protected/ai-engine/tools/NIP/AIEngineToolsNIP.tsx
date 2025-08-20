@@ -5,10 +5,10 @@ import AIEngineToolsCardHead from "../AIEngineToolsCardHead";
 import AIEngineToolsCardContainer from "../AIEngineToolsCardContainer";
 import AIEngineToolsNIPText from "./AIEngineToolsNIPText";
 import AIEngineToolsNIPCards from "./AIEngineToolsNIPCards";
-import { IconNIP, IconAdd, IconBitcoin, IconCircledEnergy } from "@/components/ui/icon";
+import { IconNIP, IconAdd, IconBitcoin, IconCircledEnergy, IconZap, IconAIMagic, IconAnalyse } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import dynamic from "next/dynamic";
-import { Text14, Text20 } from "@/components/ui/typography";
+import { Text14, Text16, Text20 } from "@/components/ui/typography";
 import CurrencyToCryptoPairConverter from "@/components/features/CurrencyToCryptoPairConverter";
 import AIEngineToolsNIPCardAI from "./AIEngineToolsNIPCardAI";
 import HomeTopPicks from "../../../home/homeTopScore/HomeTopPicks";
@@ -16,6 +16,7 @@ import CommonSelect from "@/components/ui/common-select";
 import FinancialIndexCard from "@/components/ui/financial-index-card";
 import CardBox from "@/components/ui/cardBox";
 import { Button } from "@/components/ui/button";
+import { RefreshCcw } from "lucide-react";
 
 const AdvancedRealTimeChart = dynamic(
   () =>
@@ -115,7 +116,7 @@ export default function AIEngineToolsNIP({
         />
         
         <div className="min-h-[785px] h-full overflow-y-auto">
-                    <div className="flex flex-col items-start gap-5 self-stretch md:flex-row md:gap-5">
+          <div className="flex flex-col items-start gap-5 self-stretch md:flex-row md:gap-5">
             {/* Left Side - Chart */}
             <div className="flex-1 min-w-0 w-full md:flex-[2] lg:flex-[2.5] xl:flex-[3]">
               <div className="mb-2">
@@ -133,22 +134,26 @@ export default function AIEngineToolsNIP({
                       </div>
                     </div>
                   </div>
-
                   <div className="flex flex-col justify-center items-start py-3 px-4 h-[70px] rounded-[16px] border-t border-r border-l border-[#0000001A] dark:border-white/15 bg-dark-gradient">
                     <div className="flex items-center gap-2.5">
                       <IconAdd width={20} height={20} className="text-white" />
                     </div>
                   </div>
+                    <IconAnalyse width={40} height={40} />
                 </div>
+                
               </div>
-
-              <AdvancedRealTimeChart
-                interval="60"
-                timezone="Etc/UTC"
-                width="100%"
-                height="600"
-                theme={theme === "dark" ? "dark" : "light"}
-              />
+              <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-dark-gradient z-50 pointer-events-none"></div>
+                <AdvancedRealTimeChart
+                  symbol={currency.replace("/", "")}
+                  interval="60"
+                  timezone="Etc/UTC"
+                  width="100%"
+                  height="450"
+                  theme={theme === "dark" ? "dark" : "light"}
+                />
+              </div>
             </div>
 
             {/* Right Side - Cards */}
@@ -168,10 +173,10 @@ export default function AIEngineToolsNIP({
               
               <CommonSelect
                 placeholder="Select a category"
-                defaultValue="Seasonal"
+                defaultValue="Trade"
                 options={[
-                  { value: "Seasonal", label: "Seasonal" },
-                  { value: "Trending", label: "Trending" },
+                  { value: "Trade", label: "Trade" },
+                  { value: "Seasonals", label: "Seasonals" },
                   { value: "Popular", label: "Popular" }
                 ]}
                 className="w-full min-w-0"
@@ -179,9 +184,9 @@ export default function AIEngineToolsNIP({
               
               <CommonSelect
                 placeholder="Select a category"
-                defaultValue="Seasonal"
+                defaultValue="Seasonals"
                 options={[
-                  { value: "Seasonal", label: "Seasonal" },
+                  { value: "Seasonals", label: "Seasonals" },
                   { value: "Trending", label: "Trending" },
                   { value: "Popular", label: "Popular" }
                 ]}
@@ -203,9 +208,9 @@ export default function AIEngineToolsNIP({
         />
         
         <div className="min-h-[887px] h-full overflow-y-auto">
-          <div className="flex flex-col gap-5 self-stretch md:flex-row md:gap-5">
+          <div className="flex flex-col gap-5 self-stretch md:flex-row md:gap-8">
             {/* Left Side - AI Panel */}
-            <div className="w-full md:flex-[2] lg:flex-[2.5] xl:flex-[3]">
+            <div className="w-full md:flex-[2] lg:flex-[2.5] xl:flex-[3] xl:max-w-[800px]">
               <AIEngineToolsNIPCardAI
                 title="AI Insight Panel"
                 headerAlign="center"
@@ -216,18 +221,23 @@ export default function AIEngineToolsNIP({
                 showPrediction={false}
                 showActionButton={false}
                 isNIPVersion={true}
+                badges={[
+                  // { text: "Low Risk", icon: <IconShield width={20} height={20} /> },
+                  // { text: "95% Accuracy", icon: <IconTarget width={20} height={20} /> },
+                  // { text: "Real-time", icon: <IconClock width={20} height={20} /> }
+                ]}
               />
             </div>
 
             {/* Right Side - Portfolio Cards */}
-            <div className="flex flex-col gap-8 w-full md:w-auto md:flex-1">
+            <div className="flex flex-col gap-4 w-full md:flex-1 md:max-w-[400px]">
               {/* Suggested Allocation Breakdown */}
               <CardBox
                 title="Suggested Allocation Breakdown"
                 customSize={{
                   width: "w-full",
                   height: "h-[162px]",
-                  padding: "p-[20px]"
+                  padding: "p-5"
                 }}
               >
                 <AllocationBreakdown />
@@ -244,17 +254,21 @@ export default function AIEngineToolsNIP({
                   { value: "BTC 25%, ETH 10%, SOL 5%", style: 'sub-breakdown' },
                 ]}
                 customSize={{
-                  width: "w-full"
+                  width: "w-full",
+                  padding: "p-5"
                 }}
               />
 
               {/* Risk Profile Selector */}
-              <CardBox title="Risk Profile Selector"
+              <CardBox
+                title="Risk Profile Selector"
                 customSize={{
-                  width: "w-full"
-                }}>
-                <p className="text-black dark:text-white">Your Risk Profile:</p>
-                <ul className="list-disc pl-5 text-black dark:text-white">
+                  width: "w-full",
+                  padding: "p-5"
+                }}
+              >
+                <p className="text-black dark:text-white font-medium mb-2">Your Risk Profile:</p>
+                <ul className="list-disc pl-5 text-black dark:text-white space-y-1">
                   <li>Conservative</li>
                   <li>Moderate</li>
                   <li>Aggressive</li>
@@ -262,36 +276,33 @@ export default function AIEngineToolsNIP({
               </CardBox>
 
               {/* Action Buttons */}
-              <div className="flex gap-[11px] mt-2">
-                <Button
-                  variant={theme === "dark" ? "white" : "black"}
-                  className="w-full md:w-[163px] h-[39px] rounded-[10px] border border-white/5 p-[10px]"
-                >
-                  <Text14 className="text-white dark:text-[#111] font-satoshi-medium">
-                    Apply Allocation
-                  </Text14>
-                </Button>
-
-                <Button
-                  variant={theme === "dark" ? "white" : "black"}
-                  className="w-full md:w-[163px] h-[39px] rounded-[10px] border border-white/5 p-[10px]"
-                >
-                  <Text14 className="text-white dark:text-[#111] font-satoshi-medium">
-                    Simulate ROI
-                  </Text14>
-                </Button>
+              <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                {["Apply Allocation", "Simulate ROI"].map((label) => (
+                  <Button
+                    key={label}
+                    variant={theme === "dark" ? "white" : "black"}
+                    className="w-full md:w-[163px] h-[39px] rounded-[10px] border border-white/5 p-[10px]"
+                  >
+                    <Text14 className="text-white dark:text-[#111] font-satoshi-bold">
+                      {label}
+                    </Text14>
+                  </Button>
+                ))}
               </div>
 
               {/* Rebalance Now Button and Last Updated Text */}
-              <div className="flex flex-col mt-2">
-                <div className="flex items-center justify-center w-full md:w-[337px] h-[52px] gap-[6px] rounded-[16px] bg-white/5 border border-black/20 pt-[16px] pr-[20px] pb-[16px] pl-[20px] cursor-pointer hover:bg-white/10 transition-colors">
-                  <Text14 className="text-black dark:text-white font-satoshi-medium">
-                    Rebalance Now
-                  </Text14>
+              <div className="flex flex-col mt-4">
+                <div className={`flex items-center justify-center w-full h-[52px] rounded-[16px] ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1] transition-all duration-200 hover:scale-[1.02]`}>
+                  <div className="flex items-center gap-2">
+                  <RefreshCcw size={14} className="shrink-0" />
+                    <Text14 className="text-black dark:text-white font-satoshi-bold">
+                      Rebalance Now
+                    </Text14>
+                  </div>
                 </div>
 
-                <div className="text-center mt-[8px] -mt-6">
-                  <span className="font-satoshi-medium text-[12px] leading-[100%] tracking-[-0.02em] text-black dark:text-white">
+                <div className="text-center mt-3">
+                  <span className="font-satoshi-medium text-[12px] leading-[100%] tracking-[-0.02em] text-black dark:text-white opacity-70">
                     Last updated: 30 seconds ago
                   </span>
                 </div>
@@ -307,7 +318,8 @@ export default function AIEngineToolsNIP({
                   { value: "50% Forex / 50% Crypto", style: 'mini-allocation' },
                 ]}
                 customSize={{
-                  width: "w-full"
+                  width: "w-full",
+                  padding: "p-5"
                 }}
               />
             </div>
