@@ -6,7 +6,7 @@ export default function AIEngineToolsNIPCardHead({
   icon,
 }: {
   title: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 }) {
   return (
     <div className="flex items-center gap-2 self-stretch">

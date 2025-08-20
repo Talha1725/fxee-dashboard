@@ -7,12 +7,16 @@ import HomeTopPicksHead from "@/components/features/protected/home/homeTopScore/
 import HomeTopPicksBody from "@/components/features/protected/home/homeTopScore/HomeTopPicksBody";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
-export default function HomeTopPicks() {
+interface HomeTopPicksProps {
+  showArrows?: boolean;
+}
+
+export default function HomeTopPicks({ showArrows = true }: HomeTopPicksProps) {
   const { theme } = useTheme();
   return (
     <ProtectedCardContainer className={`h-[471px] border-black/5 ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"}`}>
       <HomeTopPicksHead />
-      <HomeTopPicksBody />
+      <HomeTopPicksBody showArrows={showArrows} />
     </ProtectedCardContainer>
   );
 }
