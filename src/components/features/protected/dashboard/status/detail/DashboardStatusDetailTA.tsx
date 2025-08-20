@@ -84,7 +84,7 @@ export default function DashboardStatusDetailTA() {
             <Text16 className="dark:text-blue text-[#007AFF] font-satoshi-medium">2.1</Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
-        <DashboardStatusDetailSubcardContainer className="bg-white dark:bg-white/3 min-h-[193px] px-0">
+        <DashboardStatusDetailSubcardContainer className="bg-white dark:bg-white/3 min-h-[193px] px-0 overflow-hidden">
           <div className="inline-flex flex-col items-start gap-1.5 px-2">
 
             <div className="flex items-end gap-1.5 self-stretch">
