@@ -15,21 +15,9 @@ export default function Dashboard() {
           <DashboardWidget currency="BTC/ETH" />
         </div>
         <div>
-        <HomeTrades className="bg-card-green-gradient" />
-        <div className="w-full mt-5">
-<<<<<<< HEAD
-          <Select>
-            <SelectTrigger className="w-full rounded-xl dark:!bg-white/2 !bg-black/2">
-              <SelectValue placeholder="Select" defaultValue="Seasonal" className="dark:text-white text-black" />
-              <SelectContent className="dark:bg-black bg-white dark:text-white text-black">
-                <SelectItem value="Seasonal" className="dark:text-white text-black">Seasonal</SelectItem>
-                <SelectItem value="Trending" className="dark:text-white text-black">Trending</SelectItem>
-                <SelectItem value="Popular" className="dark:text-white text-black">Popular</SelectItem>
-              </SelectContent>
-            </SelectTrigger>
-          </Select>
-=======
-          <CommonSelect
+          <HomeTrades className="bg-card-green-gradient" />
+          <div className="w-full mt-5">
+            <CommonSelect
             placeholder="Select a category"
             defaultValue="Seasonal"
             options={[
@@ -39,7 +27,6 @@ export default function Dashboard() {
             ]}
             className="w-full min-w-0"
           />
->>>>>>> saba/fix/ai_engine_tools/main
         </div>
         </div>
       </div>
