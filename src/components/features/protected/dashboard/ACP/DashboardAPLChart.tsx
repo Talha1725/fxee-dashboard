@@ -19,6 +19,8 @@ export default function DashboardAPLChart({
 }: APLChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  // Ensure a unique gradient id per component instance to avoid collisions
+  const gradientIdRef = useRef<string>(`aplGradient-${Math.random().toString(36).slice(2)}`);
   const [dimensions, setDimensions] = useState({ width: 200, height });
 
   // Sample data representing AI Power Level over time - upward trend
@@ -101,7 +103,7 @@ export default function DashboardAPLChart({
     const gradient = svg
       .append("defs")
       .append("linearGradient")
-      .attr("id", "aplGradient")
+      .attr("id", gradientIdRef.current)
       .attr("gradientUnits", "userSpaceOnUse")
       .attr("x1", 0)
       .attr("y1", 0)
@@ -111,37 +113,67 @@ export default function DashboardAPLChart({
     gradient
       .append("stop")
       .attr("offset", "0%")
-      .attr("stopColor", "#3EDC81")
-      .attr("stop-opacity", 0.4);
+      .attr("stop-color", "#3EDC81")
+      .attr("stop-opacity", 1);
 
     gradient
       .append("stop")
       .attr("offset", "100%")
-      .attr("stopColor", "#3EDC81")
-      .attr("stop-opacity", 0.1);
+      .attr("stop-color", "#3EDC81")
+      .attr("stop-opacity", 0.2);
 
     // Add area with smooth animation
     g.append("path")
       .datum(chartData)
-      .attr("fill", "url(#aplGradient)")
+      .style("fill", `url(#${gradientIdRef.current})`)
       .attr("d", area)
-      .style("opacity", 0)
-      .transition()
-      .duration(1000)
-      .style("opacity", 0);
+      .style("opacity", 0.2);
 
     // Add line with smooth animation
     g.append("path")
       .datum(chartData)
       .attr("fill", "none")
       .attr("stroke", "#3EDC81")
-      .attr("stroke-width", 2)
+      .attr("stroke-width", 4)
       .attr("d", line)
       .style("opacity", 0)
       .transition()
       .duration(1000)
       .delay(200)
       .style("opacity", 1);
+
+    // Add dot marker at the last data point
+    const lastDataPoint = chartData[chartData.length - 10];
+    
+    // Create a white circle with green border (current point indicator)
+    g.append("circle")
+      .attr("cx", xScale(lastDataPoint.x))
+      .attr("cy", yScale(lastDataPoint.y))
+      .attr("r", 9)
+      .attr("fill", "white")
+      .attr("stroke", "#3EDC81")
+      .attr("stroke-width", 6)
+      .style("opacity", 0)
+      .transition()
+      .duration(800)
+      .delay(600)
+      .style("opacity", 1);
+
+    // Optional: Add a subtle glow effect to the dot
+    g.append("circle")
+      .attr("cx", xScale(lastDataPoint.x))
+      .attr("cy", yScale(lastDataPoint.y))
+      .attr("r", 6)
+      .attr("fill", "none")
+      .attr("stroke", "#3EDC81")
+      .attr("stroke-width", 1)
+      .attr("opacity", 0.3)
+      .style("opacity", 0)
+      .transition()
+      .duration(800)
+      .delay(600)
+      .style("opacity", 0.3);
+
   }, [chartData, dimensions]);
 
   return (

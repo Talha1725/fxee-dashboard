@@ -13,6 +13,7 @@ export default function DashboardAPL() {
       <div className="w-[244px] h-[54px] gap-[10px] flex flex-col items-start">
         <div className="flex items-center gap-2">
           <DashboardHeadBadge className={`bg-gradient-to-b from-white/20 to-white/60 ${theme === "dark" && "bg-button-grey-gradient"}`}>
+
             <IconPowerService width={14} height={14} />
           </DashboardHeadBadge>
           <Text16 className="font-satoshi-medium dark:text-white text-black">AI Power Level</Text16>
@@ -21,6 +22,7 @@ export default function DashboardAPL() {
       </div>
       <div className="w-[118px] h-[54px] relative">
         <DashboardAPLChart />
+
       </div>
     </div>
   );
