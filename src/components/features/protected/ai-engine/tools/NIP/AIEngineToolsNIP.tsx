@@ -15,7 +15,7 @@ import { Text14 } from "@/components/ui/typography";
 import { RefreshCcw } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import FancyIcon from "@/components/ui/icon";
-import PieIcon from "@/public/images/pie";
+import PieIcon from "@/components/ui/icon";
 
 const AllocationBar = ({ 
     label, 
