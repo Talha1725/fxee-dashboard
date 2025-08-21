@@ -926,6 +926,20 @@ body {
   .bg-landing-text-flow-gradient {
     background: var(--landing-text-flow-gradient);
   }
+  .bg-light-green-blue-gradient {
+    background: linear-gradient(
+      3.18deg,
+        rgba(47, 141, 86, 0.9) 14.37%,
+        rgba(4, 92, 169, 0.9) 82.05%
+      ),
+      linear-gradient(
+        236.84deg,
+        rgba(15, 15, 15, 0.14) 5.53%,
+        rgba(15, 15, 15, 0.463345) 56.04%,
+        rgba(15, 15, 15, 0.523884) 75.37%,
+        rgba(15, 15, 15, 0.63) 96.4%
+      );
+  }
   .multi-dropshadow {
     filter: drop-shadow(47px 47px 118px rgba(62, 145, 231, 0.5))
       drop-shadow(-47px -47px 94px rgba(86, 244, 154, 0.5))
