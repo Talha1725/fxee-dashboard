@@ -5,7 +5,7 @@ import { Text16 } from "@/components/ui/typography";
 
 export default function AIEngineToolsNIPText() {
   return (
-    <div className="flex flex-col items-start gap-5 flex-[1_0_0] p-5 rounded-[16px] border border-white/5 bg-card-main-dashboard-gradient h-[881px] overflow-y-auto">
+    <div className="flex flex-col items-start gap-5 flex-[1_0_0] p-5 rounded-[16px] border border-white/5 bg-card-main-dashboard-gradient h-[881px] overflow-y-auto scrollbar-hide">
       <div className="flex items-center gap-[5px]">
         <Text14 className="text-black/80 dark:text-white/80">May 9, 2025</Text14>
         <IconCircle width={2} height={2} />

@@ -1,165 +1,109 @@
-"use client";
-import React from "react";
-
+'use client'
+import { IconAnalyse, IconBitcoin, IconBull, IconClock, IconConnect, IconNIP } from "@/components/ui/icon";
 import AIEngineToolsCardHead from "../AIEngineToolsCardHead";
-import AIEngineToolsCardContainer from "../AIEngineToolsCardContainer";
 import AIEngineToolsNIPText from "./AIEngineToolsNIPText";
 import AIEngineToolsNIPCards from "./AIEngineToolsNIPCards";
-import { IconNIP, IconAdd, IconBitcoin, IconAnalyse, IconClock, IconBull, IconConnect } from "@/components/ui/icon";
-import { useTheme } from "@/lib/contexts/ThemeContext";
-import dynamic from "next/dynamic";
-import { Text14, Text16, Text20 } from "@/components/ui/typography";
-import CurrencyToCryptoPairConverter from "@/components/features/CurrencyToCryptoPairConverter";
-import AIEngineToolsNIPCardAI from "./AIEngineToolsNIPCardAI";
-import HomeTopPicks from "../../../home/homeTopScore/HomeTopPicks";
+import AIEngineToolsCardContainer from "../AIEngineToolsCardContainer";
+import DashboardWidget from "@/components/features/protected/dashboard/widget/DashboardWidget";
 import CommonSelect from "@/components/ui/common-select";
 import FinancialIndexCard from "@/components/ui/financial-index-card";
+import HomeTopPicks from "../../../home/homeTopScore/HomeTopPicks";
+import AIEngineToolsNIPCardAI from "./AIEngineToolsNIPCardAI";
 import CardBox from "@/components/ui/cardBox";
 import { Button } from "@/components/ui/button";
+import { Text14 } from "@/components/ui/typography";
 import { RefreshCcw } from "lucide-react";
-
-const AdvancedRealTimeChart = dynamic(
-  () =>
-    import("react-ts-tradingview-widgets").then(
-      (mod) => mod.AdvancedRealTimeChart
-    ),
-  { ssr: false }
-);
-
-// ============================================================================
-// REUSABLE COMPONENTS
-// ============================================================================
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 const AllocationBar = ({ 
-  label, 
-  width, 
-  opacity = 100 
-}: { 
-  label: string; 
-  width: number; 
-  opacity?: number 
-}) => (
-  <div className="flex items-center gap-[12px]">
-    <p className="font-satoshi-bold text-[10.11px] leading-[100%] tracking-[0%] text-black dark:text-white">
-      {label}
-    </p>
-    <div 
-      className="h-[18px] rounded-[2.37px] bg-gradient-to-r from-[#0276DB] to-[#3EDC81]"
-      style={{ width: `${width}px`, opacity: opacity / 100 }}
-    />
-  </div>
-);
-
-const AllocationBreakdown = () => (
-  <div className="flex flex-col gap-[14px] mb-6">
-    <AllocationBar label="Forex" width={66} opacity={100} />
-    <AllocationBar label="Crypto" width={144} opacity={40} />
-  </div>
-);
-
-const NumberScale = () => {
-  const numbers = [0, 2.0, 4.0, 6.0, 8.0, 10.0];
-  
-  return (
-    <div className="w-[295.42px] h-[14px] flex justify-between items-center pl-[42px] mt-[16px]">
-      {numbers.map((num) => (
-        <span 
-          key={num} 
-          className="font-satoshi-medium text-[10.11px] leading-[100%] tracking-[0%] text-black dark:text-white"
-        >
-          {num}
-        </span>
-      ))}
+    label, 
+    width, 
+    opacity = 100 
+  }: { 
+    label: string; 
+    width: number; 
+    opacity?: number 
+  }) => (
+    <div className="flex items-center gap-[12px]">
+      <p className="font-satoshi-bold text-[10.11px] leading-[100%] tracking-[0%] text-black dark:text-white">
+        {label}
+      </p>
+      <div 
+        className="h-[18px] rounded-[2.37px] bg-gradient-to-r from-[#0276DB] to-[#3EDC81]"
+        style={{ width: `${width}px`, opacity: opacity / 100 }}
+      />
     </div>
   );
-};
+  
+  const AllocationBreakdown = () => (
+    <div className="flex flex-col gap-[14px] mb-6">
+      <AllocationBar label="Forex" width={66} opacity={100} />
+      <AllocationBar label="Crypto" width={144} opacity={40} />
+    </div>
+  );
+  
+  const NumberScale = () => {
+    const numbers = [0, 2.0, 4.0, 6.0, 8.0, 10.0];
+    
+    return (
+      <div className="w-[295.42px] h-[14px] flex justify-between items-center pl-[42px] mt-[16px]">
+        {numbers.map((num) => (
+          <span 
+            key={num} 
+            className="font-satoshi-medium text-[10.11px] leading-[100%] tracking-[0%] text-black dark:text-white"
+          >
+            {num}
+          </span>
+        ))}
+      </div>
+    );
+  };
 
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
-
-export default function AIEngineToolsNIP({ 
-  currency = "BTC/USD" 
-}: { 
-  currency?: string 
-}) {
+export default function AIEngineToolsNIP() {
   const { theme } = useTheme();
-
   return (
     <AIEngineToolsCardContainer>
-      {/* ====================================================================
-          FIRST SECTION - NEWS IMPACT PREDICTOR
-      ===================================================================== */}
       <div className="flex flex-col gap-6">
         <AIEngineToolsCardHead
           title="News Impact Predictor"
           description="Realtime Market news analysis with sentiment scoring and impact prediction"
           icon={<IconNIP width={14} height={14} />}
         />
-        
-        <div className="min-h-[714px] max-h-[714px] overflow-y-auto">
-          <div className="flex items-start gap-5 self-stretch">
+
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch md:min-h-[714px] md:max-h-[714px]">
+          <div className="w-full md:flex-1 order-1 
+            h-auto md:h-full 
+            overflow-visible md:overflow-y-auto scrollbar-hide">
             <AIEngineToolsNIPText />
+          </div>
+
+          <div className="w-full md:w-[344px] order-2 
+            h-auto md:h-full 
+            overflow-visible md:overflow-y-auto scrollbar-hide mt-5 md:mt-0">
             <AIEngineToolsNIPCards />
           </div>
         </div>
       </div>
 
-      {/* ====================================================================
-          SECOND SECTION - RSI ANALYZER
-      ===================================================================== */}
-      <div className="flex flex-col gap-6 mt-12">
+      <div className="flex flex-col gap-6 self-stretch mt-12">
         <AIEngineToolsCardHead
           title="RSI Analyzer"
           description="Advanced RSI analysis with AI-powered overbought/oversold"
           icon={<IconNIP width={14} height={14} />}
         />
-        
-        <div className="min-h-[785px] h-full overflow-y-auto">
-          <div className="flex flex-col items-start gap-5 self-stretch md:flex-row md:gap-5">
-            {/* Left Side - Chart */}
-            <div className="flex-1 min-w-0 w-full md:flex-[2] lg:flex-[2.5] xl:flex-[3]">
-              <div className="mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="flex flex-col justify-center items-start pt-3 px-4 h-[70px] gap-5 w-[160px] sm:w-[220px] rounded-t-[16px] border-t border-r border-l border-[#0000001A] dark:border-white/15 bg-dark-gradient">
-                    <div className="flex items-center gap-2.5">
-                      <CurrencyToCryptoPairConverter currency={currency} size={38} />
-                      <div className="flex flex-col justify-center items-start">
-                        <Text20 className="font-satoshi-medium dark:text-white text-black">
-                          {currency}
-                        </Text20>
-                        <Text14 className="font-satoshi-medium dark:text-white/60 text-black/40">
-                          $0.06642
-                        </Text14>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-center items-start py-3 px-4 h-[70px] rounded-[16px] border-t border-r border-l border-[#0000001A] dark:border-white/15 bg-dark-gradient">
-                    <div className="flex items-center gap-2.5">
-                      <IconAdd width={20} height={20} className="text-white" />
-                    </div>
-                  </div>
-                    <IconAnalyse width={40} height={40} />
-                </div>
-                
-              </div>
-              <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-full bg-dark-gradient z-50 pointer-events-none"></div>
-                <AdvancedRealTimeChart
-                  symbol={currency.replace("/", "")}
-                  interval="60"
-                  timezone="Etc/UTC"
-                  width="100%"
-                  height="450"
-                  theme={theme === "dark" ? "dark" : "light"}
-                />
-              </div>
-            </div>
 
-            {/* Right Side - Cards */}
-            <div className="flex flex-col items-start gap-2 w-full mt-5 md:mt-0 md:w-auto md:flex-1">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch md:min-h-[714px] md:max-h-[714px]">
+          <div className="w-full md:flex-1 h-[350px] md:h-full overflow-y-auto scrollbar-hide order-1">
+            <DashboardWidget 
+            currency="BTC/ETH" 
+            showPlusIcon={true}
+            actionButton={<IconAnalyse width={40} height={40} />} />
+          </div>
+
+          <div className="w-full md:w-[344px] h-auto md:h-full md:overflow-y-auto scrollbar-hide mt-5 md:mt-0 order-2">
+            <div className="flex flex-col items-start gap-4 w-full">
               <HomeTopPicks showArrows={false} />
-              
+
               <FinancialIndexCard
                 symbol="BTC/ETH"
                 name="US 100 Index"
@@ -170,68 +114,65 @@ export default function AIEngineToolsNIP({
                 lastUpdate="03:22 GMT+5"
                 icon={<IconBitcoin width={24} height={24} />}
               />
-              
-              <CommonSelect
-                placeholder="Select a category"
-                defaultValue="Trade"
-                options={[
-                  { value: "Trade", label: "Trade" },
-                  { value: "Seasonals", label: "Seasonals" },
-                  { value: "Popular", label: "Popular" }
-                ]}
-                className="w-full min-w-0"
-              />
-              
-              <CommonSelect
-                placeholder="Select a category"
-                defaultValue="Seasonals"
-                options={[
-                  { value: "Seasonals", label: "Seasonals" },
-                  { value: "Trending", label: "Trending" },
-                  { value: "Popular", label: "Popular" }
-                ]}
-                className="w-full min-w-0"
-              />
+
+              <div className="w-full flex flex-col gap-4">
+                <CommonSelect
+                  placeholder="Select a category"
+                  defaultValue="Trade"
+                  options={[
+                    { value: "Trade", label: "Trade" },
+                    { value: "Trending", label: "Trending" },
+                    { value: "Popular", label: "Popular" }
+                  ]}
+                  className="w-full min-w-0"
+                />
+                <CommonSelect
+                  placeholder="Select a category"
+                  defaultValue="Seasonal"
+                  options={[
+                    { value: "Seasonal", label: "Seasonal" },
+                    { value: "Trending", label: "Trending" },
+                    { value: "Popular", label: "Popular" }
+                  ]}
+                  className="w-full min-w-0"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ====================================================================
-          THIRD SECTION - SMART PORTFOLIO ALLOCATOR
-      ===================================================================== */}
-      <div className="flex flex-col gap-6 mt-12">
+      <div className="flex flex-col gap-6 self-stretch mt-12">
         <AIEngineToolsCardHead
           title="Smart Portfolio Allocator"
           description="Leverage AI to automatically distribute your capital across assets based on risk tolerance, market trends, and performance potential."
           icon={<IconNIP width={14} height={14} />}
         />
-        
-        <div className="min-h-[887px] h-full overflow-y-auto">
-          <div className="flex flex-col gap-5 self-stretch md:flex-row md:gap-8">
-            {/* Left Side - AI Panel */}
-            <div className="w-full md:flex-[2] lg:flex-[2.5] xl:flex-[3] xl:max-w-[800px]">
-              <AIEngineToolsNIPCardAI
-                title="AI Insight Panel"
-                headerAlign="center"
-                showHeaderIcon={false}
-                showIcon={true}
-                showBadges={true}
-                showReasoning={true}
-                showPrediction={false}
-                showActionButton={false}
-                isNIPVersion={true}
-                badges={[
-                  { text: "Bullish Bias", icon: <IconBull width={20} height={20} /> },
-                  { text: "89%", icon: <IconConnect width={20} height={20} /> },
-                  { text: "Next 4 Hours ", icon: <IconClock width={20} height={20} /> }
-                ]}
-              />
-            </div>
 
-            {/* Right Side - Portfolio Cards */}
-            <div className="flex flex-col gap-4 w-full md:flex-1 md:max-w-[400px]">
-              {/* Suggested Allocation Breakdown */}
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[714px] md:max-h-[714px] md:overflow-hidden">
+          
+          <div className="w-full flex-1 h-full md:overflow-y-auto scrollbar-hide">
+            <AIEngineToolsNIPCardAI
+              title="AI Insight Panel"
+              headerAlign="center"
+              showHeaderIcon={false}
+              showIcon={true}
+              showBadges={true}
+              showReasoning={true}
+              showPrediction={false}
+              showActionButton={false}
+              isNIPVersion={true}
+              badges={[
+                { text: "Bullish Bias", icon: <IconBull width={20} height={20} /> },
+                { text: "89%", icon: <IconConnect width={20} height={20} /> },
+                { text: "Next 4 Hours ", icon: <IconClock width={20} height={20} /> }
+              ]}
+            />
+          </div>
+
+          <div className="w-full md:w-[344px] h-auto md:h-full md:overflow-y-auto scrollbar-hide">
+            <div className="flex flex-col items-start gap-4 w-full mt-5 md:mt-0 md:w-auto md:flex-1">
+
               <CardBox
                 title="Suggested Allocation Breakdown"
                 customSize={{
@@ -244,7 +185,6 @@ export default function AIEngineToolsNIP({
                 <NumberScale />
               </CardBox>
 
-              {/* Sub-Breakdown Inside Each Category */}
               <CardBox
                 title="Sub-Breakdown Inside Each Category"
                 listItems={[
@@ -259,7 +199,6 @@ export default function AIEngineToolsNIP({
                 }}
               />
 
-              {/* Risk Profile Selector */}
               <CardBox
                 title="Risk Profile Selector"
                 customSize={{
@@ -275,26 +214,30 @@ export default function AIEngineToolsNIP({
                 </ul>
               </CardBox>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 mt-4">
+              <div className="flex justify-center items-center gap-4 mt-4 w-full">
                 {["Apply Allocation", "Simulate ROI"].map((label) => (
                   <Button
                     key={label}
                     variant={theme === "dark" ? "white" : "black"}
-                    className="w-full md:w-[163px] h-[39px] rounded-[10px] border border-white/5 p-[10px]"
+                    className="h-[39px] rounded-[10px] border border-white/5 px-[10px] 
+                              w-[140px] sm:w-[163px]"
                   >
-                    <Text14 className="text-white dark:text-[#111] font-satoshi-bold">
+                    <Text14 className="text-white dark:text-[#111] font-satoshi-bold text-[14px]">
                       {label}
                     </Text14>
                   </Button>
                 ))}
               </div>
 
-              {/* Rebalance Now Button and Last Updated Text */}
-              <div className="flex flex-col mt-4">
-                <div className={`flex items-center justify-center w-full h-[52px] rounded-[16px] ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1] transition-all duration-200 hover:scale-[1.02]`}>
+              <div className="flex flex-col mt-4 w-full">
+                <div
+                  className={`flex items-center justify-center w-full h-[52px] rounded-[16px] 
+                  ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} 
+                  border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1] 
+                  transition-all duration-200 hover:scale-[1.02]`}
+                >
                   <div className="flex items-center gap-2">
-                  <RefreshCcw size={14} className="shrink-0" />
+                    <RefreshCcw size={14} className="shrink-0" />
                     <Text14 className="text-black dark:text-white font-satoshi-bold">
                       Rebalance Now
                     </Text14>
@@ -308,7 +251,6 @@ export default function AIEngineToolsNIP({
                 </div>
               </div>
 
-              {/* Mini Allocation History View */}
               <CardBox
                 title="Mini Allocation History View"
                 listItems={[
@@ -326,6 +268,7 @@ export default function AIEngineToolsNIP({
           </div>
         </div>
       </div>
+
     </AIEngineToolsCardContainer>
   );
 }

@@ -14,6 +14,7 @@ import {
   IconSend,
   IconTime,
   IconTradeUp,
+  ImageIcon,
 } from "@/components/ui/icon";
 import { Text12, Text14, Text16 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
@@ -135,6 +136,7 @@ export default function AIEngineToolsNIPCardAI({
           }`}
           backIcon={
             <div className="flex items-center gap-3">
+              <ImageIcon width={20} height={20} />
               <IconMic width={20} height={20} />
               <IconSend width={20} height={20} />
             </div>

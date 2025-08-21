@@ -1,4 +1,5 @@
 // components/ui/CardBox.tsx
+'use client'
 import React, { ReactNode } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 

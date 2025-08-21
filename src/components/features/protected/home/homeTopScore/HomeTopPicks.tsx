@@ -14,7 +14,7 @@ interface HomeTopPicksProps {
 export default function HomeTopPicks({ showArrows = true }: HomeTopPicksProps) {
   const { theme } = useTheme();
   return (
-    <ProtectedCardContainer className={`h-[471px] border-black/5 ${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`}>
+    <ProtectedCardContainer className={`w-full h-[471px] border-black/5 ${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`}>
       <HomeTopPicksHead />
       <HomeTopPicksBody showArrows={showArrows} />
     </ProtectedCardContainer>

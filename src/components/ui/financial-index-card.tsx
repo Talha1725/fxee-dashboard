@@ -35,7 +35,7 @@ export default function FinancialIndexCard({
   return (
     <div
       className={cn(
-        "w-[336px] h-[176px] rounded-[16px] border border-black/10",
+        "w-full h-[176px] rounded-[16px] border border-black/10",
         "p-5",
         `${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`,
         "flex flex-col justify-between",
@@ -44,7 +44,7 @@ export default function FinancialIndexCard({
       )}
     >
       {/* Inner Wrapper (exact dimensions) */}
-      <div className="w-[296px] h-[136px] flex flex-col justify-between">
+      <div className="w-full h-[136px] flex flex-col justify-between">
         {/* Header */}
         <div className="flex items-center gap-2">
           {icon}

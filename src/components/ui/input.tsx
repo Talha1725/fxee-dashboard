@@ -25,13 +25,13 @@ function Input({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const baseInputStyles =
-    "bg-transparent outline-none dark:placeholder:text-white/60 text-sm md:text-md font-regular disabled:cursor-not-allowed disabled:opacity-50";
+    "bg-transparent outline-none dark:placeholder:text-white/60 text-sm md:text-md font-regular disabled:cursor-not-allowed disabled:opacity-50 w-full";
 
   if (icon || isPassword || backIcon) {
     return (
       <div
         className={cn(
-          "dark:border-white/30 border-black/5 flex items-center justify-between gap-2 self-stretch rounded-md border bg-dark-gradient px-[10px] pl-3 pr-[10px] shadow-subtle transition-[color,box-shadow]",
+          "dark:border-white/30 border-black/5 flex items-center justify-between gap-2 self-stretch rounded-md border bg-dark-gradient px-[10px] pl-3 pr-[10px] shadow-subtle transition-[color,box-shadow] w-full",
           "focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[2px]",
           "has-[input:invalid]:ring-destructive/20 dark:has-[input:invalid]:ring-destructive/40 has-[input:invalid]:border-destructive",
           className

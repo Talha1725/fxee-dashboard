@@ -37,12 +37,9 @@ export default function CommonSelect({
     >
               <SelectTrigger
           className={cn(
-            // Base styles with theme-aware styling
             `rounded-[12px] ${theme === "dark" ? "bg-dark-gradient! border-white/[0.1]" : "bg-white! border-black/10"}`,
             "flex items-center justify-between",
             "w-[336px] h-[52px] pt-[14px] pr-5 pb-[14px] pl-5 min-w-[336px] max-w-[336px] gap-5",
-
-
             className
           )}
         >
