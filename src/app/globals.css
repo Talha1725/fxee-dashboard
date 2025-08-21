@@ -623,9 +623,6 @@ body {
   .bg-card-dashboard-main-gradient {
     background: var(--card-dashboard-main-gradient);
   }
-  .bg-white-gradient {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.7) 100%);
-  }
   .bg-picton-blue {
     background: var(--picton-blue);
   }
