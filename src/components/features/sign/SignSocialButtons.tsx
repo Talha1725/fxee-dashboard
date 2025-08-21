@@ -92,7 +92,7 @@ export default function SignSocialButtons() {
         }
 
       } catch (error: any) {
-        const errorMessage = handleApiError(error);
+        const errorMessage = handleApiError(error as any);
         showToast.apiError(errorMessage);
       } finally {
         dispatch(setLoading(false));

@@ -1,5 +1,15 @@
 // API Error handling utilities
-export const handleApiError = (error: any): string => {
+import { 
+  ApiErrorWithData, 
+  ApiError, 
+  ApiResponse, 
+  AuthResponseData, 
+  Payment, 
+  ChatResponse, 
+  CustomAnalysis 
+} from '@/types/api';
+
+export const handleApiError = (error: ApiErrorWithData): string => {
   if (error?.data?.message) {
     return error.data.message;
   }
@@ -32,7 +42,7 @@ export const handleApiError = (error: any): string => {
     return "Too many requests. Please try again later.";
   }
   
-  if (error?.status >= 500) {
+  if (error?.status && error.status >= 500) {
     return "Server error. Please try again later.";
   }
   
@@ -40,7 +50,8 @@ export const handleApiError = (error: any): string => {
 };
 
 // Centralized response validation and error handling
-export const handleApiResponse = (response: any, successCallback?: () => void, errorCallback?: (message: string) => void): boolean => {
+
+export const handleApiResponse = (response: ApiResponse, successCallback?: () => void, errorCallback?: (message: string) => void): boolean => {
   // Check if response indicates failure
   if (response?.success === false) {
     const errorMessage = response.error || response.message || "Operation failed";
@@ -74,19 +85,19 @@ export const handleApiResponse = (response: any, successCallback?: () => void, e
 };
 
 // Response validation utilities
-export const validateAuthResponse = (response: any): boolean => {
+export const validateAuthResponse = (response: ApiResponse<AuthResponseData>): boolean => {
   return !!(response?.data?.userData && response?.data?.token);
 };
 
-export const validatePaymentResponse = (response: any): boolean => {
+export const validatePaymentResponse = (response: ApiResponse<{ payment: Payment }>): boolean => {
   return !!(response?.success && response?.data?.payment);
 };
 
-export const validateChatResponse = (response: any): boolean => {
+export const validateChatResponse = (response: ApiResponse<ChatResponse>): boolean => {
   return !!(response?.success && response?.data?.response);
 };
 
-export const validateRecommendationResponse = (response: any): boolean => {
+export const validateRecommendationResponse = (response: ApiResponse<CustomAnalysis>): boolean => {
   return !!(response?.success && response?.data);
 };
 

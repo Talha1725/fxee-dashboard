@@ -22,6 +22,7 @@ import {
   validateRequiredFields 
 } from "@/lib/utils/apiUtils";
 import { showToast } from "@/lib/utils/toast";
+import { AuthResponse, AuthResponseData } from '@/types/api';
 
 export default function SignForm({ isSignup }: { isSignup: boolean }) {
   const router = useRouter();
@@ -179,7 +180,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       }
 
     } catch (error: any) {
-      const errorMessage = handleApiError(error);
+      const errorMessage = handleApiError(error as any);
       showToast.apiError(errorMessage);
     } finally {
       dispatch(setLoading(false));
@@ -233,7 +234,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       }
 
     } catch (error: any) {
-      const errorMessage = handleApiError(error);
+      const errorMessage = handleApiError(error as any);
       showToast.apiError(errorMessage);
     } finally {
       dispatch(setLoading(false));

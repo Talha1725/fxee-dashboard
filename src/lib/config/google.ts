@@ -22,6 +22,13 @@ if (!GOOGLE_OAUTH_CONFIG.CLIENT_ID) {
   console.error('NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id_here');
 }
 
+// Validate that the API Base URL is set
+if (!process.env.NEXT_PUBLIC_API_BASE_URL) {
+  console.error('❌ NEXT_PUBLIC_API_BASE_URL is not set in environment variables');
+  console.error('Please create a .env.local file with:');
+  console.error('NEXT_PUBLIC_API_BASE_URL=http://localhost:3000');
+}
+
 // Instructions to get Google OAuth Client ID:
 // 1. Go to Google Cloud Console: https://console.cloud.google.com/
 // 2. Create a new project or select existing one

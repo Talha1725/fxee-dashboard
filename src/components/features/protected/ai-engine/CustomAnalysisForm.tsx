@@ -64,7 +64,7 @@ export default function CustomAnalysisForm() {
         });
       }
     } catch (error) {
-      const errorMessage = handleApiError(error);
+      const errorMessage = handleApiError(error as any);
       alert(`Error creating analysis: ${errorMessage}`);
     }
   };

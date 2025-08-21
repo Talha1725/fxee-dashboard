@@ -68,7 +68,7 @@ export default function PaymentForm() {
         });
       }
     } catch (error) {
-      const errorMessage = handleApiError(error);
+      const errorMessage = handleApiError(error as any);
       alert(`Error creating payment: ${errorMessage}`);
     }
   };

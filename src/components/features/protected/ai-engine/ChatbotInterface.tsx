@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSendChatMessageMutation, useGetChatHistoryQuery, useGetChatbotInfoQuery } from '@/lib/redux/features/chatbot/chatbotApi';
 import { handleApiError } from '@/lib/utils/apiUtils';
-import type { ChatMessage } from '@/types/redux';
+import type { ChatMessage } from '@/types/api';
 
 export default function ChatbotInterface() {
   const [message, setMessage] = useState('');
@@ -54,7 +54,7 @@ export default function ChatbotInterface() {
         setConversationHistory(prev => [...prev, botMessage]);
       }
     } catch (error) {
-      const errorMessage = handleApiError(error);
+      const errorMessage = handleApiError(error as any);
       const errorChatMessage: ChatMessage = {
         role: 'assistant',
         content: `Error: ${errorMessage}`
