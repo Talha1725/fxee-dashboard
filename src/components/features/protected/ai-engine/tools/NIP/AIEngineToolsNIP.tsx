@@ -92,7 +92,7 @@ export default function AIEngineToolsNIP({ currency = "BTC/USD" }: { currency?: 
               />
             </div>
             <div className="flex flex-col items-start gap-2 w-[344px]">
-             <HomeTopPicks showArrows={false}/>
+             <HomeTopPicks showArrows={false} openModal={() => {}}/>
              <FinancialIndexCard
               symbol="BTC/ETH"
               name="US 100 Index"
