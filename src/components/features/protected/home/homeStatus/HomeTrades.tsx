@@ -1,21 +1,74 @@
 "use client";
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import ProtectedCardContainer from "@/components/features/protected/ProtectedCardContainer";
 import HomeTradesItem from "@/components/features/protected/home/homeStatus/HomeTradesItem";
 import { Separator } from "@/components/ui/separator";
 import { Text18 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { ChevronRight } from "lucide-react";
 
-export default function HomeTrades({className}: {className?: string}) {
+export default function HomeTrades({ className }: { className?: string }) {
   const { theme } = useTheme();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const handleScrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const checkScrollPosition = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 10; // 10px tolerance
+      setCanScrollRight(!isAtEnd);
+    }
+  };
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', checkScrollPosition);
+      checkScrollPosition(); // Check initial position
+      
+      return () => {
+        scrollContainer.removeEventListener('scroll', checkScrollPosition);
+      };
+    }
+  }, []);
 
   return (
-    <ProtectedCardContainer className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"} border-none overflow-x-hidden ${className}`}>
+    <ProtectedCardContainer
+      className={`flex-[1_0_0] self-stretch relative ${
+        theme === "dark"
+          ? "bg-card-green-gradient"
+          : "bg-card-green-gradient-light"
+      } border-none ${className}`}
+    >
+      <button 
+        onClick={handleScrollRight}
+        disabled={!canScrollRight}
+        className={`absolute top-1/2 -translate-y-1/2 right-1 cursor-pointer transition-opacity duration-200 ${
+          canScrollRight ? 'opacity-100' : 'opacity-30 cursor-not-allowed'
+        }`}
+      >
+        <ChevronRight className="w-8 h-8 text-white/70" />
+      </button>
       <div className="flex self-stretch">
-        <Text18 className="font-satoshi-medium text-white">AI Recommended Trades</Text18>
+        <Text18 className="font-satoshi-medium text-white">
+          AI Recommended Trades
+        </Text18>
       </div>
-      <div className="flex items-start gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide">
+      <div 
+        ref={scrollContainerRef}
+        className="flex items-start gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide"
+        style={{ scrollBehavior: 'smooth' }}
+      >
         <HomeTradesItem long={true} />
         <Separator orientation="vertical" className="h-full bg-white/5" />
         <HomeTradesItem long={false} />

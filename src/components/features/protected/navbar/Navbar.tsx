@@ -10,7 +10,7 @@ import { NavbarTitle } from "@/components/ui/typography";
 import { IconLogo1Small } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
-export default function Navbar({ className }: { className?: string }) {
+export default function Navbar({ className, pageTitle }: { className?: string; pageTitle?: string }) {
   return (
     <div
       className={cn(
@@ -25,7 +25,7 @@ export default function Navbar({ className }: { className?: string }) {
         </Link>
       </div>
       <NavbarTitle className="xl:flex-[1_0_0] hidden xl:block ">
-        Today
+        {pageTitle || "Today"}
       </NavbarTitle>
       <NavbarAccountSwitch className="lg:flex hidden" />
       <Separator
