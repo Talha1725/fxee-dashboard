@@ -26,13 +26,45 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
-    googleLogin: builder.mutation<AuthResponse, { token: string }>({
+    googleLogin: builder.mutation<AuthResponse, { access_token: string }>({
       query: (data) => ({
         url: "/auth/google",
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["User"],
+    }),
+
+    forgotPassword: builder.mutation<{ success: boolean; message: string }, { email: string }>({
+      query: (data) => ({
+        url: "/auth/forgot-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    resetPassword: builder.mutation<{ success: boolean; message: string }, { token: string; password: string }>({
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    verifyEmail: builder.mutation<{ success: boolean; message: string; data?: any }, { token: string }>({
+      query: (data) => ({
+        url: "/auth/verify-email",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    resendVerification: builder.mutation<{ success: boolean; message: string }, { email: string }>({
+      query: (data) => ({
+        url: "/auth/resend-verification",
+        method: "POST",
+        body: data,
+      }),
     }),
 
     refreshToken: builder.mutation<AuthResponse, void>({
@@ -62,6 +94,10 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGoogleLoginMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useVerifyEmailMutation,
+  useResendVerificationMutation,
   useRefreshTokenMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,

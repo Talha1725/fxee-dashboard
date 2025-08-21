@@ -1,0 +1,63 @@
+import { baseApi } from "../../services/baseApi";
+import type {
+  CustomAnalysisRequest,
+  CustomAnalysisResponse,
+  CustomAnalysesResponse,
+  SupportedSymbolsResponse,
+  ActiveRecommendationsResponse,
+} from "@/types/redux";
+
+export const recommendationsApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    createCustomAnalysis: builder.mutation<CustomAnalysisResponse, CustomAnalysisRequest>({
+      query: (analysisData) => ({
+        url: "/recommendations/custom",
+        method: "POST",
+        body: analysisData,
+      }),
+      invalidatesTags: ["Recommendation"],
+    }),
+
+    getMyAnalyses: builder.query<CustomAnalysesResponse, {
+      limit?: number;
+      offset?: number;
+    }>({
+      query: (params) => ({
+        url: "/recommendations/custom/my-analyses",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["Recommendation"],
+    }),
+
+    getCustomAnalysis: builder.query<CustomAnalysisResponse, number>({
+      query: (id) => `/recommendations/custom/${id}`,
+      providesTags: ["Recommendation"],
+    }),
+
+    getSupportedSymbols: builder.query<SupportedSymbolsResponse, void>({
+      query: () => "/recommendations/custom/supported-symbols",
+      providesTags: ["Recommendation"],
+    }),
+
+    getActiveRecommendations: builder.query<ActiveRecommendationsResponse, {
+      type?: string;
+      limit?: number;
+    }>({
+      query: (params) => ({
+        url: "/recommendations/active",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["Recommendation"],
+    }),
+  }),
+});
+
+export const {
+  useCreateCustomAnalysisMutation,
+  useGetMyAnalysesQuery,
+  useGetCustomAnalysisQuery,
+  useGetSupportedSymbolsQuery,
+  useGetActiveRecommendationsQuery,
+} = recommendationsApi;

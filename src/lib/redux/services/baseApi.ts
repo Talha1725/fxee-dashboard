@@ -5,7 +5,7 @@ import type { RootState } from "../store";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1",
+    baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api/",
     prepareHeaders: (headers, { getState }) => {
       // Get token from state
       const token = (getState() as RootState).auth.token;
@@ -18,6 +18,6 @@ export const baseApi = createApi({
     },
     credentials: "include", // for cookies
   }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "Payment", "Chat", "Recommendation"],
   endpoints: () => ({}),
 });
