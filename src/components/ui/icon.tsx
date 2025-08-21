@@ -5440,3 +5440,41 @@ export function PortfolioChart({ width, height, ...props }: IconProps) {
     </svg>
   );
 }
+
+export const PlanPoints = () => {
+  const { theme } = useTheme();
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M18.3346 10.4036C18.3346 5.80115 14.6038 2.07031 10.0013 2.07031C5.3988 2.07031 1.66797 5.80115 1.66797 10.4036C1.66797 15.0061 5.3988 18.737 10.0013 18.737C14.6038 18.737 18.3346 15.0061 18.3346 10.4036Z"
+        fill="url(#paint0_linear_1360_179292)"
+      />
+      <path
+        d="M6.66797 11.0286C6.66797 11.0286 8.0013 11.7886 8.66797 12.9036C8.66797 12.9036 10.668 8.52865 13.3346 7.07031"
+        stroke={theme === "dark" ? "white" : "black"}
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_1360_179292"
+          x1="3.67235"
+          y1="16.2208"
+          x2="7.84013"
+          y2="2.74177"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0276DB" />
+          <stop offset="1" stop-color="#3EDC81" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
