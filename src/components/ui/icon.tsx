@@ -5434,22 +5434,42 @@ export default function FancyIcon ({ width, height, ...props }: IconProps) {
 
 export function ImageIcon({ width, height, ...props }: IconProps) {
   return (
-    <svg 
+    <svg
       width={width}
       height={height}
-      viewBox="0 0 20 21" 
-      fill="none" 
+      viewBox="0 0 20 21"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="text-black dark:text-white" // ✅ dynamic color
       {...props}
     >
       <g opacity="0.6">
-        <path d="M6.25 8.09961C6.94036 8.09961 7.5 7.53997 7.5 6.84961C7.5 6.15925 6.94036 5.59961 6.25 5.59961C5.55964 5.59961 5 6.15925 5 6.84961C5 7.53997 5.55964 8.09961 6.25 8.09961Z" stroke="black" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M2.08203 10.6022C2.08203 6.87055 2.08203 5.00388 3.2412 3.84471C4.40036 2.68555 6.2662 2.68555 9.9987 2.68555C13.7304 2.68555 15.597 2.68555 16.7562 3.84471C17.9154 5.00388 17.9154 6.86971 17.9154 10.6022C17.9154 14.3339 17.9154 16.2005 16.7562 17.3597C15.597 18.5189 13.7312 18.5189 9.9987 18.5189C6.26703 18.5189 4.40036 18.5189 3.2412 17.3597C2.08203 16.2005 2.08203 14.3347 2.08203 10.6022Z" stroke="black" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M4.16406 18.0997C7.8074 13.7456 11.8924 8.00307 17.9124 11.8847" stroke="black" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+        <path
+          d="M6.25 8.09961C6.94036 8.09961 7.5 7.53997 7.5 6.84961C7.5 6.15925 6.94036 5.59961 6.25 5.59961C5.55964 5.59961 5 6.15925 5 6.84961C5 7.53997 5.55964 8.09961 6.25 8.09961Z"
+          className="stroke-current"
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M2.08203 10.6022C2.08203 6.87055 2.08203 5.00388 3.2412 3.84471C4.40036 2.68555 6.2662 2.68555 9.9987 2.68555C13.7304 2.68555 15.597 2.68555 16.7562 3.84471C17.9154 5.00388 17.9154 6.86971 17.9154 10.6022C17.9154 14.3339 17.9154 16.2005 16.7562 17.3597C15.597 18.5189 13.7312 18.5189 9.9987 18.5189C6.26703 18.5189 4.40036 18.5189 3.2412 17.3597C2.08203 16.2005 2.08203 14.3347 2.08203 10.6022Z"
+          className="stroke-current"
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.16406 18.0997C7.8074 13.7456 11.8924 8.00307 17.9124 11.8847"
+          className="stroke-current"
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </g>
     </svg>
   );
-};
+}
+
 
 
 
