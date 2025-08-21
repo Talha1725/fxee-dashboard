@@ -7,6 +7,7 @@ import DashboardWidget from "@/components/features/protected/dashboard/widget/Da
 import HomeTrades from "../home/homeStatus/HomeTrades";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SymbolModal from "@/components/common/SymbolModal";
+import OpenTrades from "./open-trades/OpenTrades";
 
 export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function Dashboard() {
         </div>
         </div>
       </div>
+      <OpenTrades />
       <DashboardStatus />
       <DashboardACP />
     </ProtectedContentContainer>
