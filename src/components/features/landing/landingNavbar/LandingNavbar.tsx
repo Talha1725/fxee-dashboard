@@ -12,7 +12,7 @@ export default function LandingNavbar() {
     { href: "/challenge-support", label: "Challenge Support" },
     { href: "/community", label: "Community" },
     { href: "/about", label: "About us" },
-    { href: "/auth/signin", label: "Login" },
+    { href: "/signin", label: "Login" },
   ];
 
   return (
