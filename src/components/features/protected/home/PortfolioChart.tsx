@@ -23,9 +23,17 @@ export default function PortfolioChart({
 }: PortfolioChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
   const gradientIdRef = useRef<string>(`highlightGradient-${Math.random().toString(36).slice(2)}`);
   const areaGradientIdRef = useRef<string>(`areaGradient-${Math.random().toString(36).slice(2)}`);
   const [dimensions, setDimensions] = useState({ width: 400, height });
+  const [tooltip, setTooltip] = useState<{ show: boolean; x: number; y: number; data: DataPoint | null }>({
+    show: false,
+    x: 0,
+    y: 0,
+    data: null
+  });
+  const [hasAnimated, setHasAnimated] = useState(false);
   const { theme } = useTheme();
 
   // Sample data with monthly progression
@@ -39,6 +47,16 @@ export default function PortfolioChart({
   ];
 
   const chartData = data || defaultData;
+
+  // Format currency value for tooltip
+  const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
   // Handle resize
   useEffect(() => {
@@ -62,6 +80,33 @@ export default function PortfolioChart({
   useEffect(() => {
     setDimensions((prev) => ({ ...prev, height }));
   }, [height]);
+
+  // Global mouse event to hide tooltip when moving outside chart area
+  useEffect(() => {
+    const handleGlobalMouseMove = (event: MouseEvent) => {
+      if (!containerRef.current || !tooltip.show) return;
+      
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const isInsideChart = (
+        event.clientX >= containerRect.left &&
+        event.clientX <= containerRect.right &&
+        event.clientY >= containerRect.top &&
+        event.clientY <= containerRect.bottom
+      );
+      
+      if (!isInsideChart) {
+        setTooltip(prev => ({ ...prev, show: false }));
+      }
+    };
+
+    if (tooltip.show) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+    };
+  }, [tooltip.show]);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -163,31 +208,43 @@ export default function PortfolioChart({
       .curve(d3.curveMonotoneX);
 
     // Add the area under the line (before highlight bar and line)
-    g.append("path")
+    const areaPath = g.append("path")
       .datum(chartData)
       .attr("fill", `url(#${areaGradientIdRef.current})`)
-      .attr("d", area)
-      .style("opacity", 0)
-      .transition()
-      .duration(600)
-      .style("opacity", 1);
+      .attr("d", area);
+    
+    if (!hasAnimated) {
+      areaPath
+        .style("opacity", 0)
+        .transition()
+        .duration(600)
+        .style("opacity", 1);
+    } else {
+      areaPath.style("opacity", 1);
+    }
 
     // Add highlight bar background with gradient (full height like SVG)
     if (highlightData && highlightIndex >= 0) {
       const barWidth = innerWidth / (chartData.length - 1) * 0.8;
       
-      g.append("rect")
+      const highlightRect = g.append("rect")
         .attr("x", xScale(highlightIndex) - barWidth / 2)
         .attr("y", 0)
         .attr("width", barWidth)
         .attr("height", innerHeight)
         .attr("fill", `url(#${gradientIdRef.current})`)
-        .attr("opacity", 0.5)
-        .style("opacity", 0)
-        .transition()
-        .duration(800)
-        .delay(400)
-        .style("opacity", 0.5);
+        .attr("opacity", 0.5);
+        
+      if (!hasAnimated) {
+        highlightRect
+          .style("opacity", 0)
+          .transition()
+          .duration(800)
+          .delay(400)
+          .style("opacity", 0.5);
+      } else {
+        highlightRect.style("opacity", 0.5);
+      }
     }
 
     // Line generator
@@ -205,31 +262,39 @@ export default function PortfolioChart({
       .attr("stroke-width", 3)
       .attr("d", line);
 
-    // Animate line drawing
-    const totalLength = path.node()?.getTotalLength() || 0;
-    path
-      .attr("stroke-dasharray", totalLength + " " + totalLength)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-      .duration(1500)
-      .ease(d3.easeLinear)
-      .attr("stroke-dashoffset", 0);
+    // Animate line drawing only on first load
+    if (!hasAnimated) {
+      const totalLength = path.node()?.getTotalLength() || 0;
+      path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+        .duration(1500)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
+    }
 
     // Add only one dot for the highlighted month
     if (highlightData && highlightIndex >= 0) {
       // Main highlighted dot
-      g.append("circle")
+      const highlightDot = g.append("circle")
         .attr("cx", xScale(highlightIndex))
         .attr("cy", yScale(highlightData.value))
         .attr("r", 8)
         .attr("fill", "white")
         .attr("stroke", "#3EDC81")
-        .attr("stroke-width", 6)
-        .style("opacity", 0)
-        .transition()
-        .duration(600)
-        .delay(1200)
-        .style("opacity", 1);
+        .attr("stroke-width", 6);
+        
+      if (!hasAnimated) {
+        highlightDot
+          .style("opacity", 0)
+          .transition()
+          .duration(600)
+          .delay(1200)
+          .style("opacity", 1);
+      } else {
+        highlightDot.style("opacity", 1);
+      }
     }
 
     // Add month labels with de-dup/skip to avoid overlap and edge clamping
@@ -261,18 +326,76 @@ export default function PortfolioChart({
       .text((d: any) => d.month)
       .style("opacity", 0);
 
-    monthLabelsEnter
-      .transition()
-      .duration(600)
-      .delay(2000)
-      .style("opacity", 1);
+    if (!hasAnimated) {
+      monthLabelsEnter
+        .transition()
+        .duration(600)
+        .delay(2000)
+        .style("opacity", 1);
+    } else {
+      monthLabelsEnter.style("opacity", 1);
+    }
 
-  }, [chartData, dimensions, highlightMonth]);
+    // Add invisible overlay rectangles for tooltip interaction
+    const overlayWidth = innerWidth / chartData.length;
+    
+    const overlayRects = g.selectAll(".overlay-rect")
+      .data(chartData)
+      .enter()
+      .append("rect")
+      .attr("class", "overlay-rect")
+      .attr("x", (d, i) => xScale(i) - overlayWidth / 2)
+      .attr("y", 0)
+      .attr("width", overlayWidth)
+      .attr("height", innerHeight)
+      .attr("fill", "transparent")
+      .style("cursor", "pointer")
+      .on("mouseover", function(event, d) {
+        const containerRect = containerRef.current?.getBoundingClientRect();
+        if (!containerRect) return;
+        
+        const mouseX = event.clientX - containerRect.left;
+        const mouseY = event.clientY - containerRect.top;
+        
+        setTooltip({
+          show: true,
+          x: mouseX,
+          y: mouseY,
+          data: d
+        });
+      })
+      .on("mousemove", function(event, d) {
+        const containerRect = containerRef.current?.getBoundingClientRect();
+        if (!containerRect) return;
+        
+        const mouseX = event.clientX - containerRect.left;
+        const mouseY = event.clientY - containerRect.top;
+        
+        setTooltip(prev => ({
+          ...prev,
+          x: mouseX,
+          y: mouseY
+        }));
+      })
+      .on("mouseout", function() {
+        setTooltip(prev => ({
+          ...prev,
+          show: false
+        }));
+      });
+
+    // Mark as animated after first render
+    if (!hasAnimated) {
+      setTimeout(() => setHasAnimated(true), 2500); // After all animations complete
+    }
+
+  }, [chartData, dimensions, highlightMonth, theme]);
 
   return (
     <div
       ref={containerRef}
-      className="w-full h-full"
+      className="w-full h-full relative"
+      onMouseLeave={() => setTooltip(prev => ({ ...prev, show: false }))}
     >
       <svg
         ref={svgRef}
@@ -280,6 +403,26 @@ export default function PortfolioChart({
         height={dimensions.height}
         className="overflow-visible"
       />
+      
+      {/* Tooltip */}
+      {tooltip.show && tooltip.data && (
+        <div
+          ref={tooltipRef}
+          className={`absolute pointer-events-none z-10 px-3 py-2 text-sm rounded-lg shadow-lg border transition-opacity duration-200 ${
+            theme === 'dark' 
+              ? 'bg-[#1A1A1A] text-white border-gray-600' 
+              : 'bg-white text-gray-900 border-gray-200'
+          }`}
+          style={{
+            left: tooltip.x + 10,
+            top: tooltip.y - 10,
+            transform: tooltip.x > dimensions.width / 2 ? 'translateX(-100%)' : 'translateX(0)',
+          }}
+        >
+          <div className="font-semibold">{tooltip.data.month}</div>
+          <div className="text-green-500 font-medium">{formatCurrency(tooltip.data.value)}</div>
+        </div>
+      )}
     </div>
   );
 }
