@@ -30,7 +30,7 @@ const TP_DATA = [
 export default function AIEngineToolsNIPCardTP() {
   const { theme } = useTheme();
   return (
-    <AIEngineToolsNIPCardContainer className={theme === "dark" ? "" : "border border-[#0000001A]"}>
+    <AIEngineToolsNIPCardContainer className={theme === "dark" ? "" : "border border-[#0000001A bg-white-gradient"}>
       <AIEngineToolsNIPCardHead
         title="Trade Probability (Next 5 Days)"
         icon={<IconAIScan width={20} height={20} />}

@@ -4,16 +4,16 @@ import React, { ReactNode } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface ListItem {
-  label?: string;       // e.g., "Forex", "Apr 30"
-  value: string;        // e.g., "BTC 25%, ETH 10%"
-  highlight?: boolean;  // to style headers like "Forex", "Crypto"
-  style?: 'default' | 'sub-breakdown' | 'mini-allocation';  // for different styling variants
+  label?: string;      
+  value: string;
+  highlight?: boolean;
+  style?: 'default' | 'sub-breakdown' | 'mini-allocation';
 }
 
 interface CardBoxProps {
   title?: string;
-  children?: ReactNode;     // normal custom content
-  listItems?: ListItem[];   // optional list mode
+  children?: ReactNode;  
+  listItems?: ListItem[]; 
   customSize?: {
     width?: string;
     height?: string;
@@ -29,7 +29,7 @@ export default function CardBox({ title, children, listItems, customSize }: Card
   const padding = customSize?.padding || "pt-[20px] pr-[16px] pb-[20px] pl-[16px]";
   
   return (
-    <div className={`${width} ${height} rounded-[16px] border border-black/10 ${padding} ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} dark:border-white/[0.1] overflow-visible`}>
+    <div className={`${width} ${height} rounded-[16px] border border-black/10 ${padding} ${theme === "dark" ? "bg-dark-gradient" : "bg-white-gradient"} dark:border-white/[0.1] overflow-visible`}>
       {title && (
         <h2 className="font-satoshi-medium text-[18px] leading-[100%] tracking-[-0.02em] capitalize mb-4 text-black dark:text-white break-words">
           {title}
@@ -37,10 +37,8 @@ export default function CardBox({ title, children, listItems, customSize }: Card
       )}
 
       <div className="space-y-3 overflow-visible">
-        {/* If listItems provided → render list mode */}
         {listItems
           ? listItems.map((item, idx) => {
-              // Determine styling based on item.style
               let labelStyle = "";
               let valueStyle = "";
               
@@ -57,7 +55,6 @@ export default function CardBox({ title, children, listItems, customSize }: Card
                   valueStyle = "font-satoshi-medium text-[14px] leading-[100%] tracking-[-0.02em] text-black dark:text-white";
                 }
               } else {
-                // Default styling
                 labelStyle = item.highlight ? "font-medium text-green-600 dark:text-green-400" : "";
                 valueStyle = "text-black dark:text-white";
               }

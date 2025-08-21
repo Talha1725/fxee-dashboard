@@ -10,7 +10,7 @@ import {
 export default function AIEngineStatusTGSTimeframeSelect() {
   return (
     <Select defaultValue="2-days">
-      <SelectTrigger className="border border-white/5 bg-gradient-to-b from-white/[0.08] to-white/[0.04] cursor-pointer w-full text-white dark:text-white">
+      <SelectTrigger className="border border-white/5 cursor-pointer w-full text-white dark:text-white">
         <SelectValue placeholder="2 Days" />
       </SelectTrigger>
       <SelectContent className="min-w-[40px]">

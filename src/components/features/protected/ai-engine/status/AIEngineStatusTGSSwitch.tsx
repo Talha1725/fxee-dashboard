@@ -10,7 +10,7 @@ export default function AIEngineStatusTGSSwitch({
   id: string;
 }) {
   return (
-    <div className="flex justify-center items-center gap-2 self-stretch flex-[1_0_0] p-2.5 rounded-[10px] border border-white/2 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+    <div className="flex justify-center items-center gap-2 self-stretch flex-[1_0_0] p-2.5 rounded-[10px] border border-white/2 ">
       <div className="flex items-start justify-between gap-1.5 flex-[1_0_0]">
         <Label htmlFor={id}>
           <Text12 className="flex-[1_0_0] text-white dark:text-white">{label}</Text12>

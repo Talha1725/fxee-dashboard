@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Text14 } from "@/components/ui/typography";
 import { RefreshCcw } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import FancyIcon from "@/components/ui/icon";
+import PieIcon from "@/public/images/pie";
 
 const AllocationBar = ({ 
     label, 
@@ -89,7 +91,7 @@ export default function AIEngineToolsNIP() {
         <AIEngineToolsCardHead
           title="RSI Analyzer"
           description="Advanced RSI analysis with AI-powered overbought/oversold"
-          icon={<IconNIP width={14} height={14} />}
+          icon={<FancyIcon width={14} height={14} />}
         />
 
         <div className="flex flex-col md:flex-row items-start gap-5 self-stretch md:min-h-[714px] md:max-h-[714px]">
@@ -146,7 +148,7 @@ export default function AIEngineToolsNIP() {
         <AIEngineToolsCardHead
           title="Smart Portfolio Allocator"
           description="Leverage AI to automatically distribute your capital across assets based on risk tolerance, market trends, and performance potential."
-          icon={<IconNIP width={14} height={14} />}
+          icon={<PieIcon width={14} height={14} />}
         />
 
         <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[714px] md:max-h-[714px] md:overflow-hidden">
@@ -232,7 +234,7 @@ export default function AIEngineToolsNIP() {
               <div className="flex flex-col mt-4 w-full">
                 <div
                   className={`flex items-center justify-center w-full h-[52px] rounded-[16px] 
-                  ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} 
+                  ${theme === "dark" ? "bg-dark-gradient" : "bg-white-gradient"} 
                   border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1] 
                   transition-all duration-200 hover:scale-[1.02]`}
                 >

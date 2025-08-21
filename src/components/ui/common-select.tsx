@@ -37,9 +37,9 @@ export default function CommonSelect({
     >
               <SelectTrigger
           className={cn(
-            `rounded-[12px] ${theme === "dark" ? "bg-dark-gradient! border-white/[0.1]" : "bg-white! border-black/10"}`,
+            `rounded-[12px] ${theme === "dark" ? "bg-dark-gradient! border-white/[0.1]" : "bg-[linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%);]! border-black/10"}`,
             "flex items-center justify-between",
-            "w-[336px] h-[52px] pt-[14px] pr-5 pb-[14px] pl-5 min-w-[336px] max-w-[336px] gap-5",
+            "w-[336px] h-[52px] font-satoshi-medium text-[18px] pt-[14px] pr-5 pb-[14px] pl-5 min-w-[336px] max-w-[336px] gap-5",
             className
           )}
         >

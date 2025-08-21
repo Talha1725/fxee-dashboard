@@ -11,7 +11,7 @@ export default function AIEngineToolsCardContainer({
 }) {
   return (
     <div
-      className={cn("flex flex-col items-start gap-4 self-stretch", className)}
+      className={cn("flex flex-col items-start gap-4 self-stretch bg-white-gradient!", className)}
     >
       {children}
     </div>
