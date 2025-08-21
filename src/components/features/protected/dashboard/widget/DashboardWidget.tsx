@@ -23,7 +23,7 @@ export default function DashboardWidget({ currency, openModal }: { currency: str
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
         <div className="flex justify-between items-center self-stretch">
-          <button className={`flex flex-col justify-center items-start py-3 px-4 gap-5 w-[160px] sm:w-[220px] rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} `} onClick={openModal}>
+          <button className={`flex flex-col justify-center items-start py-3 px-4 gap-5 w-[160px] sm:w-[220px] rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 cursor-pointer ${theme === "dark" ? "bg-dark-gradient" : "bg-white"} `} onClick={openModal}>
             <div className="flex items-center gap-2.5">
               <CurrencyToCryptoPairConverter currency={currency} size={38} />
               <div className="flex flex-col justify-center items-start">
