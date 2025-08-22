@@ -14,7 +14,7 @@ export default function AIEngineStatusTGSHead() {
       <div className="flex flex-col sm:flex-row items-start gap-2 flex-[1_0_0]">
         <div className="flex flex-col justify-center items-start gap-1 flex-[1_0_0]">
           <Text16 className="text-white dark:text-white">Trade Goal Setting</Text16>
-          <Text14 className="text-white/80 dark:text-white/80">
+          <Text14 className="font-satoshi-regular text-white/80 dark:text-white/80">
             Define your trading parameters
           </Text14>
         </div>
