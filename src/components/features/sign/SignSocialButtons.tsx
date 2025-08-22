@@ -13,7 +13,7 @@ import {
 } from "@/lib/redux/features/auth/authApi";
 import { handleAuthentication, validateProviderConfig, getProviderErrorMessage } from "@/lib/utils/authUtils";
 import { showToast } from "@/lib/utils/toast";
-import { OAUTH_CONFIG, generateOAuthUrl } from '@/lib/config/oauth';
+import { OAUTH_CONFIG } from '@/lib/config/oauth';
 
 export default function SignSocialButtons() {
   const { theme } = useTheme();
