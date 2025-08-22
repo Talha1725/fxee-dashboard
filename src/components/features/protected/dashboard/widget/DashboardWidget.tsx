@@ -17,10 +17,16 @@ const AdvancedRealTimeChart = dynamic(
   { ssr: false }
 );
 
-export default function DashboardWidget({ currency, actionButton, showPlusIcon = false, }: { 
+export default function DashboardWidget({ 
+  currency, 
+  actionButton, 
+  showPlusIcon = false, 
+  openModal 
+}: { 
   currency: string;
   actionButton?: React.ReactNode;
   showPlusIcon?: boolean;
+  openModal?: () => void;
 }) {
   const { theme } = useTheme();
   return (
@@ -28,7 +34,11 @@ export default function DashboardWidget({ currency, actionButton, showPlusIcon =
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
         <div className="flex justify-between items-center self-stretch">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 bg-dark-gradient">
+            <div 
+              className="flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 bg-dark-gradient"
+              onClick={openModal}
+              style={{ cursor: openModal ? 'pointer' : 'default' }}
+            >
               <CurrencyToCryptoPairConverter currency={currency} size={38} />
               <div className="flex flex-col justify-center items-start">
                 <Text20 className="font-satoshi-medium dark:text-white text-black">

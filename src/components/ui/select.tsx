@@ -45,7 +45,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <IconArrowDown width={20} height={20} />
+        <IconArrowDown width={20} height={20} className="[&>g>path]:stroke-white" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );

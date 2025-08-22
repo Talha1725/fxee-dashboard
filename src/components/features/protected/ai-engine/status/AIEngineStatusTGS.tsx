@@ -21,7 +21,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 export default function AIEngineStatusTGS() {
   const { theme } = useTheme();
   return (
-    <div className={`w-full lg:flex-1 rounded-[16px] p-5 pb-[25px] flex flex-col gap-4 ${theme === "dark" ? "bg-card-green-gradient" : "bg-card-green-gradient-light"}`}>
+    <div className={`w-full lg:flex-1 rounded-[16px] p-5 pb-[25px] flex flex-col gap-4 ${theme === "dark" ? "bg-card-green-gradient" : "bg-light-green-blue-gradient"}`}>
       <AIEngineStatusTGSHead />
       <Tabs defaultValue="best_trade" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
@@ -35,10 +35,10 @@ export default function AIEngineStatusTGS() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="custom_goal">
-          <div>Custom Goal</div>
+          <div className="text-[#FFFFFFCC] dark:text-[#FFFFFFCC]">Custom Goal</div>
         </TabsContent>
         <TabsContent value="best_trade" className="flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row items-center gap-4 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+          <div className="flex flex-col sm:flex-row items-center gap-4 self-stretch ">
             <AIEngineStatusTGSSlider title="Profit Target" value={5000} />
             <AIEngineStatusTGSSlider
               title="Maximum Risk"
@@ -46,7 +46,7 @@ export default function AIEngineStatusTGS() {
               color="danger"
             />
           </div>
-          <div className="flex items-center gap-1 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+          <div className="flex items-center gap-1 self-stretch ">
             <AIEngineStatusTGSDetail
               title="Protentional Profit"
               value="$5,000.00"
@@ -63,7 +63,7 @@ export default function AIEngineStatusTGS() {
               className="bg-gradient-to-b from-[#15B0F8] to-[#0276DB] text-transparent bg-clip-text dark:bg-gradient-to-b dark:from-[#15B0F8] dark:to-[#0276DB] dark:text-transparent dark:bg-clip-text"
             />
           </div>
-          <div className="flex items-start gap-4 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+          <div className="flex items-start gap-4 self-stretch ">
             <AIEngineStatusTGSCheck
               title="Risk Level"
               switches={[
@@ -87,7 +87,7 @@ export default function AIEngineStatusTGS() {
               ]}
             />
           </div>
-          <div className="flex flex-col sm:flex-row items-start gap-4 self-stretch bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+          <div className="flex flex-col sm:flex-row items-start gap-4 self-stretch ">
             <div className="flex flex-col justify-center items-start gap-2 self-stretch flex-[1_0_0]">
               <Text14 className="self-stretch text-white dark:text-white">Select Trading Pair</Text14>
               <AIEngineStatusTGSPairSelect />
@@ -102,8 +102,7 @@ export default function AIEngineStatusTGS() {
             className="w-full !p-4 gap-3 border-none text-white placeholder:text-white"
             backIcon={
               <div className="flex items-center gap-3">
-                <IconMic width={20} height={20} className="text-white" />
-                <IconSend width={20} height={20} opacity={1} className="text-white" />
+                <IconSend width={20} height={20} opacity={1} className="text-white/60" />
               </div>
             }
           />

@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "../store";
+import { API_CONFIG } from "@/lib/config/api";
 
 // Base API configuration
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1",
+    baseUrl: `${API_CONFIG.BASE_URL}/api`,
     prepareHeaders: (headers, { getState }) => {
       // Get token from state
       const token = (getState() as RootState).auth.token;
@@ -18,6 +19,6 @@ export const baseApi = createApi({
     },
     credentials: "include", // for cookies
   }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "Payment", "Chat", "Recommendation"],
   endpoints: () => ({}),
 });

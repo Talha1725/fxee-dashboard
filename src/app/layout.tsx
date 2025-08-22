@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/contexts/ThemeContext";
+import { ReduxProvider } from "@/lib/redux/provider";
+import { Toaster } from "@/components/ui/toast";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -49,9 +53,21 @@ export default function RootLayout({
       <body
         className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} antialiased`}
       >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <ReduxProvider>
+          <ThemeProvider>
+            {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
+              <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
+                {children}
+                <Toaster />
+              </GoogleOAuthProvider>
+            ) : (
+              <>
+                {children}
+                <Toaster />
+              </>
+            )}
+          </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

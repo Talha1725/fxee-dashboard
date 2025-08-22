@@ -104,7 +104,7 @@ export default function AIEngineToolsNIP() {
 
           <div className="w-full md:w-[344px] h-auto md:h-full md:overflow-y-auto scrollbar-hide mt-5 md:mt-0 order-2">
             <div className="flex flex-col items-start gap-4 w-full">
-              <HomeTopPicks showArrows={false} />
+              <HomeTopPicks showArrows={false} openModal={() => {}} />
 
               <FinancialIndexCard
                 symbol="BTC/ETH"

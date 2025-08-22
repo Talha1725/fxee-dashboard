@@ -18,7 +18,6 @@ export default function AIEngineToolsBody() {
 
   return (
     <>
-      {/* Tabs Row */}
       <div className="flex items-center -mb-5">
         {tabs.map((tab, index) => {
           const isActive = activeTab === tab.id;
@@ -57,7 +56,6 @@ export default function AIEngineToolsBody() {
         })}
       </div>
 
-      {/* Content Area */}
       <div
         className="flex flex-col items-start self-stretch p-5 rounded-b-[16px] border border-black/5 dark:border-white/5"
         style={{

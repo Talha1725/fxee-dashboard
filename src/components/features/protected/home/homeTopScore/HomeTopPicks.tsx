@@ -9,13 +9,15 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface HomeTopPicksProps {
   showArrows?: boolean;
+  openModal: () => void;
 }
 
-export default function HomeTopPicks({ showArrows = true }: HomeTopPicksProps) {
+export default function HomeTopPicks({ showArrows = true, openModal }: HomeTopPicksProps) {
   const { theme } = useTheme();
   return (
-    <ProtectedCardContainer className={`w-full h-[471px] border-black/5 ${theme === "dark" ? "bg-dark-gradient" : "bg-card-dashboard-main-gradient"}`}>
-      <HomeTopPicksHead />
+
+    <ProtectedCardContainer className={`h-[471px] border-black/5 ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"}`}>
+      <HomeTopPicksHead openModal={openModal} />
       <HomeTopPicksBody showArrows={showArrows} />
     </ProtectedCardContainer>
   );
