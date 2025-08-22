@@ -35,6 +35,24 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
+    appleLogin: builder.mutation<AuthResponse, { code: string }>({
+      query: (data) => ({
+        url: "/auth/apple",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    linkedinLogin: builder.mutation<AuthResponse, { code: string }>({
+      query: (data) => ({
+        url: "/auth/linkedin",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
     forgotPassword: builder.mutation<{ success: boolean; message: string }, { email: string }>({
       query: (data) => ({
         url: "/auth/forgot-password",
@@ -94,6 +112,8 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGoogleLoginMutation,
+  useAppleLoginMutation,
+  useLinkedinLoginMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useVerifyEmailMutation,

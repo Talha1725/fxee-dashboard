@@ -12,15 +12,15 @@ import SignSupport from "@/components/features/sign/SignSupport";
 import { Button } from "@/components/ui/button";
 
 import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/auth/authApi";
-import { setCredentials, setLoading } from "@/lib/redux/features/auth/authSlice";
+import { setLoading } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { 
   handleApiError, 
-  handleApiResponse, 
   validateEmail, 
   validatePassword, 
   validateRequiredFields 
 } from "@/lib/utils/apiUtils";
+import { handleAuthentication } from "@/lib/utils/authUtils";
 import { showToast } from "@/lib/utils/toast";
 import { AuthResponse, AuthResponseData } from '@/types/api';
 
@@ -108,83 +108,17 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
     }
   };
 
-  // Helper function to extract user and token from response
-  const extractAuthData = (response: any) => {
-    // Structure 1: response.data.userData and response.data.token
-    if (response.data?.userData && response.data?.token) {
-      return {
-        user: response.data.userData,
-        token: response.data.token
-      };
-    }
-    
-    // Structure 2: response.token and response.data (user object)
-    if (response.token && response.data && typeof response.data === 'object' && 'id' in response.data) {
-      return {
-        user: response.data,
-        token: response.token
-      };
-    }
-    
-    // Structure 3: response.data.token and response.data (user object)
-    if (response.data?.token && response.data && typeof response.data === 'object' && 'id' in response.data) {
-      return {
-        user: response.data,
-        token: response.data.token
-      };
-    }
-    
-    return null;
-  };
-
   // Login function
   const handleLogin = async () => {
-    try {
-      dispatch(setLoading(true));
-
-      const response = await login({
+    await handleAuthentication(
+      login({
         email: formData.email,
         password: formData.password,
-      }).unwrap();
-
-      // Use centralized response handling
-      const isSuccess = handleApiResponse(
-        response,
-        // Success callback
-        () => {
-          const authData = extractAuthData(response);
-          
-          if (authData) {
-            // Update Redux state
-            dispatch(setCredentials({
-              user: authData.user,
-              token: authData.token
-            }));
-
-            // Store token in localStorage
-            localStorage.setItem('token', authData.token);
-            showToast.loginSuccess();
-            router.push("/dashboard");
-          } else {
-            throw new Error("Invalid response format");
-          }
-        },
-        // Error callback
-        (errorMessage) => {
-          showToast.apiError(errorMessage);
-        }
-      );
-
-      if (!isSuccess) {
-        return; // Error already handled by callback
-      }
-
-    } catch (error: any) {
-      const errorMessage = handleApiError(error as any);
-      showToast.apiError(errorMessage);
-    } finally {
-      dispatch(setLoading(false));
-    }
+      }).unwrap(),
+      dispatch,
+      router,
+      'simple'
+    );
   };
 
   // Register function
@@ -199,39 +133,8 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
         fullName: formData.fullName,
       }).unwrap();
 
-      // Use centralized response handling
-      const isSuccess = handleApiResponse(
-        response,
-        // Success callback
-        () => {
-          const authData = extractAuthData(response);
-          
-          if (authData) {
-            // Update Redux state
-            dispatch(setCredentials({
-              user: authData.user,
-              token: authData.token
-            }));
-
-            // Store token in localStorage
-            localStorage.setItem('token', authData.token);
-            showToast.loginSuccess();
-            router.push("/dashboard");
-          } else {
-            // For registration, we might not get user data immediately if email verification is required
-            showToast.registrationSuccess();
-            router.push("/signin");
-          }
-        },
-        // Error callback
-        (errorMessage) => {
-          showToast.apiError(errorMessage);
-        }
-      );
-
-      if (!isSuccess) {
-        return; // Error already handled by callback
-      }
+      showToast.success("Registration successful! Please check your email to verify your account before logging in.");
+      router.push("/signin");
 
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
