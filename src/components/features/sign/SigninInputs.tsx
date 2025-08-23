@@ -18,7 +18,7 @@ export default function SigninInputs({ formData, onChange }: SigninInputsProps) 
   return (
     <div className="flex flex-col items-center gap-3 self-stretch">
       <SignInputContainer>
-        <SignLabel label="Email Address" required />
+        <SignLabel label="Email Address for testing" required />
         <Input
           placeholder="hello@example.com"
           icon={<IconEmail height={20} width={20} />}
