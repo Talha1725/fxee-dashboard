@@ -174,7 +174,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
           disabled={isLoading}
         >
           {isLoading 
-            ? (isSignup ? "Creating Account..." : "Signing In...") 
+            ? (isSignup ? "Registering..." : "Logging in...") 
             : (isSignup ? "Register" : "Login")
           }
         </Button>

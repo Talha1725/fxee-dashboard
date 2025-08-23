@@ -7,26 +7,55 @@ import { AuthResponse } from '@/types/redux';
 
 // Helper function to extract user and token from response
 export const extractAuthData = (response: AuthResponse) => {
-  // Structure 1: response.data.userData and response.token
+  // Structure 1: response.data.userData and response.data.token (current backend structure)
+  if (response.data && typeof response.data === 'object' && 'userData' in response.data && 'token' in response.data) {
+    const userData = response.data.userData as any;
+    // Create a new object with avatar field mapped from picture if needed
+    const user = {
+      ...userData,
+      avatar: userData.avatar || userData.picture || undefined
+    };
+    return {
+      user,
+      token: response.data.token
+    };
+  }
+  
+  // Structure 2: response.data.userData and response.token
   if (response.data && typeof response.data === 'object' && 'userData' in response.data && response.token) {
+    const userData = response.data.userData as any;
+    const user = {
+      ...userData,
+      avatar: userData.avatar || userData.picture || undefined
+    };
     return {
-      user: response.data.userData,
+      user,
       token: response.token
     };
   }
   
-  // Structure 2: response.token and response.data (user object)
+  // Structure 3: response.token and response.data (user object)
   if (response.token && response.data && typeof response.data === 'object' && 'id' in response.data) {
+    const userData = response.data as any;
+    const user = {
+      ...userData,
+      avatar: userData.avatar || userData.picture || undefined
+    };
     return {
-      user: response.data as any,
+      user,
       token: response.token
     };
   }
   
-  // Structure 3: response.data.token and response.data (user object)
+  // Structure 4: response.data.token and response.data (user object)
   if (response.data && typeof response.data === 'object' && 'token' in response.data && 'id' in response.data) {
+    const userData = response.data as any;
+    const user = {
+      ...userData,
+      avatar: userData.avatar || userData.picture || undefined
+    };
     return {
-      user: response.data as any,
+      user,
       token: response.data.token
     };
   }
@@ -75,8 +104,8 @@ export const handleSSOResponse = async (
               break;
           }
           
-          // Redirect to dashboard
-          router.push("/dashboard");
+          // Redirect to home and prevent going back to login
+          router.replace("/home");
         } else {
           throw new Error("Invalid response format");
         }
