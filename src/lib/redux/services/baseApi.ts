@@ -15,9 +15,15 @@ export const baseApi = createApi({
         headers.set("authorization", `Bearer ${token}`);
       }
 
+      // Ensure Content-Type is set for JSON requests
+      if (!headers.has('content-type')) {
+        headers.set('content-type', 'application/json');
+      }
+
       return headers;
     },
-    credentials: "include", // for cookies
+    // credentials: "include", // temporarily disabled to test CORS
+    mode: 'cors', // explicitly set CORS mode
   }),
   tagTypes: ["User", "Payment", "Chat", "Recommendation"],
   endpoints: () => ({}),
