@@ -7,7 +7,7 @@ interface SignLabelProps {
 
 export default function SignLabel({ label, required }: SignLabelProps) {
   return (
-    <Label>
+    <Label className="font-satoshi-medium">
       {label}
       {required && (
         <span className="bg-picton-blue text-transparent bg-clip-text">*</span>
