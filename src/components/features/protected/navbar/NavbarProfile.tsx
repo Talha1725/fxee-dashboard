@@ -108,7 +108,7 @@ export default function NavbarProfile() {
             <ChevronDown size={20} />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="dark:bg-[#0D0D0D] bg-white p-5 border dark:border-white/10 border-black/15">
+        <DropdownMenuContent className="dark:bg-[#0D0D0D] bg-white p-5 md:p-2 border dark:border-white/10 border-black/15">
           <div className="flex flex-col gap-2 dark:text-white text-black md:hidden">
             <div className="flex items-center gap-2">
               <Button
@@ -198,15 +198,17 @@ export default function NavbarProfile() {
               </Select>
             </div>
             <NavbarThemeSwitch dropdown={true} />{" "}
+            <Button
+                variant={theme === "dark" ? "white" : "black"}
+                className="font-satoshi-medium w-full"
+                onClick={handleLogout}
+              >
+                <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
+              </Button>
           </div>
-          <DropdownMenuItem className="flex items-center gap-2 dark:text-white text-black md:mt-0 mt-5">
-            <User size={16} className="mr-2 text-black dark:text-white/80" />
-            <p className="text-black dark:text-white/80">Profile</p>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleLogout}
-            className="flex items-center gap-2 dark:text-white text-black cursor-pointer"
+            className="items-center gap-2 dark:text-white text-black cursor-pointer md:flex hidden"
           >
             <LogOut size={16} className="mr-2 text-black dark:text-white/80" />
             <p className="text-black dark:text-white/80">Logout</p>
