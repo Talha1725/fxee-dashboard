@@ -18,7 +18,7 @@ export default function AIEngineStatusTGSSlider({
   const [sliderValue, setSliderValue] = useState(0);
 
   return (
-    <div className="flex flex-col items-start gap-2.5 py-3.5 px-3 self-stretch flex-[1_0_0] rounded-[10px] border border-white/2 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+    <div className="flex flex-col items-start gap-2.5 py-3.5 px-3 self-stretch flex-[1_0_0] rounded-[10px] border border-white/2 bg-dark-gradient ">
       <div className="flex items-center gap-2.5 self-stretch">
         <Text14 className="flex-[1_0_0] text-white dark:text-white">{title}</Text14>
         <Text12

@@ -4,6 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Text14, Text16, Text18, Text24 } from "@/components/ui/typography";
 import { RefreshCcw } from "lucide-react";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 interface FinancialIndexCardProps {
   symbol: string;
@@ -28,21 +29,21 @@ export default function FinancialIndexCard({
   icon,
   className,
 }: FinancialIndexCardProps) {
+  const { theme } = useTheme();
   const isPositive = change >= 0;
 
   return (
     <div
       className={cn(
-        "w-[336px] h-[176px] rounded-2xl border border-[#0000001A]",
-        "bg-[linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);] dark:bg-[#111]] p-5",
+        "w-full h-[176px] rounded-[16px] border border-black/10",
+        "p-5",
+        `${theme === "dark" ? "bg-tab-dark-gradient" : "bg-card-dashboard-main-gradient"}`,
         "flex flex-col justify-between",
         "dark:border-white/[0.1]",
         className
       )}
     >
-      {/* Inner Wrapper (exact dimensions) */}
-      <div className="w-[296px] h-[136px] flex flex-col justify-between">
-        {/* Header */}
+      <div className="w-full h-[136px] flex flex-col justify-between">
         <div className="flex items-center gap-2">
           {icon}
           <Text18 className="text-black dark:text-white font-medium font-satoshi-medium">
@@ -50,7 +51,6 @@ export default function FinancialIndexCard({
           </Text18>
         </div>
 
-        {/* Name + Type */}
         <div className="flex justify-between">
           <Text14 className="text-black dark:text-gray-300 text-base font-satoshi-medium">
             {name}
@@ -60,7 +60,6 @@ export default function FinancialIndexCard({
           </Text14>
         </div>
 
-        {/* Value + Change */}
         <div className="flex justify-between items-end">
           <span className="text-black dark:text-white text-[32px] font-medium font-satoshi-bold">
             {currentValue.toLocaleString("en-US", {
@@ -97,7 +96,6 @@ export default function FinancialIndexCard({
           </div>
         </div>
 
-        {/* Last Update */}
         <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
           <RefreshCcw size={14} className="shrink-0" />
           <Text14 className="font-satoshi-medium">

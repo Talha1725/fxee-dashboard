@@ -23,8 +23,8 @@ export default function AIEngineToolsCardHead({
         {icon}
       </div>
       <div className="flex flex-col justify-center items-start gap-1 flex-[1_0_0]">
-        <Text16>{title}</Text16>
-        <Text14 className="text-black/80 dark:text-white/80 self-stretch font-[400]">
+        <Text16 className="text-black/80 dark:text-white/80 font-satoshi-medium">{title}</Text16>
+        <Text14 className="text-black/80 dark:text-white/80 self-stretch font-[400] font-satoshi-regular">
           {description}
         </Text14>
       </div>

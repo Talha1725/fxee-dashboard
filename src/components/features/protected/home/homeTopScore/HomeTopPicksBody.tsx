@@ -109,11 +109,11 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent font-satoshi-medium">
-          <TableHead>Symbol</TableHead>
-          <TableHead>Last</TableHead>
-          <TableHead>Change</TableHead>
-          <TableHead>Change %</TableHead>
-          {showArrows && <TableHead className="text-right"></TableHead>}
+          <TableHead className="text-[12px] font-satoshi">Symbols</TableHead>
+          <TableHead className="text-[12px] font-satoshi">Last</TableHead>
+          <TableHead className="text-[12px] font-satoshi">Chang</TableHead>
+          <TableHead className="text-[12px] font-satoshi">Chang %</TableHead>
+          {showArrows && <TableHead className="text-[12px] font-satoshi text-right"></TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody className="font-satoshi">

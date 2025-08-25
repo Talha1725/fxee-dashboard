@@ -1,33 +1,39 @@
+'use client'
 import { Text14 } from "@/components/ui/typography";
 import { IconCircle } from "@/components/ui/icon";
 import { Text24 } from "@/components/ui/typography";
 import { Text16 } from "@/components/ui/typography";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function AIEngineToolsNIPText() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col items-start gap-5 flex-[1_0_0] p-5 rounded-[16px] border border-white/5 bg-card-main-dashboard-gradient h-[881px] overflow-y-auto">
+    <div className={`flex flex-col items-start gap-5 flex-[1_0_0] p-5 rounded-[16px] ${theme === "dark" ? "bg-tab-dark-gradient border border-[#FFFFFF0D]" : "border border-[#0000001A] bg-card-main-dashboard-gradient"} h-[881px] overflow-y-auto scrollbar-hide`}>
       <div className="flex items-center gap-[5px]">
-        <Text14 className="text-black/80 dark:text-white/80">May 9, 2025</Text14>
+        <Text14 className="text-black/80 dark:text-white/80 font-satoshi-medium">May 9, 2025</Text14>
         <IconCircle width={2} height={2} />
-        <Text14 className="text-black/80 dark:text-white/80">13:30 GMT+</Text14>
+        <Text14 className="text-black/80 dark:text-white/80 font-satoshi-medium">13:30 GMT+</Text14>
         <IconCircle width={2} height={2} />
-        <Text14 className="text-black/80 dark:text-white/80">51 min read</Text14>
+        <Text14 className="text-black/80 dark:text-white/80 font-satoshi-medium">51 min read</Text14>
       </div>
-      <Text24 className="self-stretch">
+      <Text24 className="self-stretch font-satoshi-medium">
         BTC/USD: Bitcoin Breaks $104,000 as Crypto Gets a Boost from Trade Deal
         Optimism
       </Text24>
       <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Key points:</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+        <Text16 className="font-satoshi-medium text-black/60 dark:text-white/60">Key points:</Text16>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular">
           <li>Bitcoin crosses $104,000 threshold</li>
           <li>Traders bet China deal is coming</li>
           <li>Bitcoin up 40% since April bottom</li>
         </ul>
       </div>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Bitcoin Clears $104,000</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <Text16 className="self-stretch font-satoshi-regular text-black/60 dark:text-white/60">
+      OG coin was last seen sprinting to the $104,000 mark after Trump announced a deal with the UK, dropping his hostile reciprocal tariffs. China next?
+      </Text16>
+      <div className="text-black dark:text-white font-[400]">
+        <Text16 className="font-satoshi-medium text-black/60 dark:text-white/60">Bitcoin Clears $104,000</Text16>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular text-black/60 dark:text-white/60">
           <li>
             Bitcoin (BTCUSD) surged past $104,000 early Friday, notching a fresh
             three-month high as the crypto market rallied on hopes that a
@@ -45,9 +51,9 @@ export default function AIEngineToolsNIPText() {
           </li>
         </ul>
       </div>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Tariffs Out, Risk On</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <div className="text-black dark:text-white font-[400] text-[16px]">
+        <span className="font-satoshi-medium text-black/60 dark:text-white/60">Tariffs Out, Risk On</span>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular text-black/60 dark:text-white/60">
           <li>
           The shift in tone jolted markets into risk-on mode. Bitcoin, still the 
           poster child for high-beta assets, was among the first to respond — jumping 
@@ -61,9 +67,9 @@ export default function AIEngineToolsNIPText() {
           </li>
         </ul>
       </div>
-      <div className="text-black/60 dark:text-white/60 font-[400]">
-        <Text16 className="font-medium">Tariffs Out, Risk On</Text16>
-        <ul className="list-disc list-outside ml-4 mt-2">
+      <div className="text-black dark:text-white font-[400]">
+        <Text16 className="font-satoshi-medium text-black/60 dark:text-white/60">Tariffs Out, Risk On</Text16>
+        <ul className="list-disc list-outside ml-4 mt-2 font-satoshi-regular text-black/60 dark:text-white/60">
           <li>
           The shift in tone jolted markets into risk-on mode. Bitcoin, 
           still the poster child for high-beta assets, was among the first to 

@@ -19,7 +19,7 @@ export default function AIEngineStatusTGSPairSelect() {
           </div>
         } />
       </SelectTrigger>
-      <SelectContent className="min-w-[40px]">
+      <SelectContent className="min-w-[40px] bg-gradient-to-b from-white/[0.08] to-white/[0.04] dark:bg-[#111] text-black dark:text-white">
         <SelectGroup>
           <SelectItem value="btc-usd">
             <div className="flex items-center gap-2">

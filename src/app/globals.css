@@ -951,6 +951,48 @@ body {
     background: linear-gradient(3deg, #0276db 14.37%, #3edc81 82.05%);
   }
 
+  .bg-tab-light-gradient {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.7) 100%);
+  }
+
+  .bg-tab-dark-gradient {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+  }
+
+  .bg-tab-light-base-gradient {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+  }
+
+  .bg-tab-dark-gradient-selected {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+  }
+
+  .border-tab-light {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .border-tab-dark {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .border-tab-light-no-left {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 0 8px 0 0;
+  }
+
+  .border-tab-dark-no-left {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0 8px 0 0;
+  }
+
+
+
   .tradingview-widget-copyright {
     display: none;
   }

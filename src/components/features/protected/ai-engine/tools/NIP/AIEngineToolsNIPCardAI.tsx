@@ -14,11 +14,17 @@ import {
   IconSend,
   IconTime,
   IconTradeUp,
+  ImageIcon,
 } from "@/components/ui/icon";
 import { Text12, Text14, Text16 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+
+interface BadgeItem {
+  text: string;
+  icon: React.ReactNode;
+}
 
 interface AIEngineToolsNIPCardAIProps {
   showIcon?: boolean;
@@ -32,6 +38,8 @@ interface AIEngineToolsNIPCardAIProps {
   title?: string;
   icon?: React.ReactNode;
   isNIPVersion?: boolean; // New prop to control NIP-specific styling
+  fontWeight?: string; // New prop to control title font weight
+  badges?: BadgeItem[]; // New prop to control badge data
 }
 
 export default function AIEngineToolsNIPCardAI({
@@ -45,24 +53,32 @@ export default function AIEngineToolsNIPCardAI({
   headerAlign = 'left',
   title = "News Impact Predictor",
   icon = <IconNIP width={20} height={20} />,
-  isNIPVersion = false
+  isNIPVersion = false,
+  fontWeight = "font-satoshi-medium",
+  badges = [
+    { text: "High", icon: <IconAsteroid width={20} height={20} /> },
+    { text: "89%", icon: <IconAIBrain width={20} height={20} /> },
+    { text: "4 Minutes Ago", icon: <IconTime width={20} height={20} /> }
+  ]
 }: AIEngineToolsNIPCardAIProps) {
   const { theme } = useTheme();
   return (
-    <AIEngineToolsNIPCardContainer className={`border-none border-green-gradient flex flex-col h-full ${
+    <AIEngineToolsNIPCardContainer className={`flex flex-col h-full ${
       theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"
-    } ${isNIPVersion ? 'w-full min-w-[723px] max-w-[800px] h-[887px] rounded-[16px] border border-[#0000001A] gap-4 pt-6 pr-5 pb-6 pl-5 flex-1' : ''}`}>
+    } ${isNIPVersion ? 'w-full h-full rounded-[16px] border border-[#0000001A] gap-4 pt-6 pr-5 pb-6 pl-5 flex-1 border-green-gradient' : 'border-green-gradient'}`}>
       {headerAlign === 'center' ? (
         <div className="flex justify-center">
           <AIEngineToolsNIPCardHead
             title={title}
             icon={showHeaderIcon ? icon : undefined}
+            fontWeight={fontWeight}
           />
         </div>
       ) : (
         <AIEngineToolsNIPCardHead
           title={title}
           icon={showHeaderIcon ? icon : undefined}
+          fontWeight={fontWeight}
         />
       )}
       <div className="flex items-start gap-2.5 self-stretch flex-1">
@@ -73,24 +89,19 @@ export default function AIEngineToolsNIPCardAI({
             <Text12 className="text-white/80">14:03, 15 Nov</Text12>
           </div>
           {showBadges && (
-            <div className="flex items-start align-content-start gap-2.5 flex-wrap self-stretch">
-              <AIEngineToolsNIPCardAIBadge
-                text="High"
-                icon={<IconAsteroid width={20} height={20} />}
-              />
-              <AIEngineToolsNIPCardAIBadge
-                text="89%"
-                icon={<IconAIBrain width={20} height={20} />}
-              />
-              <AIEngineToolsNIPCardAIBadge
-                text="4 Minutes Ago"
-                icon={<IconTime width={20} height={20} />}
-              />
+            <div className="flex items-start align-content-start gap-2.5 flex-wrap font-satoshi-bold text-[14px] self-stretch">
+              {badges.map((badge, index) => (
+                <AIEngineToolsNIPCardAIBadge
+                  key={index}
+                  text={badge.text}
+                  icon={badge.icon}
+                />
+              ))}
             </div>
           )}
           {showReasoning && (
-            <div className="font-[400]">
-              <Text14 className="font-medium">Reasoning:</Text14>
+            <div className="font-satoshi-medium text-[14px]">
+              <Text14 className="font-satoshi-medium">Reasoning:</Text14>
               <ul className="list-disc list-outside pl-6 mt-2">
                 <li>Break of $104K = psychological and technical breakout</li>
                 <li>
@@ -125,6 +136,7 @@ export default function AIEngineToolsNIPCardAI({
           }`}
           backIcon={
             <div className="flex items-center gap-3">
+              <ImageIcon width={20} height={20} />
               <IconMic width={20} height={20} />
               <IconSend width={20} height={20} />
             </div>
