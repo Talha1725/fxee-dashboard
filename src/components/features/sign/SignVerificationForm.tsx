@@ -298,12 +298,7 @@ export default function SignVerificationForm() {
 
   return (
     <div className="flex flex-col items-center justify-center self-stretch flex-[1_0_0]">
-      <div className="sm:w-[420px] flex flex-col items-end gap-6">
-        <SignFormHeader 
-          isSignup={false} 
-          isForgotPassword={false} 
-          isResetPassword={false} 
-        />
+      <div className="w-[90%] md:w-[420px] flex flex-col items-end md:gap-6 gap-3">
         
         <div className="w-full bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-8">
           {renderVerificationContent()}

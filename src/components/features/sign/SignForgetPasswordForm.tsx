@@ -95,7 +95,7 @@ export default function SignForgetPasswordForm() {
 
   return (
     <div className="flex flex-col items-center justify-center self-stretch flex-[1_0_0]">
-      <div className="sm:w-[420px] flex flex-col items-end gap-6">
+      <div className="w-[90%] md:w-[420px] flex flex-col items-end md:gap-6 gap-3">
         <SignFormHeader isSignup={false} isForgotPassword={true} isResetPassword={false} />
         <SignForgetPasswordInputs 
           formData={formData}
