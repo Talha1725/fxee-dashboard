@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import SignFormHeader from "@/components/features/sign/SignFormHeader";
 import SignSocialButtons from "@/components/features/sign/SignSocialButtons";
 import SignOrDivider from "@/components/features/sign/SignOrDivider";
@@ -15,14 +17,12 @@ import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/auth
 import { setLoading } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { 
-  handleApiError, 
-  validateEmail, 
-  validatePassword, 
-  validateRequiredFields 
+  handleApiError
 } from "@/lib/utils/apiUtils";
 import { handleAuthentication } from "@/lib/utils/authUtils";
 import { showToast } from "@/lib/utils/toast";
 import { AuthResponse, AuthResponseData } from '@/types/api';
+import { loginSchema, registerSchema, LoginFormData, RegisterFormData } from "@/lib/validations/auth";
 
 export default function SignForm({ isSignup }: { isSignup: boolean }) {
   const router = useRouter();
@@ -33,87 +33,43 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   
   // RTK Query mutations
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
-  const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
+  const [registerUser, { isLoading: isRegisterLoading }] = useRegisterMutation();
   
-  // Form state
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    userName: "",
-    fullName: "",
+  // React Hook Form with Zod validation
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<LoginFormData | RegisterFormData>({
+    resolver: zodResolver(isSignup ? registerSchema : loginSchema),
+    mode: "onChange",
   });
 
-  // Handle form field changes
+  // Watch form values for input components
+  const formData = watch();
+
+  // Handle form field changes for input components
   const handleFieldChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  // Form validation
-  const validateForm = () => {
-    if (isSignup) {
-      // Validate required fields
-      const requiredValidation = validateRequiredFields(formData, ['email', 'password', 'userName', 'fullName']);
-      if (!requiredValidation.isValid) {
-        showToast.validationError(requiredValidation.message!);
-        return false;
-      }
-
-      // Validate email format
-      if (!validateEmail(formData.email)) {
-        showToast.validationError("Please enter a valid email address");
-        return false;
-      }
-
-      // Validate password strength
-      const passwordValidation = validatePassword(formData.password);
-      if (!passwordValidation.isValid) {
-        showToast.validationError(passwordValidation.message!);
-        return false;
-      }
-
-      // Validate password confirmation
-      if (formData.password !== formData.confirmPassword) {
-        showToast.validationError("Passwords do not match");
-        return false;
-      }
-    } else {
-      // Validate required fields for login
-      const requiredValidation = validateRequiredFields(formData, ['email', 'password']);
-      if (!requiredValidation.isValid) {
-        showToast.validationError(requiredValidation.message!);
-        return false;
-      }
-
-      // Validate email format
-      if (!validateEmail(formData.email)) {
-        showToast.validationError("Please enter a valid email address");
-        return false;
-      }
-    }
-    return true;
+    setValue(field as keyof (LoginFormData | RegisterFormData), value);
   };
 
   // Handle form submission
-  const handleSubmit = async () => {
-    // Validate form
-    if (!validateForm()) {
-      return;
-    }
-
+  const onSubmit = async (data: LoginFormData | RegisterFormData) => {
     if (isSignup) {
-      await handleRegister();
+      await handleRegister(data as RegisterFormData);
     } else {
-      await handleLogin();
+      await handleLogin(data as LoginFormData);
     }
   };
 
   // Login function
-  const handleLogin = async () => {
+  const handleLogin = async (data: LoginFormData) => {
     await handleAuthentication(
       login({
-        email: formData.email,
-        password: formData.password,
+        email: data.email,
+        password: data.password,
       }).unwrap(),
       dispatch,
       router,
@@ -122,15 +78,15 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   };
 
   // Register function
-  const handleRegister = async () => {
+  const handleRegister = async (data: RegisterFormData) => {
     try {
       dispatch(setLoading(true));
 
-      const response = await register({
-        email: formData.email,
-        password: formData.password,
-        userName: formData.userName,
-        fullName: formData.fullName,
+      const response = await registerUser({
+        email: data.email,
+        password: data.password,
+        userName: data.userName,
+        fullName: data.fullName,
       }).unwrap();
 
       showToast.success("Registration successful! Please check your email to verify your account before logging in.");
@@ -153,31 +109,37 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
         <SignSocialButtons />
         <SignOrDivider />
         
-        {isSignup ? (
-          <SignupInputs 
-            formData={formData} 
-            onChange={handleFieldChange}
-          />
-        ) : (
-          <SigninInputs 
-            formData={formData}
-            onChange={handleFieldChange}
-          />
-        )}
-        
-        {!isSignup && <SignSupport />}
-        
-        <Button 
-          onClick={handleSubmit}
-          variant="fancy" 
-          className="flex-[1_0_0] self-stretch"
-          disabled={isLoading}
-        >
-          {isLoading 
-            ? (isSignup ? "Registering..." : "Logging in...") 
-            : (isSignup ? "Register" : "Login")
-          }
-        </Button>
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+          {isSignup ? (
+            <SignupInputs 
+              formData={formData as RegisterFormData} 
+              onChange={handleFieldChange}
+              errors={errors}
+              register={register}
+            />
+          ) : (
+            <SigninInputs 
+              formData={formData as LoginFormData}
+              onChange={handleFieldChange}
+              errors={errors}
+              register={register}
+            />
+          )}
+          
+          {!isSignup && <SignSupport />}
+          
+          <Button 
+            type="submit"
+            variant="fancy" 
+            className="flex-[1_0_0] self-stretch w-full mt-5"
+            disabled={isLoading}
+          >
+            {isLoading 
+              ? (isSignup ? "Registering..." : "Logging in...") 
+              : (isSignup ? "Register" : "Login")
+            }
+          </Button>
+        </form>
       </div>
     </div>
   );
