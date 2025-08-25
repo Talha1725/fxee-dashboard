@@ -5,9 +5,6 @@ import Link from "next/link";
 import OnboardStepIndicator from "@/components/features/onboard/OnboardStepIndicator";
 
 import { IconLogo1 } from "@/components/ui/icon";
-import { Button } from "@/components/ui/button";
-import { ChevronLeftIcon } from "lucide-react";
-import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function OnboardNav({
   step,
@@ -16,7 +13,6 @@ export default function OnboardNav({
   step?: string;
   isOnboard: boolean;
 }) {
-  const { theme } = useTheme();
   return (
     <div className="w-full flex md:flex-row flex-col items-center justify-between gap-6 py-4 sm:py-6 px-5 sm:px-11 border-b-black/10 dark:border-b-white/30 border-b overflow-hidden">
       <Link

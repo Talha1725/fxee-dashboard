@@ -34,9 +34,9 @@ export default function CheckoutCardItem({
     >
       <div className="flex flex-col gap-4 flex-[1_0_0] self-stretch">
         {title === "Crypto" && selectedPaymentMethod === title && (
-          <div className="w-full flex justify-center items-center gap-[5px] px-2.5 py-[5px] self-stretch bg-popular-gradient rounded-t-[10px] text-white">
+          <div className="w-full flex justify-center items-center gap-[5px] px-2.5 py-[5px] self-stretch bg-popular-gradient rounded-t-[10px] md:text-base text-xs text-white">
             <IconFlashlight width={24} height={24} />
-            Enjoy a 20% discount when paying with cryptocurrency
+            Enjoy a 20% discount when paying with crypto
           </div>
         )}
         <div

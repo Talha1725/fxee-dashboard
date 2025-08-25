@@ -5,7 +5,7 @@ import HomeScore from "@/components/features/protected/home/homeTopScore/HomeSco
 
 export default function HomeTopScore({ openModal }: { openModal: () => void }) {
   return (
-    <div className="flex flex-col db:flex-row items-start gap-5 self-stretch">
+    <div className="flex flex-col-reverse db:flex-row items-start gap-5 self-stretch">
       <HomeTopPicks openModal={openModal} />
       <HomeScore />
     </div>

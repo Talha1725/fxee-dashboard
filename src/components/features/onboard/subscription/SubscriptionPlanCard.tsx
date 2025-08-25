@@ -44,7 +44,7 @@ export default function SubscriptionPlanCard({
       )}
     >
       {title === "Pro" && <OnboardPopularPattern title="Most Popular" />}
-      <SubscriptionCardContainer fitfor={fitfor} alignLeft={alignLeft}>
+      <SubscriptionCardContainer fitfor={fitfor} alignLeft={window.innerWidth > 768 ? true : false}>
         <SubscriptionPlanHeader
           title={title}
           price={`$${price}/month`}

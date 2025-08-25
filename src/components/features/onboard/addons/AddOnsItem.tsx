@@ -2,7 +2,7 @@ import React from "react";
 
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Text18 } from "@/components/ui/typography";
+import { Text16, Text18 } from "@/components/ui/typography";
 
 export default function AddOnsItem({
   title,
@@ -19,21 +19,21 @@ export default function AddOnsItem({
         id="toggle-2"
         className="border-green-gradient before:p-[2px] border-none rounded-full data-[state=checked]:bg-transparent data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
       />
-      <div className="flex items-start gap-2.5 shrink-0 flex-[1_0_0]">
+      <div className="flex md:flex-row flex-col items-start gap-3 md:gap-2.5 shrink-0 flex-[1_0_0]">
         <div className="flex flex-col items-start gap-[5px] flex-[1_0_0]">
-          <Text18>{title}</Text18>
-          <p className="dark:text-white/80 text-black/60 text-[14px] font-regular liga font-normal">
+          <Text16>{title}</Text16>
+          <p className="dark:text-white/50 mt-1 text-black/60 text-[12px] font-regular liga font-normal">
             {description}
           </p>
         </div>
-        <div className="text-right w-[160px] text-[18px] font-regular font-medium">
+        <div className="text-right md:w-[160px] text-[18px] font-regular font-medium">
           {(() => {
             if (price.includes('/')) {
               const parts = price.split('/');
               return (
                 <>
                   <span className="dark:text-white">{parts[0]}</span>
-                  <span className="dark:text-white/80 font-normal text-[16px]">/{parts[1]}</span>
+                  <span className="dark:text-white/80 font-normal text-[14px]">/{parts[1]}</span>
                 </>
               );
               } else if (price.includes('for')) {
@@ -41,7 +41,7 @@ export default function AddOnsItem({
               return (
                 <>
                   <span className="dark:text-white">{parts[0]}</span>
-                  <span className="dark:text-white/80 font-normal text-[16px]">for{parts[1]}</span>
+                  <span className="dark:text-white/80 font-normal text-[14px]">for{parts[1]}</span>
                 </>
               );
             } else if (price.includes('=')) {
@@ -49,7 +49,7 @@ export default function AddOnsItem({
               return (
                 <>
                   <span className="dark:text-white">{parts[0]}</span>
-                  <span className="dark:text-white/80 font-normal text-[16px]">={parts[1]}</span>
+                  <span className="dark:text-white/80 font-normal text-[14px]">={parts[1]}</span>
                 </>
               );
             } else {
