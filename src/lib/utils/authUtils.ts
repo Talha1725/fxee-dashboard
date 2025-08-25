@@ -7,7 +7,21 @@ import { AuthResponse } from '@/types/redux';
 
 // Helper function to extract user and token from response
 export const extractAuthData = (response: AuthResponse) => {
-  // Structure 1: response.data.userData and response.data.token (current backend structure)
+  // Structure 1: response.data.user and response.data.token (Google OAuth structure)
+  if (response.data && typeof response.data === 'object' && 'user' in response.data && 'token' in response.data) {
+    const userData = (response.data as any).user;
+    // Create a new object with avatar field mapped from picture if needed
+    const user = {
+      ...userData,
+      avatar: userData.avatar || userData.picture || undefined
+    };
+    return {
+      user,
+      token: (response.data as any).token
+    };
+  }
+  
+  // Structure 2: response.data.userData and response.data.token (current backend structure)
   if (response.data && typeof response.data === 'object' && 'userData' in response.data && 'token' in response.data) {
     const userData = response.data.userData as any;
     // Create a new object with avatar field mapped from picture if needed
@@ -21,7 +35,7 @@ export const extractAuthData = (response: AuthResponse) => {
     };
   }
   
-  // Structure 2: response.data.userData and response.token
+  // Structure 3: response.data.userData and response.token
   if (response.data && typeof response.data === 'object' && 'userData' in response.data && response.token) {
     const userData = response.data.userData as any;
     const user = {
@@ -34,7 +48,7 @@ export const extractAuthData = (response: AuthResponse) => {
     };
   }
   
-  // Structure 3: response.token and response.data (user object)
+  // Structure 4: response.token and response.data (user object)
   if (response.token && response.data && typeof response.data === 'object' && 'id' in response.data) {
     const userData = response.data as any;
     const user = {
@@ -47,7 +61,7 @@ export const extractAuthData = (response: AuthResponse) => {
     };
   }
   
-  // Structure 4: response.data.token and response.data (user object)
+  // Structure 5: response.data.token and response.data (user object)
   if (response.data && typeof response.data === 'object' && 'token' in response.data && 'id' in response.data) {
     const userData = response.data as any;
     const user = {
