@@ -63,7 +63,7 @@ export default function AIEngineToolsNIPCardAI({
 }: AIEngineToolsNIPCardAIProps) {
   const { theme } = useTheme();
   return (
-    <AIEngineToolsNIPCardContainer className={`flex flex-col h-full ${
+    <AIEngineToolsNIPCardContainer className={`flex flex-col h-full flex-1 ${
       theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"
     } ${isNIPVersion ? 'w-full h-full rounded-[16px] border border-[#0000001A] gap-4 pt-6 pr-5 pb-6 pl-5 flex-1 border-green-gradient' : 'border-green-gradient'}`}>
       {headerAlign === 'center' ? (
