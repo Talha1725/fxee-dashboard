@@ -99,7 +99,7 @@ export default function AIEngineToolsNIP() {
             <DashboardWidget 
             currency="BTC/ETH" 
             showPlusIcon={true}
-            actionButton={<IconAnalyse width={40} height={40} />} />
+            actionButton={<IconAnalyse className="text-white" width={40} height={40} />} />
           </div>
 
           <div className="w-full md:w-[344px] h-auto md:h-full md:overflow-y-auto scrollbar-hide mt-5 md:mt-0 order-2">
@@ -234,7 +234,7 @@ export default function AIEngineToolsNIP() {
               <div className="flex flex-col mt-4 w-full">
                 <div
                   className={`flex items-center justify-center w-full h-[52px] rounded-[16px] 
-                  ${theme === "dark" ? "bg-dark-gradient" : "bg-white-gradient"} 
+                  ${theme === "dark" ? "bg-dark-gradient" : "bg-tab-light-gradient"} 
                   border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1] 
                   transition-all duration-200 hover:scale-[1.02]`}
                 >
@@ -246,7 +246,7 @@ export default function AIEngineToolsNIP() {
                   </div>
                 </div>
 
-                <div className="text-center mt-3">
+                <div className="text-center mt-1">
                   <span className="font-satoshi-medium text-[12px] leading-[100%] tracking-[-0.02em] text-black dark:text-white opacity-70">
                     Last updated: 30 seconds ago
                   </span>

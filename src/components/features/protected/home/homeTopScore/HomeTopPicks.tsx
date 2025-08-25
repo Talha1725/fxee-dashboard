@@ -16,7 +16,7 @@ export default function HomeTopPicks({ showArrows = true, openModal }: HomeTopPi
   const { theme } = useTheme();
   return (
 
-    <ProtectedCardContainer className={`h-[471px] border-black/5 ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"}`}>
+    <ProtectedCardContainer className={`h-[471px] border-black/5 ${theme === "dark" ? "bg-tab-dark-gradient" : "bg-tab-dark-gradient"}`}>
       <HomeTopPicksHead openModal={openModal} />
       <HomeTopPicksBody showArrows={showArrows} />
     </ProtectedCardContainer>

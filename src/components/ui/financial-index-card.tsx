@@ -37,7 +37,7 @@ export default function FinancialIndexCard({
       className={cn(
         "w-full h-[176px] rounded-[16px] border border-black/10",
         "p-5",
-        `${theme === "dark" ? "bg-dark-gradient" : "bg-card-dashboard-main-gradient"}`,
+        `${theme === "dark" ? "bg-tab-dark-gradient" : "bg-card-dashboard-main-gradient"}`,
         "flex flex-col justify-between",
         "dark:border-white/[0.1]",
         className

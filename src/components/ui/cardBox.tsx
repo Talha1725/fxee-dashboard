@@ -29,7 +29,7 @@ export default function CardBox({ title, children, listItems, customSize }: Card
   const padding = customSize?.padding || "pt-[20px] pr-[16px] pb-[20px] pl-[16px]";
   
   return (
-    <div className={`${width} ${height} rounded-[16px] border border-black/10 ${padding} ${theme === "dark" ? "bg-dark-gradient" : "bg-white-gradient"} dark:border-white/[0.1] overflow-visible`}>
+    <div className={`${width} ${height} rounded-[16px] border border-black/10 ${padding} ${theme === "dark" ? "bg-dark-gradient" : "bg-tab-light-gradient"} dark:border-white/[0.1] overflow-visible`}>
       {title && (
         <h2 className="font-satoshi-medium text-[18px] leading-[100%] tracking-[-0.02em] capitalize mb-4 text-black dark:text-white break-words">
           {title}

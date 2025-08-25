@@ -32,7 +32,7 @@ export default function DashboardWidget({
   return (
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
-        <div className="flex justify-between items-center self-stretch">
+        <div className="flex justify-between items-center self-stretch mb-2">
           <div className="flex items-center gap-2">
             <div 
               className="flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 bg-dark-gradient"
@@ -58,13 +58,14 @@ export default function DashboardWidget({
           </div>
 
           {actionButton ?? (
-            <Button variant={theme === "dark" ? "popular" : "darkPopular"}>
-              <IconAIMagic />
-              <Text16 className="font-satoshi-medium text-white">
-                Analyze with AI
-              </Text16>
-            </Button>
-          )}
+  <Button variant="popular">
+    <IconAIMagic />
+    <Text16 className="font-satoshi-medium text-white">
+      Analyze with AI
+    </Text16>
+  </Button>
+)}
+
         </div>
 
         <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">

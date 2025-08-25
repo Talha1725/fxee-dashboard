@@ -11,7 +11,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 export default function AIEngineToolsNIPCardATF() {
   const { theme } = useTheme();
   return (
-    <AIEngineToolsNIPCardContainer className={theme === "dark" ? "" : "border border-[#0000001A] bg-white-gradient"}>
+    <AIEngineToolsNIPCardContainer className={theme === "dark" ? "bg-tab-dark-gradient" : "border border-[#0000001A] bg-tab-light-gradient"}>
       <AIEngineToolsNIPCardHead
         title="AI Trend Forecast"
         icon={<IconATF width={20} height={20} />}

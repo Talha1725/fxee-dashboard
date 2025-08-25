@@ -951,7 +951,6 @@ body {
     background: linear-gradient(3deg, #0276db 14.37%, #3edc81 82.05%);
   }
 
-  /* Tab styling classes */
   .bg-tab-light-gradient {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.7) 100%);
   }

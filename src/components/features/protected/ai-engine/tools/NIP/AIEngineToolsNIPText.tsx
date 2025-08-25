@@ -1,11 +1,14 @@
+'use client'
 import { Text14 } from "@/components/ui/typography";
 import { IconCircle } from "@/components/ui/icon";
 import { Text24 } from "@/components/ui/typography";
 import { Text16 } from "@/components/ui/typography";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export default function AIEngineToolsNIPText() {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col items-start gap-5 flex-[1_0_0] p-5 rounded-[16px] border border-white/5 bg-card-main-dashboard-gradient h-[881px] overflow-y-auto scrollbar-hide">
+    <div className={`flex flex-col items-start gap-5 flex-[1_0_0] p-5 rounded-[16px] ${theme === "dark" ? "bg-tab-dark-gradient border border-[#FFFFFF0D]" : "border border-[#0000001A] bg-card-main-dashboard-gradient"} h-[881px] overflow-y-auto scrollbar-hide`}>
       <div className="flex items-center gap-[5px]">
         <Text14 className="text-black/80 dark:text-white/80">May 9, 2025</Text14>
         <IconCircle width={2} height={2} />
