@@ -48,7 +48,7 @@ const AllocationBar = ({
     const numbers = [0, 2.0, 4.0, 6.0, 8.0, 10.0];
     
     return (
-      <div className="h-[14px] flex justify-between items-center pl-[42px] mt-[16px] mb-1">
+      <div className=" h-[14px] flex justify-between items-center pl-[42px] mt-[16px]">
         {numbers.map((num) => (
           <span 
             key={num} 
@@ -72,22 +72,22 @@ export default function AIEngineToolsNIP() {
           icon={<IconNIP width={14} height={14} />}
         />
 
-        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch md:min-h-[714px] md:max-h-[714px]">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch h-[714px] md:min-h-[714px] md:max-h-[714px]">
           <div className="w-full md:flex-1 order-1 
-            h-auto md:h-full 
-            overflow-visible md:overflow-y-auto scrollbar-hide">
+            h-full 
+            overflow-y-auto scrollbar-hide">
             <AIEngineToolsNIPText />
           </div>
 
           <div className="w-full md:w-[344px] order-2 
-            h-auto md:h-full 
-            overflow-visible md:overflow-y-auto scrollbar-hide mt-5 md:mt-0">
+            h-full 
+            overflow-y-auto scrollbar-hide mt-5 md:mt-0">
             <AIEngineToolsNIPCards />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 self-stretch mt-12">
+      <div className="flex flex-col gap-6 self-stretch mt-6">
         <AIEngineToolsCardHead
           title="RSI Analyzer"
           description="Advanced RSI analysis with AI-powered overbought/oversold"
@@ -151,7 +151,7 @@ export default function AIEngineToolsNIP() {
           icon={<PieIcon width={14} height={14} />}
         />
 
-        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[952px] md:max-h-[952px] md:overflow-hidden">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[714px] md:max-h-[750px] md:overflow-y-auto scrollbar-hide">
           
           <div className="w-full flex-1 h-full md:overflow-y-auto scrollbar-hide">
             <AIEngineToolsNIPCardAI
