@@ -7,13 +7,15 @@ import NavbarSwitchContainer from "@/components/features/protected/navbar/Navbar
 
 export default function NavbarAccountSwitch({
   className,
+  dropdown,
 }: {
   className?: string;
+  dropdown?: boolean;
 }) {
   const [activeTab, setActiveTab] = useState("virtual-account");
 
   return (
-    <NavbarSwitchContainer className={className}>
+    <NavbarSwitchContainer className={className} dropdown={dropdown}>
       <NavbarSwitchToggleItem
         isActive={activeTab === "virtual-account"}
         onClick={() => setActiveTab("virtual-account")}

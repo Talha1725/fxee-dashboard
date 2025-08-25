@@ -156,7 +156,7 @@ export const SUBSCRIPTION_PLANS = [
   {
     title: "VIP",
     description: "Elite Trading Intelligence. Built for Toppers",
-    fitfor: "Great for: Traders looking for real-time market intelligence.",
+    fitfor: "Ideal for: Active traders managing prop firm challenges or retail trades manually.",
     price: 399,
     type: "VIP" as PlanType,
     items: [

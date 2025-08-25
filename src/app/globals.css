@@ -185,7 +185,7 @@ body {
       #161616 100%
     ),
     linear-gradient(29deg, #0276db 13.99%, #3edc81 102.63%);
-  --popular-gradient: linear-gradient(17deg, #0276db 14.37%, #3edc81 82.05%);
+  --popular-gradient: linear-gradient(3deg, #0276db 14.37%, #3edc81 82.05%);
   --dark-green-linear: linear-gradient(
       17deg,
       rgba(2, 118, 219, 0.2) 14.37%,
@@ -403,7 +403,7 @@ body {
     rgba(255, 255, 255, 0.04) 6.98%,
     rgba(255, 255, 255, 0.01) 99.47%
   );
-  --popular-gradient: linear-gradient(17deg, #0276db 14.37%, #3edc81 82.05%);
+  --popular-gradient: linear-gradient(2deg, #0276db 14.37%, #3edc81 82.05%);
   --dark-green-linear: linear-gradient(
       17deg,
       rgba(2, 118, 219, 0.2) 14.37%,
@@ -1002,5 +1002,49 @@ body {
       font-family: var(--font-satoshi-bold), -apple-system, BlinkMacSystemFont,
         "Segoe UI", system-ui, Arial, sans-serif;
     }
+  }
+
+  /* Override Google Chrome autofill styles */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: var(--foreground) !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Dark theme autofill overrides */
+  .dark input:-webkit-autofill,
+  .dark input:-webkit-autofill:hover,
+  .dark input:-webkit-autofill:focus,
+  .dark input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: var(--foreground) !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Specific autofill overrides for inputs with custom backgrounds */
+  input:-webkit-autofill {
+    background: transparent !important;
+    color: var(--foreground) !important;
+  }
+
+  .dark input:-webkit-autofill {
+    background: transparent !important;
+    color: var(--foreground) !important;
+  }
+
+  /* Override autofill for inputs with gradient backgrounds */
+  input[class*="bg-dark-gradient"]:-webkit-autofill,
+  input[class*="bg-gradient-to-b"]:-webkit-autofill {
+    background: transparent !important;
+    color: var(--foreground) !important;
+  }
+
+  .dark input[class*="bg-dark-gradient"]:-webkit-autofill,
+  .dark input[class*="bg-gradient-to-b"]:-webkit-autofill {
+    background: transparent !important;
+    color: var(--foreground) !important;
   }
 }

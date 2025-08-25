@@ -8,14 +8,14 @@ import { IconMoon, IconSun } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { THEMES } from "@/lib/constants";
 
-export default function NavbarThemeSwitch() {
+export default function NavbarThemeSwitch({dropdown}: {dropdown?: boolean}) {
   const { theme, setTheme } = useTheme();
 
   // Don't render until theme is loaded
   if (!theme) return null;
 
   return (
-    <NavbarSwitchContainer>
+    <NavbarSwitchContainer dropdown={dropdown}>
       <NavbarSwitchToggleItem
         isActive={theme === THEMES.DARK}
         onClick={() => setTheme(THEMES.DARK)}
@@ -23,9 +23,9 @@ export default function NavbarThemeSwitch() {
         <IconMoon
           width={20}
           height={20}
-          color={theme === "light" ? "#1D1D1DCC" : "black"}
+          color={theme === "light" ? dropdown ? "black" : "#1D1D1DCC" : "black"}
         />
-        <p className="font-satoshi-medium">Dark</p>
+        <p className={`${dropdown ? "text-black" : "dark:text-black"} font-satoshi-medium`}>Dark</p>
       </NavbarSwitchToggleItem>
       <NavbarSwitchToggleItem
         isActive={theme === THEMES.LIGHT}
