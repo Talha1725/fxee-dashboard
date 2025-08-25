@@ -48,7 +48,7 @@ const AllocationBar = ({
     const numbers = [0, 2.0, 4.0, 6.0, 8.0, 10.0];
     
     return (
-      <div className="w-[295.42px] h-[14px] flex justify-between items-center pl-[42px] mt-[16px]">
+      <div className="h-[14px] flex justify-between items-center pl-[42px] mt-[16px] mb-1">
         {numbers.map((num) => (
           <span 
             key={num} 
@@ -94,7 +94,7 @@ export default function AIEngineToolsNIP() {
           icon={<FancyIcon width={14} height={14} />}
         />
 
-        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch md:min-h-[714px] md:max-h-[714px]">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch md:min-h-[785px] md:max-h-[785px]">
           <div className="w-full md:flex-1 h-[350px] md:h-full overflow-y-auto scrollbar-hide order-1">
             <DashboardWidget 
             currency="BTC/ETH" 
@@ -151,7 +151,7 @@ export default function AIEngineToolsNIP() {
           icon={<PieIcon width={14} height={14} />}
         />
 
-        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[714px] md:max-h-[714px] md:overflow-hidden">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[952px] md:max-h-[952px] md:overflow-hidden">
           
           <div className="w-full flex-1 h-full md:overflow-y-auto scrollbar-hide">
             <AIEngineToolsNIPCardAI
@@ -235,8 +235,7 @@ export default function AIEngineToolsNIP() {
                 <div
                   className={`flex items-center justify-center w-full h-[52px] rounded-[16px] 
                   ${theme === "dark" ? "bg-dark-gradient" : "bg-tab-light-gradient"} 
-                  border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1] 
-                  transition-all duration-200 hover:scale-[1.02]`}
+                  border border-black/20 cursor-pointer hover:bg-white/10 dark:border-white/[0.1]`}
                 >
                   <div className="flex items-center gap-2">
                     <RefreshCcw size={14} className="shrink-0" />
