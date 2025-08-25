@@ -12,7 +12,7 @@ export default function SignFormHeader({
 }) {
   return (
     <div className="flex flex-col items-center gap-1 self-stretch">
-      <Title32 className="text-center [font-feature-settings:'liga'_off,'calt'_off]">
+      <Title32 className="text-center [font-feature-settings:'liga'_off,'calt'_off] font-satoshi-medium">
         {isResetPassword
           ? "Reset your password"
           : isForgotPassword 
@@ -21,7 +21,7 @@ export default function SignFormHeader({
               ? "Create a new account" 
               : "Login to your account"}
       </Title32>
-      <Description14 className="text-center">
+      <Description14 className="text-center font-satoshi">
         {isResetPassword
           ? "Enter your new password below."
           : isForgotPassword

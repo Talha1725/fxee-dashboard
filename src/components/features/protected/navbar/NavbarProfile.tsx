@@ -1,8 +1,10 @@
 "use client"
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Moon, Sun, Settings, Search, Bell, User, Wallet } from "lucide-react";
+import { ChevronDown, ChevronUp, Moon, Sun, Settings, Search, Bell, User, Wallet, LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,15 +13,47 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Label, PopularBadge } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { THEMES } from "@/lib/constants";
+import { logout } from "@/lib/redux/features/auth/authSlice";
+import { RootState } from "@/lib/redux/store";
+import { showToast } from "@/lib/utils/toast";
 
 export default function NavbarProfile() {
   const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState("English");
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  const handleLogout = () => {
+    // Clear token from localStorage
+    localStorage.removeItem("token");
+    
+    // Dispatch logout action
+    dispatch(logout());
+    
+    // Show success toast
+    showToast.success("Logged out successfully");
+    
+    // Redirect to signin page and prevent going back
+    router.replace("/signin");
+  };
+
+  // Get user initials for avatar fallback
+  const getUserInitials = () => {
+    if (!user) return "U";
+    const names = user.fullName?.split(" ") || [];
+    if (names.length >= 2) {
+      return `${names[0][0]}${names[1][0]}`.toUpperCase();
+    }
+    return user.fullName?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || "U";
+  };
+
   return (
     <div className="flex items-center gap-1.5 p-1 rounded-[10px]">
       <Button
@@ -34,10 +68,12 @@ export default function NavbarProfile() {
           <div className="flex items-center gap-1 cursor-pointer">
             <div className="flex items-center gap-2 relative">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src={user?.avatar} />
+                <AvatarFallback>{getUserInitials()}</AvatarFallback>
               </Avatar>
-              <Label className="dark:text-white text-black">Reku</Label>
+              <Label className="dark:text-white text-black">
+                {user?.fullName || user?.userName || "User"}
+              </Label>
               <PopularBadge className="flex justify-center items-center gap-2.5 p-[3px] absolute left-[21px] bottom-0 rounded-[3px]">
                 Pro
               </PopularBadge>
@@ -124,6 +160,14 @@ export default function NavbarProfile() {
           <DropdownMenuItem className="flex items-center gap-2 dark:text-white text-black">
             <User size={16} className="mr-2 text-black dark:text-white/80" />
             <p className="text-black dark:text-white/80">Profile</p>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem 
+            onClick={handleLogout}
+            className="flex items-center gap-2 dark:text-white text-black cursor-pointer"
+          >
+            <LogOut size={16} className="mr-2 text-black dark:text-white/80" />
+            <p className="text-black dark:text-white/80">Logout</p>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

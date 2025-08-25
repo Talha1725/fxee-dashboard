@@ -14,26 +14,26 @@ export default function TradeMeter({ value }: { value: number }) {
       <path
         d="M92.75 50.375C92.75 39.1365 88.2855 28.3582 80.3387 20.4114C72.3918 12.4645 61.6136 8 50.375 8C39.1365 8 28.3582 12.4645 20.4114 20.4113C12.4645 28.3582 8 39.1364 8 50.375"
         stroke="url(#paint0_linear_1350_87747)"
-        stroke-width="14.3644"
+        strokeWidth="14.3644"
       />
       <path
         d="M80.3008 20.4114C72.3581 12.4645 61.5855 8 50.3529 8C39.1202 8 28.3476 12.4645 20.4049 20.4113C12.4622 28.3582 8 39.1364 8 50.375"
         stroke="url(#paint1_linear_1350_87747)"
-        stroke-opacity="0.8"
-        stroke-width="14.3644"
+        strokeOpacity="0.8"
+        strokeWidth="14.3644"
       />
       <path
         d="M75.0391 25.4664L85.3336 15.1719"
         stroke={theme === "dark" ? "black" : "white"}
-        stroke-width="1.19703"
+        strokeWidth="1.19703"
       />
       <path
         d="M78.991 49.1849C78.991 41.5679 75.9651 34.2628 70.579 28.8768C65.193 23.4907 57.8879 20.4648 50.2709 20.4648C42.6538 20.4648 35.3488 23.4907 29.9627 28.8768C24.5766 34.2628 21.5508 41.5679 21.5508 49.1849"
         stroke="url(#paint2_linear_1350_87747)"
-        stroke-opacity="0.4"
-        stroke-width="0.791"
-        stroke-linecap="round"
-        stroke-dasharray="0 0.26 2.63 0 0.26 2.63"
+        strokeOpacity="0.4"
+        strokeWidth="0.791"
+        strokeLinecap="round"
+        strokeDasharray="0 0.26 2.63 0 0.26 2.63"
       />
       <text
         x="50"
@@ -59,8 +59,8 @@ export default function TradeMeter({ value }: { value: number }) {
           y2="50.375"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color={theme === "dark" ? "white" : "black"} stop-opacity="0.05" />
-          <stop offset="1" stop-color={theme === "dark" ? "white" : "black"} stop-opacity="0.1" />
+          <stop stopColor={theme === "dark" ? "white" : "black"} stopOpacity="0.05" />
+          <stop offset="1" stopColor={theme === "dark" ? "white" : "black"} stopOpacity="0.1" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1350_87747"
@@ -70,9 +70,9 @@ export default function TradeMeter({ value }: { value: number }) {
           y2="-12.4206"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0276DB" />
-          <stop offset="0.495192" stop-color="#15B0F8" />
-          <stop offset="1" stop-color="#3EDC81" />
+          <stop stopColor="#0276DB" />
+          <stop offset="0.495192" stopColor="#15B0F8" />
+          <stop offset="1" stopColor="#3EDC81" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_1350_87747"
@@ -82,9 +82,9 @@ export default function TradeMeter({ value }: { value: number }) {
           y2="2.84081"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0276DB" />
-          <stop offset="0.495192" stop-color="#15B0F8" />
-          <stop offset="1" stop-color="#3EDC81" />
+          <stop stopColor="#0276DB" />
+          <stop offset="0.495192" stopColor="#15B0F8" />
+          <stop offset="1" stopColor="#3EDC81" />
         </linearGradient>
       </defs>
     </svg>

@@ -17,7 +17,7 @@ export const baseApi = createApi({
 
       return headers;
     },
-    credentials: "include", // for cookies
+    credentials: "include",
   }),
   tagTypes: ["User", "Payment", "Chat", "Recommendation"],
   endpoints: () => ({}),

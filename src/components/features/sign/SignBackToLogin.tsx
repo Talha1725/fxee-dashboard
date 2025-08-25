@@ -7,7 +7,7 @@ export default function SignBackToLogin() {
         <p className="text-md font-regular font-normal leading-6 dark:text-white text-black text-center">
           Remember your password?{" "}
           <Link href="/signin">
-            <span className="bg-picton-blue bg-clip-text text-transparent font-bold">
+            <span className="bg-picton-blue bg-clip-text text-transparent font-satoshi-medium">
               Back to login
             </span>
           </Link>
