@@ -135,6 +135,8 @@ export default function AIEngineStatusTGS() {
           </div>
           <Input
             placeholder="Enter Custom Goals...."
+            value=""
+            readOnly
             className="w-full !p-4 gap-3 border-none text-white placeholder:text-white"
             backIcon={
               <div className="flex items-center gap-3">

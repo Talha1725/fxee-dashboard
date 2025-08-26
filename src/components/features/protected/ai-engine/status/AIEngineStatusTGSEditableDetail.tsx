@@ -22,7 +22,7 @@ export default function AIEngineStatusTGSEditableDetail({
   onSave,
 }: AIEngineStatusTGSEditableDetailProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(value || "");
 
   const handleSave = () => {
     if (inputValue.trim() === "") return;
@@ -87,7 +87,7 @@ export default function AIEngineStatusTGSEditableDetail({
           <div className="flex items-center gap-2 w-full">
             <Input
               type={type === "reward" ? "text" : "number"}
-              value={type === "reward" ? inputValue : inputValue.replace(/[$,]/g, "")}
+              value={type === "reward" ? (inputValue || "") : (inputValue || "").replace(/[$,]/g, "")}
               onChange={handleInputChange}
               className="flex-1 h-8 text-sm bg-transparent border border-white/20 text-white placeholder:text-white/50"
               placeholder={type === "reward" ? "e.g. 1:2.50" : "Enter amount"}

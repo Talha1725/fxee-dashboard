@@ -26,6 +26,9 @@ export default function AIEngineStatusTGSSlider({
     setSliderValue(Math.round(percentage));
   }, [value]);
 
+  // Ensure slider value is always defined
+  const currentSliderValue = typeof sliderValue === 'number' ? sliderValue : 0;
+
   return (
     <div className={cn(
       "flex flex-col items-start gap-2.5 py-3.5 px-3 self-stretch flex-[1_0_0] rounded-[10px] border border-white/2 bg-dark-gradient",
@@ -44,7 +47,7 @@ export default function AIEngineStatusTGSSlider({
       </div>
       <div className="flex items-center gap-2.5 self-stretch">
         <Slider
-          value={[sliderValue]}
+          value={[currentSliderValue]}
           onValueChange={disabled ? undefined : (value) => setSliderValue(value[0])}
           borderColor={color === "danger" ? "border-danger" : "border-green"}
           disabled={disabled}
@@ -55,7 +58,7 @@ export default function AIEngineStatusTGSSlider({
             color === "danger" && "text-[#EA4335] dark:text-[#EA4335]"
           )}
         >
-          {sliderValue}%
+          {currentSliderValue}%
         </Text12>
       </div>
     </div>

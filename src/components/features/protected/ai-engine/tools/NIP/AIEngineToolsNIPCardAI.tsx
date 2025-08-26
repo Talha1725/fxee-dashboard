@@ -131,6 +131,8 @@ export default function AIEngineToolsNIPCardAI({
       {showInput && (
         <Input
           placeholder="Type Message"
+          value=""
+          readOnly
           className={`gap-3 p-3 mt-auto ${
             theme === "dark" ? "border-none" : "border border-[#0000001A]"
           }`}

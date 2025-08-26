@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import DashboardHeadBadge from "@/components/features/protected/dashboard/DashboardHeadBadge";
 import DashboardAPLSlider from "@/components/features/protected/dashboard/ACP/DashboardAPLSlider";
 import DashboardAPLChart from "@/components/features/protected/dashboard/ACP/DashboardAPLChart";
@@ -43,18 +43,48 @@ const generateRandomData = (sliderValue: number): DataPoint[] => {
   return data;
 };
 
+// Static default data for server-side rendering (no Math.random)
+const getStaticDefaultData = (): DataPoint[] => [
+  { x: 0, y: 33 },
+  { x: 1, y: 35 },
+  { x: 2, y: 30 },
+  { x: 3, y: 38 },
+  { x: 4, y: 32 },
+  { x: 5, y: 36 },
+  { x: 6, y: 34 },
+  { x: 7, y: 37 },
+  { x: 8, y: 31 },
+  { x: 9, y: 35 },
+  { x: 10, y: 33 },
+  { x: 11, y: 36 },
+  { x: 12, y: 34 },
+  { x: 13, y: 38 },
+  { x: 14, y: 32 },
+  { x: 15, y: 35 },
+];
+
 export default function DashboardAPL() {
   const { theme } = useTheme();
-  const [sliderValue, setSliderValue] = useState(33);
-  const [chartData, setChartData] = useState<DataPoint[]>(() => generateRandomData(33));
+  const [sliderValue, setSliderValue] = useState<number>(33);
+  const [chartData, setChartData] = useState<DataPoint[]>(getStaticDefaultData);
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure we're on the client side to avoid hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+    // Generate initial random data only on client
+    setChartData(generateRandomData(33));
+  }, []);
 
   // Handle slider value change and generate new random chart data
   const handleSliderChange = useCallback((value: number) => {
+    if (!isClient) return; // Only update if on client side
+    
     setSliderValue(value);
     // Generate completely new random data every time
     const newData = generateRandomData(value);
     setChartData([...newData]); // Force new array reference
-  }, []);
+  }, [isClient]);
   return (
     <div className={`flex flex-col sm:flex-row justify-between items-center gap-2.5 self-stretch rounded-[10px] border border-white/2 ${theme === "dark" ? "bg-dark-gradient" : "bg-black/5"} `}>
       <div className="flex flex-col items-start gap-2.5 shrink-0 self-stretch py-3.5 px-3 flex-[1_0_0]">
