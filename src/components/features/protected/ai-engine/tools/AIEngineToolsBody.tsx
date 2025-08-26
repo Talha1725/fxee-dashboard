@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AIEngineToolsAllSections from "./AIEngineToolsAllSections";
 import { Text16 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAddOns } from "@/lib/contexts/AddOnsContext";
 import { useUser } from "@/lib/contexts/UserContext";
+import { IconArrowLeft, IconArrowRight } from "@/components/ui/icon";
 
 // Custom styles for horizontal scrollbar
 const getCustomScrollbarStyles = (isDark: boolean) => `
@@ -40,6 +41,10 @@ export default function AIEngineToolsBody() {
   const { theme } = useTheme();
   const { savedAddOns } = useAddOns();
   const { isPremium } = useUser();
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   
   const getActiveAddOnsTabs = () => {
     const accessibleActiveAddOns = savedAddOns.filter(addOn => {
@@ -94,6 +99,50 @@ export default function AIEngineToolsBody() {
       setActiveTab(sectionId);
     }
   };
+
+  const checkScrollPosition = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+  };
+
+  const handleScrollLeft = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    container.scrollBy({
+      left: -200,
+      behavior: 'smooth'
+    });
+  };
+
+  const handleScrollRight = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    container.scrollBy({
+      left: 200,
+      behavior: 'smooth'
+    });
+  };
+
+  useEffect(() => {
+    checkScrollPosition();
+    
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollPosition);
+      window.addEventListener('resize', checkScrollPosition);
+      
+      return () => {
+        container.removeEventListener('scroll', checkScrollPosition);
+        window.removeEventListener('resize', checkScrollPosition);
+      };
+    }
+  }, [tabs]);
 
   const isDark = theme === "dark";
   const themePrefix = isDark ? "dark" : "light";
@@ -172,9 +221,25 @@ export default function AIEngineToolsBody() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: getCustomScrollbarStyles(isDark) }} />
-      <div className={containerClasses}>
-        <div className="flex flex-nowrap items-center h-full min-w-max gap-0">
-          {tabs.map((tab, index) => {
+      <div className="relative flex items-center w-full">
+        {/* Left Arrow Button */}
+        {canScrollLeft && (
+          <button
+            onClick={handleScrollLeft}
+            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 ${
+              isDark 
+                ? 'bg-black/80 hover:bg-black/90 text-white border border-white/20' 
+                : 'bg-white/80 hover:bg-white/90 text-black border border-black/20'
+            } shadow-lg backdrop-blur-sm`}
+            title="Scroll Left"
+          >
+            <IconArrowLeft width={14} height={14} />
+          </button>
+        )}
+
+        <div ref={scrollContainerRef} className={containerClasses}>
+          <div className="flex flex-nowrap items-center h-full min-w-max gap-0">
+            {tabs.map((tab, index) => {
             const isActive = activeTab === tab.id;
             const isLast = index === tabs.length - 1;
             const isNextTabActive =
@@ -207,7 +272,23 @@ export default function AIEngineToolsBody() {
               </div>
             );
           })}
+          </div>
         </div>
+
+        {/* Right Arrow Button */}
+        {canScrollRight && (
+          <button
+            onClick={handleScrollRight}
+            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 ${
+              isDark 
+                ? 'bg-black/80 hover:bg-black/90 text-white border border-white/20' 
+                : 'bg-white/80 hover:bg-white/90 text-black border border-black/20'
+            } shadow-lg backdrop-blur-sm`}
+            title="Scroll Right"
+          >
+            <IconArrowRight width={14} height={14} />
+          </button>
+        )}
       </div>
 
       <div className={contentClasses}>
