@@ -212,7 +212,7 @@ export default function AIEngineToolsBody() {
 
       <div className={contentClasses}>
         {activeTab === "no-addons" ? (
-          <div className="flex flex-col items-center justify-center h-64 text-center">
+          <div className="flex flex-col items-center justify-center h-full w-full text-center">
             <div className="mb-4">
               <Text16 className={`${isDark ? "text-white/60" : "text-black/60"}`}>
                 No add-ons are currently selected
