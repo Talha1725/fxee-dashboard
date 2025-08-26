@@ -23,7 +23,7 @@ export default function Dashboard() {
     <ProtectedContentContainer className="sm:gap-10">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div className="lg:col-span-2">
-          <DashboardWidget currency="BTC/ETH" openModal={openModal} />
+          <DashboardWidget dashboard={true} currency="BTC/ETH" openModal={openModal} />
         </div>
         <div>
           <HomeTrades className="bg-card-green-gradient" />

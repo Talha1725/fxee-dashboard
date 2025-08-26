@@ -21,18 +21,20 @@ export default function DashboardWidget({
   currency, 
   actionButton, 
   showPlusIcon = false, 
-  openModal 
+  openModal,
+  dashboard=false
 }: { 
   currency: string;
   actionButton?: React.ReactNode;
   showPlusIcon?: boolean;
   openModal?: () => void;
+  dashboard?: boolean;
 }) {
   const { theme } = useTheme();
   return (
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
-        <div className="flex justify-between items-center self-stretch mb-2">
+        <div className={`flex justify-between items-center self-stretch ${dashboard ? "mb-0" : "mb-2"}`}>
           <div className="flex items-center gap-2">
             <div 
               className="flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 bg-dark-gradient"

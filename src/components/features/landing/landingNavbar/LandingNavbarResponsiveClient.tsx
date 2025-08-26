@@ -21,7 +21,7 @@ export default function LandingNavbarResponsiveClient({
             {link.label}
           </LandingNavbarLink>
         ))}
-        <ThemeToggle variant="minimal" size="sm" className="border-white/20" />
+        {/* <ThemeToggle variant="minimal" size="sm" className="border-white/20" /> */}
       </div>
       <LandingButton
         color="white"
@@ -46,9 +46,9 @@ export default function LandingNavbarResponsiveClient({
                   {link.label}
                 </LandingNavbarLink>
               ))}
-              <div className="pt-2">
+              {/* <div className="pt-2">
                 <ThemeToggle variant="default" size="sm" />
-              </div>
+              </div> */}
             </div>
           </SheetContent>
         </Sheet>
