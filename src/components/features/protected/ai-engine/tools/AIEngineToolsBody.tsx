@@ -47,7 +47,6 @@ export default function AIEngineToolsBody() {
       return isPremium || !addOn.isVip;
     });
     
-    // If no add-ons are active, show "No addons selected" tab
     if (accessibleActiveAddOns.length === 0) {
       return [{
         id: "no-addons",
@@ -69,22 +68,17 @@ export default function AIEngineToolsBody() {
     return tabs.length > 0 ? tabs[0].id : "no-addons";
   });
 
-  // Update active tab when tabs change
   useEffect(() => {
     if (tabs.length === 1 && tabs[0].id === "no-addons") {
-      // Only "no-addons" tab available
       setActiveTab("no-addons");
     } else if (tabs.length > 0 && activeTab === "no-addons") {
-      // Switch from "no-addons" to first available real tab
       setActiveTab(tabs[0].id);
     } else if (tabs.length > 0 && !tabs.find(tab => tab.id === activeTab)) {
-      // If current active tab is no longer available, switch to first available tab
       setActiveTab(tabs[0].id);
     }
   }, [tabs, activeTab]);
 
   const scrollToSection = (sectionId: string) => {
-    // Don't scroll for the "no-addons" tab
     if (sectionId === "no-addons") {
       setActiveTab(sectionId);
       return;
@@ -186,7 +180,6 @@ export default function AIEngineToolsBody() {
             const isNextTabActive =
               index < tabs.length - 1 && activeTab === tabs[index + 1].id;
 
-            // Don't try to find matching add-on for "no-addons" tab
             const matchingAddOn = tab.id === "no-addons" ? null : addOns.find(addOn => 
               addOn.title.toLowerCase().replace(/\s+/g, '-') === tab.id
             );

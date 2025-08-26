@@ -27,7 +27,7 @@ export default function Dashboard() {
         </div>
         <div>
           <HomeTrades className="bg-card-green-gradient" />
-          <div className="w-full mt-5">
+          {/* <div className="w-full mt-5">
             <CommonSelect
             placeholder="Select a category"
             defaultValue="Seasonal"
@@ -39,7 +39,7 @@ export default function Dashboard() {
             className="w-full min-w-0"
           />
       
-        </div>
+        </div> */}
         </div>
       </div>
       <OpenTrades />
