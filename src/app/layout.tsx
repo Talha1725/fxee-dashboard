@@ -4,7 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 import { ReduxProvider } from "@/lib/redux/provider";
-import { Toaster } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
 
@@ -58,12 +58,12 @@ export default function RootLayout({
             {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
               <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
                 {children}
-                <Toaster />
+                <Toaster position="top-right" />
               </GoogleOAuthProvider>
             ) : (
               <>
                 {children}
-                <Toaster />
+                <Toaster position="top-right" />
               </>
             )}
           </ThemeProvider>

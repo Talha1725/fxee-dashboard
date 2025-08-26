@@ -1,4 +1,4 @@
-import { toast } from '@/components/ui/toast';
+import { toast } from 'sonner';
 
 export const showToast = {
   success: (message: string) => {
