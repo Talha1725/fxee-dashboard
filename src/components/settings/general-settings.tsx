@@ -9,7 +9,6 @@ import * as AllCountry from "country-flag-icons/react/1x1";
 import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "../ui/button";
-import { THEMES } from "@/lib/constants";
 
 export default function GeneralSettings() {
   const { theme, setTheme } = useTheme();
@@ -197,7 +196,7 @@ export default function GeneralSettings() {
           <div
             className={`p-4 border cursor-pointer transition-all duration-200 hover:border-[#3EDC81]/50 ${
               selectedTheme === "light"
-                ? "border-[#3EDC81]"
+                ? "border-[#3EDC81] dark:!bg-gradient-to-b dark:from-white/5 dark:to-white/2"
                 : "dark:border-white/10 border-black/5"
             } rounded-lg`}
             style={{
@@ -242,7 +241,7 @@ export default function GeneralSettings() {
           <div
             className={`p-4 border cursor-pointer transition-all duration-200 hover:border-[#3EDC81]/50 ${
               selectedTheme === "dark"
-                ? "border-[#3EDC81]"
+                ? "border-[#3EDC81] dark:!bg-gradient-to-b dark:from-white/5 dark:to-white/2"
                 : "dark:border-white/10 border-black/5"
             } rounded-lg`}
             style={{
