@@ -21,10 +21,8 @@ export default function DashboardActiveAddons() {
       />
       <div className="flex flex-wrap items-start content-start gap-[14px_10px] self-stretch">
         {addOns.map((addOn, index) => {
-          // Determine if add-on can be toggled based on plan
-          const canToggle = isPremium || !addOn.isVip; // Premium users can toggle all, Basic users can only toggle first 4 (non-VIP)
+          const canToggle = isPremium || !addOn.isVip;
           
-          // Show VIP badge only for VIP add-ons when user is not premium (Basic plan)
           const showVipBadge = addOn.isVip && !isPremium;
           
           return (

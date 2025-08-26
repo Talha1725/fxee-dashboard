@@ -13,13 +13,9 @@ export default function AIEngineToolsBody() {
   const { addOns } = useAddOns();
   const { isPremium } = useUser();
   
-  // Generate tabs based on active add-ons that user can access
   const getActiveAddOnsTabs = () => {
     const accessibleActiveAddOns = addOns.filter(addOn => {
       if (!addOn.active) return false;
-      
-      // Only show tabs for add-ons the user can access
-      // Premium users can access all, Basic users can only access non-VIP (first 4)
       return isPremium || !addOn.isVip;
     });
     
@@ -27,10 +23,7 @@ export default function AIEngineToolsBody() {
       id: addOn.title.toLowerCase().replace(/\s+/g, '-'),
       label: addOn.title,
       icon: null as React.ReactNode | null
-    }));
-    
-    // Don't add the "Add" tab anymore per user request
-    
+    }));    
     return tabs;
   };
 
@@ -40,7 +33,6 @@ export default function AIEngineToolsBody() {
   const isDark = theme === "dark";
   const themePrefix = isDark ? "dark" : "light";
 
-  // ✅ Active vs non-active text color logic
   const getTextClass = (isActive: boolean) => {
     if (isActive) {
       return isDark ? "text-white" : "text-black";
@@ -78,23 +70,17 @@ export default function AIEngineToolsBody() {
     return classes.join(" ");
   };
 
-  // Create dynamic content map based on active add-ons
   const getContentMap = () => {
     const contentMap: { [key: string]: React.ReactNode } = {};
     
-    // Map each accessible active add-on to its content
     const accessibleActiveAddOns = addOns.filter(addOn => {
       if (!addOn.active) return false;
-      
-      // Only show content for add-ons the user can access
-      // Premium users can access all, Basic users can only access non-VIP (first 4)
       return isPremium || !addOn.isVip;
     });
     
     accessibleActiveAddOns.forEach(addOn => {
       const tabId = addOn.title.toLowerCase().replace(/\s+/g, '-');
       
-      // Special content for specific add-ons
       if (addOn.title === "News Impact") {
         contentMap[tabId] = (
           <div className={getTextClass(activeTab === tabId)}>
@@ -102,7 +88,6 @@ export default function AIEngineToolsBody() {
           </div>
         );
       } else {
-        // Default content for other add-ons
         contentMap[tabId] = (
           <div className={getTextClass(activeTab === tabId)}>
             <div className="p-8 text-center">
@@ -116,9 +101,6 @@ export default function AIEngineToolsBody() {
         );
       }
     });
-    
-    // No "Add" tab content needed anymore
-    
     return contentMap;
   };
   

@@ -37,9 +37,9 @@ interface AIEngineToolsNIPCardAIProps {
   headerAlign?: 'left' | 'center';
   title?: string;
   icon?: React.ReactNode;
-  isNIPVersion?: boolean; // New prop to control NIP-specific styling
-  fontWeight?: string; // New prop to control title font weight
-  badges?: BadgeItem[]; // New prop to control badge data
+  isNIPVersion?: boolean;
+  fontWeight?: string;
+  badges?: BadgeItem[];
 }
 
 export default function AIEngineToolsNIPCardAI({

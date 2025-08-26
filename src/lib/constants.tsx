@@ -225,7 +225,6 @@ export const LEGAL_LINKS = [
 export const CONTACT_INFO = [{ link: "/", text: "support@fxee.ai" }];
 
 export const addOnsData = [
-  // First 4 add-ons (available to all plans)
   {
     icon: <IconAIBrain width={20} height={20} />,
     title: "AI Analysis",
@@ -250,7 +249,6 @@ export const addOnsData = [
     isVip: false,
     active: true,
   },
-  // Last 4 add-ons (VIP - disabled for Basic plan)
   {
     icon: <IconEye width={20} height={20} />,
     title: "Smart Alerts",
