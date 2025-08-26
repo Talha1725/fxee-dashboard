@@ -21,12 +21,12 @@ export default function Dashboard() {
     onClose={closeModal} 
   />
     <ProtectedContentContainer className="sm:gap-10">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
         <div className="lg:col-span-2">
           <DashboardWidget dashboard={true} currency="BTC/ETH" openModal={openModal} />
         </div>
-        <div>
-          <HomeTrades className="bg-card-green-gradient" />
+        <div className="flex flex-col">
+          <HomeTrades className="bg-card-green-gradient flex-1" />
           {/* <div className="w-full mt-5">
             <CommonSelect
             placeholder="Select a category"
