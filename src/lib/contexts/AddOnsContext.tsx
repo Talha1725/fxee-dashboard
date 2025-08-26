@@ -6,6 +6,7 @@ import { addOnsData } from '@/lib/constants';
 interface AddOnData {
   icon: React.ReactNode;
   title: string;
+  description: string;
   isVip: boolean;
   active: boolean;
 }
