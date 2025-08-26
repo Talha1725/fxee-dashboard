@@ -1,11 +1,38 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 import OnboardCardContainer from "@/components/features/onboard/OnboardCardContainer";
 import OnboardSummaryItem from "@/components/features/onboard/OnboardSummaryItem";
 import { Button } from "@/components/ui/button";
 import { Text18, Title24 } from "@/components/ui/typography";
+
+// Custom hook to handle window size
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1024,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+      });
+    }
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+    
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+    
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
+
+  return windowSize;
+}
 
 export default function OnboardSummary({
   isCrypto,
@@ -15,6 +42,9 @@ export default function OnboardSummary({
   isCheckout?: boolean;
 }) {
   const router = useRouter();
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+
   return (
     <OnboardCardContainer className="bg-white dark:bg-white/5 z-50">
       <Title24 className="text-black dark:text-white">Summary</Title24>
@@ -32,11 +62,11 @@ export default function OnboardSummary({
         <div className="flex flex-col items-start gap-[5px] self-stretch">
           <Text18>Add-Ons</Text18>
           <OnboardSummaryItem
-            title="Extra MetaAPI Trade Simulation Account ($29/month per account)"
+            title={isMobile ? "Extra MetaAPI Trade Simulation Account..." : "Extra MetaAPI Trade Simulation Account ($29/month per account)"}
             value="$29.00"
           />
           <OnboardSummaryItem
-            title="ETH Token Top-Up ($50 = 500 FXEE tokens)"
+            title={isMobile ? "ETH Token Top-Up ($50 = 500 FXEE..." : "ETH Token Top-Up ($50 = 500 FXEE tokens)"}
             value="$50.00"
           />
         </div>

@@ -34,19 +34,20 @@ export default function CheckoutCardItem({
     >
       <div className="flex flex-col gap-4 flex-[1_0_0] self-stretch">
         {title === "Crypto" && selectedPaymentMethod === title && (
-          <div className="w-full flex justify-center items-center gap-[5px] px-2.5 py-[5px] self-stretch bg-popular-gradient rounded-t-[10px] md:text-base text-xs text-white">
+          <div className="w-full flex justify-center items-center gap-[5px] px-2.5 py-[5px] self-stretch bg-popular-gradient rounded-t-[10px] xl:text-base text-xs text-white">
             <IconFlashlight width={24} height={24} />
             Enjoy a 20% discount when paying with crypto
           </div>
         )}
         <div
           className={cn(
-            "flex items-center gap-2.5 flex-[1_0_0] p-4",
+            "flex md:flex-row flex-col md:justify-between md:items-center gap-2.5 flex-[1_0_0] p-4",
             title === "Crypto" &&
               selectedPaymentMethod === title &&
               "px-4 pt-0 pb-4"
           )}
         >
+          <div className="flex items-center gap-2.5">
           <div
             className={cn(
               "w-[24px] h-[24px] rounded-full border-green-gradient before:!p-[2px] transition-all duration-300",
@@ -54,8 +55,9 @@ export default function CheckoutCardItem({
             )}
           ></div>
           <Text18 className="flex-[1_0_0]">Pay with {title}</Text18>
-          <div className="self-stretch flex flex-col items-end">
-            <Title24 className="text-black dark:text-white">
+          </div>
+          <div className="self-stretch flex md:flex-col flex-row items-end">
+            <Title24 className="text-black dark:text-white xl:!text-[24px] lg:!text-[20px] !text-[24px]">
               {title === "Crypto" ? (
                 <React.Fragment>
                   <span className="line-through">${price}</span>{" "}
