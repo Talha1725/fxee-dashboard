@@ -165,8 +165,10 @@ export default function OpenTradeCard({ tradingData }: { tradingData: TradingDat
         <Text14 className="font-satoshi dark:text-white/80 text-black">
           Profit Potential
         </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black" style={{ color: profitTierInfo?.color }}>
-          {recommendation ? `${recommendation.profitPercentage}%` : tradingData.unrealizedPL}
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          <span style={{ color: profitTierInfo?.color }}>
+            {recommendation ? `${recommendation.profitPercentage}%` : tradingData.unrealizedPL}
+          </span>
         </Text14>
       </div>
       <div className="flex items-center justify-between gap-2 mb-2">

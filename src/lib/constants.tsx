@@ -71,7 +71,7 @@ export const COMMODITIES_SYMBOLS = TRADING_SYMBOLS.filter(s => s.type === "Commo
 export const CRYPTO_SYMBOLS = TRADING_SYMBOLS.filter(s => s.type === "Crypto");
 
 // For backwards compatibility
-export const CURRENCY_PAIRS = FOREX_SYMBOLS.map(s => s.displayName) as const;
+export const CURRENCY_PAIRS = FOREX_SYMBOLS.map(s => s.displayName);
 
 // Technical indicators
 export const INDICATORS = {
