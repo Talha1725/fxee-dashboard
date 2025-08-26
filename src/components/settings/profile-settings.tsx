@@ -13,8 +13,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import * as AllCountry from "country-flag-icons/react/1x1";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 
 // Country data with flags and phone codes
 const countries = [
@@ -43,12 +46,91 @@ const countries = [
 export default function ProfileSettings() {
   const { theme } = useTheme();
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [fullName, setFullName] = useState(user?.fullName || "");
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  console.log(user, "User redux data");
+
+  // Get user initials for avatar fallback (same logic as navbar)
+  const getUserInitials = () => {
+    if (!user) return "U";
+    const names = user.fullName?.split(" ") || [];
+    if (names.length >= 2) {
+      return `${names[0][0]}${names[1][0]}`.toUpperCase();
+    }
+    return (
+      user.fullName?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || "U"
+    );
+  };
+
+  // Handle image upload
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image size should be less than 5MB');
+        return;
+      }
+
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle change image button click
+  const handleChangeImage = () => {
+    fileInputRef.current?.click();
+  };
+
+  // Handle remove image
+  const handleRemoveImage = () => {
+    setUploadedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // Handle apply changes
+  const handleApplyChanges = () => {
+    // TODO: Implement API call to save changes
+    console.log('Saving changes:', { fullName, uploadedImage, selectedCountry });
+  };
+
+  // Handle discard changes
+  const handleDiscardChanges = () => {
+    setFullName(user?.fullName || "");
+    setUploadedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   return (
     <div className="w-full">
       <div className="flex gap-3 mt-5">
         <div className="md:w-[80px] md:h-[80px] w-[60px] h-[60px] rounded-full overflow-hidden">
-          <Image src={sophia} alt="user" />
+          <Avatar className="w-full h-full">
+            <AvatarImage 
+              src={uploadedImage || user?.avatar} 
+              alt="user avatar"
+            />
+            <AvatarFallback className="text-lg font-medium">
+              {getUserInitials()}
+            </AvatarFallback>
+          </Avatar>
         </div>
         <div className="flex flex-col gap-1">
           <div>
@@ -67,22 +149,34 @@ export default function ProfileSettings() {
             <Button
               variant={theme === "dark" ? "white" : "black"}
               className="h-[39px] font-satoshi-medium w-[105px]"
+              onClick={handleChangeImage}
             >
               Change
             </Button>
             <Button
               variant={"black"}
               className="h-[39px] font-satoshi w-[105px] dark:text-white dark:bg-white/5 bg-transparent text-black border-black/15 dark:border-white/15 hover:bg-white/10 hover:opacity-70"
+              onClick={handleRemoveImage}
             >
               Remove
             </Button>
           </div>
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
         </div>
       </div>
       <div className="mt-5">
         <Text18 className={`font-satoshi-medium`}>Full Name</Text18>
         <Input
           placeholder="Enter your full name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
           className={`mt-2 w-full h-[44px] border-black/10 dark:border-white/5 dark:text-white text-black ${
             theme === "dark"
               ? "bg-dark-gradient"
@@ -93,7 +187,8 @@ export default function ProfileSettings() {
       <div className="mt-3">
         <Text18 className={`font-satoshi-medium`}>Email</Text18>
         <Input
-        disabled={true}
+          disabled={true}
+          value={user?.email || ""}
           placeholder="Enter your email"
           className={`mt-2 w-full h-[44px] border-black/10 dark:border-white/5 dark:text-white text-black ${
             theme === "dark"
@@ -161,12 +256,14 @@ export default function ProfileSettings() {
         <Button
           variant={"black"}
           className="h-[52px] font-satoshi w-full dark:text-white dark:bg-white/5 bg-transparent text-black border-black/15 dark:border-white/15 hover:bg-white/10 hover:opacity-70"
+          onClick={handleDiscardChanges}
         >
           Discard
         </Button>
         <Button
           variant={theme === "dark" ? "white" : "black"}
           className="h-[52px] font-satoshi-medium w-full"
+          onClick={handleApplyChanges}
         >
           Apply Changes
         </Button>
