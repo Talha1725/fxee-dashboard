@@ -1,6 +1,7 @@
 "use client";
 
 import GeneralSettings from "@/components/settings/general-settings";
+import PrivacySettings from "@/components/settings/privacy-settings";
 import ProfileSettings from "@/components/settings/profile-settings";
 import {
   IconUserSetting,
@@ -185,6 +186,7 @@ export default function page() {
 
       {activeTab === "profile" && <ProfileSettings />}
       {activeTab === "general" && <GeneralSettings />}
+      {activeTab === "privacy" && <PrivacySettings />}
     </div>
   );
 }
