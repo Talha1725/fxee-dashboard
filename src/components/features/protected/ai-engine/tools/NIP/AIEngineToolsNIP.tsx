@@ -63,7 +63,7 @@ export default function AIEngineToolsNIP() {
           icon={<IconNIP width={14} height={14} />}
         />
 
-        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch h-[400px] md:h-[714px]">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch h-[714px] md:min-h-[714px] md:max-h-[714px]">
           <div className="w-full md:flex-1 order-1 
             h-full 
             overflow-y-auto scrollbar-hide">
@@ -100,9 +100,9 @@ export default function AIEngineToolsNIP() {
           icon={<PieIcon width={14} height={14} />}
         />
 
-        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch h-[400px] md:h-[750px]">
+        <div className="flex flex-col md:flex-row items-start gap-5 self-stretch min-h-[714px] md:max-h-[750px] md:overflow-y-auto scrollbar-hide">
           
-          <div className="w-full flex-1 h-full overflow-y-auto scrollbar-hide">
+          <div className="w-full flex-1 h-full md:overflow-y-auto scrollbar-hide">
             <AIEngineToolsNIPCardAI
               title="AI Insight Panel"
               headerAlign="center"
@@ -121,7 +121,7 @@ export default function AIEngineToolsNIP() {
             />
           </div>
 
-          <div className="w-full md:w-[344px] h-full overflow-y-auto scrollbar-hide mt-5 md:mt-0">
+          <div className="w-full md:w-[344px] h-auto md:h-full md:overflow-y-auto scrollbar-hide">
             <AIEngineToolsNIPText />                
           </div>
         </div>
