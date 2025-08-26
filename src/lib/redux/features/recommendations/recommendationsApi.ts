@@ -5,6 +5,7 @@ import type {
   CustomAnalysesResponse,
   SupportedSymbolsResponse,
   ActiveRecommendationsResponse,
+  DailyRecommendationsResponse,
 } from "@/types/redux";
 
 export const recommendationsApi = baseApi.injectEndpoints({
@@ -51,6 +52,11 @@ export const recommendationsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Recommendation"],
     }),
+
+    getDailyRecommendations: builder.query<DailyRecommendationsResponse, void>({
+      query: () => "/recommendations/daily",
+      providesTags: ["Recommendation"],
+    }),
   }),
 });
 
@@ -60,4 +66,5 @@ export const {
   useGetCustomAnalysisQuery,
   useGetSupportedSymbolsQuery,
   useGetActiveRecommendationsQuery,
+  useGetDailyRecommendationsQuery,
 } = recommendationsApi;

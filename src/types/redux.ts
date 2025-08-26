@@ -256,6 +256,33 @@ export interface ActiveRecommendationsResponse {
   count: number;
 }
 
+// Daily Recommendations Types
+export interface DailyRecommendation {
+  id: number;
+  title: string;
+  description: string;
+  symbol: string;
+  entryPrice: string;
+  targetPrice: string;
+  stopLoss: string;
+  confidence: number;
+  riskLevel: string;
+  timeframe: string;
+  riskRewardRatio: string;
+  profitTier: "GREAT_PROFIT" | "HIGH_PROFIT" | "MEDIUM_PROFIT" | "LOW_PROFIT" | "VERY_LOW_PROFIT";
+  profitPercentage: string;
+  riskPercentage: string;
+  direction: "Long" | "Short";
+  createdAt: string;
+  validUntil: string;
+}
+
+export interface DailyRecommendationsResponse {
+  success: boolean;
+  data: DailyRecommendation[];
+  message: string;
+}
+
 // Market Types
 export interface MarketData {
   pair: string;
@@ -303,4 +330,81 @@ export interface TradingSignal {
   takeProfit: number;
   analysis: string;
   createdAt: string;
+}
+
+// Proposed Trades Types
+export interface MarketDataUsed {
+  trend: string;
+  symbol: string;
+  volatility: number;
+  currentPrice: number;
+  priceHistory: {
+    low: number;
+    high: number;
+    open: number;
+    close: number;
+    volume: number;
+    timestamp: string;
+  }[];
+}
+
+export interface ProposedTrade {
+  id: number;
+  userId: number;
+  symbol: string;
+  timeframe: string;
+  profitTarget: string;
+  maximumRisk: string;
+  profitTargetPercentage: string;
+  maximumRiskPercentage: string;
+  potentialProfit: string;
+  maximumLoss: string;
+  riskRewardRatio: string;
+  riskLevel: "low" | "medium" | "high";
+  tradingType: "day_trade" | "swing_trade";
+  tradingVersion: "basic" | "pro";
+  aiAnalysis: string;
+  marketDataUsed: MarketDataUsed;
+  confidence: number;
+  status: "active" | "completed" | "cancelled";
+  analysisCount: number;
+  maxAnalysisLimit: number;
+  validUntil: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProposedTradesRequest {
+  symbol: string;
+  timeframe: string;
+}
+
+export interface ProposedTradesResponse {
+  success: boolean;
+  data: ProposedTrade;
+  message: string;
+}
+
+// Usage Limits Types
+export interface UsageLimit {
+  current: number;
+  limit: number;
+  canUse: boolean;
+  remaining: number;
+}
+
+export interface UsageLimitsData {
+  usageLimits: {
+    proposed_trade: UsageLimit;
+    hourly_analysis: UsageLimit;
+    daily_analysis: UsageLimit;
+    custom_analysis: UsageLimit;
+  };
+  date: string;
+}
+
+export interface UsageLimitsResponse {
+  success: boolean;
+  data: UsageLimitsData;
+  message: string;
 }

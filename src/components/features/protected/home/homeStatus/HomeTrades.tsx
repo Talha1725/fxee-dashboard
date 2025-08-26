@@ -7,9 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import { Text18 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { ChevronRight } from "lucide-react";
+import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 
 export default function HomeTrades({ className }: { className?: string }) {
   const { theme } = useTheme();
+  const { data: dailyRecommendations, error, isLoading } = useGetDailyRecommendationsQuery();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -69,13 +71,29 @@ export default function HomeTrades({ className }: { className?: string }) {
         className="flex items-start gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide"
         style={{ scrollBehavior: 'smooth' }}
       >
-        <HomeTradesItem long={true} />
-        <Separator orientation="vertical" className="h-full bg-white/5" />
-        <HomeTradesItem long={false} />
-        <Separator orientation="vertical" className="h-full bg-white/5" />
-        <HomeTradesItem long={true} />
-        <Separator orientation="vertical" className="h-full bg-white/5" />
-        <HomeTradesItem long={false} />
+        {dailyRecommendations?.data ? (
+          dailyRecommendations.data.map((recommendation, index) => (
+            <React.Fragment key={recommendation.id}>
+              <HomeTradesItem 
+                recommendation={recommendation}
+                long={recommendation.direction === "Long"}
+              />
+              {index < dailyRecommendations.data.length - 1 && (
+                <Separator orientation="vertical" className="h-full bg-white/5" />
+              )}
+            </React.Fragment>
+          ))
+        ) : (
+          <>
+            <HomeTradesItem long={true} />
+            <Separator orientation="vertical" className="h-full bg-white/5" />
+            <HomeTradesItem long={false} />
+            <Separator orientation="vertical" className="h-full bg-white/5" />
+            <HomeTradesItem long={true} />
+            <Separator orientation="vertical" className="h-full bg-white/5" />
+            <HomeTradesItem long={false} />
+          </>
+        )}
       </div>
     </ProtectedCardContainer>
   );

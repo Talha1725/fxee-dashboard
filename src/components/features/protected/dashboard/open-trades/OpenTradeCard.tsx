@@ -7,6 +7,14 @@ import DashboardHeadBadge from "../DashboardHeadBadge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
+import { DailyRecommendation } from "@/types/redux";
+import { 
+  Tooltip, 
+  TooltipContent, 
+  TooltipProvider, 
+  TooltipTrigger 
+} from "@/components/ui/tooltip";
+
 interface TradingData {
   symbol: string;
   realizedPL: string;
@@ -23,20 +31,62 @@ interface TradingData {
   percentageChange: number;
   aiInsight: string;
   isOpen: boolean;
+  recommendation?: DailyRecommendation;
 }
 
 export default function OpenTradeCard({ tradingData }: { tradingData: TradingData }) {
   const { theme } = useTheme();
   const isPositive = tradingData.percentageChange > 0;
+  const { recommendation } = tradingData;
+
+  // Helper function for profit tier styling
+  const getProfitTierInfo = (profitTier: string) => {
+    switch (profitTier) {
+      case "GREAT_PROFIT":
+        return { color: "#22C55E", label: "Great Profit" };
+      case "HIGH_PROFIT":
+        return { color: "#3EDC81", label: "High Profit" };
+      case "MEDIUM_PROFIT":
+        return { color: "#F59E0B", label: "Medium Profit" };
+      case "LOW_PROFIT":
+        return { color: "#EF4444", label: "Low Profit" };
+      case "VERY_LOW_PROFIT":
+        return { color: "#DC2626", label: "Very Low Profit" };
+      default:
+        return { color: "#6B7280", label: "Standard" };
+    }
+  };
+
+  const profitTierInfo = recommendation ? getProfitTierInfo(recommendation.profitTier) : null;
   
   return (
-    <div>
-      <div className="flex items-center gap-2">
-        <CurrencyToCountryFlagConverter currency={tradingData.symbol} />
-        <Text16 className="font-satoshi-medium dark:text-white text-black">
-          {tradingData.symbol}
-        </Text16>
-      </div>
+    <TooltipProvider>
+      <div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CurrencyToCountryFlagConverter currency={tradingData.symbol} />
+            <Text16 className="font-satoshi-medium dark:text-white text-black">
+              {tradingData.symbol}
+            </Text16>
+          </div>
+          {profitTierInfo && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div 
+                  className="px-2 py-1 rounded-md text-xs font-satoshi-medium text-white cursor-pointer"
+                  style={{ backgroundColor: profitTierInfo.color + "20", color: profitTierInfo.color }}
+                >
+                  {profitTierInfo.label}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Profit Tier<br/>
+                {profitTierInfo.label} classification<br/>
+                based on return potential</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
       <div className="my-2 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Text24 className="font-satoshi-medium dark:text-white text-black">
@@ -59,101 +109,112 @@ export default function OpenTradeCard({ tradingData }: { tradingData: TradingDat
             <p className={`text-sm ${isPositive ? "text-green" : "text-red"} font-satoshi`}>{tradingData.percentageChange.toFixed(2)}%</p>
           </div>
         </div>
-        <DashboardHeadBadge className="font-satoshi dark:text-white text-black flex items-center gap-1 px-3 !border-none dark:!border rounded-lg">
-          <p className="capitalize">{tradingData.direction}</p>
-          {isPositive ? (
-            <IconTradeUp
-              width={18}
-              height={18}
-              color={"var(--green)"}
-            />
-          ) : (
-            <IconTradeDown
-              width={18}
-              height={18}
-              color={"var(--danger)"}
-            />
-          )}
-        </DashboardHeadBadge>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="cursor-pointer">
+              <DashboardHeadBadge className="font-satoshi dark:text-white text-black flex items-center gap-1 px-3 !border-none dark:!border rounded-lg">
+                <p className="capitalize">{tradingData.direction}</p>
+                {isPositive ? (
+                  <IconTradeUp
+                    width={18}
+                    height={18}
+                    color={"var(--green)"}
+                  />
+                ) : (
+                  <IconTradeDown
+                    width={18}
+                    height={18}
+                    color={"var(--danger)"}
+                  />
+                )}
+              </DashboardHeadBadge>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Position Direction<br/>
+            {tradingData.direction === "long" ? "Long - expecting price increase" : "Short - expecting price decrease"}<br/>
+            Status: {isPositive ? "Profitable" : "In Loss"}</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       <div className="flex items-center justify-between gap-2 mb-2">
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Realized P/L
+          Entry Price
         </Text14>
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.realizedPL}
-        </Text14>
-      </div>
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Lot Size
-        </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.lotSize}
-        </Text14>
-      </div>
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Unrealized P/L
-        </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.unrealizedPL}
+          {recommendation ? parseFloat(recommendation.entryPrice).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 2) : tradingData.realizedPL}
         </Text14>
       </div>
       <div className="flex items-center justify-between gap-2 mb-2">
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Equity Used
+          Confidence Level
         </Text14>
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.equityUsed}
-        </Text14>
-      </div>
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Resistance Level
-        </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.resistanceLevel}
+          {recommendation ? `${recommendation.confidence}%` : "75%"}
         </Text14>
       </div>
       <div className="flex items-center justify-between gap-2 mb-2">
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Stop Loss
+          Risk Level
         </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.stopLoss}
-        </Text14>
-      </div>
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Take Profit
-        </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.takeProfit}
+        <Text14 className="font-satoshi dark:text-white/80 text-black capitalize">
+          {recommendation ? recommendation.riskLevel : "Medium"}
         </Text14>
       </div>
       <div className="flex items-center justify-between gap-2 mb-2">
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Leverage
+          Profit Potential
         </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.leverage}
-        </Text14>
-      </div>
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Runtime
-        </Text14>
-        <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.runtime}
+        <Text14 className="font-satoshi dark:text-white/80 text-black" style={{ color: profitTierInfo?.color }}>
+          {recommendation ? `${recommendation.profitPercentage}%` : tradingData.unrealizedPL}
         </Text14>
       </div>
       <div className="flex items-center justify-between gap-2 mb-2">
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        Start Time
+          Risk/Reward
         </Text14>
         <Text14 className="font-satoshi dark:text-white/80 text-black">
-        {tradingData.startTime}
+          {recommendation ? recommendation.riskRewardRatio : "1:2"}
+        </Text14>
+      </div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          Stop Loss
+        </Text14>
+        <Text14 className="font-satoshi dark:text-white/80 text-black text-red-400">
+          {recommendation ? parseFloat(recommendation.stopLoss).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 2) : tradingData.stopLoss}
+        </Text14>
+      </div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          Take Profit
+        </Text14>
+        <Text14 className="font-satoshi dark:text-white/80 text-black text-green-400">
+          {recommendation ? parseFloat(recommendation.targetPrice).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 2) : tradingData.takeProfit}
+        </Text14>
+      </div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          Timeframe
+        </Text14>
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          {recommendation ? recommendation.timeframe : tradingData.leverage}
+        </Text14>
+      </div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          Valid Until
+        </Text14>
+        <Text14 className="font-satoshi dark:text-white/80 text-black text-xs">
+          {recommendation ? new Date(recommendation.validUntil).toLocaleDateString() : tradingData.runtime}
+        </Text14>
+      </div>
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <Text14 className="font-satoshi dark:text-white/80 text-black">
+          Created
+        </Text14>
+        <Text14 className="font-satoshi dark:text-white/80 text-black text-xs">
+          {recommendation ? new Date(recommendation.createdAt).toLocaleDateString() : tradingData.startTime}
         </Text14>
       </div>
       <div className={`flex flex-col justify-center items-center gap-1.5 self-stretch py-2.5 px-3.5 rounded-[8px] ${theme === "dark" ? "bg-card-green-gradient" : "bg-light-green-blue-gradient"} mb-5`}>
@@ -172,6 +233,7 @@ export default function OpenTradeCard({ tradingData }: { tradingData: TradingDat
           {tradingData.isOpen ? "Close Trade" : "Open Trade"}
         </Button>
       </div>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }

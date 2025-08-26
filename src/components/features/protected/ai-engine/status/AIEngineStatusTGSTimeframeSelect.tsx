@@ -9,14 +9,33 @@ import {
 import { cn } from "@/lib/utils";
 
 const timeframes = [
-  { value: "2-days", label: "2 Days" },
-  { value: "1-day", label: "1 Day" },
-  { value: "1-week", label: "1 Week" },
+  { value: "2 Days", label: "2 Days" },
+  { value: "1 Day", label: "1 Day" },
+  { value: "1 Week", label: "1 Week" },
+  { value: "4 Hours", label: "4 Hours" },
+  { value: "1 Hour", label: "1 Hour" },
 ];
 
-export default function AIEngineStatusTGSTimeframeSelect({ disabled = false }: { disabled?: boolean }) {
+interface AIEngineStatusTGSTimeframeSelectProps {
+  disabled?: boolean;
+  value?: string;
+  onValueChange?: (value: string) => void;
+  defaultValue?: string;
+}
+
+export default function AIEngineStatusTGSTimeframeSelect({ 
+  disabled = false, 
+  value, 
+  onValueChange, 
+  defaultValue 
+}: AIEngineStatusTGSTimeframeSelectProps) {
   return (
-    <Select defaultValue="2-days" disabled={disabled}>
+    <Select 
+      defaultValue={defaultValue || "2 Days"} 
+      disabled={disabled}
+      value={value}
+      onValueChange={onValueChange}
+    >
       <SelectTrigger className={cn(
         "border border-white/5 bg-gradient-to-b from-white/[0.08] to-white/[0.04] cursor-pointer w-full text-white dark:text-white",
         disabled && "opacity-60 cursor-not-allowed text-white/60 dark:text-white/60"

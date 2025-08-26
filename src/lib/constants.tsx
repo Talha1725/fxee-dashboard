@@ -29,16 +29,49 @@ export const TIMEFRAMES = {
   W1: "1w",
 } as const;
 
-// Currency pairs
-export const CURRENCY_PAIRS = [
-  "EUR/USD",
-  "GBP/USD",
-  "USD/JPY",
-  "USD/CHF",
-  "USD/CAD",
-  "AUD/USD",
-  "NZD/USD",
-] as const;
+// Trading Symbols - Based on API data
+export interface TradingSymbol {
+  id: number;
+  symbol: string;
+  type: "Forex" | "Commodities" | "Crypto";
+  displayName: string;
+}
+
+export const TRADING_SYMBOLS: TradingSymbol[] = [
+  // Forex
+  { id: 5, symbol: "AUDUSD", type: "Forex", displayName: "AUD/USD" },
+  { id: 19, symbol: "EURUSD", type: "Forex", displayName: "EUR/USD" },
+  { id: 26, symbol: "GBPUSD", type: "Forex", displayName: "GBP/USD" },
+  { id: 31, symbol: "NZDUSD", type: "Forex", displayName: "NZD/USD" },
+  { id: 33, symbol: "USDCAD", type: "Forex", displayName: "USD/CAD" },
+  { id: 34, symbol: "USDCHF", type: "Forex", displayName: "USD/CHF" },
+  { id: 37, symbol: "USDJPY", type: "Forex", displayName: "USD/JPY" },
+  { id: 44, symbol: "USDTRY", type: "Forex", displayName: "USD/TRY" },
+  { id: 46, symbol: "USDZAR", type: "Forex", displayName: "USD/ZAR" },
+  
+  // Commodities
+  { id: 80, symbol: "Brent", type: "Commodities", displayName: "Brent Oil" },
+  { id: 85, symbol: "Crude", type: "Commodities", displayName: "Crude Oil" },
+  { id: 87, symbol: "GOLDInd", type: "Commodities", displayName: "Gold Index" },
+  { id: 101, symbol: "XAGUSD", type: "Commodities", displayName: "Silver/USD" },
+  { id: 107, symbol: "XAUUSD", type: "Commodities", displayName: "Gold/USD" },
+  
+  // Crypto
+  { id: 52, symbol: "BITCOIN", type: "Crypto", displayName: "Bitcoin" },
+  { id: 54, symbol: "BNB", type: "Crypto", displayName: "Binance Coin" },
+  { id: 58, symbol: "DOGECOIN", type: "Crypto", displayName: "Dogecoin" },
+  { id: 59, symbol: "ETHEREUM", type: "Crypto", displayName: "Ethereum" },
+  { id: 69, symbol: "RIPPLE", type: "Crypto", displayName: "Ripple (XRP)" },
+  { id: 70, symbol: "SOLANA", type: "Crypto", displayName: "Solana" },
+];
+
+// Organized by type
+export const FOREX_SYMBOLS = TRADING_SYMBOLS.filter(s => s.type === "Forex");
+export const COMMODITIES_SYMBOLS = TRADING_SYMBOLS.filter(s => s.type === "Commodities");
+export const CRYPTO_SYMBOLS = TRADING_SYMBOLS.filter(s => s.type === "Crypto");
+
+// For backwards compatibility
+export const CURRENCY_PAIRS = FOREX_SYMBOLS.map(s => s.displayName) as const;
 
 // Technical indicators
 export const INDICATORS = {

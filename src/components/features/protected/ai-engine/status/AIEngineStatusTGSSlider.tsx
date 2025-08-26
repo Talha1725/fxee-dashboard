@@ -19,21 +19,24 @@ export default function AIEngineStatusTGSSlider({
 }) {
   const [sliderValue, setSliderValue] = useState(0);
 
+  // Update slider position when value prop changes
+  useEffect(() => {
+    // Convert value to percentage (assuming max value is 1000 for reasonable scale)
+    const percentage = Math.min((value / 1000) * 100, 100);
+    setSliderValue(Math.round(percentage));
+  }, [value]);
+
   return (
     <div className={cn(
       "flex flex-col items-start gap-2.5 py-3.5 px-3 self-stretch flex-[1_0_0] rounded-[10px] border border-white/2 bg-dark-gradient",
-      disabled && "opacity-60 cursor-not-allowed"
+      disabled && "cursor-not-allowed"
     )}>
       <div className="flex items-center gap-2.5 self-stretch">
-        <Text14 className={cn(
-          "flex-[1_0_0] text-white dark:text-white",
-          disabled && "text-white/60 dark:text-white/60"
-        )}>{title}</Text14>
+        <Text14 className="flex-[1_0_0] text-white dark:text-white">{title}</Text14>
         <Text12
           className={cn(
             "text-[#3EDC81] dark:text-[#3EDC81]", 
-            color === "danger" && "text-[#EA4335] dark:text-[#EA4335]",
-            disabled && "opacity-60"
+            color === "danger" && "text-[#EA4335] dark:text-[#EA4335]"
           )}
         >
           ${value.toLocaleString()}
@@ -49,8 +52,7 @@ export default function AIEngineStatusTGSSlider({
         <Text12
           className={cn(
             "text-[#3EDC81] dark:text-[#3EDC81] text-right w-9",
-            color === "danger" && "text-[#EA4335] dark:text-[#EA4335]",
-            disabled && "opacity-60"
+            color === "danger" && "text-[#EA4335] dark:text-[#EA4335]"
           )}
         >
           {sliderValue}%
