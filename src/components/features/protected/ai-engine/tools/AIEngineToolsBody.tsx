@@ -6,7 +6,7 @@ import { Text16 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAddOns } from "@/lib/contexts/AddOnsContext";
 import { useUser } from "@/lib/contexts/UserContext";
-import { IconChevronLeft, IconChevronRight } from "@/components/ui/icon";
+import { IconArrowLeft, IconArrowRight } from "@/components/ui/icon";
 
 // Custom styles for horizontal scrollbar
 const getCustomScrollbarStyles = (isDark: boolean) => `
@@ -226,14 +226,14 @@ export default function AIEngineToolsBody() {
         {canScrollLeft && (
           <button
             onClick={handleScrollLeft}
-            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 mt-2.5 flex items-center justify-center rounded-[8px] transition-all duration-200 ${
+            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 ${
               isDark 
-                ? 'bg-black/60 hover:bg-black/80 text-white border border-white/30' 
-                : 'bg-white/60 hover:bg-white/80 text-black border border-black/30'
+                ? 'bg-black/80 hover:bg-black/90 text-white border border-white/20' 
+                : 'bg-white/80 hover:bg-white/90 text-black border border-black/20'
             } shadow-lg backdrop-blur-sm`}
             title="Scroll Left"
           >
-            <IconChevronLeft width={16} height={16} />
+            <IconArrowLeft width={14} height={14} />
           </button>
         )}
 
@@ -279,14 +279,14 @@ export default function AIEngineToolsBody() {
         {canScrollRight && (
           <button
             onClick={handleScrollRight}
-            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 mt-2.5 w-8 h-8 flex items-center justify-center rounded-[8px] transition-all duration-200 ${
+            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 ${
               isDark 
-                ? 'bg-black/60 hover:bg-black/80 text-white border border-white/30' 
-                : 'bg-white/60 hover:bg-white/80 text-black border border-black/30'
+                ? 'bg-black/80 hover:bg-black/90 text-white border border-white/20' 
+                : 'bg-white/80 hover:bg-white/90 text-black border border-black/20'
             } shadow-lg backdrop-blur-sm`}
             title="Scroll Right"
           >
-            <IconChevronRight width={16} height={16} />
+            <IconArrowRight width={14} height={14} />
           </button>
         )}
       </div>

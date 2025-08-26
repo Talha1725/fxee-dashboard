@@ -20,40 +20,41 @@ export default function DashboardActiveAddons() {
         icon={<IconAddOns width={14} height={14} />}
       />
       <div className="flex flex-wrap items-start content-start gap-[14px_10px] self-stretch">
-        {pendingAddOns.map((addOn, index) => {
-          const canToggle = isPremium || !addOn.isVip;
-          const showVipBadge = !isPremium && addOn.isVip;
+      {pendingAddOns.map((addOn, index) => {
+          const isVipAddOn = index >= 4; // last 4 are VIP
+          const canToggle = isPremium || !isVipAddOn; // Pro can toggle all, Basic only first 4
+          const showVipBadge = !isPremium && isVipAddOn;
+
+          // Unified text colors
+          const textColorClass = addOn.active
+            ? (theme === "dark" ? "text-white" : "text-black")
+            : (theme === "dark" ? "text-white/60" : "text-black/60");
+
+          // Unified backgrounds
+          const bgClass = addOn.active
+            ? (theme === "dark"
+                ? "!bg-card-weak-gradient"
+                : "!bg-gradient-to-b !from-black/20 !to-black/10")
+            : (theme === "dark"
+                ? "!bg-card-weak-gradient !opacity-60"
+                : "!bg-gradient-to-b !from-black/5 !to-black/2 !opacity-60");
 
           return (
             <div key={addOn.title} className="relative">
               <div
                 onClick={() => canToggle && toggleAddOn(addOn.title)}
                 className={`transition-all duration-200 ${
-                  canToggle 
-                    ? 'cursor-pointer hover:scale-105' 
-                    : 'cursor-not-allowed opacity-60'
+                  canToggle ? "cursor-pointer hover:scale-105" : "cursor-not-allowed"
                 }`}
               >
                 <DashboardStatusDetailBadge
                   title={addOn.title}
                   icon={addOn.icon}
-                  isVip={addOn.isVip}
-                  className={`${
-                    addOn.active 
-                      ? (theme === "dark" 
-                          ? "bg-card-weak-gradient text-white" 
-                          : "bg-gradient-to-b from-black/20 to-black/10 text-black") 
-                      : (theme === "dark" 
-                          ? "bg-card-weak-gradient text-white/50" 
-                          : "bg-gradient-to-b from-black/5 to-black/2 text-black/50")
-                  }`}
+                  isVip={showVipBadge}
+                  isPro={false}
+                  className={`!p-2 !rounded-[10px] ${bgClass} ${textColorClass}`}
                 />
               </div>
-              {showVipBadge && (
-                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">
-                  VIP
-                </div>
-              )}
             </div>
           );
         })}
