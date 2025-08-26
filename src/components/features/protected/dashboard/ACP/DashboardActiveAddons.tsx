@@ -3,13 +3,16 @@
 import DashboardStatusDetailCardHead from "../status/detail/DashboardStatusDetailCardHead";
 import DashboardStatusDetailBadge from "../status/detail/DashboardStatusDetailBadge";
 import { IconAddOns, IconCircledEnergy } from "@/components/ui/icon";
-import { addOnsData } from "@/lib/constants";
 import { Text14 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useAddOns } from "@/lib/contexts/AddOnsContext";
+import { useUser } from "@/lib/contexts/UserContext";
 
 export default function DashboardActiveAddons() {
   const { theme } = useTheme();
+  const { addOns, toggleAddOn } = useAddOns();
+  const { isPremium } = useUser();
   return (
     <div className="flex flex-col items-start gap-5 self-stretch px-3">
       <DashboardStatusDetailCardHead
@@ -17,15 +20,43 @@ export default function DashboardActiveAddons() {
         icon={<IconAddOns width={14} height={14} />}
       />
       <div className="flex flex-wrap items-start content-start gap-[14px_10px] self-stretch">
-        {addOnsData.map((addOn, index) => (
-          <DashboardStatusDetailBadge
-            key={index}
-            icon={addOn.icon}
-            title={addOn.title}
-            isVip={addOn.isVip}
-            className={`${theme === "dark" ? "bg-card-weak-gradient" : "bg-gradient-to-b from-black/10 to-black/5"}`}
-          />
-        ))}
+        {addOns.map((addOn, index) => {
+          // Determine if add-on can be toggled based on plan
+          const canToggle = isPremium || !addOn.isVip; // Premium users can toggle all, Basic users can only toggle first 4 (non-VIP)
+          
+          // Show VIP badge only for VIP add-ons when user is not premium (Basic plan)
+          const showVipBadge = addOn.isVip && !isPremium;
+          
+          return (
+            <div 
+              key={index} 
+              onClick={() => canToggle ? toggleAddOn(addOn.title) : null} 
+              className={`transition-all duration-200 relative ${
+                canToggle 
+                  ? "cursor-pointer hover:scale-105" 
+                  : "cursor-not-allowed"
+              }`}
+              style={{ 
+                opacity: addOn.active && canToggle ? 1 : 0.5 
+              }}
+            >
+              <DashboardStatusDetailBadge
+                icon={addOn.icon}
+                title={addOn.title}
+                isVip={showVipBadge}
+                className={`transition-all duration-200 ${
+                  addOn.active && canToggle
+                    ? (theme === "dark" 
+                        ? "bg-card-weak-gradient text-white" 
+                        : "bg-gradient-to-b from-black/20 to-black/10 text-black") 
+                    : (theme === "dark" 
+                        ? "bg-card-weak-gradient text-white/50" 
+                        : "bg-gradient-to-b from-black/5 to-black/2 text-black/50")
+                }`}
+              />
+            </div>
+          );
+        })}
         <Button variant={theme === "dark" ? "white" : "black"} className="w-[170px] h-[40px] rounded-[10px] border border-white/5 gap-1 pt-[10px] pr-[20px] pb-[10px] pl-[20px]">
           <Text14 className="text-white dark:text-[#111] font-satoshi-medium">Upgrade Power</Text14>
           <IconCircledEnergy width={20} height={20} />

@@ -225,45 +225,55 @@ export const LEGAL_LINKS = [
 export const CONTACT_INFO = [{ link: "/", text: "support@fxee.ai" }];
 
 export const addOnsData = [
+  // First 4 add-ons (available to all plans)
   {
     icon: <IconAIBrain width={20} height={20} />,
     title: "AI Analysis",
     isVip: false,
+    active: true,
   },
   {
     icon: <IconLineChart width={20} height={20} />,
     title: "Technical",
     isVip: false,
+    active: true,
   },
   {
     icon: <IconFibo width={20} height={20} />,
     title: "Fibonacci",
     isVip: false,
+    active: true,
   },
   {
     icon: <IconScale width={20} height={20} />,
     title: "Risk Calc",
     isVip: false,
+    active: true,
   },
+  // Last 4 add-ons (VIP - disabled for Basic plan)
   {
     icon: <IconEye width={20} height={20} />,
     title: "Smart Alerts",
     isVip: true,
+    active: true,
   },
   {
     icon: <IconEye width={20} height={20} />,
     title: "Psychology",
     isVip: true,
+    active: false,
   },
   {
     icon: <IconDoc width={20} height={20} />,
     title: "News Impact",
     isVip: true,
+    active: false,
   },
   {
     icon: <IconFingerPrint width={20} height={20} />,
     title: "Pattern Scanner",
     isVip: true,
+    active: false,
   },
 ];
 

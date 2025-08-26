@@ -5,18 +5,37 @@ import AIEngineToolsNIP from "./NIP/AIEngineToolsNIP";
 import { Text16 } from "@/components/ui/typography";
 import { IconAdd } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-
-const tabs = [
-  { id: "default", label: "Default" },
-  { id: "hft", label: "HFT Base" },
-  { id: "intraday", label: "Intraday View" },
-  { id: "fundamentals", label: "Fundamentals" },
-  { id: "add", icon: <IconAdd width={20} height={20} /> },
-];
+import { useAddOns } from "@/lib/contexts/AddOnsContext";
+import { useUser } from "@/lib/contexts/UserContext";
 
 export default function AIEngineToolsBody() {
-  const [activeTab, setActiveTab] = useState("hft");
   const { theme } = useTheme();
+  const { addOns } = useAddOns();
+  const { isPremium } = useUser();
+  
+  // Generate tabs based on active add-ons that user can access
+  const getActiveAddOnsTabs = () => {
+    const accessibleActiveAddOns = addOns.filter(addOn => {
+      if (!addOn.active) return false;
+      
+      // Only show tabs for add-ons the user can access
+      // Premium users can access all, Basic users can only access non-VIP (first 4)
+      return isPremium || !addOn.isVip;
+    });
+    
+    const tabs = accessibleActiveAddOns.map(addOn => ({
+      id: addOn.title.toLowerCase().replace(/\s+/g, '-'),
+      label: addOn.title,
+      icon: null as React.ReactNode | null
+    }));
+    
+    // Don't add the "Add" tab anymore per user request
+    
+    return tabs;
+  };
+
+  const tabs = getActiveAddOnsTabs();
+  const [activeTab, setActiveTab] = useState(tabs.length > 0 ? tabs[0].id : "ai-analysis");
 
   const isDark = theme === "dark";
   const themePrefix = isDark ? "dark" : "light";
@@ -59,29 +78,51 @@ export default function AIEngineToolsBody() {
     return classes.join(" ");
   };
 
-  const contentMap = {
-    default: <div className={getTextClass(activeTab === "hft")}>
-      ⚡ Default Content
-    </div>,
-    hft: (
-      <div className={getTextClass(activeTab === "hft")}>
-        <AIEngineToolsNIP />
-      </div>
-    ),
-    intraday: (
-      <div className={getTextClass(activeTab === "intraday")}>
-        📊 Intraday View Content
-      </div>
-    ),
-    fundamentals: (
-      <div className={getTextClass(activeTab === "fundamentals")}>
-        📑 Fundamentals Content
-      </div>
-    ),
-    add: (
-      <div className={getTextClass(activeTab === "add")}>➕ Add New Tab</div>
-    ),
+  // Create dynamic content map based on active add-ons
+  const getContentMap = () => {
+    const contentMap: { [key: string]: React.ReactNode } = {};
+    
+    // Map each accessible active add-on to its content
+    const accessibleActiveAddOns = addOns.filter(addOn => {
+      if (!addOn.active) return false;
+      
+      // Only show content for add-ons the user can access
+      // Premium users can access all, Basic users can only access non-VIP (first 4)
+      return isPremium || !addOn.isVip;
+    });
+    
+    accessibleActiveAddOns.forEach(addOn => {
+      const tabId = addOn.title.toLowerCase().replace(/\s+/g, '-');
+      
+      // Special content for specific add-ons
+      if (addOn.title === "News Impact") {
+        contentMap[tabId] = (
+          <div className={getTextClass(activeTab === tabId)}>
+            <AIEngineToolsNIP />
+          </div>
+        );
+      } else {
+        // Default content for other add-ons
+        contentMap[tabId] = (
+          <div className={getTextClass(activeTab === tabId)}>
+            <div className="p-8 text-center">
+              <div className="mb-4 flex justify-center">{addOn.icon}</div>
+              <h3 className="text-xl font-semibold mb-2">{addOn.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                {addOn.title} tools and features will be available here.
+              </p>
+            </div>
+          </div>
+        );
+      }
+    });
+    
+    // No "Add" tab content needed anymore
+    
+    return contentMap;
   };
+  
+  const contentMap = getContentMap();
 
   const containerClasses = [
     "flex",
@@ -119,17 +160,13 @@ export default function AIEngineToolsBody() {
               onClick={() => setActiveTab(tab.id)}
               className={getTabClasses(isActive, isLast, isNextTabActive)}
             >
-              {tab.icon ? (
-                <div className={getTextClass(isActive)}>{tab.icon}</div>
-              ) : (
-                <span
-                  className={`font-satoshi-medium text-[16px] transition-colors ${getTextClass(
-                    isActive
-                  )}`}
-                >
-                  {tab.label}
-                </span>
-              )}
+              <span
+                className={`font-satoshi-medium text-[16px] transition-colors ${getTextClass(
+                  isActive
+                )}`}
+              >
+                {tab.label}
+              </span>
             </div>
           );
         })}
