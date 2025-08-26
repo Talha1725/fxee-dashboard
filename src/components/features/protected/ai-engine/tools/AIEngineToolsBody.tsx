@@ -38,11 +38,11 @@ const getCustomScrollbarStyles = (isDark: boolean) => `
 
 export default function AIEngineToolsBody() {
   const { theme } = useTheme();
-  const { addOns } = useAddOns();
+  const { savedAddOns } = useAddOns();
   const { isPremium } = useUser();
   
   const getActiveAddOnsTabs = () => {
-    const accessibleActiveAddOns = addOns.filter(addOn => {
+    const accessibleActiveAddOns = savedAddOns.filter(addOn => {
       if (!addOn.active) return false;
       return isPremium || !addOn.isVip;
     });
@@ -180,7 +180,7 @@ export default function AIEngineToolsBody() {
             const isNextTabActive =
               index < tabs.length - 1 && activeTab === tabs[index + 1].id;
 
-            const matchingAddOn = tab.id === "no-addons" ? null : addOns.find(addOn => 
+            const matchingAddOn = tab.id === "no-addons" ? null : savedAddOns.find(addOn => 
               addOn.title.toLowerCase().replace(/\s+/g, '-') === tab.id
             );
 

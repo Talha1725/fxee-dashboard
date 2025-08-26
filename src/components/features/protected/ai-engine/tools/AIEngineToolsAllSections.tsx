@@ -16,10 +16,10 @@ import {
 } from "@/components/ui/icon";
 
 export default function AIEngineToolsAllSections() {
-  const { addOns } = useAddOns();
+  const { savedAddOns } = useAddOns();
   const { isPremium } = useUser();
 
-  const accessibleActiveAddOns = addOns.filter(addOn => {
+  const accessibleActiveAddOns = savedAddOns.filter(addOn => {
     if (!addOn.active) return false;
     return isPremium || !addOn.isVip;
   });
