@@ -72,7 +72,7 @@ export default function OpenTrades() {
   ];
 
   return (
-    <div className="flex flex-col items-center gap-2.5 p-0 sm:p-5 self-stretch rounded-[16px] border-none sm:border border-white/5 bg-transparent sm:bg-popover-gradient sm:backdrop-blur-[7px] my-10 sm:my-0 mb-5">
+    <div className="flex flex-col items-center gap-2.5 p-3 sm:p-5 self-stretch rounded-[16px] border border-black/15 md:border-transparent dark:border-white/5 bg-transparent bg-popover-gradient dark:backdrop-blur-[7px] my-10 sm:my-0 mb-5">
       <div className="w-full">
         <div  onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between gap-2 self-stretch cursor-pointer">
           <div className="flex items-center justify-between gap-2 self-stretch">

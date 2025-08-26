@@ -134,7 +134,7 @@ export default function NavbarProfile() {
                 </div>
               </div>
             </div>
-            <NavbarAccountSwitch className="text-[14px]" dropdown={true} />
+            <NavbarAccountSwitch className="text-[12px] sm:text-[14px]" dropdown={true} />
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"

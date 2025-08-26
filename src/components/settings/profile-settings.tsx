@@ -93,6 +93,7 @@ export default function ProfileSettings() {
       <div className="mt-3">
         <Text18 className={`font-satoshi-medium`}>Email</Text18>
         <Input
+        disabled={true}
           placeholder="Enter your email"
           className={`mt-2 w-full h-[44px] border-black/10 dark:border-white/5 dark:text-white text-black ${
             theme === "dark"
