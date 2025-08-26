@@ -10,10 +10,11 @@ interface CommonSelectProps {
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string; flag?: React.ReactNode }[];
   className?: string;
   disabled?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  renderOption?: (option: { value: string; label: string; flag?: React.ReactNode }) => React.ReactNode;
 }
 
 export default function CommonSelect({
@@ -25,6 +26,7 @@ export default function CommonSelect({
   className,
   disabled = false,
   size = 'md',
+  renderOption,
 }: CommonSelectProps) {
   const { theme } = useTheme();
 
@@ -61,11 +63,11 @@ export default function CommonSelect({
           theme === "dark"
             ? "!bg-tab-dark-gradient !border-white/[0.1] dark:!bg-tab-dark-gradient [&]:!bg-tab-dark-gradient"
             : "!bg-card-dashboard-main-gradient !border-black/10 [&]:!bg-card-dashboard-main-gradient"
-        } rounded-[16px]`}
+        } rounded-md`}
         style={{
           backgroundColor: theme === "dark" 
-            ? "rgba(255, 255, 255, 0.02)" 
-            : "rgba(255, 255, 255, 0.02)",
+            ? "rgba(0,0,0)" 
+            : "rgba(255, 255, 255)",
           background: theme === "dark" 
             ? "bg-tab-dark-gradient" 
             : "bg-tab-dark-gradient"
@@ -77,7 +79,7 @@ export default function CommonSelect({
             value={option.value}
             className="text-black dark:text-white cursor-pointer"
           >
-            {option.label}
+            {renderOption ? renderOption(option) : option.label}
           </SelectItem>
         ))}
       </SelectContent>
