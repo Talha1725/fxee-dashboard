@@ -1,19 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cn } from "@/lib/utils";
 
 import { Text12 } from "@/components/ui/typography";
 
-export default function DashboardAPLSlider() {
-  const [value, setValue] = useState([33]);
+interface DashboardAPLSliderProps {
+  value?: number;
+  onValueChange?: (value: number) => void;
+}
+
+export default function DashboardAPLSlider({ 
+  value = 33, 
+  onValueChange 
+}: DashboardAPLSliderProps) {
+  const handleValueChange = (values: number[]) => {
+    onValueChange?.(values[0]);
+  };
 
   return (
     <div className="flex items-center gap-2.5 self-stretch">
       <SliderPrimitive.Root
-        value={value}
-        onValueChange={setValue}
+        value={[value]}
+        onValueChange={handleValueChange}
         max={100}
         step={1}
         className="relative flex w-full touch-none items-center select-none"
@@ -23,7 +32,7 @@ export default function DashboardAPLSlider() {
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb className="bg-white dark:bg-[#ffffff11] border-black dark:border-white ring-ring/50 block size-4 shrink-0 rounded-full border-[4px] shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50" />
       </SliderPrimitive.Root>
-      <Text12 className="w-5 text-black dark:text-white font-satoshi-medium">{value[0]}%</Text12>
+      <Text12 className="w-5 text-black dark:text-white font-satoshi-medium">{value}%</Text12>
     </div>
   );
 }

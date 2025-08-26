@@ -44,6 +44,8 @@ export default function DashboardAPLChart({
   ];
 
   const chartData = data || defaultData;
+  
+  // Chart data is ready for rendering
 
   // Handle resize
   useEffect(() => {
@@ -174,7 +176,7 @@ export default function DashboardAPLChart({
       .delay(600)
       .style("opacity", 0.3);
 
-  }, [chartData, dimensions]);
+  }, [data, chartData, dimensions]);
 
   return (
     <div
