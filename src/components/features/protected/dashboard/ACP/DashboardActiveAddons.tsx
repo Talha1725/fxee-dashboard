@@ -22,42 +22,44 @@ export default function DashboardActiveAddons() {
       <div className="flex flex-wrap items-start content-start gap-[14px_10px] self-stretch">
         {pendingAddOns.map((addOn, index) => {
           const canToggle = isPremium || !addOn.isVip;
-          
-          const showVipBadge = addOn.isVip && !isPremium;
-          
+          const showVipBadge = !isPremium && addOn.isVip;
+
           return (
-            <div 
-              key={index} 
-              onClick={() => canToggle ? toggleAddOn(addOn.title) : null} 
-              className={`transition-all duration-200 relative ${
-                canToggle 
-                  ? "cursor-pointer hover:scale-105" 
-                  : "cursor-not-allowed"
-              }`}
-              style={{ 
-                opacity: addOn.active && canToggle ? 1 : 0.5 
-              }}
-            >
-              <DashboardStatusDetailBadge
-                icon={addOn.icon}
-                title={addOn.title}
-                isVip={showVipBadge}
+            <div key={addOn.title} className="relative">
+              <div
+                onClick={() => canToggle && toggleAddOn(addOn.title)}
                 className={`transition-all duration-200 ${
-                  addOn.active && canToggle
-                    ? (theme === "dark" 
-                        ? "bg-card-weak-gradient text-white" 
-                        : "bg-gradient-to-b from-black/20 to-black/10 text-black") 
-                    : (theme === "dark" 
-                        ? "bg-card-weak-gradient text-white/50" 
-                        : "bg-gradient-to-b from-black/5 to-black/2 text-black/50")
+                  canToggle 
+                    ? 'cursor-pointer hover:scale-105' 
+                    : 'cursor-not-allowed opacity-60'
                 }`}
-              />
+              >
+                <DashboardStatusDetailBadge
+                  title={addOn.title}
+                  icon={addOn.icon}
+                  isVip={addOn.isVip}
+                  className={`${
+                    addOn.active 
+                      ? (theme === "dark" 
+                          ? "bg-card-weak-gradient text-white" 
+                          : "bg-gradient-to-b from-black/20 to-black/10 text-black") 
+                      : (theme === "dark" 
+                          ? "bg-card-weak-gradient text-white/50" 
+                          : "bg-gradient-to-b from-black/5 to-black/2 text-black/50")
+                  }`}
+                />
+              </div>
+              {showVipBadge && (
+                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                  VIP
+                </div>
+              )}
             </div>
           );
         })}
       </div>
       
-      <div className="flex justify-start self-stretch">
+      <div className="flex justify-end self-stretch">
         <Button 
           onClick={saveAddOns}
           disabled={!hasUnsavedChanges}

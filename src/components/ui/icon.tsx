@@ -4297,6 +4297,7 @@ export function IconCircle({ width, height, ...props }: IconProps) {
 }
 
 export function IconChevronRight({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4306,10 +4307,34 @@ export function IconChevronRight({ width, height, ...props }: IconProps) {
       fill="none"
       {...props}
     >
-      <g opacity="0.4">
+      <g opacity="1">
         <path
           d="M7.5 5.87231C7.5 5.87231 12.5 9.55481 12.5 10.8723C12.5 12.1898 7.5 15.8723 7.5 15.8723"
-          stroke="white"
+          stroke={theme === "dark" ? "white" : "black"}
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  );
+}
+
+export function IconChevronLeft({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 20 21"
+      fill="none"
+      {...props}
+    >
+      <g opacity="1">
+        <path
+          d="M12.5 5.87231C12.5 5.87231 7.5 9.55481 7.5 10.8723C7.5 12.1898 12.5 15.8723 12.5 15.8723"
+          stroke={theme === "dark" ? "white" : "black"}
           strokeWidth="1.25"
           strokeLinecap="round"
           strokeLinejoin="round"
