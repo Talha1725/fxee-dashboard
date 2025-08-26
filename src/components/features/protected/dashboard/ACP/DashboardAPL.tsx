@@ -63,7 +63,11 @@ const getStaticDefaultData = (): DataPoint[] => [
   { x: 15, y: 35 },
 ];
 
-export default function DashboardAPL() {
+interface DashboardAPLProps {
+  onPowerLevelChange?: (value: number) => void;
+}
+
+export default function DashboardAPL({ onPowerLevelChange }: DashboardAPLProps) {
   const { theme } = useTheme();
   const [sliderValue, setSliderValue] = useState<number>(33);
   const [chartData, setChartData] = useState<DataPoint[]>(getStaticDefaultData);
@@ -74,7 +78,9 @@ export default function DashboardAPL() {
     setIsClient(true);
     // Generate initial random data only on client
     setChartData(generateRandomData(33));
-  }, []);
+    // Notify parent of initial value
+    onPowerLevelChange?.(33);
+  }, [onPowerLevelChange]);
 
   // Handle slider value change and generate new random chart data
   const handleSliderChange = useCallback((value: number) => {
@@ -84,7 +90,9 @@ export default function DashboardAPL() {
     // Generate completely new random data every time
     const newData = generateRandomData(value);
     setChartData([...newData]); // Force new array reference
-  }, [isClient]);
+    // Notify parent component of the change
+    onPowerLevelChange?.(value);
+  }, [isClient, onPowerLevelChange]);
   return (
     <div className={`flex flex-col sm:flex-row justify-between items-center gap-2.5 self-stretch rounded-[10px] border border-white/2 ${theme === "dark" ? "bg-dark-gradient" : "bg-black/5"} `}>
       <div className="flex flex-col items-start gap-2.5 shrink-0 self-stretch py-3.5 px-3 flex-[1_0_0]">
