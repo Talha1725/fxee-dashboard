@@ -1113,4 +1113,61 @@ body {
     background: transparent !important;
     color: var(--foreground) !important;
   }
+
+  /* Sonner Toast Styles */
+  .toaster {
+    --normal-bg: #ffffff;
+    --normal-text: #000000;
+    --normal-border: #e5e7eb;
+    --success-bg: #3EDC81;
+    --success-text: white;
+    --success-border: #3EDC81;
+    --error-bg: #EA4335;
+    --error-text: white;
+    --error-border: #EA4335;
+    --warning-bg: #f59d31;
+    --warning-text: white;
+    --warning-border: #f59d31;
+  }
+
+  .dark .toaster {
+    --normal-bg: #1f2937;
+    --normal-text: #ffffff;
+    --normal-border: #374151;
+  }
+
+  /* Override Sonner's overlay effects */
+  .toaster [data-sonner-toast] {
+    background: var(--normal-bg) !important;
+    border: 1px solid var(--normal-border) !important;
+    color: var(--normal-text) !important;
+  }
+
+  .toaster [data-sonner-toast][data-type="success"] {
+    background: var(--success-bg) !important;
+    border: 1px solid var(--success-border) !important;
+    color: var(--success-text) !important;
+  }
+
+  .toaster [data-sonner-toast][data-type="error"] {
+    background: var(--error-bg) !important;
+    border: 1px solid var(--error-border) !important;
+    color: var(--error-text) !important;
+  }
+
+  .toaster [data-sonner-toast][data-type="warning"] {
+    background: var(--warning-bg) !important;
+    border: 1px solid var(--warning-border) !important;
+    color: var(--warning-text) !important;
+  }
+
+  /* Remove any overlay effects */
+  .toaster [data-sonner-toast]::before,
+  .toaster [data-sonner-toast]::after {
+    display: none !important;
+  }
+
+  .toaster [data-sonner-toast] * {
+    background: transparent !important;
+  }
 }
