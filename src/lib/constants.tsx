@@ -225,45 +225,84 @@ export const LEGAL_LINKS = [
 export const CONTACT_INFO = [{ link: "/", text: "support@fxee.ai" }];
 
 export const addOnsData = [
+  // First 4 add-ons (available to all plans)
   {
     icon: <IconAIBrain width={20} height={20} />,
     title: "AI Analysis",
+    description: "AI-powered trading analysis and insights",
     isVip: false,
+    active: true,
   },
   {
     icon: <IconLineChart width={20} height={20} />,
-    title: "Technical",
+    title: "AI RSI Analyzer",
+    description: "Advanced RSI analysis with AI-powered overbought/oversold",
     isVip: false,
+    active: true,
   },
   {
     icon: <IconFibo width={20} height={20} />,
-    title: "Fibonacci",
+    title: "Fibonacci Retracement Analyzer",
+    description: "Advanced Fibonacci retracement analysis with AI-powered level detection",
     isVip: false,
+    active: true,
   },
   {
     icon: <IconScale width={20} height={20} />,
-    title: "Risk Calc",
+    title: "Volatility & Risk Analyzer",
+    description: "Advanced risk assessment and position sizing recommendations",
     isVip: false,
+    active: true,
+  },
+  // Last 6 add-ons (VIP - disabled for Basic plan)
+  {
+    icon: <IconEye width={20} height={20} />,
+    title: "Market Sentiment Aggregator",
+    description: "Real-time market sentiment analysis across multiple timeframes",
+    isVip: true,
+    active: true,
   },
   {
     icon: <IconEye width={20} height={20} />,
-    title: "Smart Alerts",
+    title: "Mass Psychology Analysis",
+    description: "Advanced crowd behavior analysis",
     isVip: true,
-  },
-  {
-    icon: <IconEye width={20} height={20} />,
-    title: "Psychology",
-    isVip: true,
+    active: false,
   },
   {
     icon: <IconDoc width={20} height={20} />,
-    title: "News Impact",
+    title: "News Impact Predictor",
+    description: "Realtime Market news analysis with sentiment scoring and impact prediction",
     isVip: true,
+    active: false,
   },
   {
     icon: <IconFingerPrint width={20} height={20} />,
-    title: "Pattern Scanner",
+    title: "Pattern Recognition Scanner",
+    description: "Track and analyze large-scale market movements and institutional trading patterns",
     isVip: true,
+    active: false,
+  },
+  {
+    icon: <IconAIBrain width={20} height={20} />,
+    title: "AI Trend Forecast",
+    description: "AI-powered market direction analysis and prediction",
+    isVip: true,
+    active: false,
+  },
+  {
+    icon: <IconScale width={20} height={20} />,
+    title: "Smart Portfolio Allocator",
+    description: "Leverage AI to automatically distribute your capital across assets based on risk tolerance, market trends...",
+    isVip: true,
+    active: false,
+  },
+  {
+    icon: <IconLineChart width={20} height={20} />,
+    title: "Trade Probability Calculator",
+    description: "Estimate a trade's success using key factors like risk/reward ratio, market volatility, historical performance...",
+    isVip: true,
+    active: false,
   },
 ];
 

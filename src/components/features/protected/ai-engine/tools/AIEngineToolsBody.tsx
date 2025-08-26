@@ -1,27 +1,152 @@
 "use client";
 
-import React, { useState } from "react";
-import AIEngineToolsNIP from "./NIP/AIEngineToolsNIP";
+import React, { useState, useEffect, useRef } from "react";
+import AIEngineToolsAllSections from "./AIEngineToolsAllSections";
 import { Text16 } from "@/components/ui/typography";
-import { IconAdd } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useAddOns } from "@/lib/contexts/AddOnsContext";
+import { useUser } from "@/lib/contexts/UserContext";
+import { IconChevronLeft, IconChevronRight } from "@/components/ui/icon";
 
-const tabs = [
-  { id: "default", label: "Default" },
-  { id: "hft", label: "HFT Base" },
-  { id: "intraday", label: "Intraday View" },
-  { id: "fundamentals", label: "Fundamentals" },
-  { id: "add", icon: <IconAdd width={20} height={20} /> },
-];
+// Custom styles for horizontal scrollbar
+const getCustomScrollbarStyles = (isDark: boolean) => `
+  .tab-scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: ${isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'} transparent;
+  }
+
+  .tab-scroll-container::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .tab-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .tab-scroll-container::-webkit-scrollbar-thumb {
+    background: ${isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
+    border-radius: 2px;
+  }
+  
+  .tab-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: ${isDark ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)'};
+  }
+
+  .tab-scroll-container::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+`;
 
 export default function AIEngineToolsBody() {
-  const [activeTab, setActiveTab] = useState("hft");
   const { theme } = useTheme();
+  const { savedAddOns } = useAddOns();
+  const { isPremium } = useUser();
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  
+  const getActiveAddOnsTabs = () => {
+    const accessibleActiveAddOns = savedAddOns.filter(addOn => {
+      if (!addOn.active) return false;
+      return isPremium || !addOn.isVip;
+    });
+    
+    if (accessibleActiveAddOns.length === 0) {
+      return [{
+        id: "no-addons",
+        label: "No addons selected",
+        icon: null as React.ReactNode | null
+      }];
+    }
+    
+    const tabs = accessibleActiveAddOns.map(addOn => ({
+      id: addOn.title.toLowerCase().replace(/\s+/g, '-'),
+      label: addOn.title,
+      icon: null as React.ReactNode | null
+    }));    
+    return tabs;
+  };
+
+  const tabs = getActiveAddOnsTabs();
+  const [activeTab, setActiveTab] = useState(() => {
+    return tabs.length > 0 ? tabs[0].id : "no-addons";
+  });
+
+  useEffect(() => {
+    if (tabs.length === 1 && tabs[0].id === "no-addons") {
+      setActiveTab("no-addons");
+    } else if (tabs.length > 0 && activeTab === "no-addons") {
+      setActiveTab(tabs[0].id);
+    } else if (tabs.length > 0 && !tabs.find(tab => tab.id === activeTab)) {
+      setActiveTab(tabs[0].id);
+    }
+  }, [tabs, activeTab]);
+
+  const scrollToSection = (sectionId: string) => {
+    if (sectionId === "no-addons") {
+      setActiveTab(sectionId);
+      return;
+    }
+    
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+      setActiveTab(sectionId);
+    }
+  };
+
+  const checkScrollPosition = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+  };
+
+  const handleScrollLeft = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    container.scrollBy({
+      left: -200,
+      behavior: 'smooth'
+    });
+  };
+
+  const handleScrollRight = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    container.scrollBy({
+      left: 200,
+      behavior: 'smooth'
+    });
+  };
+
+  useEffect(() => {
+    checkScrollPosition();
+    
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollPosition);
+      window.addEventListener('resize', checkScrollPosition);
+      
+      return () => {
+        container.removeEventListener('scroll', checkScrollPosition);
+        window.removeEventListener('resize', checkScrollPosition);
+      };
+    }
+  }, [tabs]);
 
   const isDark = theme === "dark";
   const themePrefix = isDark ? "dark" : "light";
 
-  // ✅ Active vs non-active text color logic
   const getTextClass = (isActive: boolean) => {
     if (isActive) {
       return isDark ? "text-white" : "text-black";
@@ -36,12 +161,18 @@ export default function AIEngineToolsBody() {
   ) => {
     const classes = [
       "flex",
-      "items-center",
+      "items-center", 
+      "justify-center",
       "gap-2.5",
       "h-full",
       "px-4",
+      "py-2",
       "cursor-pointer",
       "whitespace-nowrap",
+      "flex-shrink-0",
+      "min-w-fit",
+      "transition-colors",
+      "duration-200",
     ];
 
     if (isActive) {
@@ -59,35 +190,18 @@ export default function AIEngineToolsBody() {
     return classes.join(" ");
   };
 
-  const contentMap = {
-    default: <div className={getTextClass(activeTab === "hft")}>
-      ⚡ Default Content
-    </div>,
-    hft: (
-      <div className={getTextClass(activeTab === "hft")}>
-        <AIEngineToolsNIP />
-      </div>
-    ),
-    intraday: (
-      <div className={getTextClass(activeTab === "intraday")}>
-        📊 Intraday View Content
-      </div>
-    ),
-    fundamentals: (
-      <div className={getTextClass(activeTab === "fundamentals")}>
-        📑 Fundamentals Content
-      </div>
-    ),
-    add: (
-      <div className={getTextClass(activeTab === "add")}>➕ Add New Tab</div>
-    ),
-  };
 
   const containerClasses = [
+    "tab-scroll-container",
     "flex",
     "items-center",
+    "overflow-x-auto", 
+    "overflow-y-hidden",
+    "scroll-smooth",
     "-mb-5",
     "h-[44px]",
+    "w-full",
+    "max-w-full",
     isDark ? "bg-tab-dark-gradient" : "bg-tab-light-base-gradient",
     "rounded-t-[8px]",
   ].join(" ");
@@ -106,37 +220,92 @@ export default function AIEngineToolsBody() {
 
   return (
     <>
-      <div className={containerClasses}>
-        {tabs.map((tab, index) => {
-          const isActive = activeTab === tab.id;
-          const isLast = index === tabs.length - 1;
-          const isNextTabActive =
-            index < tabs.length - 1 && activeTab === tabs[index + 1].id;
+      <style dangerouslySetInnerHTML={{ __html: getCustomScrollbarStyles(isDark) }} />
+      <div className="relative flex items-center w-full">
+        {/* Left Arrow Button */}
+        {canScrollLeft && (
+          <button
+            onClick={handleScrollLeft}
+            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 mt-2.5 flex items-center justify-center rounded-[8px] transition-all duration-200 ${
+              isDark 
+                ? 'bg-black/60 hover:bg-black/80 text-white border border-white/30' 
+                : 'bg-white/60 hover:bg-white/80 text-black border border-black/30'
+            } shadow-lg backdrop-blur-sm`}
+            title="Scroll Left"
+          >
+            <IconChevronLeft width={16} height={16} />
+          </button>
+        )}
 
-          return (
-            <div
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={getTabClasses(isActive, isLast, isNextTabActive)}
-            >
-              {tab.icon ? (
-                <div className={getTextClass(isActive)}>{tab.icon}</div>
-              ) : (
-                <span
-                  className={`font-satoshi-medium text-[16px] transition-colors ${getTextClass(
-                    isActive
-                  )}`}
-                >
-                  {tab.label}
-                </span>
-              )}
-            </div>
-          );
-        })}
+        <div ref={scrollContainerRef} className={containerClasses}>
+          <div className="flex flex-nowrap items-center h-full min-w-max gap-0">
+            {tabs.map((tab, index) => {
+            const isActive = activeTab === tab.id;
+            const isLast = index === tabs.length - 1;
+            const isNextTabActive =
+              index < tabs.length - 1 && activeTab === tabs[index + 1].id;
+
+            const matchingAddOn = tab.id === "no-addons" ? null : savedAddOns.find(addOn => 
+              addOn.title.toLowerCase().replace(/\s+/g, '-') === tab.id
+            );
+
+            return (
+              <div
+                key={tab.id}
+                onClick={() => scrollToSection(tab.id)}
+                className={getTabClasses(isActive, isLast, isNextTabActive)}
+              >
+                <div className="flex items-center gap-2">
+                  {matchingAddOn?.icon && (
+                    <span className={getTextClass(isActive)}>
+                      {matchingAddOn.icon}
+                    </span>
+                  )}
+                  <span
+                    className={`font-satoshi-medium text-[16px] transition-colors ${getTextClass(
+                      isActive
+                    )}`}
+                  >
+                    {tab.label}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+          </div>
+        </div>
+
+        {/* Right Arrow Button */}
+        {canScrollRight && (
+          <button
+            onClick={handleScrollRight}
+            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 mt-2.5 w-8 h-8 flex items-center justify-center rounded-[8px] transition-all duration-200 ${
+              isDark 
+                ? 'bg-black/60 hover:bg-black/80 text-white border border-white/30' 
+                : 'bg-white/60 hover:bg-white/80 text-black border border-black/30'
+            } shadow-lg backdrop-blur-sm`}
+            title="Scroll Right"
+          >
+            <IconChevronRight width={16} height={16} />
+          </button>
+        )}
       </div>
 
       <div className={contentClasses}>
-        {contentMap[activeTab as keyof typeof contentMap] || null}
+        {activeTab === "no-addons" ? (
+          <div className="flex flex-col items-center justify-center h-full w-full text-center">
+            <div className="mb-4">
+              <Text16 className={`${isDark ? "text-white/60" : "text-black/60"}`}>
+                No add-ons are currently selected
+              </Text16>
+            </div>
+            <Text16 className={`${isDark ? "text-white/40" : "text-black/40"} text-sm`}>
+              Please select add-ons from the AI Control Panel to view their tools
+            </Text16>
+          </div>
+        ) : (
+          <AIEngineToolsAllSections />
+        )}
       </div>
     </>
   );

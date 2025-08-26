@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/contexts/ThemeContext";
+import { AddOnsProvider } from "@/lib/contexts/AddOnsContext";
+import { UserProvider } from "@/lib/contexts/UserContext";
 import { ReduxProvider } from "@/lib/redux/provider";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -55,17 +57,21 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <ThemeProvider>
-            {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
-              <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
-                {children}
-                <Toaster position="top-right" />
-              </GoogleOAuthProvider>
-            ) : (
-              <>
-                {children}
-                <Toaster position="top-right" />
-              </>
-            )}
+            <UserProvider>
+              <AddOnsProvider>
+                {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
+                  <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
+                    {children}
+                    <Toaster />
+                  </GoogleOAuthProvider>
+                ) : (
+                  <>
+                    {children}
+                    <Toaster />
+                  </>
+                )}
+              </AddOnsProvider>
+            </UserProvider>
           </ThemeProvider>
         </ReduxProvider>
       </body>
