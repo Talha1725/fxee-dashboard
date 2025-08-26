@@ -127,7 +127,7 @@ export default function ProfileSettings() {
               src={uploadedImage || user?.avatar} 
               alt="user avatar"
             />
-            <AvatarFallback className="text-lg font-medium">
+            <AvatarFallback className="text-lg font-medium bg-black/10 dark:bg-white/5">
               {getUserInitials()}
             </AvatarFallback>
           </Avatar>
