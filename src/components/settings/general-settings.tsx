@@ -150,7 +150,7 @@ export default function GeneralSettings() {
       </Text16>
 
       {/* Language and Timezone Section */}
-      <div className="mt-5">
+      <div className="mt-4">
         <div>
           <SettingsLabel label="Language" required />
           <CommonSelect
@@ -181,7 +181,7 @@ export default function GeneralSettings() {
       </div>
 
       {/* Theme Section */}
-      <div className="mt-5">
+      <div className="mt-4">
         <Text20 className="font-satoshi">Theme Options</Text20>
         <Text16 className="dark:opacity-70 mt-1">
           Pick theme to personalize experience.{" "}
@@ -284,7 +284,7 @@ export default function GeneralSettings() {
         </RadioGroup>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-2 mt-5">
+      <div className="grid sm:grid-cols-2 gap-2 mt-4">
         <Button
           variant={"black"}
           className="h-[52px] font-satoshi w-full dark:text-white dark:bg-white/5 bg-transparent text-black border-black/15 dark:border-white/15 hover:bg-white/10 hover:opacity-70"
