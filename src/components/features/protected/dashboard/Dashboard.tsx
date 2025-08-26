@@ -36,7 +36,7 @@ export default function Dashboard() {
               { value: "Trending", label: "Trending" },
               { value: "Popular", label: "Popular" }
             ]}
-            className="w-full min-w-0"
+            className="min-w-full"
           />
       
         </div> */}

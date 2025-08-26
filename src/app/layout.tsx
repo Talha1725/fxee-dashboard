@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 import { AddOnsProvider } from "@/lib/contexts/AddOnsContext";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { ReduxProvider } from "@/lib/redux/provider";
-import { Toaster } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
 
