@@ -5,12 +5,13 @@ import { Text14, Text16, Text22, Text24 } from '@/components/ui/typography'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/lib/contexts/ThemeContext'
 import NavbarAccountSwitch from '../navbar/NavbarAccountSwitch'
-import { IconWallet, IconClock, IconUK } from '@/components/ui/icon'
+import { IconWallet, IconClock, IconUK, IconExchangeLine, IconExport } from '@/components/ui/icon'
 import CommonSelect from '@/components/ui/common-select'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import PortfolioChart from '../home/PortfolioChart'
+import Image from 'next/image'
 
 // Transaction Summary Card Component
 const TransactionSummaryCard = ({
@@ -140,14 +141,22 @@ const DepositCard = () => {
                  ]}
                  className="w-[407px] px-[14px] py-[10px] rounded-lg border min-w-[407px] max-w-[407px]"
                  renderOption={(option) => (
-                   <div className="flex items-center justify-between w-full gap-2.5">
+                   <div className="flex items-center w-full gap-2.5">
                      <div className="flex items-center gap-2.5">
-                       <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600" />
+                       <div className="w-10 h-10 rounded-[10px] overflow-hidden flex items-center justify-center">
+                         <Image 
+                           src="/images/fxee.svg" 
+                           alt="FXEE Plan" 
+                           width={40} 
+                           height={40} 
+                           className="w-full h-full object-cover"
+                         />
+                       </div>
                        <Text16 className="font-satoshi-medium dark:text-white text-black">
                          {option.label}
                        </Text16>
                      </div>
-                     <div className="text-right">
+                     <div className="ml-[100px] text-right">
                        <Text16 className="font-satoshi-bold dark:text-white text-black">
                          $14,480.24
                        </Text16>
@@ -163,14 +172,26 @@ const DepositCard = () => {
             <div className="flex flex-col items-center gap-4">
               <div
                 className={cn(
-                  'flex items-center justify-center rounded-[11.58px] border-[1.16px]',
-                  'dark:bg-white/5 dark:border-white/10 bg-gray-100 border-gray-300',
-                  'w-[220px] h-[220px]'
+                  'flex items-center justify-center rounded-[11.58px] border-[0.9px] p-[11.8px]',
+                  'dark:bg-white/5 dark:border-white/10 bg-gray-100 border-gray-300'
                 )}
+                style={{
+                  width: '219.83px',
+                  height: '220px',
+                  gap: '10.73px'
+                }}
               >
-                <Text16 className="font-satoshi-medium dark:text-white/30 text-black/30">
-                  QR Code
-                </Text16>
+                <Image 
+                  src="/images/qr-code.svg" 
+                  alt="QR Code" 
+                  width={196.22} 
+                  height={196.23} 
+                  className="object-contain"
+                  style={{
+                    width: '196.22px',
+                    height: '196.23px'
+                  }}
+                />
               </div>
               <Text14 className="font-satoshi text-center dark:text-white/70 text-black/70 max-w-[220px]">
                 Scan QR Code for wallet address
@@ -185,7 +206,7 @@ const DepositCard = () => {
                 <Text16 className="font-satoshi-medium dark:text-white text-black">
                   Crypto Type
                 </Text16>
-                <span className="text-red-500">*</span>
+                <span style={{ color: 'rgba(45, 208, 255, 1)' }}>*</span>
               </div>
               <CommonSelect
                 placeholder="Select crypto currency"
@@ -204,7 +225,7 @@ const DepositCard = () => {
                 <Text16 className="font-satoshi-medium dark:text-white text-black">
                   Enter Amount
                 </Text16>
-                <span className="text-red-500">*</span>
+                <span style={{ color: 'rgba(45, 208, 255, 1)' }}>*</span>
               </div>
               <div className="flex justify-between items-center w-full h-[45px] rounded-lg border px-[14px] py-[10px]" 
                    style={{
@@ -275,8 +296,8 @@ export default function WalletPage() {
     
         <NavbarAccountSwitch
           items={[
-            { label: "Deposit", value: "deposit", icon: <IconWallet /> },
-            { label: "Transaction History", value: "history", icon: <IconClock /> },
+            { label: "Deposit", value: "deposit", icon: <IconExport /> },
+            { label: "Transaction History", value: "history", icon: <IconExchangeLine /> },
           ]}
           defaultValue="deposit"
           onValueChange={(val) => {
@@ -391,7 +412,7 @@ export default function WalletPage() {
             )}
           >
             <div className="flex flex-col items-center justify-center h-full">
-              <IconClock className="w-16 h-16 mb-4 text-gray-400" />
+              <IconExchangeLine className="w-16 h-16 mb-4 text-gray-400" />
               <Text22 className="font-satoshi-bold dark:text-white text-black mb-2">
                 Transaction History
               </Text22>

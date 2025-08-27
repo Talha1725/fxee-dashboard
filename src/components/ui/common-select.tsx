@@ -42,8 +42,8 @@ export default function CommonSelect({
               <SelectTrigger
           className={cn(
             `rounded-[12px] ${theme === "dark" ? "!bg-tab-dark-gradient !border-white/[0.1] [&]:!bg-tab-dark-gradient dark:!bg-tab-dark-gradient" : "!bg-card-dashboard-main-gradient !border-black/10 [&]:!bg-card-dashboard-main-gradient"}`,
-            "flex items-center justify-between",
-            `w-[336px] font-satoshi-medium text-[18px] pt-[14px] pr-5 pb-[14px] pl-5 min-w-[336px] max-w-[336px] gap-5`,
+            "flex items-center justify-between shadow-none",
+            `font-satoshi-medium text-[18px] pt-[14px] pr-5 pb-[14px] pl-5 gap-5`,
             className
           )}
           style={{

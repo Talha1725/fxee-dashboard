@@ -44,7 +44,16 @@ export default function NavbarAccountSwitch({
           isActive={activeTab === item.value}
           onClick={() => handleTabChange(item.value)}
         >
-          {item.icon && <span className="mr-2">{item.icon}</span>}
+          {item.icon && (
+            <span className="mr-2">
+              {React.isValidElement(item.icon) 
+                ? React.cloneElement(item.icon, {
+                    forceColor: activeTab === item.value ? 'white' : 'black'
+                  } as any)
+                : item.icon
+              }
+            </span>
+          )}
           {item.label}
         </NavbarSwitchToggleItem>
       ))}
