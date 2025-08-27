@@ -18,21 +18,30 @@ import {
 import { Text14 } from "@/components/ui/typography";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { useCreateProposedTradesMutation } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
-import { useCreateCustomAnalysisMutation } from "@/lib/redux/features/recommendations/recommendationsApi";
+import { useCreateProposedTradesMutation, useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useCreateCustomAnalysisMutation, useGetMyAnalysesQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 import type { ProposedTrade, CustomAnalysisRequest } from "@/types/redux";
 
-export default function AIEngineStatusTGS() {
+interface AIEngineStatusTGSProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  bestTrade: ProposedTrade | null;
+  setBestTrade: (trade: ProposedTrade | null) => void;
+  customAnalysis: any;
+  setCustomAnalysis: (analysis: any) => void;
+}
+
+export default function AIEngineStatusTGS({
+  activeTab,
+  setActiveTab,
+  bestTrade,
+  setBestTrade,
+  customAnalysis,
+  setCustomAnalysis
+}: AIEngineStatusTGSProps) {
   const { theme } = useTheme();
   const { setAnalysisData } = useAnalysis();
-  
-  // State for active tab and proposed trades
-  const [activeTab, setActiveTab] = useState("best_trade");
-  const [bestTrade, setBestTrade] = useState<ProposedTrade | null>(null);
-  
-  // State for custom goal analysis result
-  const [customAnalysis, setCustomAnalysis] = useState<any>(null);
   
   // State for user selections in Best Trade tab
   const [selectedTradingPair, setSelectedTradingPair] = useState<string>("USDCAD");
@@ -55,6 +64,12 @@ export default function AIEngineStatusTGS() {
   // Mutations for creating proposed trades and custom analysis
   const [createProposedTrades, { isLoading: isBestTradeLoading, error: bestTradeError }] = useCreateProposedTradesMutation();
   const [createCustomAnalysis, { isLoading: isCustomAnalysisLoading, error: customAnalysisError }] = useCreateCustomAnalysisMutation();
+  
+  // Query for refetching latest analysis after creation
+  const { refetch: refetchLatestAnalysis } = useGetMyAnalysesQuery({ limit: 1 });
+  
+  // Query for refetching usage limits
+  const { refetch: refetchUsageLimits } = useGetUsageLimitsQuery();
   
   // State for editable detail fields (Best Trade)
   const [potentialProfit, setPotentialProfit] = useState("$5,000.00");
@@ -106,28 +121,29 @@ export default function AIEngineStatusTGS() {
           riskReward: parseRiskRewardToNumber(customRiskReward),
         };
         
-        const result = await createCustomAnalysis(customAnalysisData).unwrap();
-        setCustomAnalysis(result.data || null);
+        // Create the analysis
+        await createCustomAnalysis(customAnalysisData).unwrap();
         
-        // Save to context for use in AI Tools section
-        if (result.data) {
-          setAnalysisData({
-            id: result.data.id,
-            symbol: result.data.symbol,
-            recommendation: result.data.recommendation,
-            confidence: result.data.confidence,
-            entryPrice: result.data.entryPrice,
-            targetPrice: result.data.targetPrice,
-            stopLoss: result.data.stopLoss,
-            riskRewardRatio: result.data.riskRewardRatio,
-            validFor: result.data.validFor,
-            createdAt: result.data.createdAt,
-            toolsResults: result.data.toolsResults,
-            analysisTitle: result.data.analysisTitle,
-            analysisDescription: result.data.analysisDescription,
-            detailedAnalysis: result.data.detailedAnalysis,
-          });
+        // After successful creation, fetch the latest analysis using GET endpoint
+        const latestAnalysisResponse = await refetchLatestAnalysis();
+        
+        if (latestAnalysisResponse.data?.success && latestAnalysisResponse.data?.data) {
+          // Handle both array format (my-analyses) and single object format (latest analysis)
+          const latestAnalysis = Array.isArray(latestAnalysisResponse.data.data) 
+            ? latestAnalysisResponse.data.data[0] 
+            : latestAnalysisResponse.data.data;
+          
+          if (latestAnalysis) {
+            // Set the analysis data in context
+            setAnalysisData(latestAnalysis);
+            
+            // Also set local state for the status component
+            setCustomAnalysis(latestAnalysis);
+          }
         }
+        
+        // Refetch usage limits to update the UI
+        refetchUsageLimits();
       } catch (err) {
         console.error("Failed to create custom analysis:", err);
       }
@@ -149,7 +165,11 @@ export default function AIEngineStatusTGS() {
   
   return (
     <div className={`w-full lg:flex-1 rounded-[16px] p-5 pb-[25px] flex flex-col gap-4 ${theme === "dark" ? "bg-card-green-gradient" : "bg-light-green-blue-gradient"}`}>
-      <AIEngineStatusTGSHead onRunAnalysis={handleRunAnalysis} isAnalyzing={isBestTradeLoading || isCustomAnalysisLoading} />
+      <AIEngineStatusTGSHead 
+        onRunAnalysis={handleRunAnalysis} 
+        isAnalyzing={isBestTradeLoading || isCustomAnalysisLoading} 
+        activeTab={activeTab}
+      />
       <Tabs defaultValue="best_trade" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="custom_goal" className="cursor-pointer text-[#FFFFFFCC] dark:text-[#FFFFFFCC] data-[state=active]:bg-white data-[state=active]:text-black dark:data-[state=active]:bg-white dark:data-[state=active]:text-black [&>svg]:fill-white [&>svg]:stroke-white data-[state=active]:[&>svg]:fill-black data-[state=active]:[&>svg]:stroke-black dark:data-[state=active]:[&>svg]:fill-black dark:data-[state=active]:[&>svg]:stroke-black">

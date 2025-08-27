@@ -3,7 +3,6 @@
 import React from "react";
 import AIEngineToolsCardHead from "./AIEngineToolsCardHead";
 import AIEngineToolsCardContainer from "./AIEngineToolsCardContainer";
-import AIEngineToolsNIPText from "./NIP/AIEngineToolsNIPText";
 import AIEngineToolsNIPCardAI from "./NIP/AIEngineToolsNIPCardAI";
 import AIEngineToolData from "./AIEngineToolData";
 import DashboardWidget from "@/components/features/protected/dashboard/widget/DashboardWidget";

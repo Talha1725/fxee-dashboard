@@ -116,14 +116,16 @@ export default function AIEngineToolData({
         </div>
       </div>
 
-      {/* Detailed Analysis - Formatted for readability */}
+      {/* Detailed Analysis - Only show if there's meaningful additional data */}
       {Object.keys(formattedFullData).length > 0 && (
         <div className="text-black dark:text-white font-[400] w-full">
           <Text16 className="font-satoshi-medium text-black/60 dark:text-white/60 mb-3">
-            Detailed Analysis:
+            Additional Details:
           </Text16>
           <div className="space-y-3">
-            {Object.entries(formattedFullData).map(([label, value]) => (
+            {Object.entries(formattedFullData)
+              .filter(([label, value]) => value && value.trim() !== '')
+              .map(([label, value]) => (
               <div key={label} className="border-l-2 border-gray-300 dark:border-gray-600 pl-3">
                 <Text14 className="font-satoshi-medium text-black/80 dark:text-white/80 mb-1">
                   {label}:

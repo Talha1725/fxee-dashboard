@@ -9,17 +9,17 @@ import { useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/pro
 interface AIEngineStatusTGSHeadProps {
   onRunAnalysis?: () => void;
   isAnalyzing?: boolean;
+  activeTab?: string;
 }
 
-export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing }: AIEngineStatusTGSHeadProps) {
+export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, activeTab = "best_trade" }: AIEngineStatusTGSHeadProps) {
   // Fetch usage limits
   const { data: usageLimitsResponse, error, isLoading } = useGetUsageLimitsQuery();
-  const proposedTradeLimit = usageLimitsResponse?.data?.usageLimits?.proposed_trade;
   
-  // Debug error if it exists
-  if (error) {
-    console.error("Usage limits API error:", error);
-  }
+  // Get the appropriate limit based on active tab
+  const currentLimit = activeTab === "custom_goal" 
+    ? usageLimitsResponse?.data?.usageLimits?.custom_analysis
+    : usageLimitsResponse?.data?.usageLimits?.proposed_trade;
   return (
     <div className="flex items-start gap-2 self-stretch">
       <DashboardHeadBadge>
@@ -48,8 +48,8 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing }: AI
               ? "Loading..." 
               : error 
               ? "Error loading limits" 
-              : proposedTradeLimit 
-              ? `${proposedTradeLimit.current}/${proposedTradeLimit.limit} Analysis Left` 
+              : currentLimit 
+              ? `${currentLimit.remaining}/${currentLimit.limit} Analysis Left` 
               : "- Analysis Left"}
           </Text14>
         </div>

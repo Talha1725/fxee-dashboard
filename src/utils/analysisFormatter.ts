@@ -279,16 +279,39 @@ export const formatAnalysisData = {
     
     const formatted: { [key: string]: string } = {};
     
-    // Skip these fields as they're already shown elsewhere
-    const skipFields = ['toolName', 'aiInsight', 'confidence'];
+    // Skip these fields as they're already shown elsewhere or are redundant
+    const skipFields = [
+      'toolName', 'aiInsight', 'confidence', 'confidenceLevel',
+      // Remove duplicate recommendations that are already in keyPoints or summary
+      'recommendation', 'tradingRecommendation', 'recommendedAction', 'overallRecommendation',
+      // Remove technical metadata 
+      'timeHorizon', 'analysisType', 'assetSymbol', 'assetType',
+      // Remove redundant risk info already shown
+      'riskLevel', 'riskAssessment',
+      // Remove duplicate signal info
+      'signal', 'signalQuality', 'strength',
+      // Remove confidence-related duplicates
+      'confidenceReason',
+      // Remove verbose advice already covered in AI insight
+      'tradingAdvice', 'riskManagementAdvice', 'allocationAdvice',
+      // Remove forecast summary if it duplicates AI insight
+      'forecastSummary'
+    ];
     
     Object.entries(fullData).forEach(([key, value]) => {
       if (skipFields.includes(key)) return;
       
+      // Skip empty arrays or objects
+      if (Array.isArray(value) && value.length === 0) return;
+      if (typeof value === 'object' && value !== null && Object.keys(value).length === 0) return;
+      
       const formattedKey = formatAnalysisData.formatFieldName(key);
       const formattedValue = formatAnalysisData.formatValue(key, value);
       
-      formatted[formattedKey] = formattedValue;
+      // Only add if the formatted value has meaningful content
+      if (formattedValue && formattedValue !== 'Not available' && formattedValue.trim() !== '') {
+        formatted[formattedKey] = formattedValue;
+      }
     });
     
     return formatted;
