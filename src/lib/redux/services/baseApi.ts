@@ -19,6 +19,6 @@ export const baseApi = createApi({
     },
     credentials: "include",
   }),
-  tagTypes: ["User", "Payment", "Chat", "Recommendation", "ProposedTrade"],
+  tagTypes: ["User", "Payment", "Chat", "Recommendation", "ProposedTrade", "AITools"],
   endpoints: () => ({}),
 });
