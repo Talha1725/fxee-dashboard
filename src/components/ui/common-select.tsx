@@ -58,7 +58,7 @@ export default function CommonSelect({
         >
         <SelectValue 
           placeholder={placeholder}
-          className="flex items-center justify-between text-black dark:text-white font-satoshi-medium"
+          className="flex items-center justify-between text-black dark:text-white font-satoshi-medium placeholder:text-black dark:placeholder:text-white"
         />
       </SelectTrigger>
       <SelectContent

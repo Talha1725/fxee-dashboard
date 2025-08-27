@@ -17,6 +17,8 @@ interface NavbarAccountSwitchProps {
   items?: SwitchItem[];
   defaultValue?: string;
   onValueChange?: (value: string) => void;
+  fontSize?: number;
+  customPadding?: string;
 }
 
 export default function NavbarAccountSwitch({
@@ -28,6 +30,8 @@ export default function NavbarAccountSwitch({
   ],
   defaultValue,
   onValueChange,
+  fontSize = 16,
+  customPadding,
 }: NavbarAccountSwitchProps) {
   const [activeTab, setActiveTab] = useState(defaultValue || items[0]?.value || "virtual-account");
 
@@ -37,12 +41,13 @@ export default function NavbarAccountSwitch({
   };
 
   return (
-    <NavbarSwitchContainer className={className} dropdown={dropdown}>
+    <NavbarSwitchContainer className={className} dropdown={dropdown} customPadding={customPadding}>
       {items.map((item) => (
         <NavbarSwitchToggleItem
           key={item.value}
           isActive={activeTab === item.value}
           onClick={() => handleTabChange(item.value)}
+          fontSize={fontSize}
         >
           {item.icon && (
             <span className="mr-2">

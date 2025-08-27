@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Text14, Text16, Text22, Text24 } from '@/components/ui/typography'
+import { Text14, Text16, Text18, Text20, Text22, Text24, Text28 } from '@/components/ui/typography'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/lib/contexts/ThemeContext'
 import NavbarAccountSwitch from '../navbar/NavbarAccountSwitch'
@@ -35,6 +35,7 @@ const TransactionSummaryCard = ({
       <TransactionRow label="Wallet Address" value={wallet} />
       <TransactionRow label="Crypto Type" value={cryptoType} />
       <TransactionRow label={`Amount (in ${cryptoType})`} value={`$${amount}`} />
+      <div className="h-3"></div>
       <TransactionRow label="Total Amount (in USD)" value={`$${totalAmount}`} isHighlighted />
       <TransactionRow label="New Wallet Balance" value={`$${newBalance}`} isHighlighted />
     </div>
@@ -53,17 +54,16 @@ const TransactionRow = ({
   <div className="flex justify-between items-center">
     <Text16
       className={cn(
-        'font-satoshi',
-        isHighlighted ? 'font-satoshi-medium' : '',
-        'dark:text-white/80 text-black/80'
+        'font-satoshi-regular text-[16px] dark:text-white/80 text-black/80',
+        'text-right'
       )}
     >
       {label}
     </Text16>
     <Text16
       className={cn(
-        isHighlighted ? 'font-satoshi-bold text-[20px]' : 'font-satoshi-medium',
-        'dark:text-white text-black'
+        'dark:text-white text-black text-right',
+        isHighlighted ? 'font-satoshi-medium text-[20px]' : 'font-satoshi-regular text-[16px]'
       )}
     >
       {value}
@@ -87,6 +87,7 @@ const DepositCard = () => {
             { label: "Card Deposit", value: "card" },
           ]}
           defaultValue="crypto"
+          fontSize={14}
           onValueChange={(val) => {
             setDepositType(val as 'crypto' | 'card')
           }}
@@ -99,9 +100,9 @@ const DepositCard = () => {
         <>
           {/* Section 2: Deposit Amount Header */}
           <div className="flex justify-between items-center">
-            <Text24 className="font-satoshi-bold dark:text-white text-black">
+            <Text20 className="font-satoshi-medium dark:text-white text-black">
               Deposit Amount
-            </Text24>
+            </Text20>
             <CommonSelect
               placeholder="Account: Sophia7353"
               defaultValue="sophia7353"
@@ -111,16 +112,16 @@ const DepositCard = () => {
                 { value: "john1234", label: "Account: John1234" },
                 { value: "alice5678", label: "Account: Alice5678" }
               ]}
-              className="w-[201px] min-w-[201px] max-w-[201px] p-[10px] rounded-[10px] border text-sm"
+              className="w-[201px] min-w-[201px] max-w-[201px] font-satoshi-medium text-[16px] p-[10px] rounded-[10px] border text-sm"
             />
           </div>
 
           {/* Section 3: Trading Account and QR Code */}
           <div className="flex flex-col" style={{ gap: '30px' }}>
             <div className="flex flex-col gap-2">
-              <Text14 className="font-satoshi-medium dark:text-white/70 text-black/70">
+              <Text18 className="font-satoshi-medium dark:text-white text-black">
                 Select Trading Account
-              </Text14>
+              </Text18>
                              <CommonSelect
                  placeholder="154898012"
                  defaultValue="154898012"
@@ -139,7 +140,7 @@ const DepositCard = () => {
                      label: "154898014" 
                    }
                  ]}
-                 className="w-[407px] px-[14px] py-[10px] rounded-lg border min-w-[407px] max-w-[407px]"
+                 className="w-[407px] font-satoshi-medium text-[16px] px-[14px] py-[10px] rounded-lg border min-w-[407px] max-w-[407px]"
                  renderOption={(option) => (
                    <div className="flex items-center w-full gap-2.5">
                      <div className="flex items-center gap-2.5">
@@ -160,7 +161,7 @@ const DepositCard = () => {
                        <Text16 className="font-satoshi-bold dark:text-white text-black">
                          $14,480.24
                        </Text16>
-                       <Text14 className="font-satoshi dark:text-white/50 text-black/50">
+                       <Text14 className="font-satoshi-medium text-[#000000] dark:text-white text-black">
                          Current Balance
                        </Text14>
                      </div>
@@ -193,9 +194,9 @@ const DepositCard = () => {
                   }}
                 />
               </div>
-              <Text14 className="font-satoshi text-center dark:text-white/70 text-black/70 max-w-[220px]">
+              <Text16 className="font-satoshi-bold whitespace-nowrap text-center dark:text-white text-black max-w-[220px]">
                 Scan QR Code for wallet address
-              </Text14>
+              </Text16>
             </div>
           </div>
 
@@ -203,9 +204,9 @@ const DepositCard = () => {
           <div className="flex flex-col" style={{ gap: '30px' }}>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1">
-                <Text16 className="font-satoshi-medium dark:text-white text-black">
+                <Text18 className="font-satoshi-medium dark:text-white text-black">
                   Crypto Type
-                </Text16>
+                </Text18>
                 <span style={{ color: 'rgba(45, 208, 255, 1)' }}>*</span>
               </div>
               <CommonSelect
@@ -216,15 +217,15 @@ const DepositCard = () => {
                   { value: "BTC", label: "BTC - Bitcoin" },
                   { value: "ETH", label: "ETH - Ethereum" }
                 ]}
-                className="w-full px-[14px] py-[10px] rounded-lg border min-w-0 max-w-none"
+                className="w-full px-[14px] py-[10px] placeholder:dark:text-white placeholder:text-black rounded-lg font-satoshi-regular text-[16px] border min-w-0 max-w-none"
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1">
-                <Text16 className="font-satoshi-medium dark:text-white text-black">
+                <Text18 className="font-satoshi-medium dark:text-white text-black">
                   Enter Amount
-                </Text16>
+                </Text18>
                 <span style={{ color: 'rgba(45, 208, 255, 1)' }}>*</span>
               </div>
               <div className="flex justify-between items-center w-full h-[45px] rounded-lg border px-[14px] py-[10px]" 
@@ -240,14 +241,14 @@ const DepositCard = () => {
                 <input
                   type="text"
                   placeholder="$ 0.00"
-                  className="flex-1 bg-transparent outline-none text-sm font-satoshi-medium dark:text-white text-black dark:placeholder-white/60 placeholder-black/60 min-w-0"
+                  className="flex-1 bg-transparent text-[16px] outline-none text-sm font-satoshi-regular dark:text-white text-black dark:placeholder-white/60 placeholder-black/60 min-w-0"
                 />
                 <div className="flex items-center gap-2 px-2 py-1 flex-shrink-0">
                   <Select defaultValue="uk">
                     <SelectTrigger className="w-auto h-auto border-0 bg-transparent p-0 focus:ring-0 focus:ring-offset-0 shadow-none">
                       <div className="flex items-center gap-1">
                         <IconUK width={16} height={16} />
-                        <span className="text-sm font-satoshi-medium dark:text-white text-black">USD</span>
+                        <span className="text-sm font-satoshi-regular text-[14px] dark:text-white text-black">USD</span>
                       </div>
                     </SelectTrigger>
                     <SelectContent className="min-w-[60px] dark:bg-black bg-white">
@@ -255,7 +256,7 @@ const DepositCard = () => {
                         <SelectItem value="uk">
                           <div className="flex items-center gap-2">
                             <IconUK width={16} height={16} />
-                            <span className="text-sm">USD</span>
+                            <span className="text-sm font-satoshi-regular text-[14px]">USD</span>
                           </div>
                         </SelectItem>
                       </SelectGroup>
@@ -266,7 +267,7 @@ const DepositCard = () => {
             </div>
 
             <Button variant={theme === "dark" ? "white" : "black"} className="py-2.5 px-[25px] transition-all cursor-pointer w-full h-[45px]">
-              <Text14 className="text-white dark:text-black font-satoshi-medium">Deposit Amount</Text14>
+              <Text16 className="text-white dark:text-black font-satoshi-bold">Deposit Amount</Text16>
             </Button>
           </div>
         </>
@@ -300,6 +301,7 @@ export default function WalletPage() {
             { label: "Transaction History", value: "history", icon: <IconExchangeLine /> },
           ]}
           defaultValue="deposit"
+          fontSize={16}
           onValueChange={(val) => {
             setActiveWalletSection(val)
           }}
@@ -359,10 +361,10 @@ export default function WalletPage() {
                       </div>
                     </div>
                     <div className="flex items-baseline gap-3">
-                      <Text22 className="font-satoshi-bold dark:text-white text-black text-[32px]">
+                      <Text28 className="font-satoshi-medium dark:text-white text-black">
                         $14,480.24
-                      </Text22>
-                      <span className="px-2 py-0.5 bg-green-500/20 text-green-500 rounded text-sm font-satoshi-medium">
+                      </Text28>
+                      <span className="px-2 py-0.5 bg-[#3EDC8126] text-[#3EDC81] rounded text-[12px] font-satoshi-medium">
                         +5%
                       </span>
                     </div>
@@ -386,9 +388,9 @@ export default function WalletPage() {
               )}
             >
               <div className="flex flex-col gap-[26px] w-full h-full">
-                <Text22 className="font-satoshi-bold dark:text-white text-black">
+                <Text20 className="font-satoshi-medium dark:text-white text-black">
                   Transaction Summary
-                </Text22>
+                </Text20>
                 <TransactionSummaryCard
                   account="154898012"
                   wallet="xhdjfhu83763bxbx61"
