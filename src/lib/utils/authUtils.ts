@@ -207,3 +207,22 @@ export const validateProviderConfig = (provider: 'google' | 'linkedin' | 'apple'
       return true;
   }
 };
+
+// Simplified authentication handler for 2FA verification
+export const handle2FAAuthentication = async (
+  authData: { token: string; userData: any },
+  router: AppRouterInstance
+) => {
+  try {
+    // Store token
+    localStorage.setItem('token', authData.token);
+    
+    // Redirect to home
+    router.replace("/home");
+    
+    return true;
+  } catch (error) {
+    console.error('Authentication error:', error);
+    return false;
+  }
+};

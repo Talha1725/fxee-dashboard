@@ -66,15 +66,45 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
 
   // Login function
   const handleLogin = async (data: LoginFormData) => {
-    await handleAuthentication(
-      login({
+    try {
+      dispatch(setLoading(true));
+      
+      const response = await login({
         email: data.email,
         password: data.password,
-      }).unwrap(),
-      dispatch,
-      router,
-      'simple'
-    );
+      }).unwrap();
+
+      // Check if 2FA is required
+      if (response.data && typeof response.data === 'object' && 'requiresTwoFA' in response.data) {
+        const twoFAData = response.data as any;
+        showToast.success("2FA code sent to your email");
+        
+        // Store 2FA data in session storage for security (don't expose in URL)
+        sessionStorage.setItem('2fa_verification_data', JSON.stringify({
+          userId: twoFAData.userId,
+          email: twoFAData.email,
+          twoFAMethod: twoFAData.twoFAMethod,
+          timestamp: Date.now()
+        }));
+        
+        // Redirect to 2FA verification page with only userId
+        router.push(`/verify-2fa?userId=${twoFAData.userId}`);
+        return;
+      }
+
+      // Handle normal login
+      await handleAuthentication(
+        Promise.resolve(response),
+        dispatch,
+        router,
+        'simple'
+      );
+    } catch (error: any) {
+      const errorMessage = handleApiError(error as any);
+      showToast.apiError(errorMessage);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   // Register function
