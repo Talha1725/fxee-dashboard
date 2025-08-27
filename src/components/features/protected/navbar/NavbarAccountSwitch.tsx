@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
 import NavbarSwitchToggleItem from "@/components/features/protected/navbar/NavbarSwitchToggleItem";
 import NavbarSwitchContainer from "@/components/features/protected/navbar/NavbarSwitchContainer";
@@ -33,6 +34,7 @@ export default function NavbarAccountSwitch({
   fontSize = 16,
   customPadding,
 }: NavbarAccountSwitchProps) {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState(defaultValue || items[0]?.value || "virtual-account");
 
   const handleTabChange = (value: string) => {
@@ -53,7 +55,9 @@ export default function NavbarAccountSwitch({
             <span className="mr-2">
               {React.isValidElement(item.icon) 
                 ? React.cloneElement(item.icon, {
-                    forceColor: activeTab === item.value ? 'white' : 'black'
+                    forceColor: activeTab === item.value 
+                      ? (theme === 'dark' ? 'black' : 'white')  // Selected: black in dark mode, white in light mode
+                      : (theme === 'dark' ? 'white' : 'black')  // Not selected: white in dark mode, black in light mode
                   } as any)
                 : item.icon
               }
