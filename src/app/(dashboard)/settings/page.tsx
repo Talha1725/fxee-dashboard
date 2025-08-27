@@ -3,6 +3,7 @@
 import GeneralSettings from "@/components/settings/general-settings";
 import PrivacySettings from "@/components/settings/privacy-settings";
 import ProfileSettings from "@/components/settings/profile-settings";
+import TradingPreferenceSection from "@/components/settings/trading-prefernce-section";
 import {
   IconUserSetting,
   IconUserSettingActive,
@@ -214,6 +215,7 @@ export default function page() {
       {activeTab === "profile-settings" && <ProfileSettings />}
       {activeTab === "general-settings" && <GeneralSettings />}
       {activeTab === "privacy-security" && <PrivacySettings />}
+      {activeTab === "trading-preferences" && <TradingPreferenceSection />}
     </div>
   );
 }
