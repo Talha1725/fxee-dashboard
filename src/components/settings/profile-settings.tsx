@@ -13,21 +13,60 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/lib/redux/store";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
-import {countries} from "@/lib/constants"
+import {countries} from "@/lib/constants";
+import { useUpdateUserProfileMutation } from "@/lib/redux/services/userApi";
+import { uploadToS3 } from "@/lib/utils/s3Upload";
+import { toast } from "sonner";
+import { updateUser } from "@/lib/redux/features/auth/authSlice";
 
 
 
 export default function ProfileSettings() {
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const { user } = useSelector((state: RootState) => state.auth);
   const [fullName, setFullName] = useState(user?.fullName || "");
+  const [userName, setUserName] = useState(user?.userName || "");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+
+  // Parse phone number to extract country code and number
+  const parsePhoneNumber = (fullPhone: string) => {
+    if (!fullPhone) return { countryCode: "", number: "" };
+    
+    // Find matching country code
+    for (const country of countries) {
+      if (fullPhone.startsWith(country.phoneCode)) {
+        return {
+          countryCode: country.phoneCode,
+          number: fullPhone.slice(country.phoneCode.length)
+        };
+      }
+    }
+    return { countryCode: "", number: fullPhone };
+  };
+
+  // Initialize phone number and country from user data
+  React.useEffect(() => {
+    if (user?.phoneNumber) {
+      const { countryCode, number } = parsePhoneNumber(user.phoneNumber);
+      setPhoneNumber(number);
+      
+      // Set the correct country based on phone code
+      const matchingCountry = countries.find(country => country.phoneCode === countryCode);
+      if (matchingCountry) {
+        setSelectedCountry(matchingCountry);
+      }
+    }
+  }, [user?.phoneNumber]);
 
   console.log(user, "User redux data");
 
@@ -82,14 +121,66 @@ export default function ProfileSettings() {
   };
 
   // Handle apply changes
-  const handleApplyChanges = () => {
-    // TODO: Implement API call to save changes
-    console.log('Saving changes:', { fullName, uploadedImage, selectedCountry });
+  const handleApplyChanges = async () => {
+    try {
+      if (!fullName.trim()) {
+        toast.error("Full name is required");
+        return;
+      }
+
+      let profilePicture = user?.picture;
+      
+      // If user uploaded a new image, upload to S3 first
+      if (uploadedImage && fileInputRef.current?.files?.[0]) {
+        setIsUploading(true);
+        try {
+          profilePicture = await uploadToS3(fileInputRef.current.files[0]);
+        } catch (error) {
+          toast.error("Failed to upload image");
+          setIsUploading(false);
+          return;
+        }
+        setIsUploading(false);
+      }
+
+      const updateData = {
+        fullName: fullName.trim(),
+        userName: userName.trim(),
+        ...(profilePicture && { picture: profilePicture }),
+        ...(phoneNumber && { phoneNumber: `${selectedCountry.phoneCode}${phoneNumber}` })
+      };
+
+      const result = await updateUserProfile(updateData).unwrap();
+      
+      // Update Redux store with new user data
+      dispatch(updateUser(result.result));
+      
+      toast.success("Profile updated successfully!");
+      setUploadedImage(null); // Clear the preview
+    } catch (error: any) {
+      console.error('Error updating profile:', error);
+      toast.error(error?.data?.message || "Failed to update profile");
+    }
   };
 
   // Handle discard changes
   const handleDiscardChanges = () => {
     setFullName(user?.fullName || "");
+    setUserName(user?.userName || "");
+    
+    // Reset phone number to original user data
+    if (user?.phoneNumber) {
+      const { countryCode, number } = parsePhoneNumber(user.phoneNumber);
+      setPhoneNumber(number);
+      const matchingCountry = countries.find(country => country.phoneCode === countryCode);
+      if (matchingCountry) {
+        setSelectedCountry(matchingCountry);
+      }
+    } else {
+      setPhoneNumber("");
+      setSelectedCountry(countries[0]);
+    }
+    
     setUploadedImage(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -102,7 +193,7 @@ export default function ProfileSettings() {
         <div className="md:w-[80px] md:h-[80px] w-[60px] h-[60px] rounded-full overflow-hidden">
           <Avatar className="w-full h-full">
             <AvatarImage 
-              src={uploadedImage || user?.avatar} 
+              src={uploadedImage || user?.picture} 
               alt="user avatar"
             />
             <AvatarFallback className="text-lg font-medium bg-black/10 dark:bg-white/5">
@@ -155,6 +246,19 @@ export default function ProfileSettings() {
           placeholder="Enter your full name"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
+          className={`mt-2 w-full h-[44px] border-black/10 dark:border-white/5 dark:text-white text-black ${
+            theme === "dark"
+              ? "bg-dark-gradient"
+              : "bg-gradient-to-b from-[#00000004] to-[#00000003]"
+          }`}
+        />
+      </div>
+      <div className="mt-3">
+        <Text18 className={`font-satoshi-medium`}>Username</Text18>
+        <Input
+          placeholder="Enter your username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
           className={`mt-2 w-full h-[44px] border-black/10 dark:border-white/5 dark:text-white text-black ${
             theme === "dark"
               ? "bg-dark-gradient"
@@ -226,6 +330,8 @@ export default function ProfileSettings() {
           </DropdownMenu>
           <Input
             placeholder="000 000 000"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
             className={`shadow-none h-full w-full rounded-none border-none dark:text-white text-black dark:bg-[#56565601]`}
           />
         </div>
@@ -242,8 +348,9 @@ export default function ProfileSettings() {
           variant={theme === "dark" ? "white" : "black"}
           className="h-[52px] font-satoshi-medium w-full"
           onClick={handleApplyChanges}
+          disabled={isLoading || isUploading}
         >
-          Apply Changes
+          {isLoading || isUploading ? "Saving..." : "Apply Changes"}
         </Button>
       </div>
     </div>

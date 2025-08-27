@@ -95,7 +95,7 @@ export default function NavbarProfile() {
           <div className="flex items-center gap-1 cursor-pointer">
             <div className="flex items-center gap-2 relative">
               <Avatar>
-                <AvatarImage src={user?.avatar} />
+                <AvatarImage src={user?.picture} />
                 <AvatarFallback>{getUserInitials()}</AvatarFallback>
               </Avatar>
               <Label className="dark:text-white text-black lg:block hidden">
@@ -121,7 +121,7 @@ export default function NavbarProfile() {
                 <div className="flex items-center gap-1 cursor-pointer">
                   <div className="flex items-center gap-2 relative">
                     <Avatar>
-                      <AvatarImage src={user?.avatar} />
+                      <AvatarImage src={user?.picture} />
                       <AvatarFallback>{getUserInitials()}</AvatarFallback>
                     </Avatar>
                     <Label className="dark:text-white text-black">

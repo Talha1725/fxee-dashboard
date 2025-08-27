@@ -5,7 +5,8 @@ export interface User {
   fullName: string;
   userName: string;
   role: "user" | "admin" | "trader";
-  avatar?: string;
+  picture?: string;
+  phoneNumber?: string;
   emailVerified?: boolean;
   createdAt: string;
   updatedAt: string;
