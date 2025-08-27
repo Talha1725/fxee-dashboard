@@ -18,10 +18,18 @@ export const proposedTradesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["ProposedTrade"],
     }),
+    getLastProposedTrade: builder.query<ProposedTradesResponse, void>({
+      query: () => ({
+        url: "/proposed-trades/last",
+        method: "GET",
+      }),
+      providesTags: ["ProposedTrade"],
+    }),
   }),
 });
 
 export const {
   useCreateProposedTradesMutation,
   useGetUsageLimitsQuery,
+  useGetLastProposedTradeQuery,
 } = proposedTradesApi;

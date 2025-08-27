@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import AIEngineStatusTGSHead from "./AIEngineStatusTGSHead";
 import AIEngineStatusTGSSlider from "./AIEngineStatusTGSSlider";
@@ -18,7 +18,7 @@ import {
 import { Text14 } from "@/components/ui/typography";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { useCreateProposedTradesMutation } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useCreateProposedTradesMutation, useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 import type { ProposedTrade } from "@/types/redux";
 
 export default function AIEngineStatusTGS() {
@@ -32,13 +32,28 @@ export default function AIEngineStatusTGS() {
   const [selectedTradingPair, setSelectedTradingPair] = useState<string>("USDCAD");
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>("2 Days");
   
-  // Mutation for creating proposed trades
+  // API hooks
   const [createProposedTrades, { isLoading, error }] = useCreateProposedTradesMutation();
+  const { data: lastTradeData, isLoading: isLoadingLastTrade } = useGetLastProposedTradeQuery();
   
   // State for editable detail fields
   const [potentialProfit, setPotentialProfit] = useState("$5,000.00");
   const [maximumLoss, setMaximumLoss] = useState("$2,000.00");
   const [riskReward, setRiskReward] = useState("1:2.50");
+
+  // Set bestTrade from last trade data when available
+  useEffect(() => {
+    if (lastTradeData?.data && !bestTrade) {
+      setBestTrade(lastTradeData.data);
+      // Update selected trading pair and timeframe if available
+      if (lastTradeData.data.symbol) {
+        setSelectedTradingPair(lastTradeData.data.symbol);
+      }
+      if (lastTradeData.data.timeframe) {
+        setSelectedTimeframe(lastTradeData.data.timeframe);
+      }
+    }
+  }, [lastTradeData, bestTrade]);
   
   // Handle Run Analysis button click
   const handleRunAnalysis = async () => {
@@ -149,12 +164,12 @@ export default function AIEngineStatusTGS() {
           <div className="flex flex-col sm:flex-row items-center gap-4 self-stretch ">
             <AIEngineStatusTGSSlider 
               title="Profit Target" 
-              value={bestTrade ? parseFloat(bestTrade.profitTarget) : 5000} 
+              value={bestTrade ? parseFloat(bestTrade.profitTarget) : 0} 
               disabled={true} 
             />
             <AIEngineStatusTGSSlider
               title="Maximum Risk"
-              value={bestTrade ? parseFloat(bestTrade.maximumRisk) : 2000}
+              value={bestTrade ? parseFloat(bestTrade.maximumRisk) : 0}
               color="danger"
               disabled={true}
             />
@@ -162,17 +177,17 @@ export default function AIEngineStatusTGS() {
           <div className="flex items-center gap-1 self-stretch ">
             <AIEngineStatusTGSDetail
               title="Potential Profit"
-              value={bestTrade ? `$${parseFloat(bestTrade.potentialProfit).toFixed(2)}` : "$5,000.00"}
+              value={bestTrade ? `$${parseFloat(bestTrade.potentialProfit).toFixed(2)}` : "$0.00"}
               className="text-[#3EDC81] dark:text-[#3EDC81]"
             />
             <AIEngineStatusTGSDetail
               title="Maximum Loss"
-              value={bestTrade ? `$${parseFloat(bestTrade.maximumLoss).toFixed(2)}` : "$2,000.00"}
+              value={bestTrade ? `$${parseFloat(bestTrade.maximumLoss).toFixed(2)}` : "$0.00"}
               className="text-[#EA4335] dark:text-[#EA4335]"
             />
             <AIEngineStatusTGSDetail
               title="Risk/Reward"
-              value={bestTrade?.riskRewardRatio || "1:2.50"}
+              value={bestTrade?.riskRewardRatio || "0:0"}
               className="bg-gradient-to-b from-[#15B0F8] to-[#0276DB] text-transparent bg-clip-text dark:bg-gradient-to-b dark:from-[#15B0F8] dark:to-[#0276DB] dark:text-transparent dark:bg-clip-text"
             />
           </div>
@@ -180,25 +195,25 @@ export default function AIEngineStatusTGS() {
             <AIEngineStatusTGSCheck
               title="Risk Level"
               switches={[
-                { label: "Low Risk", id: "low-risk", checked: bestTrade?.riskLevel === "low" },
-                { label: "Mid Risk", id: "mid-risk", checked: bestTrade?.riskLevel === "medium" },
-                { label: "High Risk", id: "high-risk", checked: bestTrade?.riskLevel === "high" },
+                { label: "Low Risk", id: "low-risk", checked: bestTrade ? bestTrade.riskLevel === "low" : false },
+                { label: "Mid Risk", id: "mid-risk", checked: bestTrade ? bestTrade.riskLevel === "medium" : false },
+                { label: "High Risk", id: "high-risk", checked: bestTrade ? bestTrade.riskLevel === "high" : false },
               ]}
               disabled={true}
             />
             <AIEngineStatusTGSCheck
               title="Trading Type"
               switches={[
-                { label: "Day Trade", id: "day-trade", checked: bestTrade?.tradingType === "day_trade" },
-                { label: "Swing Trade", id: "swing-trade", checked: bestTrade?.tradingType === "swing_trade" },
+                { label: "Day Trade", id: "day-trade", checked: bestTrade ? bestTrade.tradingType === "day_trade" : false },
+                { label: "Swing Trade", id: "swing-trade", checked: bestTrade ? bestTrade.tradingType === "swing_trade" : false },
               ]}
               disabled={true}
             />
             <AIEngineStatusTGSCheck
               title="Trading Version"
               switches={[
-                { label: "Basic", id: "basic", checked: bestTrade?.tradingVersion === "basic" },
-                { label: "Pro", id: "pro", checked: bestTrade?.tradingVersion === "pro" },
+                { label: "Basic", id: "basic", checked: bestTrade ? bestTrade.tradingVersion === "basic" : false },
+                { label: "Pro", id: "pro", checked: bestTrade ? bestTrade.tradingVersion === "pro" : false },
               ]}
               disabled={true}
             />
