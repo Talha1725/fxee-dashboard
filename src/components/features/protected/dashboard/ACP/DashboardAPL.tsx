@@ -94,7 +94,7 @@ export default function DashboardAPL({ onPowerLevelChange }: DashboardAPLProps) 
     onPowerLevelChange?.(value);
   }, [isClient, onPowerLevelChange]);
   return (
-    <div className={`flex flex-col sm:flex-row justify-between items-center gap-2.5 self-stretch rounded-[10px] border border-white/2 ${theme === "dark" ? "bg-dark-gradient" : "bg-black/5"} `}>
+    <div className={`flex flex-col sm:flex-row justify-between items-center gap-2.5 overflow-hidden self-stretch rounded-[10px] border border-white/2 ${theme === "dark" ? "bg-dark-gradient" : "bg-black/5"} `}>
       <div className="flex flex-col items-start gap-2.5 shrink-0 self-stretch py-3.5 px-3 flex-[1_0_0]">
         <div className="flex items-center gap-2 self-stretch">
           <DashboardHeadBadge>
