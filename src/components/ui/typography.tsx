@@ -563,14 +563,14 @@ export const ReviewText = ({ children, className }: TypographyProps) => {
 
 export const HeroNumber = ({ children, className }: TypographyProps) => {
   return (
-    <text
+    <span
       className={cn(
         "text-[67px] lg:text-[116px] font-regular font-[700] tracking-[-1.34px] lg:tracking-[-2.32px] select-none",
         className
       )}
     >
       {children}
-    </text>
+    </span>
   );
 };
 
