@@ -200,7 +200,7 @@ export default function ProfileSettings() {
       <div className="mt-3">
         <Text18 className={`font-satoshi-medium`}>Phone Number</Text18>
         <div
-          className={`rounded-[8px] border mt-2 flex items-center p-2 w-full h-[64px] border-black/10 dark:border-white/5 dark:text-white text-black ${
+          className={`rounded-[8px] border mt-2 flex items-center p-2 w-full h-[54px] md:h-[64px] border-black/10 dark:border-white/5 dark:text-white text-black ${
             theme === "dark"
               ? "bg-dark-gradient"
               : "bg-gradient-to-b from-[#00000004] to-[#00000003]"
