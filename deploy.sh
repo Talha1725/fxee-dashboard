@@ -1,3 +1,5 @@
+git restore .
+
 git pull 
 
 yarn install 

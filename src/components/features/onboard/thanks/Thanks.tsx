@@ -10,9 +10,11 @@ import ThanksBottom from "@/public/images/thanks-bottom.svg";
 import { Button } from "@/components/ui/button";
 import { DisplayMD, Body16 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useRouter } from "next/navigation";
 
 export default function Thanks() {
   const { theme } = useTheme();
+  const router = useRouter();
   return (
     <div className={`flex flex-col self-stretch flex-[1_0_0] ${theme === "dark" ? "bg-dark-green-linear" : ""}`}>
       <Image
@@ -44,6 +46,7 @@ export default function Thanks() {
           <Button
             variant={"fancy"}
             className="flex-wrap self-center px-8 py-2.5 gap-1 z-50"
+            onClick={() => router.push("/home")}
           >
             Go To Dashboard
             <ChevronRight height={20} width={20} />

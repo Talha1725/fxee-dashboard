@@ -5,7 +5,7 @@ import React from "react";
 import SubscriptionPlanCard from "@/components/features/onboard/subscription/SubscriptionPlanCard";
 import { SUBSCRIPTION_PLANS } from "@/lib/constants";
 import { PlanType } from "@/types/common";
-import { useRouter } from "next/navigation";
+import { useOnboarding } from "@/lib/contexts/OnboardingContext";
 
 export default function SubscriptionPlan({
   plan,
@@ -14,11 +14,11 @@ export default function SubscriptionPlan({
   plan: PlanType | null;
   setPlan: (plan: PlanType) => void;
 }) {
-  const router = useRouter();
+  const { selectPlanAndNavigate } = useOnboarding();
 
   return (
     <div className="flex flex-col items-start gap-5 self-stretch px-5 lg:px-0">
-      <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-[18px] self-stretch">
+      <div className="grid xl:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-[18px] self-stretch">
         {SUBSCRIPTION_PLANS.map((planConfig) => (
           <SubscriptionPlanCard
             key={planConfig.type}
@@ -28,8 +28,7 @@ export default function SubscriptionPlan({
             price={planConfig.price}
             items={planConfig.items}
             onClick={() => {
-              setPlan(planConfig.type);
-              router.push(`/onboard/2`);
+              selectPlanAndNavigate(planConfig.type);
             }}
             selected={plan === planConfig.type}
           />
