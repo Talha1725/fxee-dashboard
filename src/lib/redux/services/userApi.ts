@@ -7,6 +7,10 @@ interface UpdateUserProfileRequest {
   phoneNumber?: string;
 }
 
+interface Update2FAPreferencesRequest {
+  twoFAMethod: "sms" | "email" | "authenticator" | null;
+}
+
 interface UpdateGeneralSettingsRequest {
   language?: string;
   timezone?: string;
@@ -55,6 +59,7 @@ interface UserProfile {
   phoneNumber?: string;
   language?: string;
   timezone?: string;
+  twoFAMethod?: "sms" | "email" | "authenticator" | null;
   emailVerified: boolean;
   createdAt: string;
   updatedAt: string;
@@ -127,6 +132,17 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["TradingPreferences"],
     }),
+    update2FAPreferences: builder.mutation<
+      { message: string; result: UserProfile },
+      Update2FAPreferencesRequest
+    >({
+      query: (twoFAData) => ({
+        url: "/users",
+        method: "PUT",
+        body: twoFAData,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -136,5 +152,6 @@ export const {
   useUpdateLanguageMutation, 
   useChangePasswordMutation,
   useGetTradingPreferencesQuery,
-  useUpdateTradingPreferencesMutation
+  useUpdateTradingPreferencesMutation,
+  useUpdate2FAPreferencesMutation
 } = userApi;

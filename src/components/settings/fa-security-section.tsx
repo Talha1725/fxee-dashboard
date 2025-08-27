@@ -5,41 +5,50 @@ import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { IconAuthenticator, MailIcon, SmsCodeIcon } from "../ui/icon";
 import { Button } from "../ui/button";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { useUpdate2FAPreferencesMutation } from "@/lib/redux/services/userApi";
+import { updateUser } from "@/lib/redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 export default function FASecuritySection() {
   const { theme } = useTheme();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
   const [selectedFA, setSelectedFA] = useState<string>("");
   const [originalFA, setOriginalFA] = useState<string>("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [update2FAPreferences, { isLoading }] = useUpdate2FAPreferencesMutation();
 
-  // Initialize 2FA state (simulate getting current 2FA setting)
+  // Initialize 2FA state from user data
   useEffect(() => {
-    // TODO: Get current 2FA setting from API/user context
-    const current2FA = localStorage.getItem("ai-trading-2fa-setting") || "";
+    const current2FA = user?.twoFAMethod || "";
     setSelectedFA(current2FA);
     setOriginalFA(current2FA);
-  }, []);
+  }, [user?.twoFAMethod]);
 
   const handleApplyChanges = async () => {
-    setIsSubmitting(true);
     try {
-      // TODO: Implement API call to update 2FA setting
-      console.log("Updating 2FA setting to:", selectedFA);
+      if (!selectedFA) {
+        toast.error("Please select a 2FA method");
+        return;
+      }
+
+      const twoFAMethod = selectedFA as "sms" | "email" | "authenticator" | null;
+      const result = await update2FAPreferences({ twoFAMethod }).unwrap();
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Update Redux store with new user data
+      dispatch(updateUser({
+        ...result.result,
+        role: (result.result.role as "user" | "admin" | "trader") || user?.role || "user"
+      }));
       
-      // Save to localStorage for persistence
-      localStorage.setItem("ai-trading-2fa-setting", selectedFA);
       setOriginalFA(selectedFA);
-      
-      // TODO: Show success message
-      console.log("2FA setting updated successfully");
-    } catch (error) {
-      // TODO: Handle error
-      console.error("Error updating 2FA setting:", error);
-    } finally {
-      setIsSubmitting(false);
+      toast.success(`2FA preference updated to ${selectedFA}`);
+    } catch (error: any) {
+      console.error('Error updating 2FA preference:', error);
+      toast.error(error?.data?.message || "Failed to update 2FA preference");
+      // Revert on error
+      setSelectedFA(originalFA);
     }
   };
 
@@ -189,9 +198,9 @@ export default function FASecuritySection() {
           variant={theme === "dark" ? "white" : "black"}
           className="h-[52px] font-satoshi-medium w-full"
           onClick={handleApplyChanges}
-          disabled={!isDirty || isSubmitting}
+          disabled={!isDirty || isLoading}
         >
-          Enable 2FA Security
+          {isLoading ? "Updating..." : selectedFA ? "Update 2FA Preference" : "Enable 2FA Security"}
         </Button>
       </div>
     </div>

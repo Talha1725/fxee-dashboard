@@ -9,6 +9,7 @@ export interface User {
   phoneNumber?: string;
   language?: string;
   timezone?: string;
+  twoFAMethod?: "sms" | "email" | "authenticator" | null;
   emailVerified?: boolean;
   createdAt: string;
   updatedAt: string;
