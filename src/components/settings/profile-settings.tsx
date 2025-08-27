@@ -153,6 +153,7 @@ export default function ProfileSettings() {
       const result = await updateUserProfile(updateData).unwrap();
       
       // Update Redux store with new user data
+      //@ts-ignore
       dispatch(updateUser(result.result));
       
       toast.success("Profile updated successfully!");
