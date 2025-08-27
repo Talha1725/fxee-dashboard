@@ -22,16 +22,16 @@ import {
 const items = [
   { step: 1, href: "/onboard/1", label: "Subscription Plan" },
   { step: 2, href: "/onboard/2", label: "Add-Ons" },
-  { step: 3, href: "/onboard/3", label: "Checkout" },
-  { step: 4, href: "/onboard/4", label: "Contract" },
-  { step: 5, href: "/onboard/5", label: "Account Type" },
-  { step: 6, href: "/onboard/6", label: "Payment" },
+  { step: 3, href: "/onboard/3", label: "Contract" },
+  { step: 4, href: "/onboard/4", label: "Account Type" },
+  { step: 5, href: "/onboard/5", label: "Checkout" },
+  // { step: 6, href: "/onboard/6", label: "Payment" },
 ];
 
 export default function OnboardStepIndicator({ step }: { step?: string }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 1025px)") || true;
-  const ITEMS_TO_DISPLAY = isDesktop ? 6 : 3;
+  const ITEMS_TO_DISPLAY = isDesktop ? 5 : 3;
 
   return (
     <div className="flex items-center justify-center shrink-0 self-stretch flex-[1_0_0] select-none">

@@ -17,6 +17,8 @@ export default function CheckoutCardItem({
   price: string;
 }) {
   const { theme } = useTheme();
+  const isSelected = selectedPaymentMethod === title;
+  
   return (
     <div
       className={cn(
@@ -48,13 +50,28 @@ export default function CheckoutCardItem({
           )}
         >
           <div className="flex items-center gap-2.5">
-          <div
-            className={cn(
-              "w-[24px] h-[24px] rounded-full border-green-gradient before:!p-[2px] transition-all duration-300",
-              selectedPaymentMethod === title && "border-none before:!p-[6px]"
-            )}
-          ></div>
-          <Text18 className="flex-[1_0_0]">Pay with {title}</Text18>
+            <div className="relative w-6 h-6">
+              <div
+                className="w-6 h-6 rounded-full cursor-pointer border-2 border-transparent bg-clip-padding p-[2px]"
+                style={{
+                  background: isSelected 
+                    ? 'linear-gradient(45deg, #4ade80, #3b82f6) padding-box, linear-gradient(45deg, #4ade80, #3b82f6) border-box'
+                    : 'linear-gradient(45deg, #4ade80, #3b82f6) padding-box, transparent border-box',
+                  border: '2px solid transparent',
+                  borderRadius: '50%',
+                  padding: '2px'
+                }}
+              />
+              <div 
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#EDF2FF] dark:bg-[#191919]"
+                style={{
+                  width: isSelected ? '12px' : '15px',
+                  height: isSelected ? '12px' : '15px',
+                  transition: 'all 0.3s ease'
+                }}
+              />
+            </div>
+            <Text18 className="flex-[1_0_0]">Pay with {title}</Text18>
           </div>
           <div className="self-stretch flex md:flex-col flex-row items-end">
             <Title24 className="text-black dark:text-white xl:!text-[24px] lg:!text-[20px] !text-[24px]">

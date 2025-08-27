@@ -19,6 +19,7 @@ interface SubscriptionPlanCardProps {
   selected: boolean;
   className?: string;
   alignLeft?: boolean;
+  onboard?: boolean;
 }
 
 export default function SubscriptionPlanCard({
@@ -31,6 +32,7 @@ export default function SubscriptionPlanCard({
   selected,
   className,
   alignLeft,
+  onboard=false
 }: SubscriptionPlanCardProps) {
   const { theme } = useTheme();
   return (
@@ -38,12 +40,12 @@ export default function SubscriptionPlanCard({
       className={cn(
         "flex flex-col items-center self-stretch flex-[1_0_0] gap-4 pt-[50px] px-4 pb-4 rounded-2xl relative z-50",
         className,
-        title === "Pro"
+        title === "VIP"
           ? `${theme === "dark" ? "bg-green-radial-gradient" : "bg-light-green-gradient"} border-green-gradient`
           : `${theme === "dark" ? "bg-dark-radial-gradient" : "bg-blue-gradient"} dark:border border-white/30`
       )}
     >
-      {title === "Pro" && <OnboardPopularPattern title="Most Popular" />}
+      {title === "VIP" && !onboard && <OnboardPopularPattern title="Most Popular" />}
       <SubscriptionCardContainer fitfor={fitfor} alignLeft={window.innerWidth > 768 ? true : false}>
         <SubscriptionPlanHeader
           title={title}
@@ -52,8 +54,8 @@ export default function SubscriptionPlanCard({
         />
         <Button
           onClick={onClick}
-          variant={title === "Pro" || selected ? "fancy" : "default"}
-          className={`w-full ${title !== "Pro" ? "border-black/20 dark:border-white/20" : ""}`}
+          variant={title === "VIP" || selected ? "fancy" : "default"}
+          className={`w-full ${title !== "VIP" ? "border-black/20 dark:border-white/20" : ""}`}
         >
           {selected ? "Selected" : "Select"}
           {selected && <IconCheck width={20} height={20} />}
@@ -63,9 +65,9 @@ export default function SubscriptionPlanCard({
             <SubscriptionPlanItem key={index} item={item} />
           ))}
         </div>
-        {title === "Pro" && (
+        {title === "VIP" && (
           <div className="absolute bottom-0 right-0 left-0">
-            <div className="h-[4px] w-[214px] rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient mx-auto"></div>
+            <div className="h-[4px] w-[80%] rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient mx-auto"></div>
           </div>
         )}
       </SubscriptionCardContainer>
