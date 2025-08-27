@@ -111,7 +111,19 @@ export const Title20 = ({ children, className }: TypographyProps) => {
   );
 };
 
-// ===== TEXT COMPONENTS =====
+export const Text28 = ({ children, className }: TypographyProps) => {
+  return (
+    <p
+      className={cn(
+        "text-black dark:text-white liga font-regular text-[22px] sm:text-[28px] font-medium tracking-[-0.44px] sm:tracking-[-0.56px] select-none",
+        className
+      )}
+    >
+      {children}
+    </p>
+  );
+};
+
 export const Text24 = ({ children, className }: TypographyProps) => {
   return (
     <p
