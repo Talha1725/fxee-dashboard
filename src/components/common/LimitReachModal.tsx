@@ -43,106 +43,106 @@ export default function LimitReachModal({
             Limit Reached
           </DialogTitle>
 
-          <DialogDescription>
-            <p className="font-satoshi-medium dark:text-white/50 text-black/60 text-start">
-              You’ve reached the maximum number of uses for this AI tool on your
-              current plan. To continue using the AI Trend Forecast, you can
-              purchase:
-            </p>
-            <div className="mt-5 grid grid-cols-2 gap-5">
-              <div
-                className={`dark:bg-[#ffffff05] bg-gradient-to-b from-[#00000004] to-[#00000011] p-6 md:p-7 border dark:border-white/5 rounded-xl`}
-              >
-                <h1 className="font-satoshi-bold text-md md:text-lg dark:text-white/50 text-black/40 uppercase text-start">
-                  Premium Plan
-                </h1>
-                <h1 className="font-satoshi-bold text-2xl md:text-4xl dark:text-white text-black mt-2 text-start">
-                  $99/mo
-                </h1>
-                <div className="mt-3">
-                  <div
-                    className={`flex items-center gap-2 ${
-                      theme === "dark"
-                        ? "bottom-border-dark"
-                        : "bottom-border-light"
-                    } py-2`}
-                  >
-                    <PlanPoints />
-                    <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
-                      Analyze 20 times everyday{" "}
-                    </Text14>
-                  </div>
-                  <div
-                    className={`flex items-center gap-2 ${
-                      theme === "dark"
-                        ? "bottom-border-dark"
-                        : "bottom-border-light"
-                    } py-2`}
-                  >
-                    <PlanPoints />
-                    <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
-                      Access to 3 AI Tools{" "}
-                    </Text14>
-                  </div>
-                  <div className="flex items-center gap-2 pt-2">
-                    <PlanPoints />
-                    <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
-                      Set Custom Goal{" "}
-                    </Text14>
-                  </div>
+          <DialogDescription className="font-satoshi-medium dark:text-white/50 text-black/60 text-start">
+            You've reached the maximum number of uses for this AI tool on your
+            current plan. To continue using the AI Trend Forecast, you can
+            purchase:
+          </DialogDescription>
+          
+          <div className="mt-5 grid grid-cols-2 gap-5">
+            <div
+              className={`dark:bg-[#ffffff05] bg-gradient-to-b from-[#00000004] to-[#00000011] p-6 md:p-7 border dark:border-white/5 rounded-xl`}
+            >
+              <h1 className="font-satoshi-bold text-md md:text-lg dark:text-white/50 text-black/40 uppercase text-start">
+                Premium Plan
+              </h1>
+              <h1 className="font-satoshi-bold text-2xl md:text-4xl dark:text-white text-black mt-2 text-start">
+                $99/mo
+              </h1>
+              <div className="mt-3">
+                <div
+                  className={`flex items-center gap-2 ${
+                    theme === "dark"
+                      ? "bottom-border-dark"
+                      : "bottom-border-light"
+                  } py-2`}
+                >
+                  <PlanPoints />
+                  <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
+                    Analyze 20 times everyday{" "}
+                  </Text14>
                 </div>
-              </div>
-              <div
-                className={`bg-gradient-to-b from-[#00000004] dark:from-[#ffffff05] to-[#00000011] dark:to-[#ffffff13] p-5 md:p-7 border dark:border-white/5 rounded-xl relative overflow-hidden`}
-              >
-                <div className="h-[4px] w-full md:w-[80%] left-1/2 -translate-x-1/2 absolute bottom-0 mx-auto rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient"></div>
-                <h1 className="font-satoshi-bold text-md md:text-lg dark:text-white/50 text-black/40 uppercase text-start">
-                  VIP Platinum Plan
-                </h1>
-                <h1 className="font-satoshi-bold text-2xl md:text-4xl dark:text-white text-black mt-2 text-start">
-                  $199/mo
-                </h1>
-                <div className="mt-3">
-                  <div
-                    className={`flex items-center gap-2 ${
-                      theme === "dark"
-                        ? "bottom-border-dark"
-                        : "bottom-border-light"
-                    } py-2`}
-                  >
-                    <PlanPoints />
-                    <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
-                      Analyze 100 times everyday{" "}
-                    </Text14>
-                  </div>
-                  <div
-                    className={`flex items-center gap-2 ${
-                      theme === "dark"
-                        ? "bottom-border-dark"
-                        : "bottom-border-light"
-                    } py-2`}
-                  >
-                    <PlanPoints />
-                    <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
-                      Access to All Tools{" "}
-                    </Text14>
-                  </div>
-                  <div className="flex items-center gap-2 pt-2">
-                    <PlanPoints />
-                    <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
-                      Set Custom Goal{" "}
-                    </Text14>
-                  </div>
+                <div
+                  className={`flex items-center gap-2 ${
+                    theme === "dark"
+                      ? "bottom-border-dark"
+                      : "bottom-border-light"
+                  } py-2`}
+                >
+                  <PlanPoints />
+                  <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
+                    Access to 3 AI Tools{" "}
+                  </Text14>
+                </div>
+                <div className="flex items-center gap-2 pt-2">
+                  <PlanPoints />
+                  <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
+                    Set Custom Goal{" "}
+                  </Text14>
                 </div>
               </div>
             </div>
-            <Button
-              variant={theme === "dark" ? "white" : "black"}
-              className="font-satoshi-bold w-full mt-5 btn-shadow text-base"
+            <div
+              className={`bg-gradient-to-b from-[#00000004] dark:from-[#ffffff05] to-[#00000011] dark:to-[#ffffff13] p-5 md:p-7 border dark:border-white/5 rounded-xl relative overflow-hidden`}
             >
-              Upgrade Plan
-            </Button>{" "}
-          </DialogDescription>
+              <div className="h-[4px] w-full md:w-[80%] left-1/2 -translate-x-1/2 absolute bottom-0 mx-auto rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient"></div>
+              <h1 className="font-satoshi-bold text-md md:text-lg dark:text-white/50 text-black/40 uppercase text-start">
+                VIP Platinum Plan
+              </h1>
+              <h1 className="font-satoshi-bold text-2xl md:text-4xl dark:text-white text-black mt-2 text-start">
+                $199/mo
+              </h1>
+              <div className="mt-3">
+                <div
+                  className={`flex items-center gap-2 ${
+                    theme === "dark"
+                      ? "bottom-border-dark"
+                      : "bottom-border-light"
+                  } py-2`}
+                >
+                  <PlanPoints />
+                  <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
+                    Analyze 100 times everyday{" "}
+                  </Text14>
+                </div>
+                <div
+                  className={`flex items-center gap-2 ${
+                    theme === "dark"
+                      ? "bottom-border-dark"
+                      : "bottom-border-light"
+                  } py-2`}
+                >
+                  <PlanPoints />
+                  <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
+                    Access to All Tools{" "}
+                  </Text14>
+                </div>
+                <div className="flex items-center gap-2 pt-2">
+                  <PlanPoints />
+                  <Text14 className="font-satoshi-medium dark:text-white text-black text-start">
+                    Set Custom Goal{" "}
+                  </Text14>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <Button
+            variant={theme === "dark" ? "white" : "black"}
+            className="font-satoshi-bold w-full mt-5 btn-shadow text-base"
+          >
+            Upgrade Plan
+          </Button>
         </DialogHeader>
       </DialogContent>
     </Dialog>

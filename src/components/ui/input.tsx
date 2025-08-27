@@ -23,12 +23,19 @@ function Input({
   backIcon,
   InputStyles,
   parentStyles = false,
+  value,
+  onChange,
   ...props
 }: InputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { theme } = useTheme();
   const baseInputStyles =
     "bg-transparent outline-none dark:placeholder:text-white/60 text-sm md:text-md font-regular disabled:cursor-not-allowed disabled:opacity-50 w-full";
+
+  // Determine if this should be a controlled input
+  const isControlled = onChange !== undefined;
+  const inputValue = value ?? "";
+  const defaultValue = !isControlled ? inputValue : undefined;
 
   if (icon || isPassword || backIcon) {
     return (
@@ -55,6 +62,9 @@ function Input({
           type={isPassword && !isPasswordVisible ? "password" : "text"}
           data-slot="input"
           className={cn("flex-1 shrink-0", baseInputStyles, InputStyles)}
+          value={isControlled ? inputValue : undefined}
+          defaultValue={defaultValue}
+          onChange={onChange}
           {...props}
         />
         {isPassword && (
@@ -84,6 +94,9 @@ function Input({
         "invalid:ring-destructive/20 dark:invalid:ring-destructive/40 invalid:border-destructive",
         className
       )}
+      value={isControlled ? inputValue : undefined}
+      defaultValue={defaultValue}
+      onChange={onChange}
       {...props}
     />
   );
