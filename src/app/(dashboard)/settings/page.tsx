@@ -4,6 +4,7 @@ import GeneralSettings from "@/components/settings/general-settings";
 import LinkBrokerAccount from "@/components/settings/link-broker-account";
 import PrivacySettings from "@/components/settings/privacy-settings";
 import ProfileSettings from "@/components/settings/profile-settings";
+import SubscriptionSection from "@/components/settings/subscription-section";
 import TradingPreferenceSection from "@/components/settings/trading-prefernce-section";
 import {
   IconUserSetting,
@@ -218,6 +219,7 @@ export default function page() {
       {activeTab === "privacy-security" && <PrivacySettings />}
       {activeTab === "trading-preferences" && <TradingPreferenceSection />}
       {activeTab === "linked-broker-account" && <LinkBrokerAccount />}
+      {activeTab === "subscription-billing" && <SubscriptionSection />}
     </div>
   );
 }
