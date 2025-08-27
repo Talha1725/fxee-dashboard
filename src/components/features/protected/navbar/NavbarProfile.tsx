@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,13 +44,53 @@ import { IconSearch } from "@/components/ui/icon";
 import { IconNotification } from "@/components/ui/icon";
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
 import NavbarAccountSwitch from "./NavbarAccountSwitch";
+import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
+import { useUpdateLanguageMutation } from "@/lib/redux/services/userApi";
+import { updateUser } from "@/lib/redux/features/auth/authSlice";
 
 export default function NavbarProfile() {
   const { theme, setTheme } = useTheme();
-  const [selectedLanguage, setSelectedLanguage] = useState("english");
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [updateLanguage] = useUpdateLanguageMutation();
+  
+  // Get user's current language or default to English (US)
+  const [selectedLanguage, setSelectedLanguage] = useState(user?.language || "English (US)");
+  const currentLanguage = getLanguageByValue(selectedLanguage);
+  
+  // Update selected language when user data changes
+  useEffect(() => {
+    if (user?.language) {
+      setSelectedLanguage(user.language);
+    }
+  }, [user?.language]);
+  
+  // Handle language change
+  const handleLanguageChange = async (newLanguage: string) => {
+    try {
+      setSelectedLanguage(newLanguage);
+      
+      // Update language via API - include required user data
+      const result = await updateLanguage({ 
+        language: newLanguage,
+        fullName: user?.fullName,
+        userName: user?.userName
+      }).unwrap();
+      
+      // Update Redux store - ensure all required fields are present
+      dispatch(updateUser({
+        ...result.result,
+        role: (result.result.role as "user" | "admin" | "trader") || user?.role || "user"
+      }));
+      
+      showToast.success(`Language changed to ${getLanguageByValue(newLanguage).shortLabel}`);
+    } catch (error) {
+      // Revert on error
+      setSelectedLanguage(user?.language || "English (US)");
+      showToast.error("Failed to update language");
+    }
+  };
 
   const handleLogout = () => {
     // Clear token from localStorage
@@ -150,49 +190,30 @@ export default function NavbarProfile() {
               </Button>
               <Select
                 value={selectedLanguage}
-                onValueChange={setSelectedLanguage}
+                onValueChange={handleLanguageChange}
               >
                 <SelectTrigger className="border-none bg-none bg-dark-gradient cursor-pointer shadow-none flex items-center gap-2 px-3 py-2 rounded-lg w-full">
                   <div className="flex items-center gap-2">
-                  <IconUK width={16} height={16} />
+                  {currentLanguage.navbarFlag}
                   <span className="dark:text-white text-black font-satoshi">
-                    {selectedLanguage === "english" && "English"}
-                    {selectedLanguage === "spanish" && "Español"}
-                    {selectedLanguage === "french" && "Français"}
-                    {selectedLanguage === "german" && "Deutsch"}
+                    {currentLanguage.shortLabel}
                   </span>
                   </div>
                 </SelectTrigger>
                 <SelectContent className="min-w-[120px] dark:bg-black bg-white">
                   <SelectGroup>
-                    <SelectItem
-                      value="english"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>English</span>
-                    </SelectItem>
-                    <SelectItem
-                      value="spanish"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>Español</span>
-                    </SelectItem>
-                    <SelectItem
-                      value="french"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>Français</span>
-                    </SelectItem>
-                    <SelectItem
-                      value="german"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>Deutsch</span>
-                    </SelectItem>
+                    {LANGUAGES.map((language) => (
+                      <SelectItem
+                        key={language.value}
+                        value={language.value}
+                        className="flex items-center gap-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          {language.navbarFlag}
+                          <span>{language.shortLabel}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -206,6 +227,40 @@ export default function NavbarProfile() {
                 <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
               </Button>
           </div>
+          
+          {/* Desktop Language Dropdown */}
+          <div className="md:flex hidden px-2 py-1">
+            <Select
+              value={selectedLanguage}
+              onValueChange={handleLanguageChange}
+            >
+              <SelectTrigger className="border-none bg-none bg-dark-gradient cursor-pointer shadow-none flex items-center gap-2 px-3 py-2 rounded-lg w-full">
+                <div className="flex items-center gap-2">
+                {currentLanguage.navbarFlag}
+                <span className="dark:text-white text-black font-satoshi">
+                  {currentLanguage.shortLabel}
+                </span>
+                </div>
+              </SelectTrigger>
+              <SelectContent className="min-w-[120px] dark:bg-black bg-white">
+                <SelectGroup>
+                  {LANGUAGES.map((language) => (
+                    <SelectItem
+                      key={language.value}
+                      value={language.value}
+                      className="flex items-center gap-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        {language.navbarFlag}
+                        <span>{language.shortLabel}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          
           <DropdownMenuItem
             onClick={handleLogout}
             className="items-center gap-2 dark:text-white text-black cursor-pointer md:flex hidden"

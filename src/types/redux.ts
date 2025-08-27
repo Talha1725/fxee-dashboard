@@ -7,6 +7,8 @@ export interface User {
   role: "user" | "admin" | "trader";
   picture?: string;
   phoneNumber?: string;
+  language?: string;
+  timezone?: string;
   emailVerified?: boolean;
   createdAt: string;
   updatedAt: string;
