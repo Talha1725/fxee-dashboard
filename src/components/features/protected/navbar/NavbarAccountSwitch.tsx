@@ -5,29 +5,49 @@ import React, { useState } from "react";
 import NavbarSwitchToggleItem from "@/components/features/protected/navbar/NavbarSwitchToggleItem";
 import NavbarSwitchContainer from "@/components/features/protected/navbar/NavbarSwitchContainer";
 
+interface SwitchItem {
+  label: string;
+  value: string;
+  icon?: React.ReactNode;
+}
+
+interface NavbarAccountSwitchProps {
+  className?: string;
+  dropdown?: boolean;
+  items?: SwitchItem[];
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+}
+
 export default function NavbarAccountSwitch({
   className,
   dropdown,
-}: {
-  className?: string;
-  dropdown?: boolean;
-}) {
-  const [activeTab, setActiveTab] = useState("virtual-account");
+  items = [
+    { label: "Virtual Account", value: "virtual-account" },
+    { label: "Demo Account", value: "demo-account" }
+  ],
+  defaultValue,
+  onValueChange,
+}: NavbarAccountSwitchProps) {
+  const [activeTab, setActiveTab] = useState(defaultValue || items[0]?.value || "virtual-account");
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    onValueChange?.(value);
+  };
 
   return (
     <NavbarSwitchContainer className={className} dropdown={dropdown}>
-      <NavbarSwitchToggleItem
-        isActive={activeTab === "virtual-account"}
-        onClick={() => setActiveTab("virtual-account")}
-      >
-        Virtual Account
-      </NavbarSwitchToggleItem>
-      <NavbarSwitchToggleItem
-        isActive={activeTab === "demo-account"}
-        onClick={() => setActiveTab("demo-account")}
-      >
-        Demo Account
-      </NavbarSwitchToggleItem>
+      {items.map((item) => (
+        <NavbarSwitchToggleItem
+          key={item.value}
+          isActive={activeTab === item.value}
+          onClick={() => handleTabChange(item.value)}
+        >
+          {item.icon && <span className="mr-2">{item.icon}</span>}
+          {item.label}
+        </NavbarSwitchToggleItem>
+      ))}
     </NavbarSwitchContainer>
   );
 }

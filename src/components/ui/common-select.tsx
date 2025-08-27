@@ -14,6 +14,7 @@ interface CommonSelectProps {
   className?: string;
   disabled?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  height?: number;
   renderOption?: (option: { value: string; label: string; flag?: React.ReactNode }) => React.ReactNode;
 }
 
@@ -26,6 +27,7 @@ export default function CommonSelect({
   className,
   disabled = false,
   size = 'md',
+  height = 52,
   renderOption,
 }: CommonSelectProps) {
   const { theme } = useTheme();
@@ -41,10 +43,11 @@ export default function CommonSelect({
           className={cn(
             `rounded-[12px] ${theme === "dark" ? "!bg-tab-dark-gradient !border-white/[0.1] [&]:!bg-tab-dark-gradient dark:!bg-tab-dark-gradient" : "!bg-card-dashboard-main-gradient !border-black/10 [&]:!bg-card-dashboard-main-gradient"}`,
             "flex items-center justify-between",
-            "w-[336px] h-[52px] font-satoshi-medium text-[18px] pt-[14px] pr-5 pb-[14px] pl-5 min-w-[336px] max-w-[336px] gap-5",
+            `w-[336px] font-satoshi-medium text-[18px] pt-[14px] pr-5 pb-[14px] pl-5 min-w-[336px] max-w-[336px] gap-5`,
             className
           )}
           style={{
+            height: `${height}px`,
             backgroundColor: theme === "dark" 
               ? "rgba(255, 255, 255, 0.02)" 
               : "rgba(0, 0, 0, 0.02)",
