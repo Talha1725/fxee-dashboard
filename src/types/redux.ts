@@ -176,6 +176,9 @@ export interface CustomAnalysisRequest {
   symbol: string;
   timeFrame?: string;
   customGoals?: string;
+  potentialProfit: number;
+  maximumLoss: number;
+  riskReward: number;
 }
 
 export interface CustomAnalysis {

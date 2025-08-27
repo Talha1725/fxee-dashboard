@@ -11,18 +11,20 @@ export default function AIEngineStatusTGSSlider({
   value,
   color = "green",
   disabled = false,
+  onValueChange,
 }: {
   title: string;
   value: number;
   color?: "green" | "danger";
   disabled?: boolean;
+  onValueChange?: (value: number) => void;
 }) {
   const [sliderValue, setSliderValue] = useState(0);
 
   // Update slider position when value prop changes
   useEffect(() => {
-    // Convert value to percentage (assuming max value is 1000 for reasonable scale)
-    const percentage = Math.min((value / 1000) * 100, 100);
+    // Convert value to percentage (assuming max value is 10000 for reasonable scale)
+    const percentage = Math.min((value / 10000) * 100, 100);
     setSliderValue(Math.round(percentage));
   }, [value]);
 
@@ -48,7 +50,13 @@ export default function AIEngineStatusTGSSlider({
       <div className="flex items-center gap-2.5 self-stretch">
         <Slider
           value={[currentSliderValue]}
-          onValueChange={disabled ? undefined : (value) => setSliderValue(value[0])}
+          onValueChange={disabled ? undefined : (sliderValues) => {
+            const newSliderValue = sliderValues[0];
+            setSliderValue(newSliderValue);
+            // Convert slider percentage back to actual value (assuming max value is 10000 for better granularity)
+            const actualValue = Math.round((newSliderValue / 100) * 10000);
+            onValueChange?.(actualValue);
+          }}
           borderColor={color === "danger" ? "border-danger" : "border-green"}
           disabled={disabled}
         />
