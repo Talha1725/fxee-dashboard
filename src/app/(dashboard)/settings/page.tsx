@@ -1,6 +1,7 @@
 "use client";
 
 import GeneralSettings from "@/components/settings/general-settings";
+import LinkBrokerAccount from "@/components/settings/link-broker-account";
 import PrivacySettings from "@/components/settings/privacy-settings";
 import ProfileSettings from "@/components/settings/profile-settings";
 import TradingPreferenceSection from "@/components/settings/trading-prefernce-section";
@@ -216,6 +217,7 @@ export default function page() {
       {activeTab === "general-settings" && <GeneralSettings />}
       {activeTab === "privacy-security" && <PrivacySettings />}
       {activeTab === "trading-preferences" && <TradingPreferenceSection />}
+      {activeTab === "linked-broker-account" && <LinkBrokerAccount />}
     </div>
   );
 }
