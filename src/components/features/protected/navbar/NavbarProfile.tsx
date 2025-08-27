@@ -84,7 +84,7 @@ export default function NavbarProfile() {
           <div className="flex items-center gap-1 cursor-pointer">
             <div className="flex items-center gap-2 relative">
               <Avatar>
-                <AvatarImage src={user?.picture} />
+                <AvatarImage src={user?.picture || undefined} />
                 <AvatarFallback>{getUserInitials()}</AvatarFallback>
               </Avatar>
               <Label className="dark:text-white text-black lg:block hidden">
@@ -98,6 +98,26 @@ export default function NavbarProfile() {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="dark:bg-[#0D0D0D] bg-white p-5 md:p-2 border dark:border-white/10 border-black/15">
+          {/* Desktop User Info Section */}
+          <div className="hidden md:block px-2 py-3">
+            <div className="flex items-center gap-3">
+              <Avatar className="w-10 h-10">
+                <AvatarImage src={user?.picture || undefined} />
+                <AvatarFallback>{getUserInitials()}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <Label className="dark:text-white text-black font-satoshi-medium">
+                  {user?.fullName || user?.userName || "User"}
+                </Label>
+                <span className="text-sm dark:text-white/60 text-black/60 font-satoshi">
+                  {user?.email || "user@example.com"}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <DropdownMenuSeparator className="hidden md:block dark:bg-white/10 bg-black/10" />
+
           <div className="flex flex-col gap-2 dark:text-white text-black md:hidden">
             <div className="flex items-center gap-2">
               <Button
@@ -110,12 +130,17 @@ export default function NavbarProfile() {
                 <div className="flex items-center gap-1 cursor-pointer">
                   <div className="flex items-center gap-2 relative">
                     <Avatar>
-                      <AvatarImage src={user?.picture} />
+                      <AvatarImage src={user?.picture || undefined} />
                       <AvatarFallback>{getUserInitials()}</AvatarFallback>
                     </Avatar>
-                    <Label className="dark:text-white text-black">
-                      {user?.fullName || user?.userName || "User"}
-                    </Label>
+                    <div className="flex flex-col">
+                      <Label className="dark:text-white text-black">
+                        {user?.fullName || user?.userName || "User"}
+                      </Label>
+                      <span className="text-xs dark:text-white/60 text-black/60 font-satoshi">
+                        {user?.email || "user@example.com"}
+                      </span>
+                    </div>
                     <PopularBadge className="flex justify-center items-center gap-2.5 p-[3px] absolute left-[21px] bottom-0 rounded-[3px]">
                       Pro
                     </PopularBadge>
@@ -123,6 +148,7 @@ export default function NavbarProfile() {
                 </div>
               </div>
             </div>
+            <DropdownMenuSeparator className="md:hidden dark:bg-white/10 bg-black/10" />
             <NavbarAccountSwitch className="text-[12px] sm:text-[14px]" dropdown={true} />
             <div className="flex items-center gap-2">
               <Button

@@ -3,7 +3,7 @@ import { baseApi } from "./baseApi";
 interface UpdateUserProfileRequest {
   fullName: string;
   userName: string;
-  picture?: string;
+  picture?: string | null;
   phoneNumber?: string;
 }
 
@@ -51,7 +51,7 @@ interface UserProfile {
   fullName: string;
   userName: string;
   role?: "user" | "admin" | "trader";
-  picture?: string;
+  picture?: string | null;
   phoneNumber?: string;
   language?: string;
   timezone?: string;

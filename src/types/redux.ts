@@ -5,7 +5,7 @@ export interface User {
   fullName: string;
   userName: string;
   role: "user" | "admin" | "trader";
-  picture?: string;
+  picture?: string | null;
   phoneNumber?: string;
   language?: string;
   timezone?: string;

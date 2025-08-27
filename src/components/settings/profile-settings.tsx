@@ -35,6 +35,7 @@ export default function ProfileSettings() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isPictureRemoved, setIsPictureRemoved] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
 
@@ -102,6 +103,7 @@ export default function ProfileSettings() {
       const reader = new FileReader();
       reader.onload = (e) => {
         setUploadedImage(e.target?.result as string);
+        setIsPictureRemoved(false); // Reset remove flag when new image is uploaded
       };
       reader.readAsDataURL(file);
     }
@@ -115,6 +117,7 @@ export default function ProfileSettings() {
   // Handle remove image
   const handleRemoveImage = () => {
     setUploadedImage(null);
+    setIsPictureRemoved(true);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -142,11 +145,16 @@ export default function ProfileSettings() {
         }
         setIsUploading(false);
       }
+      
+      // If user removed picture, set it to null
+      if (isPictureRemoved) {
+        profilePicture = null;
+      }
 
       const updateData = {
         fullName: fullName.trim(),
         userName: userName.trim(),
-        ...(profilePicture && { picture: profilePicture }),
+        picture: profilePicture, // Always include picture field (can be null)
         ...(phoneNumber && { phoneNumber: `${selectedCountry.phoneCode}${phoneNumber}` })
       };
 
@@ -158,6 +166,7 @@ export default function ProfileSettings() {
       
       toast.success("Profile updated successfully!");
       setUploadedImage(null); // Clear the preview
+      setIsPictureRemoved(false); // Reset remove flag
     } catch (error: any) {
       console.error('Error updating profile:', error);
       toast.error(error?.data?.message || "Failed to update profile");
@@ -183,6 +192,7 @@ export default function ProfileSettings() {
     }
     
     setUploadedImage(null);
+    setIsPictureRemoved(false); // Reset remove flag
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -194,7 +204,7 @@ export default function ProfileSettings() {
         <div className="md:w-[80px] md:h-[80px] w-[60px] h-[60px] rounded-full overflow-hidden">
           <Avatar className="w-full h-full">
             <AvatarImage 
-              src={uploadedImage || user?.picture} 
+              src={isPictureRemoved ? "" : (uploadedImage || user?.picture || undefined)} 
               alt="user avatar"
             />
             <AvatarFallback className="text-lg font-medium bg-black/10 dark:bg-white/5">
@@ -214,6 +224,11 @@ export default function ProfileSettings() {
             <Text16 className="mt-1 font-extralight font-regular text-black/80 dark:text-white/60">
               Min 400x400px, PNG or JPEG
             </Text16>
+            {isPictureRemoved && (
+              <Text16 className="mt-1 font-extralight font-regular text-red-500">
+                Picture will be removed when you apply changes
+              </Text16>
+            )}
           </div>
           <div className="flex items-center gap-2 mt-3">
             <Button
@@ -227,6 +242,7 @@ export default function ProfileSettings() {
               variant={"black"}
               className="h-[39px] font-satoshi w-[105px] dark:text-white dark:bg-white/5 bg-transparent text-black border-black/15 dark:border-white/15 hover:bg-white/10 hover:opacity-70"
               onClick={handleRemoveImage}
+              disabled={!user?.picture && !uploadedImage}
             >
               Remove
             </Button>
@@ -342,6 +358,7 @@ export default function ProfileSettings() {
           variant={"black"}
           className="h-[52px] font-satoshi w-full dark:text-white dark:bg-white/5 bg-transparent text-black border-black/15 dark:border-white/15 hover:bg-white/10 hover:opacity-70"
           onClick={handleDiscardChanges}
+          disabled={isLoading || isUploading}
         >
           Discard
         </Button>
