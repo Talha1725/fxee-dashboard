@@ -3,20 +3,38 @@ import { RadioGroup } from "../ui/radio-group";
 import { RadioGroupItem } from "../ui/radio-group";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useState, useEffect } from "react";
+import { useGetTradingPreferencesQuery, useUpdateTradingPreferencesMutation } from "@/lib/redux/services/userApi";
+import { toast } from "sonner";
 
 export default function PreferredAssets() {
   const { theme } = useTheme();
   const [selectedAsset, setSelectedAsset] = useState("both");
+  
+  const { data: preferences, isLoading: isLoadingPreferences } = useGetTradingPreferencesQuery();
+  const [updatePreferences, { isLoading: isUpdating }] = useUpdateTradingPreferencesMutation();
 
-  // Set default value on component mount
+  // Set value from API data
   useEffect(() => {
-    setSelectedAsset("both");
-  }, []);
+    if (preferences?.result?.preferredAssets) {
+      setSelectedAsset(preferences.result.preferredAssets);
+    }
+  }, [preferences]);
 
-  const handleValueChange = (value: string) => {
+  const handleValueChange = async (value: string) => {
     setSelectedAsset(value);
-    // Here you can add additional logic like saving to localStorage or API
-    console.log("Preferred asset class changed to:", value);
+    
+    try {
+      await updatePreferences({
+        preferredAssets: value as "crypto" | "forex" | "both"
+      }).unwrap();
+      
+      toast.success("Preferred assets updated!");
+    } catch (error: any) {
+      const errorMessage = error?.data?.message || "Failed to update trading preferences";
+      toast.error(errorMessage);
+      // Revert on error
+      setSelectedAsset(preferences?.result?.preferredAssets || "both");
+    }
   };
 
   return (

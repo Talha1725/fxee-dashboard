@@ -59,7 +59,7 @@ function Input({
       >
         {icon && <div className="flex-shrink-0 text-white/60">{icon}</div>}
         <input
-          type={isPassword && !isPasswordVisible ? "password" : "text"}
+          type={isPassword && !isPasswordVisible ? "password" : isPassword ? "text" : type || "text"}
           data-slot="input"
           className={cn("flex-1 shrink-0", baseInputStyles, InputStyles)}
           value={isControlled ? inputValue : undefined}
@@ -69,8 +69,12 @@ function Input({
         />
         {isPassword && (
           <div
-            className="text-black/60 dark:text-white/60 cursor-pointer"
-            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            className="text-black/60 dark:text-white/60 cursor-pointer hover:opacity-70 transition-opacity"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsPasswordVisible(!isPasswordVisible);
+            }}
           >
             {isPasswordVisible ? (
               <IconEyeOff height={20} width={20} className="dark:text-white/60 !text-black/60" />

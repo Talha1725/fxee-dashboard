@@ -3,20 +3,38 @@ import { RadioGroup } from "../ui/radio-group";
 import { RadioGroupItem } from "../ui/radio-group";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useState, useEffect } from "react";
+import { useGetTradingPreferencesQuery, useUpdateTradingPreferencesMutation } from "@/lib/redux/services/userApi";
+import { toast } from "sonner";
 
 export default function TradingSize() {
   const { theme } = useTheme();
   const [selectedFA, setSelectedFA] = useState("fixed");
+  
+  const { data: preferences, isLoading: isLoadingPreferences } = useGetTradingPreferencesQuery();
+  const [updatePreferences, { isLoading: isUpdating }] = useUpdateTradingPreferencesMutation();
 
-  // Set default value on component mount
+  // Set value from API data
   useEffect(() => {
-    setSelectedFA("fixed");
-  }, []);
+    if (preferences?.result?.tradeSizeLogic) {
+      setSelectedFA(preferences.result.tradeSizeLogic);
+    }
+  }, [preferences]);
 
-  const handleValueChange = (value: string) => {
+  const handleValueChange = async (value: string) => {
     setSelectedFA(value);
-    // Here you can add additional logic like saving to localStorage or API
-    console.log("Trading size logic changed to:", value);
+    
+    try {
+      await updatePreferences({
+        tradeSizeLogic: value as "fixed" | "percentage"
+      }).unwrap();
+      
+      toast.success("Trading size preference updated!");
+    } catch (error: any) {
+      const errorMessage = error?.data?.message || "Failed to update trading preferences";
+      toast.error(errorMessage);
+      // Revert on error
+      setSelectedFA(preferences?.result?.tradeSizeLogic || "fixed");
+    }
   };
 
   return (
