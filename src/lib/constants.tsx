@@ -11,6 +11,7 @@ import {
   IconAIPattern,
   IconBox,
 } from "@/components/ui/icon";
+import * as AllCountry from "country-flag-icons/react/1x1";
 
 // API endpoints
 export const API_BASE_URL =
@@ -48,14 +49,14 @@ export const TRADING_SYMBOLS: TradingSymbol[] = [
   { id: 37, symbol: "USDJPY", type: "Forex", displayName: "USD/JPY" },
   { id: 44, symbol: "USDTRY", type: "Forex", displayName: "USD/TRY" },
   { id: 46, symbol: "USDZAR", type: "Forex", displayName: "USD/ZAR" },
-  
+
   // Commodities
   { id: 80, symbol: "Brent", type: "Commodities", displayName: "Brent Oil" },
   { id: 85, symbol: "Crude", type: "Commodities", displayName: "Crude Oil" },
   { id: 87, symbol: "GOLDInd", type: "Commodities", displayName: "Gold Index" },
   { id: 101, symbol: "XAGUSD", type: "Commodities", displayName: "Silver/USD" },
   { id: 107, symbol: "XAUUSD", type: "Commodities", displayName: "Gold/USD" },
-  
+
   // Crypto
   { id: 52, symbol: "BITCOIN", type: "Crypto", displayName: "Bitcoin" },
   { id: 54, symbol: "BNB", type: "Crypto", displayName: "Binance Coin" },
@@ -444,4 +445,31 @@ export const COPY_TRADING_HOW_TO = [
     description:
       "Profits are reflected in your account balance. You can choose to withdraw them or reinvest into other strategies to diversify your portfolio.",
   },
+];
+
+
+
+
+
+export const countries = [
+  { code: "US", name: "United States", phoneCode: "+1", flag: AllCountry.US },
+  { code: "GB", name: "United Kingdom", phoneCode: "+44", flag: AllCountry.GB },
+  { code: "CA", name: "Canada", phoneCode: "+1", flag: AllCountry.CA },
+  { code: "AU", name: "Australia", phoneCode: "+61", flag: AllCountry.AU },
+  { code: "DE", name: "Germany", phoneCode: "+49", flag: AllCountry.DE },
+  { code: "FR", name: "France", phoneCode: "+33", flag: AllCountry.FR },
+  { code: "JP", name: "Japan", phoneCode: "+81", flag: AllCountry.JP },
+  { code: "IN", name: "India", phoneCode: "+91", flag: AllCountry.IN },
+  { code: "BR", name: "Brazil", phoneCode: "+55", flag: AllCountry.BR },
+  { code: "IT", name: "Italy", phoneCode: "+39", flag: AllCountry.IT },
+  { code: "ES", name: "Spain", phoneCode: "+34", flag: AllCountry.ES },
+  { code: "NL", name: "Netherlands", phoneCode: "+31", flag: AllCountry.NL },
+  { code: "SE", name: "Sweden", phoneCode: "+46", flag: AllCountry.SE },
+  { code: "NO", name: "Norway", phoneCode: "+47", flag: AllCountry.NO },
+  { code: "DK", name: "Denmark", phoneCode: "+45", flag: AllCountry.DK },
+  { code: "FI", name: "Finland", phoneCode: "+358", flag: AllCountry.FI },
+  { code: "CH", name: "Switzerland", phoneCode: "+41", flag: AllCountry.CH },
+  { code: "AT", name: "Austria", phoneCode: "+43", flag: AllCountry.AT },
+  { code: "BE", name: "Belgium", phoneCode: "+32", flag: AllCountry.BE },
+  { code: "IE", name: "Ireland", phoneCode: "+353", flag: AllCountry.IE },
 ];
