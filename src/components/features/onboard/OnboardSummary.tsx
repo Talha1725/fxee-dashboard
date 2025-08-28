@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Text18, Title24 } from "@/components/ui/typography";
 import { useOnboarding } from "@/lib/contexts/OnboardingContext";
 import { SUBSCRIPTION_PLANS } from "@/lib/constants";
+import { useCreateVIPCheckoutMutation } from "@/lib/redux/features/payments/paymentsApi";
+import { toast } from "sonner";
 
 // Custom hook to handle window size
 function useWindowSize() {
@@ -76,6 +78,7 @@ export default function OnboardSummary({
   const { width } = useWindowSize();
   const { selectedPlan, selectedAddOns } = useOnboarding();
   const isMobile = width < 768;
+  const [createVIPCheckout, { isLoading: isCheckoutLoading }] = useCreateVIPCheckoutMutation();
 
   // Show add-ons section only for VIP plan
   const showAddOns = selectedPlan === "VIP";
@@ -91,11 +94,47 @@ export default function OnboardSummary({
 
   // Calculate totals
   const subtotal = planPrice + addOnsTotal;
-  const cryptoDiscount = isCrypto ? subtotal * 0.2 : 0; // 20% crypto discount
-  const total = subtotal - cryptoDiscount;
+  const total = subtotal; // No crypto discount
 
-  // Don't show crypto discount for Free plan
-  const shouldShowCryptoDiscount = isCrypto && cryptoDiscount > 0 && selectedPlan !== "Free";
+  // Remove crypto discount logic
+  const shouldShowCryptoDiscount = false;
+
+  const handleCheckout = async () => {
+    if (isCheckout && selectedPlan === "VIP") {
+      try {
+        const result = await createVIPCheckout({
+          planId: "VIP",
+          metadata: {
+            source: "web_app",
+            campaign: "onboarding",
+            selectedAddOns: selectedAddOns,
+            subtotal: subtotal.toString(),
+            total: total.toString(),
+          },
+        }).unwrap();
+
+        // Store trackId in localStorage for later use on thanks page
+        if (result.data?.payment?.trackId) {
+          localStorage.setItem("paymentTrackId", result.data.payment.trackId);
+        }
+
+        // Redirect to checkout URL
+        if (result.data?.checkoutUrl) {
+          window.location.href = result.data.checkoutUrl;
+        } else {
+          toast.error("Checkout URL not received. Please try again.");
+        }
+      } catch (error: any) {
+        console.error("Checkout failed:", error);
+        toast.error(error.data?.message || "Checkout failed. Please try again.");
+      }
+    } else if (isCheckout) {
+      // For non-VIP plans, redirect to thanks directly
+      router.push("/thanks");
+    } else {
+      router.push("/onboard/3");
+    }
+  };
 
   return (
     <OnboardCardContainer className="bg-white dark:bg-white/5 z-50">
@@ -103,13 +142,6 @@ export default function OnboardSummary({
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <OnboardSummaryItem title="Plan" value={`${planTitle} $${planPrice}/month`} />
         <OnboardSummaryItem title="Cost" value={`$${planPrice.toFixed(2)}`} />
-        {shouldShowCryptoDiscount && (
-          <OnboardSummaryItem
-            title="Crypto Discount"
-            value={`-$${cryptoDiscount.toFixed(2)}`}
-            isDiscount
-          />
-        )}
         <OnboardSummaryItem title="Tax" value="$0.00" />
         {showAddOns && selectedAddOnsData.length > 0 && (
           <div className="flex flex-col items-start gap-[5px] self-stretch">
@@ -129,16 +161,11 @@ export default function OnboardSummary({
       </Text18>
       <Button
         variant="fancy"
-        onClick={() => {
-          if (isCheckout) {
-            router.push("/thanks");
-          } else {
-            router.push("/onboard/3");
-          }
-        }}
+        onClick={handleCheckout}
         className="w-full"
+        disabled={isCheckoutLoading}
       >
-        {isCheckout ? "Checkout" : "View Contract"}
+        {isCheckoutLoading ? "Processing..." : (isCheckout ? "Checkout" : "View Contract")}
       </Button>
     </OnboardCardContainer>
   );

@@ -1,9 +1,13 @@
 import { baseApi } from "../../services/baseApi";
 import type {
-  Payment,
-  CreatePaymentRequest,
+  VIPCheckoutRequest,
+  VIPCheckoutResponse,
+  PaymentStatusResponse,
   PaymentResponse,
   PaymentsListResponse,
+} from "@/types/api";
+import type {
+  CreatePaymentRequest,
 } from "@/types/redux";
 
 export const paymentsApi = baseApi.injectEndpoints({
@@ -36,6 +40,31 @@ export const paymentsApi = baseApi.injectEndpoints({
       query: (paymentId) => `/payments/${paymentId}`,
       providesTags: ["Payment"],
     }),
+
+    // VIP Subscription Checkout
+    createVIPCheckout: builder.mutation<VIPCheckoutResponse, VIPCheckoutRequest>({
+      query: (checkoutData) => ({
+        url: "/payments/create",
+        method: "POST",
+        body: checkoutData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["Payment"],
+    }),
+
+    // Get Payment Status by Track ID
+    getPaymentStatusByTrackId: builder.query<PaymentStatusResponse, string>({
+      query: (trackId) => ({
+        url: `/payments/status/${trackId}`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      providesTags: ["Payment"],
+    }),
   }),
 });
 
@@ -43,4 +72,6 @@ export const {
   useCreatePaymentMutation,
   useGetPaymentsQuery,
   useGetPaymentStatusQuery,
+  useCreateVIPCheckoutMutation,
+  useGetPaymentStatusByTrackIdQuery,
 } = paymentsApi;
