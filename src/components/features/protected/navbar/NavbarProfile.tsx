@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,10 +30,14 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import { logout } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { showToast } from "@/lib/utils/toast";
-import { IconSearch } from "@/components/ui/icon";
+import { IconSearch, IconUK } from "@/components/ui/icon";
 import { IconNotification } from "@/components/ui/icon";
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
 import NavbarAccountSwitch from "./NavbarAccountSwitch";
+import { Select, SelectItem, SelectTrigger, SelectContent, SelectGroup } from "@/components/ui/select";
+import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
+import { useUpdateLanguageMutation } from "@/lib/redux/services/userApi";
+import { updateUser } from "@/lib/redux/features/auth/authSlice";
 
 export default function NavbarProfile() {
   const { theme } = useTheme();
@@ -53,6 +57,45 @@ export default function NavbarProfile() {
 
     // Redirect to signin page and prevent going back
     router.replace("/signin");
+  };
+
+  const [updateLanguage] = useUpdateLanguageMutation();
+  
+  // Get user's current language or default to English (US)
+  const [selectedLanguage, setSelectedLanguage] = useState(user?.language || "English (US)");
+  const currentLanguage = getLanguageByValue(selectedLanguage);
+  
+  // Update selected language when user data changes
+  useEffect(() => {
+    if (user?.language) {
+      setSelectedLanguage(user.language);
+    }
+  }, [user?.language]);
+  
+  // Handle language change
+  const handleLanguageChange = async (newLanguage: string) => {
+    try {
+      setSelectedLanguage(newLanguage);
+      
+      // Update language via API - include required user data
+      const result = await updateLanguage({ 
+        language: newLanguage,
+        fullName: user?.fullName,
+        userName: user?.userName
+      }).unwrap();
+      
+      // Update Redux store - ensure all required fields are present
+      dispatch(updateUser({
+        ...result.result,
+        role: (result.result.role as "user" | "admin" | "trader") || user?.role || "user"
+      }));
+      
+      showToast.success(`Language changed to ${getLanguageByValue(newLanguage).shortLabel}`);
+    } catch (error) {
+      // Revert on error
+      setSelectedLanguage(user?.language || "English (US)");
+      showToast.error("Failed to update language");
+    }
   };
 
   // Get user initials for avatar fallback
@@ -118,39 +161,44 @@ export default function NavbarProfile() {
           
           <DropdownMenuSeparator className="hidden md:block dark:bg-white/10 bg-black/10" />
 
-          <div className="flex flex-col gap-2 dark:text-white text-black md:hidden">
+          <div className="flex flex-col gap-1 sm:gap-2 dark:text-white text-black md:hidden">
             <div className="flex items-center gap-2">
               <Button
                 variant={theme === "dark" ? "white" : "black"}
-                className="font-satoshi-medium w-[141px]"
+                className="font-satoshi-medium w-[120px] sm:w-[141px] text-xs sm:text-sm"
               >
-                <p>Upgrade</p> <ArrowUp className="w-4 h-4 dark:text-black text-white" />
+                <p>Upgrade</p> <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 dark:text-black text-white" />
               </Button>
               <div>
                 <div className="flex items-center gap-1 cursor-pointer">
-                  <div className="flex items-center gap-2 relative">
-                    <Avatar>
+                  <div className="flex items-center gap-1 sm:gap-2 relative">
+                    <Avatar className="w-8 h-8 sm:w-10 sm:h-10">
                       <AvatarImage src={user?.picture || undefined} />
-                      <AvatarFallback>{getUserInitials()}</AvatarFallback>
+                      <AvatarFallback className="text-xs sm:text-sm">{getUserInitials()}</AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col">
-                      <Label className="dark:text-white text-black">
+                    <div className="flex flex-col gap-0.5 sm:gap-1">
+                      <Label className="dark:text-white text-black text-xs sm:text-sm">
                         {user?.fullName || user?.userName || "User"}
                       </Label>
                       <span className="text-xs dark:text-white/60 text-black/60 font-satoshi">
                         {user?.email || "user@example.com"}
                       </span>
                     </div>
-                    <PopularBadge className="flex justify-center items-center gap-2.5 p-[3px] absolute left-[21px] bottom-0 rounded-[3px]">
+                    <PopularBadge className="flex justify-center items-center gap-1.5 sm:gap-2.5 p-[2px] sm:p-[3px] absolute left-[16px] sm:left-[21px] bottom-0 rounded-[3px] text-xs">
                       Pro
                     </PopularBadge>
                   </div>
                 </div>
               </div>
             </div>
-            <DropdownMenuSeparator className="md:hidden dark:bg-white/10 bg-black/10" />
-            <NavbarAccountSwitch className="text-[12px] sm:text-[14px]" dropdown={true} />
-            <div className="flex items-center gap-2">
+          </div>
+          
+          <DropdownMenuSeparator className="md:hidden dark:bg-white/10 bg-black/10 mt-2" />
+          
+          <div className="flex flex-col gap-2">
+            <NavbarAccountSwitch className="text-[12px] sm:text-[14px] md:hidden" dropdown={true} />
+            <div className="flex items-center gap-2 md:hidden">
+            <div className="flex items-center gap-2 md:hidden">
               <Button
                 variant="ghost"
                 className={`${theme === "light" && "bg-light-gradient"}`}
@@ -164,7 +212,39 @@ export default function NavbarProfile() {
                 <IconNotification width={20} height={20} />
               </Button>
             </div>
-            <NavbarThemeSwitch dropdown={true} />
+            <Select
+                value={selectedLanguage}
+                onValueChange={handleLanguageChange}
+              >
+                <SelectTrigger className="border-none bg-none bg-dark-gradient cursor-pointer shadow-none flex items-center gap-2 px-3 py-2 rounded-lg w-full">
+                  <div className="flex items-center gap-2">
+                    {currentLanguage.navbarFlag}
+                    <span className="dark:text-white text-black font-satoshi">
+                      {currentLanguage.shortLabel}
+                    </span>
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="min-w-[120px] dark:bg-black bg-white z-[999]">
+                  <SelectGroup>
+                    {LANGUAGES.map((lang) => (
+                      <SelectItem
+                        key={lang.value}
+                        value={lang.value}
+                        className="flex items-center gap-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          {lang.navbarFlag}
+                          <span>{lang.shortLabel}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              </div> 
+            <div className="md:hidden">
+              <NavbarThemeSwitch dropdown={true} />
+            </div>
             <Button
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-full"
@@ -173,14 +253,6 @@ export default function NavbarProfile() {
                 <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
               </Button>
           </div>
-          
-          <DropdownMenuItem
-            onClick={handleLogout}
-            className="items-center gap-2 dark:text-white text-black cursor-pointer md:flex hidden"
-          >
-            <LogOut size={16} className="mr-2 text-black dark:text-white/80" />
-            <p className="text-black dark:text-white/80">Logout</p>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

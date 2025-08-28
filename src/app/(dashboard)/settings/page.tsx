@@ -167,7 +167,7 @@ export default function page() {
             </Text14>
           </div>
 
-          <div
+          {/* <div
             className={`flex items-center gap-1.5 p-2 hover:bg-white/10 cursor-pointer transition-all duration-300 rounded-[8px] ${
               activeTab === "linked-broker-account"
                 ? "dark:backdrop-blur-[7px] bg-gradient-to-b from-[#15b0f817] dark:from-white/10 to-[#0276db16] dark:to-white/10"
@@ -187,7 +187,7 @@ export default function page() {
             >
               Linked Broker Account
             </Text14>
-          </div>
+          </div> */}
 
           <div
             className={`flex items-center gap-1.5 p-2 hover:bg-white/10 cursor-pointer transition-all duration-300 rounded-[8px] ${
@@ -218,7 +218,7 @@ export default function page() {
       {activeTab === "general-settings" && <GeneralSettings />}
       {activeTab === "privacy-security" && <PrivacySettings />}
       {activeTab === "trading-preferences" && <TradingPreferenceSection />}
-      {activeTab === "linked-broker-account" && <LinkBrokerAccount />}
+      {/* {activeTab === "linked-broker-account" && <LinkBrokerAccount />} */}
       {activeTab === "subscription-billing" && <SubscriptionSection />}
     </div>
   );
