@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,32 +22,21 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Label, PopularBadge } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { THEMES } from "@/lib/constants";
 import { logout } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { showToast } from "@/lib/utils/toast";
-import { Select, SelectTrigger } from "@/components/ui/select";
-import { SelectValue } from "@/components/ui/select";
-import { SelectContent } from "@/components/ui/select";
-import { SelectGroup } from "@/components/ui/select";
-import { SelectItem } from "@/components/ui/select";
-import { IconUK } from "@/components/ui/icon";
 import { IconSearch } from "@/components/ui/icon";
 import { IconNotification } from "@/components/ui/icon";
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
 import NavbarAccountSwitch from "./NavbarAccountSwitch";
 
 export default function NavbarProfile() {
-  const { theme, setTheme } = useTheme();
-  const [selectedLanguage, setSelectedLanguage] = useState("english");
+  const { theme } = useTheme();
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
@@ -95,7 +84,7 @@ export default function NavbarProfile() {
           <div className="flex items-center gap-1 cursor-pointer">
             <div className="flex items-center gap-2 relative">
               <Avatar>
-                <AvatarImage src={user?.avatar} />
+                <AvatarImage src={user?.picture || undefined} />
                 <AvatarFallback>{getUserInitials()}</AvatarFallback>
               </Avatar>
               <Label className="dark:text-white text-black lg:block hidden">
@@ -109,6 +98,26 @@ export default function NavbarProfile() {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="dark:bg-[#0D0D0D] bg-white p-5 md:p-2 border dark:border-white/10 border-black/15">
+          {/* Desktop User Info Section */}
+          <div className="hidden md:block px-2 py-3">
+            <div className="flex items-center gap-3">
+              <Avatar className="w-10 h-10">
+                <AvatarImage src={user?.picture || undefined} />
+                <AvatarFallback>{getUserInitials()}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <Label className="dark:text-white text-black font-satoshi-medium">
+                  {user?.fullName || user?.userName || "User"}
+                </Label>
+                <span className="text-sm dark:text-white/60 text-black/60 font-satoshi">
+                  {user?.email || "user@example.com"}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <DropdownMenuSeparator className="hidden md:block dark:bg-white/10 bg-black/10" />
+
           <div className="flex flex-col gap-2 dark:text-white text-black md:hidden">
             <div className="flex items-center gap-2">
               <Button
@@ -121,12 +130,17 @@ export default function NavbarProfile() {
                 <div className="flex items-center gap-1 cursor-pointer">
                   <div className="flex items-center gap-2 relative">
                     <Avatar>
-                      <AvatarImage src={user?.avatar} />
+                      <AvatarImage src={user?.picture || undefined} />
                       <AvatarFallback>{getUserInitials()}</AvatarFallback>
                     </Avatar>
-                    <Label className="dark:text-white text-black">
-                      {user?.fullName || user?.userName || "User"}
-                    </Label>
+                    <div className="flex flex-col">
+                      <Label className="dark:text-white text-black">
+                        {user?.fullName || user?.userName || "User"}
+                      </Label>
+                      <span className="text-xs dark:text-white/60 text-black/60 font-satoshi">
+                        {user?.email || "user@example.com"}
+                      </span>
+                    </div>
                     <PopularBadge className="flex justify-center items-center gap-2.5 p-[3px] absolute left-[21px] bottom-0 rounded-[3px]">
                       Pro
                     </PopularBadge>
@@ -134,6 +148,7 @@ export default function NavbarProfile() {
                 </div>
               </div>
             </div>
+            <DropdownMenuSeparator className="md:hidden dark:bg-white/10 bg-black/10" />
             <NavbarAccountSwitch className="text-[12px] sm:text-[14px]" dropdown={true} />
             <div className="flex items-center gap-2">
               <Button
@@ -148,56 +163,8 @@ export default function NavbarProfile() {
               >
                 <IconNotification width={20} height={20} />
               </Button>
-              <Select
-                value={selectedLanguage}
-                onValueChange={setSelectedLanguage}
-              >
-                <SelectTrigger className="border-none bg-none bg-dark-gradient cursor-pointer shadow-none flex items-center gap-2 px-3 py-2 rounded-lg w-full">
-                  <div className="flex items-center gap-2">
-                  <IconUK width={16} height={16} />
-                  <span className="dark:text-white text-black font-satoshi">
-                    {selectedLanguage === "english" && "English"}
-                    {selectedLanguage === "spanish" && "Español"}
-                    {selectedLanguage === "french" && "Français"}
-                    {selectedLanguage === "german" && "Deutsch"}
-                  </span>
-                  </div>
-                </SelectTrigger>
-                <SelectContent className="min-w-[120px] dark:bg-black bg-white">
-                  <SelectGroup>
-                    <SelectItem
-                      value="english"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>English</span>
-                    </SelectItem>
-                    <SelectItem
-                      value="spanish"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>Español</span>
-                    </SelectItem>
-                    <SelectItem
-                      value="french"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>Français</span>
-                    </SelectItem>
-                    <SelectItem
-                      value="german"
-                      className="flex items-center gap-2"
-                    >
-                      <IconUK width={16} height={16} />
-                      <span>Deutsch</span>
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
             </div>
-            <NavbarThemeSwitch dropdown={true} />{" "}
+            <NavbarThemeSwitch dropdown={true} />
             <Button
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-full"
@@ -206,6 +173,7 @@ export default function NavbarProfile() {
                 <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
               </Button>
           </div>
+          
           <DropdownMenuItem
             onClick={handleLogout}
             className="items-center gap-2 dark:text-white text-black cursor-pointer md:flex hidden"

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import Sidebar from "@/components/features/protected/sidebar/Sidebar";
 import { IconAlignLeft } from "@/components/ui/icon";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 export default function NavbarSheet() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function NavbarSheet() {
         />
       </SheetTrigger>
       <SheetContent side="left">
+        <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
         <Sidebar />
       </SheetContent>
     </Sheet>

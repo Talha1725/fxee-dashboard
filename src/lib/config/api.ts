@@ -19,6 +19,7 @@ export const API_CONFIG = {
       PROFILE: "/users/profile",
       ALL: "/users",
       BY_ID: (id: string) => `/users/${id}`,
+      TRADING_PREFERENCES: "/users/trading-preferences",
     },
     PAYMENTS: {
       CREATE: "/payments",

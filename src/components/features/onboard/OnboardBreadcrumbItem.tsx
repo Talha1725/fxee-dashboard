@@ -21,6 +21,7 @@ export default function OnboardBreadcrumbItem({
 }) {
   const isCompleted = item.step < currentStep;
   const isCurrent = item.step === currentStep;
+  const isFuture = item.step > currentStep;
 
   return (
     <React.Fragment>
@@ -46,18 +47,30 @@ export default function OnboardBreadcrumbItem({
               </span>
             )}
           </div>
-          <BreadcrumbLink asChild>
-            <Link
-              href={item.href ?? "/"}
+          {isFuture ? (
+            // Disabled link for future steps
+            <span
               className={cn(
-                "select-none dark:text-white/80 text-[16px] font-regular font-normal liga leading-5 tracking-[-0.096px]",
-                isCurrent && "dark:text-white text-black",
-                isCompleted && "dark:text-white/60 text-black/60" // Muted text for completed steps
+                "select-none dark:text-white/40 text-black/40 text-[16px] font-regular font-normal liga leading-5 tracking-[-0.096px] cursor-not-allowed"
               )}
             >
               {item.label}
-            </Link>
-          </BreadcrumbLink>
+            </span>
+          ) : (
+            // Active link for completed and current steps
+            <BreadcrumbLink asChild>
+              <Link
+                href={item.href ?? "/"}
+                className={cn(
+                  "select-none dark:text-white/80 text-[16px] font-regular font-normal liga leading-5 tracking-[-0.096px]",
+                  isCurrent && "dark:text-white text-black",
+                  isCompleted && "dark:text-white/60 text-black/60" // Muted text for completed steps
+                )}
+              >
+                {item.label}
+              </Link>
+            </BreadcrumbLink>
+          )}
         </div>
       </BreadcrumbItem>
       {item.step !== length && <BreadcrumbSeparator />}

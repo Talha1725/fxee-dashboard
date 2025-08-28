@@ -3,7 +3,7 @@ import React from "react";
 import LandingButton from "@/components/features/landing/LandingButton";
 import LandingNavbarLink from "@/components/features/landing/landingNavbar/LandingNavbarLink";
 import { IconMenu } from "@/components/ui/icon";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface NavbarResponsiveClientProps {
@@ -40,6 +40,7 @@ export default function LandingNavbarResponsiveClient({
             className="bg-black border-white/20 py-2.5 px-4"
             style={{ zIndex: 999 }}
           >
+            <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
             <div className="flex flex-col gap-2.5 pt-8">
               {navLinks.map((link) => (
                 <LandingNavbarLink key={link.href} href={link.href}>

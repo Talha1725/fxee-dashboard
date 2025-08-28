@@ -23,12 +23,19 @@ function Input({
   backIcon,
   InputStyles,
   parentStyles = false,
+  value,
+  onChange,
   ...props
 }: InputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { theme } = useTheme();
   const baseInputStyles =
     "bg-transparent outline-none dark:placeholder:text-white/60 text-sm md:text-md font-regular disabled:cursor-not-allowed disabled:opacity-50 w-full";
+
+  // Determine if this should be a controlled input
+  const isControlled = onChange !== undefined;
+  const inputValue = value ?? "";
+  const defaultValue = !isControlled ? inputValue : undefined;
 
   if (icon || isPassword || backIcon) {
     return (
@@ -52,15 +59,22 @@ function Input({
       >
         {icon && <div className="flex-shrink-0 text-white/60">{icon}</div>}
         <input
-          type={isPassword && !isPasswordVisible ? "password" : "text"}
+          type={isPassword && !isPasswordVisible ? "password" : isPassword ? "text" : type || "text"}
           data-slot="input"
           className={cn("flex-1 shrink-0", baseInputStyles, InputStyles)}
+          value={isControlled ? inputValue : undefined}
+          defaultValue={defaultValue}
+          onChange={onChange}
           {...props}
         />
         {isPassword && (
           <div
-            className="text-black/60 dark:text-white/60 cursor-pointer"
-            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            className="text-black/60 dark:text-white/60 cursor-pointer hover:opacity-70 transition-opacity"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsPasswordVisible(!isPasswordVisible);
+            }}
           >
             {isPasswordVisible ? (
               <IconEyeOff height={20} width={20} className="dark:text-white/60 !text-black/60" />
@@ -84,6 +98,9 @@ function Input({
         "invalid:ring-destructive/20 dark:invalid:ring-destructive/40 invalid:border-destructive",
         className
       )}
+      value={isControlled ? inputValue : undefined}
+      defaultValue={defaultValue}
+      onChange={onChange}
       {...props}
     />
   );

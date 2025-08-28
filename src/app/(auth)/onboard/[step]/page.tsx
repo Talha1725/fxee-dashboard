@@ -9,7 +9,7 @@ import AddOns from "@/components/features/onboard/addons/AddOns";
 import Checkout from "@/components/features/onboard/checkout/Checkout";
 import Contract from "@/components/features/onboard/contract/Contract";
 import AccountType from "@/components/features/onboard/accountType/AccountType";
-import Broker from "@/components/features/onboard/broker/Broker";
+// import Broker from "@/components/features/onboard/broker/Broker";
 
 export default async function page({
   params,
@@ -24,13 +24,13 @@ export default async function page({
       case "2":
         return <AddOns />;
       case "3":
-        return <Checkout />;
-      case "4":
         return <Contract />;
-      case "5":
+      case "4":
         return <AccountType />;
-      case "6":
-        return <Broker />;
+      case "5":
+        return <Checkout />;
+      // case "6":
+      //   return <Broker />;
       default:
         break;
     }

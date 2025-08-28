@@ -5,7 +5,11 @@ export interface User {
   fullName: string;
   userName: string;
   role: "user" | "admin" | "trader";
-  avatar?: string;
+  picture?: string | null;
+  phoneNumber?: string;
+  language?: string;
+  timezone?: string;
+  twoFAMethod?: "sms" | "email" | "authenticator" | null;
   emailVerified?: boolean;
   createdAt: string;
   updatedAt: string;

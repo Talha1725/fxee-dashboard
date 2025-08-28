@@ -35,7 +35,7 @@ export default function AccountTypePlanCard({
         <Button
           variant={isPopular ? "fancy" : "default"}
           onClick={() => {
-            router.push("/onboard/6");
+            router.push("/onboard/5");
           }}
           className={`w-full ${isPopular ? "" : "border-black/20 dark:border-white/20"}`}
         >

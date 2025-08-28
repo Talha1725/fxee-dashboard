@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
+import { useChangePasswordMutation } from "@/lib/redux/services/userApi";
+import { toast } from "sonner";
 
 // Create a new schema for change password
 const changePasswordSchema = z.object({
@@ -35,13 +37,14 @@ type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 
 export default function ChangePasswordSection() {
   const { theme } = useTheme();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const {
     register,
     handleSubmit,
     watch,
     reset,
+    setValue,
     formState: { errors, isDirty },
   } = useForm<ChangePasswordFormData>({
     resolver: zodResolver(changePasswordSchema),
@@ -52,12 +55,17 @@ export default function ChangePasswordSection() {
     },
   });
 
-  const newPassword = watch("newPassword");
+  const formData = watch();
+  const newPassword = formData.newPassword;
+
+  const handleInputChange = (field: keyof ChangePasswordFormData, value: string) => {
+    setValue(field, value, { shouldValidate: true, shouldDirty: true });
+  };
 
   // Password strength validation functions
-  const hasUppercase = /[A-Z]/.test(newPassword);
-  const hasNumber = /[0-9]/.test(newPassword);
-  const hasMinLength = newPassword.length >= 8;
+  const hasUppercase = /[A-Z]/.test(newPassword || "");
+  const hasNumber = /[0-9]/.test(newPassword || "");
+  const hasMinLength = (newPassword || "").length >= 8;
 
   // Calculate password strength (0-3)
   const getPasswordStrength = () => {
@@ -71,22 +79,19 @@ export default function ChangePasswordSection() {
   const passwordStrength = getPasswordStrength();
 
   const onSubmit = async (data: ChangePasswordFormData) => {
-    setIsSubmitting(true);
     try {
-      // TODO: Implement API call here
-      console.log("Change password data:", data);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await changePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      }).unwrap();
       
       // Reset form on success
       reset();
-      // TODO: Show success message
-    } catch (error) {
-      // TODO: Handle error
-      console.error("Error changing password:", error);
-    } finally {
-      setIsSubmitting(false);
+      toast.success("Password changed successfully!");
+    } catch (error: any) {
+      // Handle API errors
+      const errorMessage = error?.data?.message || "Failed to change password. Please try again.";
+      toast.error(errorMessage);
     }
   };
 
@@ -112,6 +117,8 @@ export default function ChangePasswordSection() {
               className="h-10 mt-2 dark:border-white/10 border-black/10 !bg-transparent "
               parentStyles={true}
               {...register("currentPassword")}
+              value={formData.currentPassword}
+              onChange={(e) => handleInputChange("currentPassword", e.target.value)}
             />
             {errors.currentPassword && (
               <Text16 className="!text-red-500 mt-1 !text-xs">
@@ -127,6 +134,8 @@ export default function ChangePasswordSection() {
                 className="h-10 mt-2 dark:border-white/10 border-black/10 !bg-transparent"
                 parentStyles={true}
                 {...register("newPassword")}
+                value={formData.newPassword}
+                onChange={(e) => handleInputChange("newPassword", e.target.value)}
               />
               {errors.newPassword && (
                 <Text16 className="!text-red-500 mt-1 !text-xs">
@@ -142,6 +151,8 @@ export default function ChangePasswordSection() {
                   className="h-10 mt-2 dark:border-white/10 border-black/10 !bg-transparent"
                   parentStyles={true}
                   {...register("confirmPassword")}
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
                 />
                 {errors.confirmPassword && (
                   <Text16 className="!text-red-500 mt-1 !text-xs">
@@ -222,7 +233,7 @@ export default function ChangePasswordSection() {
             variant={"black"}
             className="h-[52px] font-satoshi w-full dark:text-white dark:bg-white/5 bg-transparent text-black border-black/15 dark:border-white/15 hover:bg-white/10 hover:opacity-70"
             onClick={handleDiscard}
-            disabled={!isDirty || isSubmitting}
+            disabled={!isDirty || isLoading}
           >
             Discard
           </Button>
@@ -230,9 +241,9 @@ export default function ChangePasswordSection() {
             type="submit"
             variant={theme === "dark" ? "white" : "black"}
             className="h-[52px] font-satoshi-medium w-full"
-            disabled={!isDirty || isSubmitting || passwordStrength < 3}
+            disabled={!isDirty || isLoading || passwordStrength < 3}
           >
-            {isSubmitting ? "Changing Password..." : "Apply Changes"}
+            {isLoading ? "Changing Password..." : "Apply Changes"}
           </Button>
         </div>
       </form>

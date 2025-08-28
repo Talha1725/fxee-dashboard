@@ -5,17 +5,30 @@ import CommonSelect from "../ui/common-select";
 import { IconInfoFilled, IconMoon, IconSun } from "../ui/icon";
 import { Text14, Text16, Text20 } from "../ui/typography";
 import SettingsLabel from "./settings-label";
-import * as AllCountry from "country-flag-icons/react/1x1";
+import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
 import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "../ui/button";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { useUpdateGeneralSettingsMutation } from "@/lib/redux/services/userApi";
+import { updateUser } from "@/lib/redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 export default function GeneralSettings() {
   const { theme, setTheme } = useTheme();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [updateGeneralSettings, { isLoading }] = useUpdateGeneralSettingsMutation();
+  
   const [selectedTheme, setSelectedTheme] = useState<string>("light");
   const [originalTheme, setOriginalTheme] = useState<string>("light");
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("English (US)");
+  const [selectedTimezone, setSelectedTimezone] = useState<string>("GMT-5:00 - Eastern Standard Time (EST)");
+  const [originalLanguage, setOriginalLanguage] = useState<string>("English (US)");
+  const [originalTimezone, setOriginalTimezone] = useState<string>("GMT-5:00 - Eastern Standard Time (EST)");
 
-  // Initialize theme state
+  // Initialize state from user data and theme
   useEffect(() => {
     if (theme) {
       setSelectedTheme(theme);
@@ -26,56 +39,25 @@ export default function GeneralSettings() {
       setOriginalTheme("light");
       setTheme("light");
     }
-  }, [theme, setTheme]);
+    
+    // Initialize language and timezone from user data
+    if (user?.language) {
+      setSelectedLanguage(user.language);
+      setOriginalLanguage(user.language);
+    }
+    
+    if (user?.timezone) {
+      setSelectedTimezone(user.timezone);
+      setOriginalTimezone(user.timezone);
+    }
+  }, [theme, setTheme, user]);
 
-  // Language options with country flags
-  const languageOptions = [
-    {
-      value: "English (US)",
-      label: "English (US)",
-      flag: <AllCountry.US className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "English (UK)",
-      label: "English (UK)",
-      flag: <AllCountry.GB className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "Spanish",
-      label: "Spanish",
-      flag: <AllCountry.ES className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "French",
-      label: "French",
-      flag: <AllCountry.FR className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "German",
-      label: "German",
-      flag: <AllCountry.DE className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "Italian",
-      label: "Italian",
-      flag: <AllCountry.IT className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "Portuguese",
-      label: "Portuguese",
-      flag: <AllCountry.PT className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "Russian",
-      label: "Russian",
-      flag: <AllCountry.RU className="w-5 h-5 rounded-full" />,
-    },
-    {
-      value: "Chinese",
-      label: "Chinese",
-      flag: <AllCountry.CN className="w-5 h-5 rounded-full" />,
-    },
-  ];
+  // Use shared language options
+  const languageOptions = LANGUAGES.map(lang => ({
+    value: lang.value,
+    label: lang.label,
+    flag: lang.flag
+  }));
 
   // Custom render function for options with flags
   const renderLanguageOption = (option: {
@@ -129,17 +111,43 @@ export default function GeneralSettings() {
     },
   ];
 
-  const handleApplyChanges = () => {
-    // Set to selected theme
-    setTheme(selectedTheme as "light" | "dark");
-    setOriginalTheme(selectedTheme);
-    localStorage.setItem("ai-trading-theme-preference", selectedTheme);
-    // TODO: Save to backend/localStorage
+  const handleApplyChanges = async () => {
+    try {
+      // Update theme locally
+      setTheme(selectedTheme as "light" | "dark");
+      setOriginalTheme(selectedTheme);
+      localStorage.setItem("ai-trading-theme-preference", selectedTheme);
+      
+      // Update language and timezone via API - include required user data
+      const result = await updateGeneralSettings({
+        language: selectedLanguage,
+        timezone: selectedTimezone,
+        fullName: user?.fullName,
+        userName: user?.userName
+      }).unwrap();
+      
+      // Update Redux store with new user data - ensure all required fields are present
+      dispatch(updateUser({
+        ...result.result,
+        role: (result.result.role as "user" | "admin" | "trader") || user?.role || "user"
+      }));
+      
+      // Update original values
+      setOriginalLanguage(selectedLanguage);
+      setOriginalTimezone(selectedTimezone);
+      
+      toast.success("Settings updated successfully!");
+    } catch (error: any) {
+      console.error('Error updating settings:', error);
+      toast.error(error?.data?.message || "Failed to update settings");
+    }
   };
 
   const handleDiscard = () => {
     setSelectedTheme(originalTheme);
     setTheme(originalTheme as "light" | "dark");
+    setSelectedLanguage(originalLanguage);
+    setSelectedTimezone(originalTimezone);
   };
 
   return (
@@ -155,7 +163,8 @@ export default function GeneralSettings() {
           <SettingsLabel label="Language" required />
           <CommonSelect
             placeholder="Select a language"
-            defaultValue="English (US)"
+            value={selectedLanguage}
+            onValueChange={setSelectedLanguage}
             options={languageOptions}
             renderOption={renderLanguageOption}
             className="min-w-full mt-2 rounded-md font-satoshi text-sm"
@@ -173,7 +182,8 @@ export default function GeneralSettings() {
 
           <CommonSelect
             placeholder="Select a timezone"
-            defaultValue="GMT-4:00 - Atlantic Standard Time (AST)"
+            value={selectedTimezone}
+            onValueChange={setSelectedTimezone}
             options={timezoneOptions}
             className="min-w-full mt-2 rounded-md font-satoshi text-sm"
           />
@@ -296,8 +306,9 @@ export default function GeneralSettings() {
           variant={theme === "dark" ? "white" : "black"}
           className="h-[52px] font-satoshi-medium w-full"
           onClick={handleApplyChanges}
+          disabled={isLoading}
         >
-          Apply Changes
+          {isLoading ? "Saving..." : "Apply Changes"}
         </Button>
       </div>
     </div>

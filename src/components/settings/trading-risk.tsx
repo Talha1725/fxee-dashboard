@@ -3,20 +3,38 @@ import { RadioGroup } from "../ui/radio-group";
 import { RadioGroupItem } from "../ui/radio-group";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useState, useEffect } from "react";
+import { useGetTradingPreferencesQuery, useUpdateTradingPreferencesMutation } from "@/lib/redux/services/userApi";
+import { toast } from "sonner";
 
 export default function TradingRisk() {
   const { theme } = useTheme();
   const [selectedRisk, setSelectedRisk] = useState("low");
+  
+  const { data: preferences, isLoading: isLoadingPreferences } = useGetTradingPreferencesQuery();
+  const [updatePreferences, { isLoading: isUpdating }] = useUpdateTradingPreferencesMutation();
 
-  // Set default value on component mount
+  // Set value from API data
   useEffect(() => {
-    setSelectedRisk("low");
-  }, []);
+    if (preferences?.result?.riskProfile) {
+      setSelectedRisk(preferences.result.riskProfile);
+    }
+  }, [preferences]);
 
-  const handleValueChange = (value: string) => {
+  const handleValueChange = async (value: string) => {
     setSelectedRisk(value);
-    // Here you can add additional logic like saving to localStorage or API
-    console.log("Risk profile changed to:", value);
+    
+    try {
+      await updatePreferences({
+        riskProfile: value as "low" | "medium" | "high"
+      }).unwrap();
+      
+      toast.success("Risk profile updated!");
+    } catch (error: any) {
+      const errorMessage = error?.data?.message || "Failed to update trading preferences";
+      toast.error(errorMessage);
+      // Revert on error
+      setSelectedRisk(preferences?.result?.riskProfile || "low");
+    }
   };
 
   return (
