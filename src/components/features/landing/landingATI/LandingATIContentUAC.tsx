@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 
 import LandingATICardContainer from "@/components/features/landing/landingATI/LandingATICardContainer";
@@ -17,8 +19,14 @@ import {
 import LandingVRA100 from "@/public/images/landing-vra-100.png";
 
 export default function LandingATIContentUAC() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <LandingWhyFxeeCardContainer className="min-h-[390px] lg:h-full overflow-hidden">
+    <LandingWhyFxeeCardContainer onMouseEnter={() => {
+      setIsHovered(true);
+    }} onMouseLeave={() => {
+      setIsHovered(false);
+    }} className={`min-h-[390px] lg:h-full overflow-hidden ${isHovered ? "border-gradient-blue-green" : window.innerWidth > 640 ? "border-gradient-right" : "border-gradient-top-bottom"}`}>
       <LandingATICardHead
         title="Unique AI Capabilities"
         description="Track whale wallet movements for crypto insights. Analyze social sentiment and news for market predictions. Observe top stock portfolios and hedge fund actions."

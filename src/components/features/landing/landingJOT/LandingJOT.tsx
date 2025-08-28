@@ -64,7 +64,7 @@ export default function LandingJOT() {
               }
               text="Join Our Telegram"
             />
-            <p className="text-white text-center text-[16px] lg:text-[18px] font-regular font-[700] tracking-[-0.36px]">
+            <p className="text-white text-center text-[16px] lg:text-[18px] font-satoshi-medium tracking-[-0.36px]">
               25K+ Members | 98% Positive Feedback
             </p>
           </div>

@@ -1249,6 +1249,12 @@ body {
     border-image-source: linear-gradient(270deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
     border-image-slice: 1;
   }
+  .border-gradient-top-bottom {
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(0deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    border-image-slice: 1;
+  }
   .border-gradient-top-left-right {
     border-width: 1px 1px 0px 1px;
     border-style: solid;
