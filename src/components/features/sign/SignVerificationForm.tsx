@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Loader2, Mail } from "lucide-react";
 import { showToast } from "@/lib/utils/toast";
 import SignFormHeader from "@/components/features/sign/SignFormHeader";
+import { toast } from "sonner";
 
 type VerificationState = 'verifying' | 'success' | 'error' | 'expired';
 
@@ -134,8 +135,8 @@ export default function SignVerificationForm() {
       case 'success':
         return (
           <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+            <div className="flex items-center justify-center w-16 h-16rounded-full">
+              <CheckCircle className="h-14 w-14 text-green-600" />
             </div>
             <div className="text-center">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -171,8 +172,8 @@ export default function SignVerificationForm() {
       case 'error':
         return (
           <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center justify-center w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full">
-              <XCircle className="h-8 w-8 text-red-600" />
+            <div className="flex items-center justify-center w-16 h-16 rounded-full">
+              <XCircle className="h-14 w-14 text-red-600" />
             </div>
             <div className="text-center">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -234,8 +235,8 @@ export default function SignVerificationForm() {
       case 'expired':
         return (
           <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center justify-center w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full">
-              <XCircle className="h-8 w-8 text-orange-600" />
+            <div className="flex items-center justify-center w-16 h-16 rounded-full">
+              <XCircle className="h-14 w-14 text-orange-600" />
             </div>
             <div className="text-center">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -296,6 +297,16 @@ export default function SignVerificationForm() {
     }
   };
 
+  // Show toast notifications
+  useEffect(() => {
+    if (verificationState === 'success' && message) {
+      toast.success(message);
+    }
+    if (verificationState === 'error' && message) {
+      toast.error(message);
+    }
+  }, [verificationState, message]);
+
   return (
     <div className="flex flex-col items-center justify-center self-stretch flex-[1_0_0]">
       <div className="w-[90%] md:w-[420px] flex flex-col items-end md:gap-6 gap-3">
@@ -304,15 +315,6 @@ export default function SignVerificationForm() {
           {renderVerificationContent()}
         </div>
         
-        {message && (
-          <div className={`w-full p-4 rounded-lg text-sm ${
-            verificationState === 'success' 
-              ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800' 
-              : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800'
-          }`}>
-            {message}
-          </div>
-        )}
       </div>
     </div>
   );
