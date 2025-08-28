@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 
 import LandingHero2 from "@/public/images/landing-hero2.png";
 import LandingHero1 from "@/public/images/landing-hero1.png";
-
 export default function LandingHeroContainer({
   children,
   className,
