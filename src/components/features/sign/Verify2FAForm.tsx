@@ -14,6 +14,7 @@ import { showToast } from "@/lib/utils/toast";
 import { handle2FAAuthentication } from "@/lib/utils/authUtils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { API_BASE_URL } from "@/lib/constants";
+import { ArrowLeftIcon } from "lucide-react";
 
 const verify2FASchema = z.object({
   code: z.string().min(6, "Code must be 6 digits").max(6, "Code must be 6 digits")
@@ -90,7 +91,7 @@ export default function Verify2FAForm() {
     mode: "onChange",
   });
 
-  const codeValue = watch("code") || "";
+  const [codeValue, setCodeValue] = useState<string[]>(['', '', '', '', '', '']);
 
   const onSubmit = async (data: Verify2FAFormData) => {
     if (!userInfo) return;
@@ -168,9 +169,11 @@ export default function Verify2FAForm() {
   };
 
   // Auto-format code input
-  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
-    setValue("code", value);
+  const handleCodeChange = (index: number, value: string) => {
+    const newCodeValue = [...codeValue];
+    newCodeValue[index] = value.replace(/\D/g, "").slice(0, 1);
+    setCodeValue(newCodeValue);
+    setValue("code", newCodeValue.join(""));
   };
 
   // Show loading state while userInfo is being loaded
@@ -190,7 +193,7 @@ export default function Verify2FAForm() {
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto">
+    <div className="w-full max-w-sm mx-auto flex flex-col justify-center h-full p-4 lg:p-0">
       <div className="flex flex-col items-center gap-1 self-stretch mb-8">
         <Title32 className="text-center font-satoshi-medium">
           Enter Verification Code
@@ -205,18 +208,36 @@ export default function Verify2FAForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-8">
         <div className="space-y-2">
-          <Label htmlFor="code">Verification Code</Label>
-          <Input
-            id="code"
-            type="text"
-            placeholder="000000"
-            value={codeValue}
-            onChange={handleCodeChange}
-            className={`text-center text-2xl tracking-widest font-mono h-14 ${
-              errors.code ? "border-red-500" : ""
-            }`}
-            maxLength={6}
-          />
+          <Label htmlFor="code" className="text-black dark:text-white font-satoshi-medium text-sm">Verification Code</Label>
+          <div className="flex gap-2 justify-center">
+            {[0, 1, 2, 3, 4, 5].map((index) => (
+              <Input
+                key={index}
+                id={`code-${index}`}
+                type="text"
+                placeholder="0"
+                value={codeValue[index] || ''}
+                onChange={(e) => handleCodeChange(index, e.target.value)}
+                className={`text-center text-2xl tracking-widest font-mono h-12 w-12 sm:h-14 sm:w-14 border-black/5 ${
+                  errors.code ? "border-red-500" : ""
+                }`}
+                maxLength={1}
+                onKeyDown={(e) => {
+                  if (e.key === 'Backspace' && !codeValue[index] && index > 0) {
+                    // Move to previous input on backspace if current is empty
+                    document.getElementById(`code-${index - 1}`)?.focus();
+                  }
+                }}
+                onInput={(e) => {
+                  const value = e.currentTarget.value;
+                  if (value && index < 5) {
+                    // Move to next input when a digit is entered
+                    document.getElementById(`code-${index + 1}`)?.focus();
+                  }
+                }}
+              />
+            ))}
+          </div>
           {errors.code && (
             <p className="text-sm text-red-500">{errors.code.message}</p>
           )}
@@ -226,7 +247,7 @@ export default function Verify2FAForm() {
           type="submit"
           disabled={isLoading || codeValue.length !== 6}
           className="w-full h-12"
-          variant={theme === "dark" ? "white" : "black"}
+          variant={"fancy"}
         >
           {isLoading ? "Verifying..." : "Verify & Sign In"}
         </Button>
@@ -248,13 +269,14 @@ export default function Verify2FAForm() {
           </div>
         )}
 
-        <div className="text-center">
+        <div className="text-center relative z-50">
           <Button
             type="button"
-            variant="ghost"
+            variant={theme === "dark" ? "white" : "black"}
             onClick={() => router.push("/signin")}
-            className="text-sm"
+            className="text-sm bg-transparent border-none dark:text-white text-black font-satoshi hover:!bg-transparent"
           >
+            <ArrowLeftIcon className="w-4 h-4" />
             Back to Sign In
           </Button>
         </div>
