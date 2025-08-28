@@ -16,12 +16,12 @@ export default function LandingHeroContainer({
   return (
     <section
       className={cn(
-        "relative w-full mt-17 2xl:mb-0 2xl:h-[810px] h-full -mb-12.5",
+        "relative w-full mt-17 xl:mb-0 xl:h-[810px] h-full -mb-12.5",
         className
       )}
     >
       {children}
-      <div className="absolute -top-40 sm:-top-60 lg:-top-80 2xl:top-0 right-0 -z-5 select-none w-[450px] h-[600px] sm:w-[600px] sm:h-[900px] lg:w-[830px] lg:h-[1050px]">
+      <div className="absolute -top-40 sm:-top-60 lg:-top-80 xl:top-0 right-0 -z-5 select-none w-[450px] h-[600px] sm:w-[600px] sm:h-[900px] lg:w-[830px] lg:h-[1050px]">
         <Image
           src={LandingHero2}
           alt="Landing Hero 2"
@@ -31,7 +31,7 @@ export default function LandingHeroContainer({
           className="object-contain"
         />
       </div>
-      <div className="absolute top-45 sm:top-50 lg:top-65 2xl:top-0 left-0 -z-5 select-none w-[600px] h-[900px] lg:w-[860px] lg:h-[1300px]">
+      <div className="absolute top-62 lg:top-65 xl:-top-5 left-0 -z-5 select-none w-[530px] h-[900px] lg:w-[1010px] lg:h-[1450px]">
         <Image
           src={LandingHero1}
           alt="Landing Hero 1"
