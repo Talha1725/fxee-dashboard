@@ -9,6 +9,7 @@ import { ReduxProvider } from "@/lib/redux/provider";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
+import AuthInitializer from '@/components/auth/AuthInitializer';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({
         className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} antialiased`}
       >
         <ReduxProvider>
+          <AuthInitializer />
           <ThemeProvider>
             <UserProvider>
               <AddOnsProvider>

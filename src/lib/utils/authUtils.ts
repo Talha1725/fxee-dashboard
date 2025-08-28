@@ -211,11 +211,23 @@ export const validateProviderConfig = (provider: 'google' | 'linkedin' | 'apple'
 // Simplified authentication handler for 2FA verification
 export const handle2FAAuthentication = async (
   authData: { token: string; userData: any },
-  router: AppRouterInstance
+  router: AppRouterInstance,
+  dispatch?: Dispatch
 ) => {
   try {
     // Store token
     localStorage.setItem('token', authData.token);
+    
+    // Store user data in Redux if dispatch is provided
+    if (dispatch && authData.userData) {
+      dispatch(setCredentials({
+        user: {
+          ...authData.userData,
+          avatar: authData.userData.avatar || authData.userData.picture || undefined
+        },
+        token: authData.token
+      }));
+    }
     
     // Redirect to home
     router.replace("/home");

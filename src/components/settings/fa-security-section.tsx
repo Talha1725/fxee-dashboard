@@ -8,28 +8,66 @@ import { Button } from "../ui/button";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/lib/redux/store";
 import { useUpdate2FAPreferencesMutation } from "@/lib/redux/services/userApi";
+import { useGetProfileQuery } from "@/lib/redux/features/auth/authApi";
 import { updateUser } from "@/lib/redux/features/auth/authSlice";
 import { toast } from "sonner";
+import AuthenticatorSetupModal from "./authenticator-setup-modal";
 
 export default function FASecuritySection() {
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const { user, token, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { data: profileData, isLoading: profileLoading, error: profileError } = useGetProfileQuery(undefined, {
+    skip: true // Temporarily disable to test Redux user data only
+  });
   const [selectedFA, setSelectedFA] = useState<string>("");
   const [originalFA, setOriginalFA] = useState<string>("");
+  const [showAuthenticatorModal, setShowAuthenticatorModal] = useState(false);
+  const [pendingAuthenticatorSelection, setPendingAuthenticatorSelection] = useState(false);
   const [update2FAPreferences, { isLoading }] = useUpdate2FAPreferencesMutation();
 
-  // Initialize 2FA state from user data
+  // Debug auth state
+  console.log('Auth Debug:', { token: !!token, isAuthenticated, user: !!user, profileError });
+  console.log('Full user object:', user);
+  console.log('User twoFAMethod:', user?.twoFAMethod);
+
+  // Sync profile data to Redux store when it's fetched
   useEffect(() => {
-    const current2FA = user?.twoFAMethod || "";
+    if (profileData && (!user || user.twoFAMethod !== profileData.twoFAMethod)) {
+      dispatch(updateUser({
+        ...profileData,
+        role: user?.role || "user" // Keep existing role or default to user
+      }));
+    }
+  }, [profileData, user, dispatch]);
+
+  // Initialize 2FA state from user data (prefer profile data from API, fallback to Redux user data)
+  useEffect(() => {
+    const current2FA = profileData?.twoFAMethod || user?.twoFAMethod || "";
+    console.log('2FA Debug - Setting state:', { 
+      profileData: profileData?.twoFAMethod, 
+      user: user?.twoFAMethod, 
+      final: current2FA,
+      typeof: typeof current2FA 
+    });
     setSelectedFA(current2FA);
     setOriginalFA(current2FA);
-  }, [user?.twoFAMethod]);
+  }, [profileData?.twoFAMethod, user?.twoFAMethod]);
+
+  // Debug: Log current state
+  console.log('2FA Debug - Current state:', { selectedFA, originalFA });
 
   const handleApplyChanges = async () => {
     try {
       if (!selectedFA) {
         toast.error("Please select a 2FA method");
+        return;
+      }
+
+      // If authenticator is selected and not already enabled, show setup modal
+      if (selectedFA === "authenticator" && originalFA !== "authenticator") {
+        setPendingAuthenticatorSelection(true);
+        setShowAuthenticatorModal(true);
         return;
       }
 
@@ -57,6 +95,27 @@ export default function FASecuritySection() {
   };
 
   const isDirty = selectedFA !== originalFA;
+
+  // Show loading state while profile data is being fetched
+  if (profileLoading) {
+    return (
+      <div className="mt-5">
+        <Text20 className="font-satoshi">2FA Security</Text20>
+        <Text16 className="dark:opacity-70 mt-1">
+          Loading 2FA settings...
+        </Text16>
+      </div>
+    );
+  }
+
+  // Debug: Show current state in UI for debugging
+  console.log('2FA Component render:', { 
+    profileLoading, 
+    selectedFA, 
+    originalFA, 
+    profileData: profileData?.twoFAMethod, 
+    user: user?.twoFAMethod 
+  });
 
   return (
     <div className="mt-5">
@@ -203,6 +262,25 @@ export default function FASecuritySection() {
           {isLoading ? "Updating..." : selectedFA ? "Update 2FA Preference" : "Enable 2FA Security"}
         </Button>
       </div>
+
+      {/* Authenticator Setup Modal */}
+      <AuthenticatorSetupModal
+        isOpen={showAuthenticatorModal}
+        onClose={() => {
+          setShowAuthenticatorModal(false);
+          // Revert selection if setup was cancelled
+          if (pendingAuthenticatorSelection) {
+            setSelectedFA(originalFA);
+            setPendingAuthenticatorSelection(false);
+          }
+        }}
+        onSuccess={() => {
+          setShowAuthenticatorModal(false);
+          setPendingAuthenticatorSelection(false);
+          setOriginalFA("authenticator");
+          toast.success("Authenticator 2FA enabled successfully!");
+        }}
+      />
     </div>
   );
 }

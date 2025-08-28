@@ -77,7 +77,10 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       // Check if 2FA is required
       if (response.data && typeof response.data === 'object' && 'requiresTwoFA' in response.data) {
         const twoFAData = response.data as any;
-        showToast.success("2FA code sent to your email");
+        const toastMessage = twoFAData.twoFAMethod === 'email' 
+          ? "2FA code sent to your email"
+          : "Please enter your authenticator code";
+        showToast.success(toastMessage);
         
         // Store 2FA data in session storage for security (don't expose in URL)
         sessionStorage.setItem('2fa_verification_data', JSON.stringify({

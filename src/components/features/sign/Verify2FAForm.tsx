@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,6 +25,7 @@ export default function Verify2FAForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [userInfo, setUserInfo] = useState<{
@@ -115,7 +117,7 @@ export default function Verify2FAForm() {
 
       if (result.success && result.data) {
         // Handle successful authentication
-        await handle2FAAuthentication(result.data, router);
+        await handle2FAAuthentication(result.data, router, dispatch);
         
         // Clear session storage on successful verification
         sessionStorage.removeItem('2fa_verification_data');
@@ -133,7 +135,7 @@ export default function Verify2FAForm() {
   };
 
   const handleResendCode = async () => {
-    if (!userInfo || countdown > 0) return;
+    if (!userInfo || countdown > 0 || userInfo.twoFAMethod !== 'email') return;
 
     setIsLoading(true);
     try {
@@ -194,7 +196,10 @@ export default function Verify2FAForm() {
           Enter Verification Code
         </Title32>
         <Description14 className="text-center font-satoshi">
-          We've sent a 6-digit code to {userInfo.email}
+          {userInfo.twoFAMethod === 'email' 
+            ? `We've sent a 6-digit code to ${userInfo.email}`
+            : 'Enter the 6-digit code from your authenticator app'
+          }
         </Description14>
       </div>
 
@@ -226,20 +231,22 @@ export default function Verify2FAForm() {
           {isLoading ? "Verifying..." : "Verify & Sign In"}
         </Button>
 
-        <div className="text-center space-y-2">
-          <p className="text-sm text-gray-500">
-            Didn't receive the code?
-          </p>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={handleResendCode}
-            disabled={countdown > 0 || isLoading}
-            className="text-sm"
-          >
-            {countdown > 0 ? `Resend in ${countdown}s` : "Resend Code"}
-          </Button>
-        </div>
+        {userInfo.twoFAMethod === 'email' && (
+          <div className="text-center space-y-2">
+            <p className="text-sm text-gray-500">
+              Didn't receive the code?
+            </p>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={handleResendCode}
+              disabled={countdown > 0 || isLoading}
+              className="text-sm"
+            >
+              {countdown > 0 ? `Resend in ${countdown}s` : "Resend Code"}
+            </Button>
+          </div>
+        )}
 
         <div className="text-center">
           <Button
