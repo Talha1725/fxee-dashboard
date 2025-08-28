@@ -8,6 +8,7 @@ import {
   Body12,
   Text16,
 } from "@/components/ui/typography";
+import RangBar from "@/public/images/range-bar.svg"
 
 import LandingRBVVector from "@/public/images/landing-rbv-vector.png";
 
@@ -18,15 +19,15 @@ export default function LandingATCContentRBVCard() {
         <Text18 className="flex-[1_0_0]">Range Bar Visualization</Text18>
         <IconChevronDown width={24} height={24} />
       </div>
-      <div className="flex flex-col items-center gap-2.5 sm:gap-4 self-stretch z-1">
-        <div className="self-stretch">
+      <div className="z-50 relative">
+        <div className="self-stretch w-full">
           <Image
-            src={LandingRBVVector}
+            src={RangBar}
             alt="Fxee"
-            className="w-full h-[80px] sm:h-[100px] select-none"
+            className="w-full h-auto z-50"
           />
         </div>
-        <div className="flex flex-col items-center gap-[6px] self-stretch">
+        {/* <div className="flex flex-col items-center gap-[6px] self-stretch">
           <div className="flex flex-col items-center">
             <TextSuccess className="text-[16px] sm:text-[18px] font-medium liga tracking-[-0.36px]">
               Current
@@ -43,7 +44,7 @@ export default function LandingATCContentRBVCard() {
               $12,150
             </Text16>
           </div>
-        </div>
+        </div> */}
       </div>
     </React.Fragment>
   );

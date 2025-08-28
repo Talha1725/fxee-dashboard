@@ -6,7 +6,8 @@ import { Separator } from "@/components/ui/separator";
 
 import LandingATCContentVRAItem from "@/components/features/landing/landingATC/LandingATCContentVRAItem";
 import LandingVRA100 from "@/public/images/landing-vra-100.png";
-import LandingVRARisk from "@/public/images/landing-vra-risk.png";
+import LandingVRARisk from "@/public/images/risk-chart.svg";
+import RiskChart from "@/public/images/risk-chart.svg";
 
 export default function LandingATCContentVRACard() {
   return (
@@ -42,15 +43,17 @@ export default function LandingATCContentVRACard() {
         </LandingATCContentVRAItem>
       </div>
       <Separator className="bg-white/5 z-1" />
-      <div className="flex flex-col justify-center items-center gap-2 z-1">
-        <p className="text-[#F59D31] text-[16px] sm:text-[18px] font-regular font-medium liga tracking-[-0.09px]">
-          Medium
-        </p>
+      <div className="flex flex-col justify-center items-center gap-0 z-1">
+        <div className="w-[100%]">
         <Image
           src={LandingVRARisk}
           alt="Fxee"
-          className="h-[150px] w-[290px] sm:w-[290px] sm:h-[220px] select-none"
+          width={100}
+          height={100}
+          className="w-[100%] h-full"
         />
+        {/* <RiskChart /> */}
+        </div>
       </div>
     </React.Fragment>
   );

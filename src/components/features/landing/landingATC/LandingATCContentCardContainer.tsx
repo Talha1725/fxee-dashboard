@@ -11,7 +11,7 @@ export default function LandingATCContentCardContainer({
   return (
     <div
       className={cn(
-        "relative flex flex-col items-start gap-2.5 sm:gap-4 p-2.5 sm:p-4 self-stretch rounded-[10px] bg-landing-atc-gradient overflow-hidden select-none",
+        "relative flex flex-col items-start gap-2.5 sm:gap-4 p-3 sm:p-4 self-stretch rounded-[10px] bg-landing-atc-gradient overflow-hidden select-none",
         className
       )}
     >
