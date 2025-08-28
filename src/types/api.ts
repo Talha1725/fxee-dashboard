@@ -47,13 +47,18 @@ export interface User {
 // Payment Types
 export interface Payment {
   id: number;
+  trackId?: string;
   transactionId: string;
   userId: number;
   amount: string;
   currency: string;
-  status: string;
+  status: 'pending' | 'paid' | 'failed' | 'refunded' | 'chargeback' | 'trial';
+  subscriptionStatus?: 'active' | 'cancelled_pending' | 'cancelled' | 'expired' | 'paused';
+  billingCycle?: 'monthly' | 'yearly';
   paymentMethod: string;
   description?: string;
+  nextBillingDate?: string;
+  isRecurring?: boolean;
   createdAt?: string;
   paidAt?: string;
   failedAt?: string;
@@ -62,6 +67,70 @@ export interface Payment {
 export interface PaymentResponse extends ApiResponse<Payment> {
   payment?: Payment;
 }
+
+// VIP Subscription Types
+export interface VIPCheckoutRequest {
+  planId: 'VIP';
+  metadata?: {
+    source?: string;
+    campaign?: string;
+    [key: string]: any;
+  };
+}
+
+export interface VIPPlan {
+  name: string;
+  tier: 'vip';
+  billingCycle: 'monthly' | 'yearly';
+  features: string[];
+}
+
+export interface VIPCheckoutPayment {
+  id: number;
+  trackId: string;
+  amount: string;
+  currency: string;
+  status: 'pending' | 'paid' | 'failed' | 'refunded' | 'chargeback' | 'trial';
+}
+
+export interface VIPCheckoutResponse extends ApiResponse<{
+  payment: VIPCheckoutPayment;
+  checkoutUrl: string;
+  plan: VIPPlan;
+}> {}
+
+export interface Subscription {
+  id: number;
+  tier: string;
+  isActive: boolean;
+  startDate: string;
+  endDate?: string;
+  nextBillingDate: string;
+}
+
+export interface PaymentStatusUser {
+  id: number;
+  email: string;
+  fullName: string;
+}
+
+export interface PaymentStatusResponse extends ApiResponse<{
+  payment: {
+    id: number;
+    trackId: string;
+    amount: string;
+    currency: string;
+    status: 'pending' | 'paid' | 'failed' | 'refunded' | 'chargeback' | 'trial';
+    subscriptionStatus: 'active' | 'cancelled_pending' | 'cancelled' | 'expired' | 'paused';
+    billingCycle: 'monthly' | 'yearly';
+    nextBillingDate: string;
+    isRecurring: boolean;
+    paidAt?: string;
+    createdAt: string;
+  };
+  user: PaymentStatusUser;
+  subscription: Subscription;
+}> {}
 
 export interface PaymentsListResponse extends ApiResponse<{
   payments: Payment[];
