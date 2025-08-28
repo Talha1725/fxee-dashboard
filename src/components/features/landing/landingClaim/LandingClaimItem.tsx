@@ -11,7 +11,7 @@ export default function LandingClaimItem({
   return (
     <div className="flex justify-center items-center gap-3 flex-[1_0_0] shrink-0">
       {icon}
-      <Title22 className="text-black/90 text-center shrink-0">{title}</Title22>
+      <Title22 className="!text-black text-center shrink-0">{title}</Title22>
     </div>
   );
 }

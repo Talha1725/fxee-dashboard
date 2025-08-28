@@ -13,7 +13,7 @@ export default function LandingClaimHead() {
       <LandingTitle className="w-full lg:w-[950px] text-center tracking-[-3.6px] leading-[120%] text-landing-title-black-gradient">
         Get Started with FXEE — Earn $100 in ETH Instantly
       </LandingTitle>
-      <LandingDescription className="text-center text-black/40 w-full lg:w-[700px]">
+      <LandingDescription className="text-center !text-black/40 w-full lg:w-[700px]">
         Join FXEE Today and Receive $100 Worth of Ethereum Deposited into Your
         Trading Account
       </LandingDescription>
