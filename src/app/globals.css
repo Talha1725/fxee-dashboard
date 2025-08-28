@@ -1259,4 +1259,9 @@ body {
     border-image-source: linear-gradient(0deg, #0276DB 14.37%, #3EDC81 82.05%);
     border-image-slice: 1 ;
   }
+  
+  .bg-hero-card-thr-gradient {
+    background: linear-gradient(241.77deg, rgba(255, 255, 255, 0.1) 1.24%, rgba(255, 255, 255, 0) 90.3%);
+
+  }
 }

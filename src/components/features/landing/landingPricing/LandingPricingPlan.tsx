@@ -24,7 +24,7 @@ export default function LandingPricingPlan({
   return (
     <div
       className={cn(
-        "flex flex-col items-center gap-5 p-5 flex-[1_0_0] self-stretch bg-hero-card-gradient border-grey-linear min-w-[300px] rounded-none border-green-gradient-0 ",
+        `flex flex-col items-center gap-5 p-5 flex-[1_0_0] self-stretch ${window.innerWidth<640 ? "bg-hero-card-thr-gradient" : "bg-hero-card-gradient"} border-grey-linear min-w-[300px] rounded-none border-green-gradient-0`,
         className,
         isActive && "bg-landing-card-green-gradient border-green-gradient"
       )}

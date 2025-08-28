@@ -5,16 +5,19 @@ export default function LandingPricingSwitchButton({
   title,
   isActive,
   onClick,
+  className
 }: {
   title: string;
   isActive: boolean;
   onClick: () => void;
+  className?: string;
 }) {
   return (
     <button
       className={cn(
-        "rounded-none flex flex-col items-start gap-5 p-5 bg-landing-pricing-switch border-landing-pricing-switch border-green-gradient-0 cursor-pointer",
-        isActive && "bg-landing-card-green-gradient border-green-gradient"
+        "rounded-none flex flex-col items-start gap-5 p-5 bg-landing-pricing-switch cursor-pointer",
+        className,
+        isActive && "bg-landing-card-green-gradient border-gradient-blue-green"
       )}
       onClick={onClick}
     >
