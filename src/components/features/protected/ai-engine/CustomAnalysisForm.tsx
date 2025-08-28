@@ -19,7 +19,10 @@ export default function CustomAnalysisForm() {
     tradingVersion: 'basic',
     symbol: '',
     timeFrame: '',
-    customGoals: ''
+    customGoals: '',
+    potentialProfit: 0,
+    maximumLoss: 0,
+    riskReward: 0
   });
 
   // API hooks
@@ -60,7 +63,10 @@ export default function CustomAnalysisForm() {
           tradingVersion: 'basic',
           symbol: '',
           timeFrame: '',
-          customGoals: ''
+          customGoals: '',
+          potentialProfit: 0,
+          maximumLoss: 0,
+          riskReward: 0
         });
       }
     } catch (error) {

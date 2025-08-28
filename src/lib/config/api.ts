@@ -1,7 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
   // API Base URL from environment variables
-  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000",
+  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001",
   
   // API Endpoints
   ENDPOINTS: {

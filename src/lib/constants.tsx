@@ -260,33 +260,33 @@ export const CONTACT_INFO = [{ link: "/", text: "support@fxee.ai" }];
 
 export const addOnsData = [
   // First 4 add-ons (available to all plans)
-  {
-    icon: <IconAIBrain width={20} height={20} />,
-    title: "AI Analysis",
-    description: "AI-powered trading analysis and insights",
-    isVip: false,
-    active: true,
-  },
+  // {
+  //   icon: <IconAIBrain width={20} height={20} />,
+  //   title: "AI Analysis",
+  //   description: "AI-powered trading analysis and insights",
+  //   isVip: false,
+  //   active: true,
+  // },
   {
     icon: <IconLineChart width={20} height={20} />,
     title: "AI RSI Analyzer",
     description: "Advanced RSI analysis with AI-powered overbought/oversold",
     isVip: false,
-    active: true,
+    active: false,
   },
   {
     icon: <IconFibo width={20} height={20} />,
     title: "Fibonacci Retracement Analyzer",
     description: "Advanced Fibonacci retracement analysis with AI-powered level detection",
     isVip: false,
-    active: true,
+    active: false,
   },
   {
     icon: <IconScale width={20} height={20} />,
     title: "Volatility & Risk Analyzer",
     description: "Advanced risk assessment and position sizing recommendations",
     isVip: false,
-    active: true,
+    active: false,
   },
   // Last 6 add-ons (VIP - disabled for Basic plan)
   {
@@ -294,7 +294,7 @@ export const addOnsData = [
     title: "Market Sentiment Aggregator",
     description: "Real-time market sentiment analysis across multiple timeframes",
     isVip: true,
-    active: true,
+    active: false,
   },
   {
     icon: <IconEye width={20} height={20} />,
@@ -303,13 +303,13 @@ export const addOnsData = [
     isVip: true,
     active: false,
   },
-  {
-    icon: <IconDoc width={20} height={20} />,
-    title: "News Impact Predictor",
-    description: "Realtime Market news analysis with sentiment scoring and impact prediction",
-    isVip: true,
-    active: false,
-  },
+  // {
+  //   icon: <IconDoc width={20} height={20} />,
+  //   title: "News Impact Predictor",
+  //   description: "Realtime Market news analysis with sentiment scoring and impact prediction",
+  //   isVip: true,
+  //   active: false,
+  // },
   {
     icon: <IconFingerPrint width={20} height={20} />,
     title: "Pattern Recognition Scanner",

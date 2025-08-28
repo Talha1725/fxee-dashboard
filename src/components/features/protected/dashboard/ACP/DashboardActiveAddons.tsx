@@ -11,7 +11,7 @@ import { useUser } from "@/lib/contexts/UserContext";
 
 export default function DashboardActiveAddons() {
   const { theme } = useTheme();
-  const { pendingAddOns, toggleAddOn, saveAddOns, hasUnsavedChanges } = useAddOns();
+  const { pendingAddOns, toggleAddOn, saveAddOns, hasUnsavedChanges, isUpdating } = useAddOns();
   const { isPremium } = useUser();
   return (
     <div className="flex flex-col items-start gap-5 self-stretch px-3">
@@ -63,15 +63,17 @@ export default function DashboardActiveAddons() {
       <div className="flex justify-end self-stretch">
         <Button 
           onClick={saveAddOns}
-          disabled={!hasUnsavedChanges}
+          disabled={!hasUnsavedChanges || isUpdating}
           className={`w-[120px] h-[40px] rounded-[10px] border border-green-500/20 gap-1 pt-[10px] pr-[20px] pb-[10px] pl-[20px] transition-colors ${
-            hasUnsavedChanges 
+            hasUnsavedChanges && !isUpdating
               ? 'bg-green-500 hover:bg-green-600' 
               : 'bg-green-500/90 cursor-not-allowed'
           }`}
         >
-          <Text14 className="text-white font-satoshi-medium">Save</Text14>
-          <IconCheck width={20} height={20} />
+          <Text14 className="text-white font-satoshi-medium">
+            {isUpdating ? "Saving..." : "Save"}
+          </Text14>
+          {!isUpdating && <IconCheck width={20} height={20} />}
         </Button>
       </div>
     </div>

@@ -3,8 +3,8 @@
 import React from "react";
 import AIEngineToolsCardHead from "./AIEngineToolsCardHead";
 import AIEngineToolsCardContainer from "./AIEngineToolsCardContainer";
-import AIEngineToolsNIPText from "./NIP/AIEngineToolsNIPText";
 import AIEngineToolsNIPCardAI from "./NIP/AIEngineToolsNIPCardAI";
+import AIEngineToolData from "./AIEngineToolData";
 import DashboardWidget from "@/components/features/protected/dashboard/widget/DashboardWidget";
 import { useAddOns } from "@/lib/contexts/AddOnsContext";
 import { useUser } from "@/lib/contexts/UserContext";
@@ -24,28 +24,33 @@ export default function AIEngineToolsAllSections() {
     return isPremium || !addOn.isVip;
   });
 
-  const renderSectionContent = (addOn: any) => {
-    let sectionHeight = "h-[400px] md:h-[714px]";
-
-    if (addOn.title === "RSI Analyzer") {
-      sectionHeight = "h-[400px] md:h-[785px]";
-    }
+  // Map add-on titles to their corresponding API tool keys
+  const getToolKeyForAddOn = (title: string): string => {
+    const titleToKeyMap: { [key: string]: string } = {
+      "AI RSI Analyzer": "rsi",
+      "Smart Portfolio Allocator": "smart_portfolio", 
+      "AI Trend Forecast": "ai_trend",
+      "Volatility & Risk Analyzer": "volatility_risk",
+      "Fibonacci Retracement Analyzer": "fibonacci_retracement",
+      "Pattern Recognition Scanner": "pattern_recognition",
+      "Mass Psychology Analysis": "mass_psychology",
+      "Market Sentiment Aggregator": "market_sentiment",
+      "Trade Probability Calculator": "trade_probability"
+    };
     
-    if (addOn.title === "Smart Portfolio Allocator") {
-      return (
-        <div className={`flex flex-col md:flex-row items-start gap-5 self-stretch ${sectionHeight}`}>
-          <div className="w-full flex-1 h-full overflow-y-auto scrollbar-hide">
-            <AIEngineToolsNIPText />
-          </div>
-        </div>
-      );
-    }
+    return titleToKeyMap[title] || title.toLowerCase().replace(/\s+/g, '_');
+  };
+
+  const renderSectionContent = (addOn: any) => {
+    const toolKey = getToolKeyForAddOn(addOn.title);
     
     return (
-      <div className={`flex flex-col md:flex-row items-start gap-5 self-stretch ${sectionHeight}`}>
-        <div className="w-full flex-1 h-full overflow-y-auto scrollbar-hide">
-          <AIEngineToolsNIPText />
-        </div>
+      <div className="w-full">
+        <AIEngineToolData 
+          toolKey={toolKey}
+          fallbackTitle={addOn.title}
+          fallbackDescription={addOn.description}
+        />
       </div>
     );
   };

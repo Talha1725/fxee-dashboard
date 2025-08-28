@@ -180,6 +180,9 @@ export interface CustomAnalysisRequest {
   symbol: string;
   timeFrame?: string;
   customGoals?: string;
+  potentialProfit: number;
+  maximumLoss: number;
+  riskReward: number;
 }
 
 export interface CustomAnalysis {
@@ -411,4 +414,29 @@ export interface UsageLimitsResponse {
   success: boolean;
   data: UsageLimitsData;
   message: string;
+}
+
+// AI Tools Types
+export interface AIToolsData {
+  enabledTools: string[];
+  count: number;
+}
+
+export interface AIToolsResponse {
+  success: boolean;
+  data?: AIToolsData;
+  message?: string;
+  error?: string;
+  requiresUpgrade?: boolean;
+  upgradeUrl?: string;
+  details?: Array<{
+    code: string;
+    minimum?: number;
+    type: string;
+    message: string;
+  }>;
+}
+
+export interface UpdateAIToolsRequest {
+  tools: string[];
 }
