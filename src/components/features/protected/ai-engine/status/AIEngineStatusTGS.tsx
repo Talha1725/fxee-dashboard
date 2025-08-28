@@ -19,7 +19,7 @@ import { Text14 } from "@/components/ui/typography";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
-import { useCreateProposedTradesMutation, useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useCreateProposedTradesMutation, useGetUsageLimitsQuery, useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 import { useCreateCustomAnalysisMutation, useGetMyAnalysesQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 import type { ProposedTrade, CustomAnalysisRequest } from "@/types/redux";
@@ -73,6 +73,9 @@ export default function AIEngineStatusTGS({
   
   // Query for refetching usage limits
   const { refetch: refetchUsageLimits } = useGetUsageLimitsQuery();
+  
+  // Query for getting last proposed trade
+  const { data: lastTradeData } = useGetLastProposedTradeQuery();
 
   
   // State for editable detail fields (Best Trade)
