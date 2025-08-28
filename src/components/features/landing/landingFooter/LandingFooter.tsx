@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { QUICK_LINKS, LEGAL_LINKS, CONTACT_INFO } from "@/lib/constants";
 
 import LandingFooterImage from "@/public/images/landing-footer.png";
+import LandingFooterImageMobile from "@/public/images/footer-second-image.png";
 
 export default function LandingFooter() {
   return (
@@ -22,7 +23,12 @@ export default function LandingFooter() {
       <Image
         src={LandingFooterImage}
         alt="Landing Footer Image"
-        className="absolute right-0 top-0 h-[400px] w-[700px]"
+        className="absolute right-0 top-0 h-[600px] w-[800px] md:block hidden"
+      />
+      <Image
+        src={LandingFooterImageMobile}
+        alt="Landing Footer Image"
+        className="absolute right-0 top-[100px] h-[900px] w-[800px] md:hidden block"
       />
       <LandingMax1440Container className="pt-25 pb-10 gap-10">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 justify-between items-start self-stretch">
