@@ -9,7 +9,7 @@ export default function LandingATCContentACPCard() {
         <p className="text-white text-[12px] sm:text-[14px] font-regular font-medium liga tracking-[-0.145px] flex-[1_0_0]">
           AI Confidence Percentage
         </p>
-        <div className="flex justify-center items-center gap-1 py-1 px-2 bg-card-weak-gradient rounded-[8px] backdrop-blur-[9.905548095703125px]">
+        <div className="flex justify-center items-center gap-1 py-1 px-2 bg-card-weak-gradient rounded-[8px] backdrop-blur-[5px] bg-white/10">
           <IconTradeUp width={16} height={16} color="#3EDC81" />
           <p className="text-white text-[10px] font-regular font-medium tracking-[-0.198px]">
             Bullish

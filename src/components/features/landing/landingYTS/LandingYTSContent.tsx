@@ -7,15 +7,15 @@ import LandingYTSContentBTC from "@/components/features/landing/landingYTS/Landi
 
 export default function LandingYTSContent() {
   return (
-    <div className="flex flex-col md:flex-row items-center gap-1 sm:gap-2.5">
-      <div className="flex flex-col items-end gap-2.5 w-[320px] sm:w-[340px]">
+    <div className="flex flex-col lg:flex-row items-center gap-1 sm:gap-2.5">
+      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-end gap-2.5 w-[320px] sm:w-[340px]">
         <LandingYTSContentCardano />
       </div>
-      <div className="flex flex-col items-end gap-2.5 w-[320px] sm:w-[340px]">
+      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-end gap-2.5 w-[320px] sm:w-[340px] lg:w-[340px] md:w-[90%]">
         <LandingATCContentNIP />
         <LandingATCContentACP />
       </div>
-      <div className="flex flex-col items-end gap-2.5 w-[320px] sm:w-[340px]">
+      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-end gap-2.5 w-[320px] sm:w-[340px]">
         <LandingYTSContentBTC />
       </div>
     </div>
