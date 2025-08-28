@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { EmblaCarouselType } from "embla-carousel";
 
@@ -58,9 +58,20 @@ export default function LandingReviewCarousel() {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi as EmblaCarouselType);
 
+  // Auto-scroll functionality
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const autoScroll = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(autoScroll);
+  }, [emblaApi]);
+
   return (
     <div className="flex flex-col gap-[50px] sm:gap-[70px]">
-      <div className="max-w-[1000px]">
+      <div className="max-w-[100vw] xl:max-w-[55vw]">
         <div className="" ref={emblaRef}>
           <div className="flex ml-0 sm:-ml-[155px]">
             {SLIDES.map((slide, index) => (
