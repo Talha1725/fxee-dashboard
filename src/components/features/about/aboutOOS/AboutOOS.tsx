@@ -6,7 +6,7 @@ import AboutOOSContent from "@/components/features/about/aboutOOS/AboutOOSConten
 
 export default function AboutOOS() {
   return (
-    <LandingMax1440Container className="py-25 gap-[50px] sm:gap-[70px]">
+    <LandingMax1440Container className="mt-20 md:mt-0 py-25 gap-[50px] sm:gap-[70px]">
       <AboutOOSHead />
       <AboutOOSContent />
     </LandingMax1440Container>

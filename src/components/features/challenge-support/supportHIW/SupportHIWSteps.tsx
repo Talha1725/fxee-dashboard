@@ -72,7 +72,7 @@ export default function CommunityHIWSteps() {
               {step.reverseOnDesktop ? (
                 <>
                   <HIWTextContainer
-                    className="hidden lg:flex min-h-[180px]"
+                    className="hidden lg:flex min-h-[150px] md:min-h-[180px]"
                     reverseOnDesktop={step.reverseOnDesktop}
                   >
                     <LandingHIWContentTitle title={step.title}>
@@ -95,7 +95,7 @@ export default function CommunityHIWSteps() {
                 <>
                   <StepComponent />
                   <HIWTextContainer
-                    className="min-h-[180px]"
+                    className="min-h-[140px] md:min-h-[180px]"
                     reverseOnDesktop={step.reverseOnDesktop}
                   >
                     <LandingHIWContentTitle title={step.title}>

@@ -13,9 +13,9 @@ export default function AboutFOIK() {
       <Image
         src={FOIKBg}
         alt="FOIK Background"
-        className="absolute top-0 right-0 w-[1000px] h-[800px] object-cover -z-1"
+        className="absolute top-0 right-0 w-[1000px] md:h-[800px] object-cover -z-1"
       />
-      <LandingMax1440Container className="py-25 gap-[50px] sm:gap-[70px]">
+      <LandingMax1440Container className="py-20 gap-[50px] sm:gap-[70px]">
         <LandingTitle className="text-center">
           What Makes FXEE <br className="block lg:hidden" /> First-of-Its-Kind
         </LandingTitle>

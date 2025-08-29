@@ -4,7 +4,7 @@ import Image from "next/image";
 import SupportHIWStepImage from "@/components/features/challenge-support/supportHIW/SupportHIWStepImage";
 // import { IconFlashlight } from "@/components/ui/icon";
 
-import SupportHIWStep1Image from "@/public/images/support-hiw-1.png";
+import SupportHIWStep1Image from "@/public/images/subscribe.svg";
 
 export default function SupportHIWStep1() {
   return (

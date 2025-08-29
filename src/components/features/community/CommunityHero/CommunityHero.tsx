@@ -20,7 +20,7 @@ export default function CommunityHero() {
           <LandingTitle className="max-w-[1100px] text-center text-[64px] sm:text-[80px] lg:text-[124px] leading-[105%]">
             Join the FXEE Movement — Where Traders and Technology Unite
           </LandingTitle>
-          <LandingDescription className="w-full max-w-[640px] text-white text-center">
+          <LandingDescription className="w-full max-w-[640px] !text-white text-center">
             We’re building more than a product — we’re building a movement. Join
             our global community of traders who are leveraging AI to change the
             game.

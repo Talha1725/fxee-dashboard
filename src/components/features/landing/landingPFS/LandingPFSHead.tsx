@@ -10,7 +10,7 @@ import { fadeInDownView } from "@/lib/motion-variants";
 
 export default function LandingPFSHead() {
   return (
-    <motion.div className="flex flex-col items-center gap-5" {...fadeInDownView}>
+    <motion.div className="flex flex-col items-center gap-5 mt-20 lg:mt-52" {...fadeInDownView}>
       <LandingTitle className="text-center leading-[120%]">
         FXEE for Prop Firm Success
       </LandingTitle>

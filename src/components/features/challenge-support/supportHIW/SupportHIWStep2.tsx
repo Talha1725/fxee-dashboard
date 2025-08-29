@@ -4,7 +4,7 @@ import Image from "next/image";
 import SupportHIWStepImage from "@/components/features/challenge-support/supportHIW/SupportHIWStepImage";
 
 // import SupportHIWStep2Image from "@/public/images/support-step-2.png";
-import SupportHIWStep2Image from "@/public/images/support-hiw-2.png";
+import SupportHIWStep2Image from "@/public/images/account-mode.svg";
 
 export default function SupportHIWStep2() {
   return (

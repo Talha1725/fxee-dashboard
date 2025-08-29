@@ -7,7 +7,7 @@ export default function AboutOOSHead() {
   return (
     <div className="flex flex-col items-center gap-5">
       <LandingTitle>Our Origin Story</LandingTitle>
-      <LandingDescription className="text-white">
+      <LandingDescription className="!text-white">
         FXEE was born from a bold question:
       </LandingDescription>
     </div>
