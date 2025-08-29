@@ -1,18 +1,24 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
 
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
 import LandingNavbarResponsiveClient from "@/components/features/landing/landingNavbar/LandingNavbarResponsiveClient";
-import { IconLogo1, IconLogoLanding } from "@/components/ui/icon";
+import {  IconLogoLanding } from "@/components/ui/icon";
 
 export default function LandingNavbar() {
+  const { isAuthenticated, token } = useSelector((state: RootState) => state.auth);
+
   const NavLinks = [
     { href: "/", label: "Home" },
     { href: "/how-it-works", label: "How it works" },
     { href: "/challenge-support", label: "Challenge Support" },
     { href: "/community", label: "Community" },
     { href: "/about", label: "About us" },
-    { href: "/signin", label: "Login" },
+    { href: isAuthenticated ? "/home" : "/signin", label: isAuthenticated ? "Home" : "Login" },
   ];
 
   return (

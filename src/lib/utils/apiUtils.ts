@@ -123,7 +123,7 @@ export const removeStoredToken = (): void => {
 
 // API URL utilities
 export const getApiUrl = (endpoint: string): string => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api';
   return `${baseUrl}${endpoint}`;
 };
 

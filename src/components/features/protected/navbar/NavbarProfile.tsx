@@ -44,7 +44,6 @@ export default function NavbarProfile() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
-
   const handleLogout = () => {
     // Clear token from localStorage
     localStorage.removeItem("token");
@@ -55,37 +54,37 @@ export default function NavbarProfile() {
     // Show success toast
     showToast.success("Logged out successfully");
 
-    // Redirect to signin page and prevent going back
-    router.replace("/signin");
-  };
-
-  const [updateLanguage] = useUpdateLanguageMutation();
-  
+    // Redirect to signin page and prevent going back          
+    router.replace("/signin");                                 
+  };                                             
+                                                             
+  const [updateLanguage] = useUpdateLanguageMutation();         
+   
   // Get user's current language or default to English (US)
   const [selectedLanguage, setSelectedLanguage] = useState(user?.language || "English (US)");
   const currentLanguage = getLanguageByValue(selectedLanguage);
-  
-  // Update selected language when user data changes
-  useEffect(() => {
-    if (user?.language) {
-      setSelectedLanguage(user.language);
-    }
-  }, [user?.language]);
-  
-  // Handle language change
-  const handleLanguageChange = async (newLanguage: string) => {
-    try {
-      setSelectedLanguage(newLanguage);
-      
-      // Update language via API - include required user data
-      const result = await updateLanguage({ 
-        language: newLanguage,
-        fullName: user?.fullName,
-        userName: user?.userName
-      }).unwrap();
-      
-      // Update Redux store - ensure all required fields are present
-      dispatch(updateUser({
+                                                           
+  // Update selected language when user data changes                                 
+  useEffect(() => {                                    
+    if (user?.language) {                              
+      setSelectedLanguage(user.language);                           
+    }                                
+  }, [user?.language]);         
+                                             
+  // Handle language change                                             
+  const handleLanguageChange = async (newLanguage: string) => {         
+    try {                                   
+      setSelectedLanguage(newLanguage);                    
+                                                                             
+      // Update language via API - include required user data                   
+      const result = await updateLanguage({                            
+        language: newLanguage,             
+        fullName: user?.fullName,                       
+        userName: user?.userName                   
+      }).unwrap();                                  
+                                                                         
+      // Update Redux store - ensure all required fields are present             
+      dispatch(updateUser({              
         ...result.result,
         role: (result.result.role as "user" | "admin" | "trader") || user?.role || "user"
       }));

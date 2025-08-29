@@ -1,36 +1,42 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/lib/redux/store';
 import { useGetProfileQuery } from '@/lib/redux/features/auth/authApi';
-import { setCredentials, logout } from '@/lib/redux/features/auth/authSlice';
+import { setCredentials, setToken, logout } from '@/lib/redux/features/auth/authSlice';
 
 export default function AuthInitializer() {
   const dispatch = useDispatch();
   const { token, user, isAuthenticated } = useSelector((state: RootState) => state.auth);
   
-  // Check localStorage token on component mount
+  // Memoize the decision to fetch profile to prevent unnecessary re-renders
+  const shouldFetchProfile = useMemo(() => {
+    return !!token && !user;
+  }, [token, user]);
+  
+  // Check localStorage token on component mount and restore if needed
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    console.log('AuthInitializer Debug:', { 
-      reduxToken: !!token, 
-      storedToken: !!storedToken, 
-      isAuthenticated, 
-      user: !!user 
-    });
     
-    // If we have a stored token but no Redux token, there might be a persistence issue
+    // If we have a stored token but no Redux token, restore the token to Redux
     if (storedToken && !token) {
-      console.warn('Token found in localStorage but not in Redux - possible persistence issue');
+      dispatch(setToken(storedToken));
     }
-  }, [token, isAuthenticated, user]);
+    
+    // If no stored token and we have Redux token, clear Redux state
+    if (!storedToken && token) {
+      dispatch(logout());
+    }
+  }, [token, dispatch]); // Removed isAuthenticated and user from dependencies
   
   // Only fetch profile if we have a token but no user data
-  const shouldFetchProfile = !!token && !user;
-  
   const { data: profileData, error, isError } = useGetProfileQuery(undefined, {
-    skip: !shouldFetchProfile
+    skip: !shouldFetchProfile,
+    // Add caching to prevent unnecessary refetches
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
+    refetchOnReconnect: false
   });
 
   // Handle profile fetch success

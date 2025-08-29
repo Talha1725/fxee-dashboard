@@ -39,6 +39,11 @@ export default function ProfileSettings() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
 
+  // Original values for text fields only
+  const [originalFullName, setOriginalFullName] = useState(user?.fullName || "");
+  const [originalUserName, setOriginalUserName] = useState(user?.userName || "");
+  const [originalPhoneNumber, setOriginalPhoneNumber] = useState("");
+
   // Parse phone number to extract country code and number
   const parsePhoneNumber = (fullPhone: string) => {
     if (!fullPhone) return { countryCode: "", number: "" };
@@ -60,6 +65,7 @@ export default function ProfileSettings() {
     if (user?.phoneNumber) {
       const { countryCode, number } = parsePhoneNumber(user.phoneNumber);
       setPhoneNumber(number);
+      setOriginalPhoneNumber(number);
       
       // Set the correct country based on phone code
       const matchingCountry = countries.find(country => country.phoneCode === countryCode);
@@ -172,6 +178,12 @@ export default function ProfileSettings() {
       toast.error(error?.data?.message || "Failed to update profile");
     }
   };
+
+  // Check if any text fields have changed
+  const hasChanges = 
+    fullName !== originalFullName ||
+    userName !== originalUserName ||
+    phoneNumber !== originalPhoneNumber;
 
   // Handle discard changes
   const handleDiscardChanges = () => {
@@ -366,7 +378,7 @@ export default function ProfileSettings() {
           variant={theme === "dark" ? "white" : "black"}
           className="h-[52px] font-satoshi-medium w-full"
           onClick={handleApplyChanges}
-          disabled={isLoading || isUploading}
+          disabled={isLoading || isUploading || !hasChanges}
         >
           {isLoading || isUploading ? "Saving..." : "Apply Changes"}
         </Button>
