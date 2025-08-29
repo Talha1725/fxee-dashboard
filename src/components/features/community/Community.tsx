@@ -17,8 +17,8 @@ export default function Community() {
       <CommunityHero />
       <CommunityFLG />
       <LandingTextFlow />
-      <CommunityJOT />
-      {/* <LandingJOT /> */}
+      {/* <CommunityJOT /> */}
+      <LandingJOT />
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>

@@ -20,7 +20,7 @@ export default function AboutHero() {
           <LandingTitle className="max-w-[1050px] text-center text-[64px] sm:text-[80px] lg:text-[124px] leading-[105%]">
             The World’s First AI-Powered Trading Simulation Model
           </LandingTitle>
-          <LandingDescription className="w-full max-w-[1060px] text-white text-center">
+          <LandingDescription className="w-full max-w-[1060px] !text-white text-center">
             FXEE is redefining what it means to trade smart — with next-gen AI
             that simulates, executes, and scales with you.
           </LandingDescription>
