@@ -29,7 +29,7 @@ export default function LandingNavbar() {
   }, []);
 
   return (
-    <div className={`flex w-full fixed top-0 z-50 ${isScrolled ? 'bg-black/50 backdrop-blur-xl border-none' : 'lg:bg-black/50 lg:backdrop-blur-xl lg:border-b'}`}>
+    <div className={`flex w-full fixed top-0 z-[9999] ${isScrolled ? 'bg-black/50 backdrop-blur-xl border-none' : 'lg:bg-black/50 lg:backdrop-blur-xl lg:border-b'}`}>
       <LandingMax1440Container className="w-full flex flex-row py-3 justify-between items-center relative">
         <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-white/10 w-[90%] block lg:hidden ${isScrolled ? 'hidden' : ''}`}></div>
         <Link href="/" prefetch={true} className="shrink-0">

@@ -8,6 +8,7 @@ import LandingTextFlow from "@/components/features/landing/landingTextFlow/Landi
 import LandingClaim from "@/components/features/landing/landingClaim/LandingClaim";
 import CommunityHero from "@/components/features/community/CommunityHero/CommunityHero";
 import CommunityFLG from "@/components/features/community/CommunityFLG/CommunityFLG";
+import CommunityJOT from "./ComunityJOT/CommunityJOT";
 
 export default function Community() {
   return (
@@ -16,7 +17,8 @@ export default function Community() {
       <CommunityHero />
       <CommunityFLG />
       <LandingTextFlow />
-      <LandingJOT />
+      <CommunityJOT />
+      {/* <LandingJOT /> */}
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>
