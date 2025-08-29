@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 
@@ -5,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 import LandingHero2 from "@/public/images/landing-hero2.png";
 import LandingHero1 from "@/public/images/landing-hero1.png";
+import { usePathname } from "next/navigation";
 export default function LandingHeroContainer({
   children,
   className,
@@ -12,6 +15,7 @@ export default function LandingHeroContainer({
   children: React.ReactNode;
   className?: string;
 }) {
+  const pathname = usePathname();
   return (
     <section
       className={cn(
@@ -30,7 +34,7 @@ export default function LandingHeroContainer({
           className="object-contain"
         />
       </div>
-      <div className="absolute top-62 lg:top-65 xl:-top-5 left-0 -z-5 select-none w-[530px] h-[900px] lg:w-[1010px] lg:h-[1450px]">
+      <div className={`absolute ${pathname === "/challenge-support" ? "top-32" : "top-62"} lg:top-65 xl:-top-5 left-0 -z-5 select-none w-[530px] h-[900px] lg:w-[1010px] lg:h-[1450px]`}>
         <Image
           src={LandingHero1}
           alt="Landing Hero 1"

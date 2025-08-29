@@ -11,6 +11,7 @@ import { IconLandingBtn1 } from "@/components/ui/icon";
 
 import LandingATIBg2 from "@/public/images/landing-ati-bg2.png";
 import SupportWhyFxeeBg from "@/public/images/support-whyfxee-bg.png";
+import SupportWhyFxeeBgMobile from "@/public/images/why-fxee-footer-shade.png";
 
 export default function SupportWhyFxee() {
   return (
@@ -23,9 +24,14 @@ export default function SupportWhyFxee() {
       <Image
         src={SupportWhyFxeeBg}
         alt="Support Why FXEE"
-        className="absolute bottom-0 right-0 w-[1400px] h-[700px] object-cover"
+        className="absolute bottom-0 right-0 w-[1400px] h-[700px] object-cover md:block hidden"
       />
-      <LandingMax1440Container className="py-25 px-0">
+      <Image
+        src={SupportWhyFxeeBgMobile}
+        alt="Support Why FXEE"
+        className="absolute -bottom-20 right-0 w-[1400px] h-[700px] object-cover md:hidden block"
+      />
+      <LandingMax1440Container className="py-25 mb-20 md:mb-0 px-0">
         <div className="flex flex-col items-center lg:gap-[164px] gap-[100px]">
           <div className="flex flex-col items-center lg:gap-[70px] sm:gap-[50px] gap-3">
             <SupportWhyFxeeHead />

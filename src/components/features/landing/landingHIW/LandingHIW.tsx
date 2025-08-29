@@ -7,7 +7,6 @@ import LandingButton from "@/components/features/landing/LandingButton";
 import { IconLandingBtn1 } from "@/components/ui/icon";
 import firmShade from "@/public/images/hiw-bg.png";
 import Image from "next/image";
-import { div } from "motion/react-client";
 
 export default function LandingHIW() {
   return (

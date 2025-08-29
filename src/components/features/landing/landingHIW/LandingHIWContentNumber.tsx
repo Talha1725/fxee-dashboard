@@ -7,7 +7,7 @@ export default function LandingHIWContentNumber({
   hiw=false
 }: {
   number: string;
-  hiw: boolean;
+  hiw?: boolean;
 }) {
   return (
     <React.Fragment>
