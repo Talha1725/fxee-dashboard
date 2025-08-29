@@ -7,7 +7,7 @@ import AboutVisionHead from "@/components/features/about/aboutVision/AboutVision
 import { IconLandingBtn1 } from "@/components/ui/icon";
 
 import AboutVisionBg from "@/public/images/about-vision-bg.png";
-import AboutVisionImage from "@/public/images/about-vision-image.png";
+import AboutVisionImage from "@/public/images/vission.svg";
 
 export default function AboutVision() {
   return (
@@ -17,7 +17,7 @@ export default function AboutVision() {
       </div>
       <LandingMax1440Container className="py-25 gap-[30px] sm:gap-[50px]">
         <AboutVisionHead />
-        <div className="w-[350px] h-[250px] sm:w-[600px] sm:h-[400px] md:w-[700px] md:h-[450px] lg:w-[873px] lg:h-[582px] border-green-gradient">
+        <div className="w-[350px] h-[250px] sm:w-[600px] sm:h-[400px] md:w-[700px] md:h-[450px] lg:w-[873px] lg:h-[582px] translate-y-5">
           <Image src={AboutVisionImage} alt="About Vision" fill />
         </div>
         <LandingButton

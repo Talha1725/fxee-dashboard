@@ -144,6 +144,46 @@ export interface PaymentsListResponse extends ApiResponse<{
   };
 }> {}
 
+// Payment History Types
+export interface PaymentHistoryItem {
+  id: number;
+  userId: number;
+  transactionId: string;
+  amount: string;
+  currency: string;
+  status: 'pending' | 'paid' | 'failed' | 'refunded' | 'chargeback' | 'trial';
+  paymentMethod: string;
+  subscriptionStatus?: 'active' | 'cancelled_pending' | 'cancelled' | 'expired' | 'paused';
+  billingCycle?: 'monthly' | 'yearly';
+  nextBillingDate?: string;
+  isRecurring?: boolean;
+  productName?: string;
+  paidAt?: string;
+  createdAt: string;
+  userEmail: string;
+  userFullName: string;
+}
+
+export interface PaymentHistoryQueryParams {
+  page?: number;
+  limit?: number;
+  status?: 'pending' | 'paid' | 'failed' | 'refunded' | 'chargeback' | 'trial';
+  fromDate?: string; // ISO datetime string
+  toDate?: string; // ISO datetime string
+}
+
+export interface PaymentHistoryResponse extends ApiResponse<{
+  payments: PaymentHistoryItem[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+}> {}
+
 // Chatbot Types
 export interface ChatMessage {
   role: 'user' | 'assistant';

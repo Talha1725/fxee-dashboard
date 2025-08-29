@@ -20,7 +20,7 @@ export default function SupportHero() {
           <LandingTitle className="text-center text-[64px] sm:text-[80px] lg:text-[124px] leading-[105%]">
             Pass Your Prop Firm Challenge Without Lifting a Finger
           </LandingTitle>
-          <LandingDescription className="w-full max-w-[390px] text-white text-center">
+          <LandingDescription className="w-full max-w-[390px] !text-white text-center">
             Let FXEE handle the strategy, risk, and execution — you just connect
             and watch it work.
           </LandingDescription>

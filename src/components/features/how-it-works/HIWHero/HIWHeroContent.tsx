@@ -27,7 +27,7 @@ export default function HIWHeroContent() {
             <br />
             Scale Easier.
           </LandingTitle>
-          <LandingDescription className="w-full max-w-[620px] text-white text-center">
+          <LandingDescription className="w-full max-w-[620px] !text-white text-center">
             FXEE is the result of powerful inspiration and innovation —
             combining the market intelligence of the world’s top platforms into
             one seamless experience.
@@ -38,14 +38,14 @@ export default function HIWHeroContent() {
           {...createFadeIn(0.5)}
         >
           <div className="absolute inset-0 mask-landing-pfs-partner z-1"></div>
-          <IconOandaLogo className="w-[130px] h-[37px]" />
-          <IconTradingViewLogo className="w-[130px] h-[24px]" />
+          <IconOandaLogo className="w-[130px] h-[37px] opacity-50 md:opacity-100" />
+          <IconTradingViewLogo className="w-[130px] h-[24px] opacity-50 md:opacity-100" />
           <IconLogo4
             className="w-[97px] sm:w-[120px] h-[126px] sm:h-[156px] multi-dropshadow"
             opacity={0.5}
           />
-          <IconBinanceLogo className="w-[130px] h-[26px]" />
-          <IconOpenAILogo className="w-[130px] h-[35px]" />
+          <IconBinanceLogo className="w-[130px] h-[26px] opacity-50 md:opacity-100" />
+          <IconOpenAILogo className="w-[130px] h-[35px] opacity-50 md:opacity-100" />
         </motion.div>
       </div>
     </LandingMax1440Container>

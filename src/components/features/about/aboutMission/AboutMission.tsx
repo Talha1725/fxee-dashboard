@@ -5,6 +5,8 @@ import LandingMax1440Container from "@/components/features/landing/LandingMax144
 import AboutMissionHead from "@/components/features/about/aboutMission/AboutMissionHead";
 
 // import AboutMissionImage from "@/public/images/about-mission-bg.png";
+import AboutMissionImage from "@/public/images/mission.svg";
+import Image from "next/image";
 
 export default function AboutMission() {
   return (
@@ -14,6 +16,7 @@ export default function AboutMission() {
       </div> */}
       <LandingMax1440Container className="py-25 gap-[30px] sm:gap-[50px]">
         <AboutMissionHead />
+        <Image src={AboutMissionImage} alt="About Mission" />
       </LandingMax1440Container>
     </div>
   );

@@ -228,6 +228,11 @@ body {
     rgba(255, 255, 255, 0.05) 1.24%,
     rgba(255, 255, 255, 0) 90.3%
   );
+  --hero-card-sec-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 1.24%,
+    rgba(255, 255, 255, 0) 90.3%
+  );
   --landing-card-green-gradient: radial-gradient(
       126.8% 109.9% at 95.59% 0%,
       rgba(0, 0, 0, 0.63) 0%,
@@ -688,6 +693,9 @@ body {
   }
   .bg-hero-card-gradient {
     background: var(--hero-card-gradient);
+  }
+  .bg-hero-card-sec-gradient {
+    background: var(--hero-card-sec-gradient) !important;
   }
   .bg-alert-gradient {
     background: var(--alert-gradient);
@@ -1214,5 +1222,156 @@ body {
 
   .toaster [data-sonner-toast] * {
     background: transparent !important;
+  }
+
+  /* Custom Border Styles */
+  .border-gradient-right {
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+  .border-gradient-left {
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+  .border-gradient-top {
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+  .border-gradient-bottom {
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+  .border-gradient-top-bottom {
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+  .border-gradient-top-left-right {
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+  .border-gradient-blue-green {
+    border: 1.2px solid;
+    border-image-source: linear-gradient(0deg, #0276db 14.37%, #3edc81 82.05%);
+    border-image-slice: 1;
+  }
+
+  .bg-hero-card-thr-gradient {
+    background: linear-gradient(
+      241.77deg,
+      rgba(255, 255, 255, 0.1) 1.24%,
+      rgba(255, 255, 255, 0) 90.3%
+    );
+  }
+
+  .insta-gradient {
+    background: linear-gradient(
+        241.77deg,
+        rgba(255, 255, 255, 0.05) 1.24%,
+        rgba(255, 255, 255, 0) 90.3%
+      ),
+      linear-gradient(
+        253.69deg,
+        rgba(174, 0, 77, 0.2) 0%,
+        rgba(87, 3, 0, 0.2) 100%
+      ),
+      linear-gradient(
+        242.29deg,
+        rgba(255, 255, 255, 0) 44.91%,
+        rgba(255, 255, 255, 0.05) 57.9%,
+        rgba(255, 255, 255, 0) 74.67%
+      );
+  }
+
+  .youtube-gradient {
+    background: linear-gradient(
+        241.77deg,
+        rgba(255, 255, 255, 0.05) 1.24%,
+        rgba(255, 255, 255, 0) 90.3%
+      ),
+      linear-gradient(
+        253.13deg,
+        rgba(184, 1, 0, 0.2) 0%,
+        rgba(66, 3, 0, 0.2) 100.84%
+      ),
+      linear-gradient(
+        242.29deg,
+        rgba(255, 255, 255, 0) 44.91%,
+        rgba(255, 255, 255, 0.05) 57.9%,
+        rgba(255, 255, 255, 0) 74.67%
+      );
+  }
+
+  .telegram-gradient {
+    background: linear-gradient(
+        241.77deg,
+        rgba(255, 255, 255, 0.05) 1.24%,
+        rgba(255, 255, 255, 0) 90.3%
+      ),
+      linear-gradient(
+        253.69deg,
+        rgba(0, 155, 204, 0.2) 0%,
+        rgba(0, 40, 54, 0.2) 100%
+      ),
+      linear-gradient(
+        242.29deg,
+        rgba(255, 255, 255, 0) 44.91%,
+        rgba(255, 255, 255, 0.05) 57.9%,
+        rgba(255, 255, 255, 0) 74.67%
+      );
+  }
+
+  .discord-gradient {
+    background: linear-gradient(
+        117.74deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0) 91.35%
+      ),
+      linear-gradient(
+        73.86deg,
+        rgba(34, 39, 113, 0.2) 0%,
+        rgba(111, 101, 227, 0.2) 100.88%
+      ),
+      linear-gradient(
+        62.29deg,
+        rgba(255, 255, 255, 0) 25.33%,
+        rgba(255, 255, 255, 0.05) 65.76%,
+        rgba(255, 255, 255, 0) 88.46%
+      );
   }
 }

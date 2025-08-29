@@ -23,7 +23,7 @@ export default function LandingYTSContentCardano() {
         alt="FXEE"
         className="absolute top-0 right-0 w-full h-full select-none"
       />
-      <HomeTokenPair token="ADA" pair="ADA/USD" iconName="IconCryptoCardano" />
+      <HomeTokenPair token="Carando" pair="ADA/USD" iconName="IconCryptoCardano" />
       <div className="flex items-start content-start gap-2.5 self-stretch flex-wrap z-1">
         <HomeTradesItemBadge
           text="1:3.5 RR"

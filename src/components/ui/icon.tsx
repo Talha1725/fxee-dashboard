@@ -4053,7 +4053,7 @@ export function IconTradingViewLogo({ width, height, ...props }: IconProps) {
         fill="white"
       />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clipRule="evenodd"
         d="M9.67966 18.4384H5.0703V10.6025H0V5.9931H9.67966V18.4384ZM16.5937 8.75872C16.5937 10.2861 15.3555 11.5244 13.8281 11.5244C12.3007 11.5244 11.0625 10.2861 11.0625 8.75872C11.0625 7.23131 12.3007 5.9931 13.8281 5.9931C15.3555 5.9931 16.5937 7.23131 16.5937 8.75872ZM13.8281 18.4384L19.1289 5.9931H24.6601L19.3593 18.4384H13.8281Z"
         fill="white"

@@ -4,7 +4,7 @@ import Image from "next/image";
 import SupportHIWStepImage from "@/components/features/challenge-support/supportHIW/SupportHIWStepImage";
 
 // import { IconEquity, IconMargin } from "@/components/ui/icon";
-import SupportHIWStep5Image from "@/public/images/support-hiw-5.png";
+import SupportHIWStep5Image from "@/public/images/monitor-progress.svg";
 
 export default function SupportHIWStep5() {
   return (
@@ -58,7 +58,7 @@ export default function SupportHIWStep5() {
           </div>
         </div>
       </div> */}
-      <Image src={SupportHIWStep5Image} alt="Support HIW Step 5" />
+      <Image src={SupportHIWStep5Image} alt="Support HIW Step 5" className="w-full" />
     </SupportHIWStepImage>
   );
 }

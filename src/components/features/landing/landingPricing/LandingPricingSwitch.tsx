@@ -13,11 +13,13 @@ export default function LandingPricingSwitch() {
         title="Simulation Account"
         isActive={isActive === "simulation"}
         onClick={() => setIsActive("simulation")}
+        className="border-gradient-right"
       />
       <LandingPricingSwitchButton
         title="Propfirm Mode"
         isActive={isActive === "propfirm"}
         onClick={() => setIsActive("propfirm")}
+        className="border-gradient-left"
       />
     </div>
   );
