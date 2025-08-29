@@ -4,12 +4,14 @@ import { HeroNumber, HeroNumberShadow } from "@/components/ui/typography";
 
 export default function LandingHIWContentNumber({
   number,
+  hiw=false
 }: {
   number: string;
+  hiw: boolean;
 }) {
   return (
     <React.Fragment>
-      <div className="absolute -bottom-10 -right-20 lg:bottom-0 lg:left-[46px] select-none font-regular">
+      <div className={`absolute ${hiw? "bottom-0 -right-20" :"-bottom-10 -right-20"} lg:bottom-0 lg:left-[46px] select-none font-regular`}>
         <svg
           width="200"
           height="145"
@@ -45,12 +47,12 @@ export default function LandingHIWContentNumber({
           </g>
         </svg>
       </div>
-      <div className="absolute -bottom-10 -right-20 lg:bottom-0 lg:left-[46px] bg-popular-gradient bg-clip-text text-transparent blur-[42px]">
+      <div className={`absolute ${hiw? "bottom-2 right-7" :"-bottom-8 right-7"} lg:bottom-0 lg:left-[46px] bg-popular-gradient bg-clip-text text-transparent blur-[42px]`}>
         <HeroNumber>{number}</HeroNumber>
       </div>
       <HeroNumberShadow
         className={cn(
-          "absolute -bottom-10 -right-22 lg:bottom-0 lg:left-[46px]",
+          `absolute ${hiw? "-bottom-2 -right-22" :"-bottom-12 -right-22"} lg:bottom-0 lg:left-[46px]`,
           number === "01" && "-right-10"
         )}
       >

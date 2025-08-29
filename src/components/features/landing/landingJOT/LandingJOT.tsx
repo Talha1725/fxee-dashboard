@@ -16,9 +16,9 @@ import { Separator } from "@/components/ui/separator";
 
 export default function LandingJOT() {
   return (
-    <LandingMax1440Container className="py-25">
+    <LandingMax1440Container className="py-25 z-50">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-1 w-full">
-        <IconTextCommunity className="w-full 2xl:w-[1326px] h-[243px]" />
+        <IconTextCommunity className="w-full 2xl:w-[1326px] h-[243px] z-50" />
       </div>
       <div className="relative flex flex-col items-center">
         <div className="absolute inset-0 flex -z-1">

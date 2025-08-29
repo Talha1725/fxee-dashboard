@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
@@ -16,11 +18,24 @@ import {
 import LandingClaimCoin1 from "@/public/images/landing-claim-coin1.png";
 import LandingClaimCoin2 from "@/public/images/landing-claim-coin2.png";
 import LandingClaimCoin3 from "@/public/images/landing-claim-coin3.png";
+import LandingClaimCoin3Mobile from "@/public/images/coin3-mobile.svg";
 import LandingClaimCoin4 from "@/public/images/landing-claim-coin4.png";
 
 export default function LandingClaim() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
   return (
-    <div className="relative bg-white">
+    <div className="relative bg-white overflow-hidden">
       <Image
         src={LandingClaimCoin1}
         alt="Landing Claim Coin 1"
@@ -32,14 +47,14 @@ export default function LandingClaim() {
         className="absolute left-0 top-[118px] w-[80px] h-[132px] lg:w-[160px] lg:h-[231px]"
       />
       <Image
-        src={LandingClaimCoin3}
+        src={isMobile ? LandingClaimCoin3Mobile : LandingClaimCoin3}
         alt="Landing Claim Coin 3"
-        className="absolute left-[10px] lg:left-[121px] bottom-0 w-[160px] h-[156px] lg:w-[244px] lg:h-[231px]"
+        className="absolute left-[0px] md:left-[10px] lg:left-[121px] bottom-[170px] md:bottom-0 w-[100px] h-[auto] md:w-[160px] md:h-[156px] lg:w-[244px] lg:h-[231px]"
       />
       <Image
         src={LandingClaimCoin4}
         alt="Landing Claim Coin 4"
-        className="absolute -right-[30px] lg:right-[18px] bottom-[150px] lg:bottom-[65px] w-[160px] h-[174px] lg:w-[244px] lg:h-[274px]"
+        className="absolute -right-[5px] lg:right-[18px] bottom-[-30px] lg:bottom-[65px] w-[100px] h-[auto] md:w-[160px] md:h-[174px] lg:w-[244px] lg:h-[274px]"
       />
       <LandingMax1440Container className="py-25 gap-12.5 sm:gap-[50px]">
         <LandingClaimHead />

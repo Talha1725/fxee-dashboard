@@ -28,7 +28,7 @@ const HIW_STEPS: HIWStep[] = [
   {
     id: "step1",
     image: HIWImage1,
-    title: "Sign Up In Seconds",
+    title: "Choose Your Mode",
     bulletPoints: [
       "Best Market Advice: Let FXEE scan the markets and give you top-tier trade ideas instantly.",
       "Custom Goal Mode (Premium): Set your profit target, risk tolerance, and timeframe — FXEE builds a personalized trade plan for you.",
@@ -39,7 +39,7 @@ const HIW_STEPS: HIWStep[] = [
   {
     id: "step2",
     image: HIWImage2,
-    title: "Simulate & Train",
+    title: "Analyze with AI",
     bulletPoints: [
       "Get live charts powered by AI overlays",
       "See entries, exits, stop losses, Fibonacci zones, RSI/MAs, trendlines, and more",
@@ -52,7 +52,7 @@ const HIW_STEPS: HIWStep[] = [
   {
     id: "step3",
     image: HIWImage3,
-    title: "Upgrade for Prop Firm Mode",
+    title: "Simulate Trades Without Risk",
     bulletPoints: [
       "Execute trades directly inside the FXEE dashboard",
       "No broker connection required",
@@ -64,7 +64,7 @@ const HIW_STEPS: HIWStep[] = [
   {
     id: "step4",
     image: HIWImage4,
-    title: "Simulate & Train",
+    title: "Upgrade for Challenge Mode",
     bulletPoints: [
       "Activate Simulation Account Mode",
       "Copy trades to your external MT4/MT5 prop firm account",
@@ -76,7 +76,7 @@ const HIW_STEPS: HIWStep[] = [
   {
     id: "step5",
     image: HIWImage5,
-    title: "Upgrade for Prop Firm Mode",
+    title: "Track, Improve, Repeat",
     bulletPoints: [
       "AI learns your trading patterns and improves suggestions",
       "Save strategies, monitor risk, and optimize results",
@@ -99,7 +99,7 @@ export default function HIWFlowContent() {
           ))}
         </ul>
       </LandingHIWContentTitle>
-      <LandingHIWContentNumber number={step.number} />
+      <LandingHIWContentNumber number={step.number} hiw={true} />
     </HIWTextContainer>
   );
 
