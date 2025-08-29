@@ -38,7 +38,7 @@ export default function LandingPricingPlan({
             <p className="flex-[1_0_0] text-white/90 text-[18px] sm:text-[20px] font-regular font-[700] tracking-[-0.4px]">
               {item.title}
             </p>
-            <PricingText className="text-center">$0</PricingText>
+            <PricingText className="text-center">${item.price}</PricingText>
           </div>
           <div className="text-white/40 text-[12px] sm:text-[14px] font-regular font-normal tracking-[-0.28px] self-stretch">
             {item.description}
