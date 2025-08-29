@@ -2,12 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
 
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
 import LandingNavbarResponsiveClient from "@/components/features/landing/landingNavbar/LandingNavbarResponsiveClient";
 import { IconLogoLanding } from "@/components/ui/icon";
 
 export default function LandingNavbar() {
+   const { isAuthenticated, token } = useSelector((state: RootState) => state.auth);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const NavLinks = [
@@ -16,7 +19,7 @@ export default function LandingNavbar() {
     { href: "/challenge-support", label: "Challenge Support" },
     { href: "/community", label: "Community" },
     { href: "/about", label: "About us" },
-    { href: "/signin", label: "Login" },
+    { href: isAuthenticated ? "/home" : "/signin", label: isAuthenticated ? "Home" : "Login" },
   ];
 
   useEffect(() => {

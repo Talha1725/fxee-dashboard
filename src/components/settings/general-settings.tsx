@@ -143,6 +143,12 @@ export default function GeneralSettings() {
     }
   };
 
+  // Check if any changes have been made
+  const hasChanges = 
+    selectedTheme !== originalTheme ||
+    selectedLanguage !== originalLanguage ||
+    selectedTimezone !== originalTimezone;
+
   const handleDiscard = () => {
     setSelectedTheme(originalTheme);
     setTheme(originalTheme as "light" | "dark");
@@ -306,7 +312,7 @@ export default function GeneralSettings() {
           variant={theme === "dark" ? "white" : "black"}
           className="h-[52px] font-satoshi-medium w-full"
           onClick={handleApplyChanges}
-          disabled={isLoading}
+          disabled={isLoading || !hasChanges}
         >
           {isLoading ? "Saving..." : "Apply Changes"}
         </Button>

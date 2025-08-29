@@ -105,7 +105,8 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
       showToast.apiError(errorMessage);
-    } finally {
+    } 
+    finally {
       dispatch(setLoading(false));
     }
   };

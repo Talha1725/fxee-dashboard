@@ -15,7 +15,7 @@ import * as AllCountry from "country-flag-icons/react/1x1";
 
 // API endpoints
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001/api";
 export const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3001";
 
 // Timeframes
