@@ -13,7 +13,7 @@ import { Title32, Description14 } from "@/components/ui/typography";
 import { showToast } from "@/lib/utils/toast";
 import { handle2FAAuthentication } from "@/lib/utils/authUtils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { API_BASE_URL } from "@/lib/constants";
+import { useVerify2FAMutation, useResend2FAMutation } from "@/lib/redux/features/auth/authApi";
 import { ArrowLeftIcon } from "lucide-react";
 
 const verify2FASchema = z.object({
@@ -27,7 +27,8 @@ export default function Verify2FAForm() {
   const searchParams = useSearchParams();
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const [verify2FA, { isLoading: isVerifying }] = useVerify2FAMutation();
+  const [resend2FA, { isLoading: isResending }] = useResend2FAMutation();
   const [countdown, setCountdown] = useState(0);
   const [userInfo, setUserInfo] = useState<{
     userId: number;
@@ -96,75 +97,48 @@ export default function Verify2FAForm() {
   const onSubmit = async (data: Verify2FAFormData) => {
     if (!userInfo) return;
 
-    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/verify-2fa`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userInfo.userId,
-          code: data.code
-        }),
-      });
+      const result = await verify2FA({
+        userId: userInfo.userId,
+        code: data.code
+      }).unwrap();
 
-      const result = await response.json();
+      if (result.data) {
+        // Extract the correct structure for handle2FAAuthentication
+        const authData = typeof result.data === 'object' && 'userData' in result.data && 'token' in result.data
+          ? { token: result.data.token || '', userData: result.data.userData }
+          : result.token && result.data
+          ? { token: result.token, userData: result.data }
+          : null;
 
-      if (!response.ok) {
-        showToast.error(result.message || "Verification failed");
-        return;
-      }
-
-      if (result.success && result.data) {
-        // Handle successful authentication
-        await handle2FAAuthentication(result.data, router, dispatch);
-        
-        // Clear session storage on successful verification
-        sessionStorage.removeItem('2fa_verification_data');
-        
-        showToast.success("Login successful!");
+        if (authData) {
+          await handle2FAAuthentication(authData, router, dispatch);
+          sessionStorage.removeItem('2fa_verification_data');
+          showToast.success("Login successful!");
+        } else {
+          showToast.error("Invalid response format");
+        }
       } else {
         showToast.error("Verification failed");
       }
-    } catch (error) {
-      console.error("2FA verification error:", error);
-      showToast.error("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
+    } catch (error: any) {
+      showToast.error(error.data?.message || "Verification failed");
     }
   };
 
   const handleResendCode = async () => {
     if (!userInfo || countdown > 0 || userInfo.twoFAMethod !== 'email') return;
 
-    setIsLoading(true);
     try {
-      // Create a proper resend endpoint call
-      const response = await fetch(`${API_BASE_URL}/auth/resend-2fa`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userInfo.userId,
-          email: userInfo.email
-        }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setCountdown(60);
-        showToast.success("New verification code sent to your email");
-      } else {
-        showToast.error(result.message || "Failed to resend code");
-      }
-    } catch (error) {
-      console.error("Resend error:", error);
-      showToast.error("Failed to resend code");
-    } finally {
-      setIsLoading(false);
+      await resend2FA({
+        userId: userInfo.userId,
+        email: userInfo.email
+      }).unwrap();
+      
+      setCountdown(60);
+      showToast.success("New verification code sent to your email");
+    } catch (error: any) {
+      showToast.error(error.data?.message || "Failed to resend code");
     }
   };
 
@@ -245,11 +219,11 @@ export default function Verify2FAForm() {
 
         <Button
           type="submit"
-          disabled={isLoading || codeValue.length !== 6}
+          disabled={isVerifying || codeValue.length !== 6}
           className="w-full h-12"
           variant={"fancy"}
         >
-          {isLoading ? "Verifying..." : "Verify & Sign In"}
+          {isVerifying ? "Verifying..." : "Verify & Sign In"}
         </Button>
 
         {userInfo.twoFAMethod === 'email' && (
@@ -261,7 +235,7 @@ export default function Verify2FAForm() {
               type="button"
               variant="ghost"
               onClick={handleResendCode}
-              disabled={countdown > 0 || isLoading}
+              disabled={countdown > 0 || isResending}
               className="text-sm"
             >
               {countdown > 0 ? `Resend in ${countdown}s` : "Resend Code"}

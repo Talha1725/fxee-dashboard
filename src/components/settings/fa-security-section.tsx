@@ -17,19 +17,13 @@ export default function FASecuritySection() {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { user, token, isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const { data: profileData, isLoading: profileLoading, error: profileError } = useGetProfileQuery(undefined, {
-    skip: true // Temporarily disable to test Redux user data only
-  });
+  const { data: profileData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
   const [selectedFA, setSelectedFA] = useState<string>("");
   const [originalFA, setOriginalFA] = useState<string>("");
   const [showAuthenticatorModal, setShowAuthenticatorModal] = useState(false);
   const [pendingAuthenticatorSelection, setPendingAuthenticatorSelection] = useState(false);
   const [update2FAPreferences, { isLoading }] = useUpdate2FAPreferencesMutation();
 
-  // Debug auth state
-  console.log('Auth Debug:', { token: !!token, isAuthenticated, user: !!user, profileError });
-  console.log('Full user object:', user);
-  console.log('User twoFAMethod:', user?.twoFAMethod);
 
   // Sync profile data to Redux store when it's fetched
   useEffect(() => {
@@ -41,21 +35,16 @@ export default function FASecuritySection() {
     }
   }, [profileData, user, dispatch]);
 
-  // Initialize 2FA state from user data (prefer profile data from API, fallback to Redux user data)
+  // Initialize 2FA state from user data
   useEffect(() => {
-    const current2FA = profileData?.twoFAMethod || user?.twoFAMethod || "";
-    console.log('2FA Debug - Setting state:', { 
-      profileData: profileData?.twoFAMethod, 
-      user: user?.twoFAMethod, 
-      final: current2FA,
-      typeof: typeof current2FA 
-    });
-    setSelectedFA(current2FA);
-    setOriginalFA(current2FA);
-  }, [profileData?.twoFAMethod, user?.twoFAMethod]);
+    const current2FA = (user as any)?.twoFaMethod || (profileData as any)?.twoFaMethod || "";
+    
+    if (current2FA) {
+      setSelectedFA(current2FA);
+      setOriginalFA(current2FA);
+    }
+  }, [user, profileData]);
 
-  // Debug: Log current state
-  console.log('2FA Debug - Current state:', { selectedFA, originalFA });
 
   const handleApplyChanges = async () => {
     try {
@@ -108,14 +97,6 @@ export default function FASecuritySection() {
     );
   }
 
-  // Debug: Show current state in UI for debugging
-  console.log('2FA Component render:', { 
-    profileLoading, 
-    selectedFA, 
-    originalFA, 
-    profileData: profileData?.twoFAMethod, 
-    user: user?.twoFAMethod 
-  });
 
   return (
     <div className="mt-5">

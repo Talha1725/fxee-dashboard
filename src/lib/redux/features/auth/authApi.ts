@@ -92,8 +92,42 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    verify2FA: builder.mutation<AuthResponse, { userId: number; code: string }>({
+      query: (data) => ({
+        url: "/auth/verify-2fa",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    resend2FA: builder.mutation<{ success: boolean; message: string }, { userId: number; email: string }>({
+      query: (data) => ({
+        url: "/auth/resend-2fa",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    setupAuthenticator: builder.mutation<{ result: { qrCodeUrl: string; manualEntryKey: string } }, void>({
+      query: () => ({
+        url: "/users/authenticator/setup",
+        method: "POST",
+      }),
+    }),
+
+    verifyAuthenticator: builder.mutation<{ result: User }, { code: string }>({
+      query: (data) => ({
+        url: "/users/authenticator/verify",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
     getProfile: builder.query<User, void>({
       query: () => "/users/profile",
+      transformResponse: (response: { result: User }) => response.result,
       providesTags: ["User"],
     }),
 
@@ -119,6 +153,10 @@ export const {
   useVerifyEmailMutation,
   useResendVerificationMutation,
   useRefreshTokenMutation,
+  useVerify2FAMutation,
+  useResend2FAMutation,
+  useSetupAuthenticatorMutation,
+  useVerifyAuthenticatorMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
 } = authApi;

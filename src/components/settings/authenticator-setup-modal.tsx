@@ -14,7 +14,7 @@ import QRCode from "@/components/ui/qr-code";
 import { Copy, CheckCircle } from "lucide-react";
 import { RootState } from "@/lib/redux/store";
 import { updateUser } from "@/lib/redux/features/auth/authSlice";
-import { API_BASE_URL } from "@/lib/constants";
+import { useSetupAuthenticatorMutation, useVerifyAuthenticatorMutation } from "@/lib/redux/features/auth/authApi";
 import { showToast } from "@/lib/utils/toast";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
@@ -34,9 +34,10 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { token } = useSelector((state: RootState) => state.auth);
+  const [setupAuthenticator, { isLoading: isSetupLoading }] = useSetupAuthenticatorMutation();
+  const [verifyAuthenticator, { isLoading: isVerifyLoading }] = useVerifyAuthenticatorMutation();
   
   const [step, setStep] = useState<"setup" | "verify">("setup");
-  const [isLoading, setIsLoading] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [copied, setCopied] = useState(false);
@@ -63,32 +64,17 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
 
   // Initialize authenticator setup
   const initializeSetup = async () => {
-    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/users/authenticator/setup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to setup authenticator");
-      }
-
+      const result = await setupAuthenticator().unwrap();
+      
       if (result.result) {
         setQrCodeUrl(result.result.qrCodeUrl);
         setSecretKey(result.result.manualEntryKey);
         setStep("setup");
       }
     } catch (error: any) {
-      showToast.error(error.message || "Failed to setup authenticator");
+      showToast.error(error.data?.message || "Failed to setup authenticator");
       onClose();
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -102,27 +88,10 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
 
   // Verify the code
   const onSubmit = async (data: VerifyFormData) => {
-    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/users/authenticator/verify`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          code: data.code
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Invalid code");
-      }
-
+      const result = await verifyAuthenticator({ code: data.code }).unwrap();
+      
       if (result.result) {
-        // Update Redux state with new user data
         dispatch(updateUser({
           ...result.result,
           role: result.result.role || "user"
@@ -133,18 +102,16 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
         onSuccess();
       }
     } catch (error: any) {
-      showToast.error(error.message || "Invalid verification code");
-    } finally {
-      setIsLoading(false);
+      showToast.error(error.data?.message || "Invalid verification code");
     }
   };
 
   // Initialize when modal opens
   useEffect(() => {
-    if (isOpen && !qrCodeUrl && !isLoading) {
+    if (isOpen && !qrCodeUrl && !isSetupLoading) {
       initializeSetup();
     }
-  }, [isOpen]);
+  }, [isOpen, qrCodeUrl, isSetupLoading]);
 
   // Reset modal state when it closes
   useEffect(() => {
@@ -174,7 +141,7 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
           <div className="space-y-6">
             {/* QR Code */}
             <div className="flex justify-center">
-              {isLoading ? (
+              {isSetupLoading ? (
                 <div className="w-[200px] h-[200px] bg-gray-100 dark:bg-gray-800 animate-pulse rounded-lg" />
               ) : (
                 qrCodeUrl && <QRCode value={qrCodeUrl} size={200} className="border p-2 rounded-lg" />
@@ -216,7 +183,7 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
               <Button
                 variant="ghost"
                 onClick={onClose}
-                disabled={isLoading}
+                disabled={isSetupLoading}
                 className="flex-1"
               >
                 Cancel
@@ -224,7 +191,7 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
               <Button
                 variant={theme === "dark" ? "white" : "black"}
                 onClick={() => setStep("verify")}
-                disabled={isLoading || !qrCodeUrl}
+                disabled={isSetupLoading || !qrCodeUrl}
                 className="flex-1"
               >
                 Next
@@ -254,7 +221,7 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
                 type="button"
                 variant="ghost"
                 onClick={() => setStep("setup")}
-                disabled={isLoading}
+                disabled={isVerifyLoading}
                 className="flex-1"
               >
                 Back
@@ -262,10 +229,10 @@ export default function AuthenticatorSetupModal({ isOpen, onClose, onSuccess }: 
               <Button
                 type="submit"
                 variant={theme === "dark" ? "white" : "black"}
-                disabled={isLoading || codeValue.length !== 6}
+                disabled={isVerifyLoading || codeValue.length !== 6}
                 className="flex-1"
               >
-                {isLoading ? "Verifying..." : "Verify & Enable"}
+                {isVerifyLoading ? "Verifying..." : "Verify & Enable"}
               </Button>
             </div>
           </form>
