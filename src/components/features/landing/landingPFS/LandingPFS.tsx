@@ -11,7 +11,14 @@ export default function LandingPFS() {
   return (
     <LandingMax1440Container className="pb-25 gap-12.5 sm:gap-[70px]">
       <LandingPFSHead />
-      <LandingPFSContent />
+      <div className="relative w-[112.5%] min-h-[520px] sm:hidden block z-50">
+        <div className="w-full h-full absolute z-50 top-0 left-1/2 -translate-x-1/2">
+          <LandingPFSContent />
+        </div>
+      </div>
+
+      <LandingPFSContent className="sm:block hidden" />
+
       <LandingPFSPartner />
       <LandingButton
         color="black"

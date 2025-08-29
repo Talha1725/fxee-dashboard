@@ -9,7 +9,7 @@ export default function LandingJOTHead() {
       <LandingTitle className="w-full md:w-[640px] text-center text-[32px] sm:text-[44px] !tracking-[-1.76px] leading-[120%]">
         Stay Ahead of the Markets with Real-Time Insights
       </LandingTitle>
-      <LandingDescription className="text-white text-center text-[16px] sm:text-[18px] tracking-[-0.36px] leading-[150%]">
+      <LandingDescription className="!text-white text-center text-[16px] sm:text-[18px] tracking-[-0.36px] leading-[150%]">
         Join Our Telegram Channel for Daily Trading Signals, AI Alerts, and
         Insider Content
       </LandingDescription>

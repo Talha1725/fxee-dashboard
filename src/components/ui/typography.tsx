@@ -565,7 +565,7 @@ export const HeroNumber = ({ children, className }: TypographyProps) => {
   return (
     <span
       className={cn(
-        "text-[67px] lg:text-[116px] font-regular font-[700] tracking-[-1.34px] lg:tracking-[-2.32px] select-none",
+        "text-[67px] lg:text-[116px] font-sans font-[700] tracking-[-1.34px] lg:tracking-[-2.32px] select-none",
         className
       )}
     >
@@ -578,7 +578,7 @@ export const HeroNumberShadow = ({ children, className }: TypographyProps) => {
   return (
     <div
       className={cn(
-        "text-[180px] lg:text-[230px] font-regular font-[700] tracking-[-3.6px] lg:tracking-[-4.585px] opacity-5 bg-gradient-to-b from-white/0 to-white bg-clip-text text-transparent select-none",
+        "text-[180px] lg:text-[230px] font-regular font-[700] tracking-[-3.6px] lg:tracking-[-4.585px] opacity-10 md:opacity-5 bg-gradient-to-b from-white/0 to-white bg-clip-text text-transparent select-none",
         className
       )}
     >

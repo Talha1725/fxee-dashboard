@@ -1,11 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
 import LandingNavbarResponsiveClient from "@/components/features/landing/landingNavbar/LandingNavbarResponsiveClient";
-import { IconLogo1, IconLogoLanding } from "@/components/ui/icon";
+import { IconLogoLanding } from "@/components/ui/icon";
 
 export default function LandingNavbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const NavLinks = [
     { href: "/", label: "Home" },
     { href: "/how-it-works", label: "How it works" },
@@ -15,9 +19,19 @@ export default function LandingNavbar() {
     { href: "/signin", label: "Login" },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="flex w-full fixed top-0 z-50 bg-black/50 backdrop-blur-xl">
-      <LandingMax1440Container className="w-full flex flex-row py-3 justify-between items-center">
+    <div className={`flex w-full fixed top-0 z-50 ${isScrolled ? 'bg-black/50 backdrop-blur-xl border-none' : 'lg:bg-black/50 lg:backdrop-blur-xl lg:border-b'}`}>
+      <LandingMax1440Container className="w-full flex flex-row py-3 justify-between items-center relative">
+        <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-white/10 w-[90%] block lg:hidden ${isScrolled ? 'hidden' : ''}`}></div>
         <Link href="/" prefetch={true} className="shrink-0">
           <IconLogoLanding color="white" className="shrink-0 w-[110px] sm:w-[134px] h-[28px] sm:h-[32px]" />
         </Link>

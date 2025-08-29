@@ -228,6 +228,11 @@ body {
     rgba(255, 255, 255, 0.05) 1.24%,
     rgba(255, 255, 255, 0) 90.3%
   );
+  --hero-card-sec-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 1.24%,
+    rgba(255, 255, 255, 0) 90.3%
+  );
   --landing-card-green-gradient: radial-gradient(
       126.8% 109.9% at 95.59% 0%,
       rgba(0, 0, 0, 0.63) 0%,
@@ -688,6 +693,9 @@ body {
   }
   .bg-hero-card-gradient {
     background: var(--hero-card-gradient);
+  }
+  .bg-hero-card-sec-gradient {
+    background: var(--hero-card-sec-gradient) !important;
   }
   .bg-alert-gradient {
     background: var(--alert-gradient);
@@ -1214,5 +1222,52 @@ body {
 
   .toaster [data-sonner-toast] * {
     background: transparent !important;
+  }
+
+  /* Custom Border Styles */
+  .border-gradient-right {
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(270deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    border-image-slice: 1;
+  }
+  .border-gradient-left {
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    border-image-slice: 1;
+  }
+  .border-gradient-top {
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    border-image-slice: 1;
+  }
+  .border-gradient-bottom {
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(270deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    border-image-slice: 1;
+  }
+  .border-gradient-top-bottom {
+    border-width: 1px 0px 1px 0px;
+    border-style: solid;
+    border-image-source: linear-gradient(0deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    border-image-slice: 1;
+  }
+  .border-gradient-top-left-right {
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);    border-image-slice: 1;
+  }
+  .border-gradient-blue-green {
+    border: 1.2px solid ;
+    border-image-source: linear-gradient(0deg, #0276DB 14.37%, #3EDC81 82.05%);
+    border-image-slice: 1 ;
+  }
+  
+  .bg-hero-card-thr-gradient {
+    background: linear-gradient(241.77deg, rgba(255, 255, 255, 0.1) 1.24%, rgba(255, 255, 255, 0) 90.3%);
+
   }
 }

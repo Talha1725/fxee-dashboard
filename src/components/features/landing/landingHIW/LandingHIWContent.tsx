@@ -12,7 +12,7 @@ import LandingHIWContentTextContainer from "@/components/features/landing/landin
 import { Separator } from "@/components/ui/separator";
 import { staggerContainer } from "@/lib/motion-variants";
 
-import LandingHIW1 from "@/public/images/landing-hiw-2.png";
+import LandingHIW1 from "@/public/images/step-one.svg";
 import LandingHIW2 from "@/public/images/landing-hiw-2.png";
 import LandingHIW3 from "@/public/images/landing-hiw-3.png";
 

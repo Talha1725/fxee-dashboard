@@ -17,7 +17,7 @@ export default function LandingReview() {
       <Image
         src={LandingReviewBG}
         alt="Landing Review BG"
-        className="absolute bottom-0 right-0 w-full h-[800px] sm:h-[800px] lg:w-[1400px] lg:h-[1200px]"
+        className="absolute bottom-[300px] sm:bottom-0 right-0 min-w-[800px] h-[500px] sm:h-[800px] lg:w-[1400px] lg:h-[1200px]"
       />
     </div>
   );

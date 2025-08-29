@@ -17,6 +17,7 @@ export default function LandingPricingPlans() {
           key={index}
           isActive={item.type === plan}
           onClick={() => setPlan(item.type)}
+          className={`${index == 1 ? "border-gradient-left" : "border-gradient-right"}`}
         />
       ))}
     </div>

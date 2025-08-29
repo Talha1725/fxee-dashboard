@@ -40,7 +40,7 @@ const SLIDES_DATA = [
   },
 ];
 
-export default function LandingPFSContent() {
+export default function LandingPFSContent({ className }: { className?: string }) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
@@ -56,7 +56,24 @@ export default function LandingPFSContent() {
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 769px)");
+
+  // Handle window resize properly
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 641);
+    };
+    
+    // Set initial value
+    checkMobile();
+    
+    // Add event listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
@@ -85,8 +102,8 @@ export default function LandingPFSContent() {
   } = usePrevNextButtons(emblaApi as EmblaCarouselType);
 
   return (
-    <div className="w-full md:w-auto flex flex-col items-center justify-center gap-5 pt-[50px] bg-landing-card-green-gradient border-green-gradient rounded-none overflow-hidden">
-      <div className="relative w-full md:w-[760px] h-[300px] md:h-[400px] lg:w-[960px] lg:h-[490px]">
+    <div className={`w-full md:w-auto flex flex-col items-center justify-center gap-5 pt-[50px] bg-landing-card-green-gradient ${isMobile ? "border-b border-[#0276DB]" : "border-green-gradient"} rounded-none overflow-hidden ${className}`}>
+      <div className="relative w-full mx-auto md:w-[760px] h-[400px] md:h-[400px] lg:w-[960px] lg:h-[490px]">
         <div className="overflow-hidden h-full" ref={emblaRef}>
           <div className="flex h-full ml-5 md:ml-0">
             {SLIDES_DATA.map((slide, index) => (
@@ -101,6 +118,7 @@ export default function LandingPFSContent() {
                   alt={slide.title}
                   fill
                   priority={index === 0}
+                  className="md:object-contain"
                 />
               </div>
             ))}
@@ -111,10 +129,9 @@ export default function LandingPFSContent() {
       <div className="flex flex-col items-center self-stretch transition-all duration-300">
         <div
           className={cn(`w-full h-[1px] transition-all duration-300`, {
-            "bg-landing-line-gradient1": isDesktop && selectedIndex === 0,
-            "bg-landing-line-gradient2": isDesktop && selectedIndex === 1,
-            "bg-landing-line-gradient3": isDesktop && selectedIndex === 2,
-            "bg-white/40": !isDesktop,
+            "bg-landing-line-gradient1": selectedIndex === 0,
+            "bg-landing-line-gradient2": selectedIndex === 1,
+            "bg-landing-line-gradient3": selectedIndex === 2,
           })}
         ></div>
         <div className="flex md:justify-start justify-between items-center md:items-start md:gap-15 gap-3 sm:gap-5 self-stretch px-4 py-3 sm:px-8 sm:py-5 bg-landing-pfs-gradient">
