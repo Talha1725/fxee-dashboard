@@ -53,6 +53,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
+      </head>
       <body
         className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} antialiased`}
       >
