@@ -5,6 +5,8 @@ import type {
   PaymentStatusResponse,
   PaymentResponse,
   PaymentsListResponse,
+  PaymentHistoryResponse,
+  PaymentHistoryQueryParams,
 } from "@/types/api";
 import type {
   CreatePaymentRequest,
@@ -65,6 +67,19 @@ export const paymentsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Payment"],
     }),
+
+    // Get Payment History with enhanced query parameters
+    getPaymentHistory: builder.query<PaymentHistoryResponse, PaymentHistoryQueryParams | void>({
+      query: (params) => ({
+        url: "/payments/history",
+        method: "GET",
+        params: params || { page: 1, limit: 10 },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      providesTags: ["Payment"],
+    }),
   }),
 });
 
@@ -74,4 +89,5 @@ export const {
   useGetPaymentStatusQuery,
   useCreateVIPCheckoutMutation,
   useGetPaymentStatusByTrackIdQuery,
+  useGetPaymentHistoryQuery,
 } = paymentsApi;

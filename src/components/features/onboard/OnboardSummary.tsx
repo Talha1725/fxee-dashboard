@@ -96,8 +96,7 @@ export default function OnboardSummary({
   const subtotal = planPrice + addOnsTotal;
   const total = subtotal; // No crypto discount
 
-  // Remove crypto discount logic
-  const shouldShowCryptoDiscount = false;
+  // Crypto discount removed - no longer used
 
   const handleCheckout = async () => {
     if (isCheckout && selectedPlan === "VIP") {
