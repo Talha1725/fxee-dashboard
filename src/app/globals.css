@@ -1100,13 +1100,13 @@ body {
 
   /* Safari-specific SVG font fallbacks */
   @supports (-webkit-appearance: none) {
-    svg text {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
-        Arial, sans-serif !important;
-      -webkit-font-smoothing: antialiased;
+  .satoshi-svg-text svg text {
+    font-family: "Satoshi-Bold", "Satoshi", Arial, sans-serif !important;
+    font-weight: 700 !important;
+    -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-    }
   }
+}
 
   /* Ensure SVG text renders properly across browsers */
   svg text {
@@ -1121,6 +1121,11 @@ body {
       font-family: var(--font-satoshi-bold), -apple-system, BlinkMacSystemFont,
         "Segoe UI", system-ui, Arial, sans-serif;
     }
+  }
+
+  /* Dark mode SVG text styling for tutorial cards */
+  .dark svg text {
+    fill: black !important;
   }
 
   /* Override Google Chrome autofill styles */
