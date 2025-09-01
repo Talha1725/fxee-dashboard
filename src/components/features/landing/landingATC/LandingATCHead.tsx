@@ -6,20 +6,19 @@ import * as motion from "motion/react-client";
 import LandingTitle from "@/components/features/landing/LandingTitle";
 import LandingDescription from "@/components/features/landing/LandingDescription";
 import { fadeInUpView } from "@/lib/motion-variants";
+import { EllipsLight } from "@/components/ui/icon";
 
 export default function LandingATCHead() {
   return (
-    <motion.div className="flex flex-col items-center gap-5" {...fadeInUpView}>
-      <LandingTitle className="text-center tracking-[-3.6px] leading-[120%] text-landing-title-black-gradient">
+    <motion.div className="flex flex-col items-center gap-5 relative" {...fadeInUpView}>
+      <EllipsLight className="absolute top-[-100px] md:top-[-300px] -rotate-45 left-[-600px] md:left-[-100px]" />
+      <LandingTitle className="text-center tracking-[-3.6px] leading-[120%] text-white">
         FXEE as Your AI Trading Companion
       </LandingTitle>
-      <div className="text-black text-[20px] sm:text-[24px] text-center font-regular font-medium tracking-[-0.48px]">
-        The All-in-One AI Trading Simulator
-      </div>
-      <LandingDescription className="text-center !text-black/40 md:w-[700px]">
+      <LandingDescription className="text-center !text-white/40 lg:w-[55%]">
         AI suggests entries, TP/SL, lot sizes based on indicators: RSI, MA,
         Fibonacci, sentiment Trade probability, stop-loss optimizer, portfolio
-        split suggestions<br></br>AI draws patterns + highlights volatility
+        split suggestions AI draws patterns + highlights volatility
         zones
       </LandingDescription>
     </motion.div>

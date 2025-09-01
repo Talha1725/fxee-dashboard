@@ -16,14 +16,18 @@ import LandingATI from "@/components/features/landing/landingATI/LandingATI";
 import LandingClaim from "@/components/features/landing/landingClaim/LandingClaim";
 import LandingFooter from "@/components/features/landing/landingFooter/LandingFooter";
 import LandingContainer from "@/components/features/landing/LandingContainer";
+import LandingPFSPartner from "./landingPFS/LandingPFSPartner";
+import LandingEBS from "./LandingEBS/LandingEBS";
 
 export default function Landing() {
   return (
     <LandingContainer>
       <LandingHero />
+      <LandingPFSPartner />
       <LandingWhyFxee />
-      <LandingPFS />
       <LandingATC />
+      <LandingEBS />
+      <LandingPFS />
       <LandingHIW />
       <LandingPFC />
       <LandingPricing />

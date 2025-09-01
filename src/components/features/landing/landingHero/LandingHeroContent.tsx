@@ -6,7 +6,7 @@ import LandingHeroText from "@/components/features/landing/landingHero/LandingHe
 
 export default function LandingHeroContent() {
   return (
-    <LandingMax1440Container>
+    <LandingMax1440Container className="overflow-hidden h-[750px] lg:h-[750px] gradient-white-border">
       <LandingHeroText />
       <LandingHeroImage />
     </LandingMax1440Container>

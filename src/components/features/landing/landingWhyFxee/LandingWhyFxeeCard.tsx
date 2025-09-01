@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 
 import LandingWhyFxeeCardText from "@/components/features/landing/landingWhyFxee/LandingWhyFxeeCardText";
@@ -7,37 +7,44 @@ import LandingWhyFxeeCardContainer from "@/components/features/landing/landingWh
 export default function LandingWhyFxeeCard({
   title,
   description,
-  imageUrl,
   className,
   onMouseEnter,
   onMouseLeave,
-  propFirm
+  isActive = false,
 }: {
   title: string;
   description: string;
-  imageUrl: StaticImageData;
   className?: string;
-  propFirm?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  isActive?: boolean;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    onMouseEnter?.();
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    onMouseLeave?.();
+  };
+
+  // Show description if card is active (autoplay) or hovered
+  const shouldShowDescription = isActive || isHovered;
+
   return (
-    <LandingWhyFxeeCardContainer 
-      className={`min-h-[360px] sm:min-h-[284px] md:min-h-[380px] xl:min-h-[284px] ${className}`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+    <LandingWhyFxeeCardContainer
+      className={`h-auto p-4 rounded-md transition-all duration-500 ease-in-out ${
+        isActive 
+          ? 'opacity-100 border border-white/20 bg-gradient-to-r from-white/5 via-white/5 to-transparent' 
+          : 'opacity-20'
+      } hover:opacity-100 hover:border hover:border-white/20 hover:bg-gradient-to-r from-white/5 via-white/5 to-transparent ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <LandingWhyFxeeCardText title={title} description={description} />
-      <div className={`absolute bottom-0 ${propFirm ? "right-0": "right-1/2 translate-x-1/2"} sm:translate-x-0 sm:right-0 select-none`}>
-        <Image
-          src={imageUrl}
-          alt={title}
-          className={`${propFirm ? "min-w-[90%]" :"min-w-[290px]" } h-auto sm:w-[300px] sm:h-[240px]`}
-          width={300}
-          height={240}
-          priority
-        />
-      </div>
+      <LandingWhyFxeeCardText title={title} description={description} showDescription={shouldShowDescription} />
     </LandingWhyFxeeCardContainer>
   );
 }
