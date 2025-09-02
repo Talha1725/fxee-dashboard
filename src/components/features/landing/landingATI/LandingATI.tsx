@@ -9,30 +9,18 @@ import { IconLandingBtn1 } from "@/components/ui/icon";
 
 import LandingATIBG1 from "@/public/images/landing-ati-bg1.png";
 import LandingATIBG2 from "@/public/images/landing-ati-bg2.png";
+import { Button } from "@/components/ui/button";
 
 export default function LandingATI() {
   return (
     <div className="relative">
-      <Image
-        src={LandingATIBG1}
-        alt="Landing ATI"
-        className="absolute bottom-0 right-0 select-none w-[1400px] h-[300px] -z-5"
-      />
-      <Image
-        src={LandingATIBG2}
-        alt="Landing ATI"
-        className="absolute top-0 left-0 select-none w-[600px] h-[950px]"
-      />
-      <LandingMax1440Container className="px-0 lg:px-10 py-25 gap-12.5 sm:gap-[70px]">
+      <LandingMax1440Container className="lg:px-32 gap-12.5 sm:gap-[70px]">
         <LandingATIHead />
         <LandingATIContent />
-        <LandingButton
-          color="black"
-          icon={
-            <IconLandingBtn1 className="absolute -z-1 w-full h-full top-0 left-0" />
-          }
-          text="See the AI in Action"
-        />
+        <Button
+          variant="white"
+          className="relative font-satoshi-medium"
+        >Explore the Platform</Button>
       </LandingMax1440Container>
     </div>
   );

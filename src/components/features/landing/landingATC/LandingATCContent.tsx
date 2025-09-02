@@ -1,26 +1,68 @@
 import React from "react";
-
-import LandingATCContentATF from "@/components/features/landing/landingATC/LandingATCContentATF";
-import LandingATCContentNIP from "@/components/features/landing/landingATC/LandingATCContentNIP";
-import LandingATCContentTP from "@/components/features/landing/landingATC/LandingATCContentTP";
-import LandingATCContentACP from "@/components/features/landing/landingATC/LandingATCContentACP";
-import LandingATCContentRBV from "@/components/features/landing/landingATC/LandingATCContentRBV";
-import LandingATCContentVRA from "@/components/features/landing/landingATC/LandingATCContentVRA";
+import TradingCompanion from "@/public/images/trading-companion.svg";
+import Image from "next/image";
 
 export default function LandingATCContent() {
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-2.5 overflow-hidden">
-      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-center gap-2.5 w-[320px] sm:w-[340px] md:w-[90%] lg:w-[340px]">
-        <LandingATCContentATF />
-        <LandingATCContentNIP />
+    <div className="flex w-full xl:w-[84%] mx-auto flex-col md:flex-row lg:items-center justify-start lg:gap-2.5 gap-14 overflow-hidden">
+      <div className="border border-white/20 w-full md:w-[550px] h-[300px] min-[405px]:h-[350px] min-[505px]:h-[400px] sm:h-[500px] md:h-[400px] lg:h-[468px] rounded-md bg-gradient-to-b from-white/5 to-transparent relative overflow-hidden flex items-center justify-center">
+        <Image src={TradingCompanion} alt="Base Chart" className="w-[92%]" />
       </div>
-      <div className="flex flex-col md:flex-row lg:flex-col items-start gap-2.5 w-[320px] sm:w-[340px] lg:w-[340px] md:w-[90%]">
-        <LandingATCContentTP />
-        <LandingATCContentACP />
-        <LandingATCContentRBV />
-      </div>
-      <div className="flex flex-col md:flex-row lg:flex-col items-center justify-center gap-2.5 w-[320px] sm:w-[340px] lg:w-[340px] md:w-[90%]">
-        <LandingATCContentVRA />
+      <div className="lg:px-15 px-3 relative">
+        <div className="absolute -bottom-10 left-0 md:left-5 w-full h-15 bg-black blur-md rounded-md z-5"></div>
+        <div className="marquee-container-vertical h-[460px]">
+          <div className="marquee-content-vertical gap-3">
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              RSI Analyzer
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              News Impact Predictor
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Fibonacci Auto-Leveler
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Trade Probability Calculator
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Sentiment Scanner
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Pattern Recognizer
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Volatility Advisor
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              AI Trend Forecast
+            </div>
+            {/* Duplicate items for seamless loop */}
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              RSI Analyzer
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              News Impact Predictor
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Fibonacci Auto-Leveler
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Trade Probability Calculator
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Sentiment Scanner
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Pattern Recognizer
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              Volatility Advisor
+            </div>
+            <div className="w-fit bg-gradient-to-r from-white/10 via-white/5 to-transparent overflow-hidden hover:bg-white border hover:border-white border-white/20 hover:text-black font-satoshi px-3 py-2 rounded-md text-white transition-all duration-300">
+              AI Trend Forecast
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

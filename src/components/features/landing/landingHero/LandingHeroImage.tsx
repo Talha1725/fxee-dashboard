@@ -3,14 +3,14 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
 
-import Galaxy from "@/public/images/galaxy.png";
+import Galaxy from "@/public/images/galaxy-tab.svg";
 import { fadeInRightDelayed } from "@/lib/motion-variants";
 
 export default function LandingHeroImage() {
   return (
     <motion.div
       {...fadeInRightDelayed}
-      className="relative select-none shrink-0 mt-4 sm:mt-0 w-[500px] h-[380px] md:h-[600px] md:w-[800px] lg:w-[1030px] lg:h-[760px] xl:w-[830px] xl:h-[600px] min-[1420px]:w-[1010px] min-[1420px]:h-[760px] xl:absolute xl:top-28 min-[1420px]:top-25 xl:right-0 z-10"
+      className="bottom-[-10%] lg:bottom-[-20%] absolute left-1/2 -translate-x-1/2 lg:w-[1200px] lg:h-[600px] min-[576px]:w-[900px] min-[576px]:h-[450px] w-[800px] h-[380px] z-50"
     >
       <Image src={Galaxy} alt="Galaxy" fill priority />
     </motion.div>

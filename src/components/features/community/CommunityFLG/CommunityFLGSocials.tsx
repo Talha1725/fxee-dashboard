@@ -9,29 +9,29 @@ import DiscordImage from "@/public/images/discord.png";
 
 export default function CommunityFLGSocials() {
   return (
-    <div className="flex flex-col items-start w-full max-w-[525px] md:max-w-[1050px] lg:min-w-[1050px]">
-      <div className="flex flex-col md:flex-row items-center self-stretch">
+    <div className="flex flex-col items-start w-full max-w-[525px] md:max-w-[1050px] lg:min-w-[1050px] relative">
+      <div className="flex flex-col md:flex-row items-center self-stretch gap-5">
         <CommunityFLGSocialCard
           title="Instagram"
           description="Trading tips, success stories, live stats, and AI-powered insights."
           buttonText="Follow us for real-time Updates"
-          className="border-[rgba(174,0,77,0.30)] insta-gradient"
+          className="border-white/30 rounded-lg insta-gradient"
           image={InstagramImage}
         ></CommunityFLGSocialCard>
         <CommunityFLGSocialCard
           title="YouTube"
           description="Weekly content including strategy sessions, AI walkthroughs, tutorials, and trader interviews."
           buttonText="Subscribe Now"
-          className="border-[rgba(184,1,0,0.30)] youtube-gradient"
+          className="border-white/30 rounded-lg youtube-gradient"
           image={YouTubeImage}
         ></CommunityFLGSocialCard>
       </div>
-      <div className="flex flex-col md:flex-row items-center self-stretch">
+      <div className="flex flex-col md:flex-row items-center self-stretch gap-5 mt-5">
         <CommunityFLGSocialCard
           title="Telegram Channel"
           description="Instant updates from the AI engine, new features, performance reviews, and exclusive community drops."
           buttonText="Join our live updates"
-          className="border-[rgba(0,155,204,0.30)] telegram-gradient"
+          className="border-white/30 rounded-lg telegram-gradient"
           image={TelegramImage}
         ></CommunityFLGSocialCard>
         <CommunityFLGSocialCard
@@ -39,7 +39,7 @@ export default function CommunityFLGSocials() {
           description="A private space for our VIP subscribers. Early access to tools, direct chats with our team, and exclusive events.
 "
           buttonText="Upgrade to VIP and unlock"
-          className="border-[rgba(111,101,227,0.30)] discord-gradient"
+          className="border-white/30 rounded-lg discord-gradient"
           image={DiscordImage}
         ></CommunityFLGSocialCard>
       </div>

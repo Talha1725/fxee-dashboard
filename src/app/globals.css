@@ -844,6 +844,33 @@ body {
     }
   }
 
+  /* Vertical Marquee animation */
+  .marquee-container-vertical {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-content-vertical {
+    display: flex;
+    flex-direction: column;
+    animation: marquee-vertical 30s linear infinite;
+  }
+
+  /* Slow down on hover */
+  .marquee-container-vertical:hover .marquee-content-vertical {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-vertical {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
   .border-green-gradient-0 {
     border-radius: 10px;
     position: relative;
@@ -1004,10 +1031,10 @@ body {
       );
   }
   .multi-dropshadow {
-    filter: drop-shadow(47px 47px 118px rgba(62, 145, 231, 0.5))
-      drop-shadow(-47px -47px 94px rgba(86, 244, 154, 0.5))
-      drop-shadow(47px -47px 94px rgba(62, 220, 129, 0.5))
-      drop-shadow(-47px 47px 94px rgba(19, 147, 194, 0.5));
+    filter: drop-shadow(27px 27px 38px rgba(62, 145, 231, 0.6))
+      drop-shadow(-27px -27px 38px rgba(86, 244, 154, 0.6))
+      drop-shadow(27px -27px 38px rgba(62, 220, 129, 0.6))
+      drop-shadow(-27px 27px 38px rgba(19, 147, 194, 0.6));
   }
 
   .modal-gradient {
@@ -1291,6 +1318,70 @@ body {
     border-image-slice: 1;
   }
 
+  .border-gradient-blue-green-rounded {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .border-gradient-blue-green-rounded::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.2px;
+    background: linear-gradient(0deg, #0276db 14.37%, #3edc81 82.05%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .border-gradient-blue-green-rounded > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Alternative approach using box-shadow for better compatibility */
+  .border-gradient-blue-green-shadow {
+    position: relative;
+    border-radius: 8px;
+    background: linear-gradient(0deg, #0276db 14.37%, #3edc81 82.05%);
+    padding: 1.2px;
+  }
+
+  .border-gradient-blue-green-shadow > * {
+    background: inherit;
+    border-radius: 6px;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* New rounded gradient border using double border technique */
+  .rounded-gradient-border {
+    border: double 1.2px transparent;
+    border-radius: 12px;
+    background-image: linear-gradient(transparent, transparent),
+      /* Transparent background */
+        linear-gradient(0deg, #0276db6e 14.37%, #3edc8085 82.05%); /* Blue to green gradient */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  /* Alternative with white background for light themes */
+  .rounded-gradient-border-white {
+    border: double 1.2px transparent;
+    border-radius: 8px;
+    background-image: linear-gradient(white, white),
+      /* White background */
+        linear-gradient(0deg, #0276db 14.37%, #3edc81 82.05%); /* Blue to green gradient */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
   .bg-hero-card-thr-gradient {
     background: linear-gradient(
       241.77deg,
@@ -1374,4 +1465,66 @@ body {
         rgba(255, 255, 255, 0) 88.46%
       );
   }
+
+  .text-gradient {
+    background: linear-gradient(0.18deg, #0276db 14.37%, #3edc81 82.05%),
+      linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-white-border {
+    border-bottom: 1px solid;
+
+    border-image-source: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+
+  .bull-gradient {
+    background: linear-gradient(29.31deg, #0276db1a 13.99%, #3edc812b 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #161616 0%, #161616f1 74.01%, #161616 100%);
+  }
+}
+
+/* Marquee Animations */
+@keyframes marquee-left-to-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marquee-right-to-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee-left-to-right {
+  animation: marquee-left-to-right 80s linear infinite;
+}
+
+.animate-marquee-right-to-left {
+  animation: marquee-right-to-left 75s linear infinite;
+}
+
+.animate-marquee-left-to-right-slow {
+  animation: marquee-left-to-right 90s linear infinite;
+}
+
+.animate-marquee-left-to-right:hover,
+.animate-marquee-right-to-left:hover,
+.animate-marquee-left-to-right-slow:hover {
+  animation-play-state: paused;
 }

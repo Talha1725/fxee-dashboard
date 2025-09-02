@@ -11,17 +11,7 @@ import LandingTop from "@/public/images/landing-tp-sec.png";
 export default function HIWFlow() {
   return (
     <div className="relative">
-      <Image
-        src={HIWBg}
-        alt="HIW Background"
-        className="absolute bottom-[-8%] md:-bottom-[13.7%] right-0 w-full h-[200px] md:w-[1000px] md:h-[800px] md:object-cover md:block hidden"
-      />
-      <Image
-        src={LandingTop}
-        alt="HIW Background"
-        className="absolute bottom-[-0%] min-[411px]:bottom-[-3%] -right-6 md:-bottom-[13.7%] md:right-0 w-[1300px] min-[411px]:w-[400px] h-[auto] md:w-[1000px] md:h-[800px] object-cover block md:hidden"
-      />
-      <LandingMax1440Container className="py-25 gap-12.5 sm:gap-[70px]">
+      <LandingMax1440Container className="pt-36 md:pt-28 gap-12.5 sm:gap-[70px]">
         <LandingDescription className="text-center max-w-[734px]">
           FXEE is your all-in-one AI trading companion — built for speed,
           precision, and simplicity. Whether you’re testing a new strategy or

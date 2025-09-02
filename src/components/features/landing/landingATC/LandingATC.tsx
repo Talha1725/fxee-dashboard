@@ -6,11 +6,9 @@ import LandingATCContent from "@/components/features/landing/landingATC/LandingA
 
 export default function LandingATC() {
   return (
-    <div className="bg-white">
-      <LandingMax1440Container className="py-25 gap-12.5 sm:gap-[70px]">
-        <LandingATCHead />
-        <LandingATCContent />
-      </LandingMax1440Container>
-    </div>
+    <LandingMax1440Container className="gap-12.5">
+      <LandingATCHead />
+      <LandingATCContent />
+    </LandingMax1440Container>
   );
 }

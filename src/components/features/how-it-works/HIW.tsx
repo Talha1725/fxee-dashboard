@@ -15,8 +15,9 @@ export default function HIW() {
       <LandingNavbar />
       <HIWHero />
       <HIWFlow />
-      <LandingJOT />
+      <div className="mt-20"></div>
       <LandingTextFlow />
+      <LandingJOT />
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>

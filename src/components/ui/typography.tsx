@@ -10,7 +10,7 @@ export const DisplayXL = ({ children, className }: TypographyProps) => {
   return (
     <h1
       className={cn(
-        "text-[40px] sm:text-[72px] font-space-grotesk font-medium tracking-[-2.4px] sm:tracking-[-3.2px] leading-[120%] bg-hero-title-gradient bg-clip-text text-transparent select-none z-5",
+        "text-[56px] font-satoshi-medium tracking-[-2.4px] sm:tracking-[-3.2px] leading-[120%] bg-hero-title-gradient bg-clip-text text-transparent select-none z-5",
         className
       )}
     >
@@ -526,7 +526,7 @@ export const TextFlow = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-black dark:text-white text-[20px] font-space-grotesk font-[700] tracking-[-0.6px] uppercase shrink-0 select-none",
+        "text-black dark:text-white text-[13px] md:text-[20px] font-satoshi-medium tracking-[-0.6px] shrink-0 select-none",
         className
       )}
     >
