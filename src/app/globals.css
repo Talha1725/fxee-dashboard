@@ -1491,3 +1491,40 @@ body {
     background: linear-gradient(29.31deg, #0276db1a 13.99%, #3edc812b 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #161616 0%, #161616f1 74.01%, #161616 100%);
   }
 }
+
+/* Marquee Animations */
+@keyframes marquee-left-to-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marquee-right-to-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee-left-to-right {
+  animation: marquee-left-to-right 80s linear infinite;
+}
+
+.animate-marquee-right-to-left {
+  animation: marquee-right-to-left 75s linear infinite;
+}
+
+.animate-marquee-left-to-right-slow {
+  animation: marquee-left-to-right 90s linear infinite;
+}
+
+.animate-marquee-left-to-right:hover,
+.animate-marquee-right-to-left:hover,
+.animate-marquee-left-to-right-slow:hover {
+  animation-play-state: paused;
+}

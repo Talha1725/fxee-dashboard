@@ -3,7 +3,6 @@
   import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
   import LandingJOTHead from "@/components/features/landing/landingJOT/LandingJOTHead";
   import LandingJOTItem from "@/components/features/landing/landingJOT/LandingJOTItem";
-  import LandingButton from "@/components/features/landing/LandingButton";
   import {
     IconAIContent,
     IconAIScan,
@@ -18,7 +17,7 @@
 
   export default function LandingJOT() {
     return (
-      <LandingMax1440Container className="py-25 z-50">
+      <LandingMax1440Container className="py-20 z-50">
         <div className="p-[1px] rounded-gradient-border xl:w-[1150px] relative overflow-hidden">
           <div className="bg-black h-full w-full rounded-md z-50 relative">
           <div className="bull-gradient h-full w-full z-50 relative">

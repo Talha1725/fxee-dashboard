@@ -1,5 +1,4 @@
 import React from "react";
-import { Title22 } from "@/components/ui/typography";
 
 export default function LandingJOTItem({
   icon,

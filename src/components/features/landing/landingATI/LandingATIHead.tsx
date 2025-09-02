@@ -10,7 +10,7 @@ import { fadeInDownView } from "@/lib/motion-variants";
 export default function LandingATIHead() {
   return (
     <motion.div
-      className="flex flex-col items-center gap-5 w-full xl:w-[986px] mx-auto"
+      className="flex flex-col items-center gap-5 w-full xl:w-[886px] mx-auto"
       {...fadeInDownView}
     >
       <LandingTitle className="text-center tracking-[-3.6px] leading-[120%]">
