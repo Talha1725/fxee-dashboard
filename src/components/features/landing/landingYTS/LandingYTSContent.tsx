@@ -1,23 +1,28 @@
 import React from "react";
-
-import LandingYTSContentCardano from "@/components/features/landing/landingYTS/LandingYTSContentCardano";
-import LandingATCContentNIP from "@/components/features/landing/landingATC/LandingATCContentNIP";
-import LandingATCContentACP from "@/components/features/landing/landingATC/LandingATCContentACP";
-import LandingYTSContentBTC from "@/components/features/landing/landingYTS/LandingYTSContentBTC";
+import bracket from "@/public/images/bracket.png";
+import confidencePercentage from "@/public/images/confidence-percentage.svg";
+import RangeBar from "@/public/images/range-bar-visu.svg";
+import GoldChart from "@/public/images/gold-cahrt.svg";
+import riskAnalyzer from "@/public/images/risk-analyzer.svg";
+import TrendForecast from "@/public/images/trend-forecast.svg";
+import Image from "next/image";
 
 export default function LandingYTSContent() {
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-1 sm:gap-2.5">
-      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-end gap-2.5 w-[320px] sm:w-[340px]">
-        <LandingYTSContentCardano />
-      </div>
-      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-end gap-2.5 w-[320px] sm:w-[340px] lg:w-[340px] md:w-[90%]">
-        <LandingATCContentNIP />
-        <LandingATCContentACP />
-      </div>
-      <div className="flex flex-col md:flex-row lg:flex-col justify-center items-end gap-2.5 w-[320px] sm:w-[340px]">
-        <LandingYTSContentBTC />
-      </div>
-    </div>
+   <div className="flex sm:flex-row flex-col items-center gap-3 sm:gap-0">
+     <div className="flex flex-col gap-3 w-full sm:w-auto">
+      <Image src={confidencePercentage} alt="bracket" className="w-full sm:w-auto" />
+      <Image src={riskAnalyzer} alt="bracket" className="w-full sm:w-auto"/>
+     </div>
+     <Image src={bracket} alt="bracket" className="sm:block hidden" />
+     <div className="bg-gradient-to-b from-white/5 to-white/0 sm:bg-transparent rounded-md w-full sm:w-auto">
+      <Image src={GoldChart} alt="bracket" className="w-full sm:w-auto" />
+     </div>
+     <Image src={bracket} alt="bracket" className="rotate-180 sm:block hidden" />
+     <div className="flex flex-col gap-3 w-full sm:w-auto">
+      <Image src={RangeBar} alt="bracket" className="w-full sm:w-auto" />
+      <Image src={TrendForecast} alt="bracket" className="w-full sm:w-auto" />
+     </div>
+   </div>
   );
 }

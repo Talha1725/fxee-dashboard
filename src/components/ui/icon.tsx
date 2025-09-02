@@ -6349,7 +6349,7 @@ export function IconExport({
   );
 }
 
-export function EllipsLight({ className }: { className?: string }) {
+export function EllipsLight({ className, opacity }: { className?: string, opacity?: string }) {
   return (
     <svg
       width="1142"
@@ -6359,7 +6359,7 @@ export function EllipsLight({ className }: { className?: string }) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g opacity="0.15" filter="url(#filter0_f_1471_1731)">
+      <g opacity={opacity? opacity : "0.15"} filter="url(#filter0_f_1471_1731)">
         <ellipse
           cx="570.861"
           cy="387.613"
