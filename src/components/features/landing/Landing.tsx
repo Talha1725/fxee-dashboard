@@ -27,8 +27,8 @@ export default function Landing() {
       <LandingWhyFxee />
       <LandingATC />
       <LandingEBS />
-      <LandingPFS />
       <LandingHIW />
+      <LandingPFS />
       <LandingPFC />
       <LandingPricing />
       <LandingReview />
