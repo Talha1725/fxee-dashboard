@@ -526,7 +526,7 @@ export const TextFlow = ({ children, className }: TypographyProps) => {
   return (
     <p
       className={cn(
-        "text-black dark:text-white text-[20px] font-space-grotesk font-[700] tracking-[-0.6px] uppercase shrink-0 select-none",
+        "text-black dark:text-white text-[13px] md:text-[20px] font-satoshi-medium tracking-[-0.6px] shrink-0 select-none",
         className
       )}
     >

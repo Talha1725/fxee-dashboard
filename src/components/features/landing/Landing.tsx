@@ -28,13 +28,14 @@ export default function Landing() {
       <LandingATC />
       <LandingEBS />
       <LandingHIW />
+      <LandingTextFlow />
+
       <LandingPFS />
       <LandingPFC />
       <LandingPricing />
       <LandingReview />
       <LandingYTS />
       <LandingJOT />
-      <LandingTextFlow />
       <LandingATI />
       <LandingClaim />
       <LandingFooter />

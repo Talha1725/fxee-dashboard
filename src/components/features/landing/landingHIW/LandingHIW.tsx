@@ -3,18 +3,14 @@ import React from "react";
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
 import LandingHIWHead from "@/components/features/landing/landingHIW/LandingHIWHead";
 import LandingHIWContent from "@/components/features/landing/landingHIW/LandingHIWContent";
-import LandingButton from "@/components/features/landing/LandingButton";
-import { IconLandingBtn1, LongEllipse } from "@/components/ui/icon";
-import firmShade from "@/public/images/hiw-bg.png";
-import Image from "next/image";
-import longEllipse from "@/public/images/long-ellipse.svg";
+import { LongEllipse } from "@/components/ui/icon";
 
 export default function LandingHIW() {
   return (
     <div className="relative mt-10">
       <LongEllipse className="absolute top-[-30%] -right-5 sm:right-1/2 sm:translate-x-1/2 opacity-70 sm:opacity-100" />
       
-      <LandingMax1440Container className="py-25 lg:pb-36 gap-12.5 sm:gap-[70px]">
+      <LandingMax1440Container className="py-25 lg:pb-30 gap-12.5 sm:gap-[70px]">
         <LandingHIWHead />
         <LandingHIWContent />
       </LandingMax1440Container>
