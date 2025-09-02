@@ -9,9 +9,9 @@ import { fadeInDownView } from "@/lib/motion-variants";
 export default function CommunityFLGHead() {
   return (
     <motion.div {...fadeInDownView}>
-      <LandingTitle className="max-w-[950px] text-center lg:tracking-[-3.6px] tracking-[-2px]">
-        Follow Us. Learn <br className="block sm:hidden" />
-        With Us. <br />
+      <LandingTitle className="max-w-[950px] text-[55px] text-center leading-[100%]">
+        Follow Us.<br className="block md:hidden" /> <span className="block md:hidden">{" "}</span>
+        Learn With Us.<br />
         Grow With Us.
       </LandingTitle>
     </motion.div>

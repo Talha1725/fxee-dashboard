@@ -16,9 +16,10 @@ export default function Community() {
       <LandingNavbar />
       <CommunityHero />
       <CommunityFLG />
-      <LandingTextFlow />
       {/* <CommunityJOT /> */}
       <LandingJOT />
+      <LandingTextFlow />
+      <div className="mb-20"></div>
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>
