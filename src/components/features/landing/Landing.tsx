@@ -31,11 +31,11 @@ export default function Landing() {
       <LandingTextFlow />
       <LandingYTS />
       <LandingPricing />
+      <LandingJOT />
 
       <LandingPFS />
       <LandingPFC />
       <LandingReview />
-      <LandingJOT />
       <LandingATI />
       <LandingClaim />
       <LandingFooter />

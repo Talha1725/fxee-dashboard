@@ -1,12 +1,10 @@
 import React from "react";
-import Image from "next/image";
 
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
 import LandingPricingHead from "@/components/features/landing/landingPricing/LandingPricingHead";
 import LandingPricingSwitch from "@/components/features/landing/landingPricing/LandingPricingSwitch";
 import LandingPricingPlans from "@/components/features/landing/landingPricing/LandingPricingPlans";
 
-import LandingPricingImage from "@/public/images/landing-pricing.png";
 import { EllipsLight } from "@/components/ui/icon";
 
 export default function LandingPricing() {
