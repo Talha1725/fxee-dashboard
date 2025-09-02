@@ -9,7 +9,7 @@ export default function OnboardLayout({
 }) {
   return (
     <OnboardingProvider>
-      <div className="flex flex-col items-center self-stretch flex-[1_0_0] h-[100vh]">
+      <div className="flex flex-col items-center self-stretch flex-[1_0_0] overflow-x-hidden">
         {children}
       </div>
     </OnboardingProvider>
