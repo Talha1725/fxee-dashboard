@@ -54,7 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} antialiased`}
+        className={`${satoshiRegular.variable} ${satoshiMedium.variable} ${satoshiBold.variable} ${spaceGrotesk.variable} ${creatoRegular.variable} bg-[#0A0A0A] antialiased`}
       >
         <ReduxProvider>
           <AuthInitializer />

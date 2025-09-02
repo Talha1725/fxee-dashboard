@@ -24,7 +24,7 @@
 
             <Image src={bullBg} alt="bull-right-top" className="absolute w-full h-full top-0 sm:block hidden object-cover" />
             <Image src={bullRightMobile} alt="bull-right-top" className="absolute w-full h-full top-0 block sm:hidden object-cover" />
-            <div className="flex flex-col items-center gap-5 p-8 sm:p-12.5  self-stretch z-50 relative">
+            <div className="flex flex-col items-center gap-5 p-8 pt-15 sm:p-12.5  self-stretch z-50 relative">
               <LandingJOTHead />
               <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-2.5 md:gap-0 lg:gap-10 self-stretch flex-[1_0_0] mt-10">
                 <LandingJOTItem

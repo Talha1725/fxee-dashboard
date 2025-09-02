@@ -18,7 +18,7 @@ export default function LandingHeroContainer({
   return (
     <section
       className={cn(
-        "relative w-full mt-17 xl:mb-0 xl:h-[810px] -mb-12.5 h-full bg-[#ffffff06]",
+        "relative w-full mt-17 xl:mb-0 xl:h-[810px] -mb-12.5 h-full",
         className
       )}
     >
