@@ -30,10 +30,10 @@ export default function Landing() {
       <LandingHIW />
       <LandingTextFlow />
       <LandingYTS />
+      <LandingPricing />
 
       <LandingPFS />
       <LandingPFC />
-      <LandingPricing />
       <LandingReview />
       <LandingJOT />
       <LandingATI />

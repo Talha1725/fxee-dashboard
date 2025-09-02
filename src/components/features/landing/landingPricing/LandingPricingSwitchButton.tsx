@@ -15,15 +15,16 @@ export default function LandingPricingSwitchButton({
   return (
     <button
       className={cn(
-        "rounded-none flex flex-col items-start gap-5 p-5 bg-landing-pricing-switch cursor-pointer",
-        className,
-        isActive && "bg-landing-card-green-gradient border-gradient-blue-green"
+        "px-6 py-3 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out cursor-pointer font-satoshi-medium",
+        "border border-transparent",
+        isActive 
+          ? "bg-gradient-to-b from-white to-white/70 text-black shadow-lg" 
+          : "bg-gradient-to-r from-white/10 to-transparent text-gray-300 hover:bg-white hover:text-black border border-white/20",
+        className
       )}
       onClick={onClick}
     >
-      <p className="text-white/90 text-[16px] sm:text-[22px] font-regular font-[700] tracking-[-0.44px]">
-        {title}
-      </p>
+      {title}
     </button>
   );
 }

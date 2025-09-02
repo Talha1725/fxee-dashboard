@@ -7,19 +7,19 @@ import LandingPricingSwitch from "@/components/features/landing/landingPricing/L
 import LandingPricingPlans from "@/components/features/landing/landingPricing/LandingPricingPlans";
 
 import LandingPricingImage from "@/public/images/landing-pricing.png";
+import { EllipsLight } from "@/components/ui/icon";
 
 export default function LandingPricing() {
   return (
     <div className="relative">
-      <LandingMax1440Container className="pt-25 gap-12.5 sm:gap-[70px] z-1">
+      <LandingMax1440Container className="z-1">
         <LandingPricingHead />
         <LandingPricingSwitch />
         <LandingPricingPlans />
       </LandingMax1440Container>
-      <Image
-        src={LandingPricingImage}
-        alt="Landing Pricing"
-        className="absolute top-[50px] left-0 -z-5 select-none w-[500px] h-[1200px]"
+      <EllipsLight
+      opacity="0.1"
+        className="absolute sm:top-[250px] top-[450px] left-1/2 -translate-x-1/2 -rotate-[147deg] sm:opacity-30"
       />
     </div>
   );
