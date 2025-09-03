@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 import { AddOnsProvider } from "@/lib/contexts/AddOnsContext";
 import { UserProvider } from "@/lib/contexts/UserContext";
+import { AccountTypeProvider } from "@/lib/contexts/AccountTypeContext";
 import { ReduxProvider } from "@/lib/redux/provider";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -59,8 +60,9 @@ export default function RootLayout({
         <ReduxProvider>
           <AuthInitializer />
           <ThemeProvider>
-            <UserProvider>
-              <AddOnsProvider>
+            <AccountTypeProvider>
+              <UserProvider>
+                <AddOnsProvider>
                 {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
                   <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
                     {children}
@@ -72,8 +74,9 @@ export default function RootLayout({
                     <Toaster />
                   </>
                 )}
-              </AddOnsProvider>
-            </UserProvider>
+                </AddOnsProvider>
+              </UserProvider>
+            </AccountTypeProvider>
           </ThemeProvider>
         </ReduxProvider>
       </body>

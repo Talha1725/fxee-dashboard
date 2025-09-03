@@ -150,15 +150,15 @@ export default function HomeTradesItem({ long = false, recommendation }: HomeTra
           <div className="grid grid-cols-3 gap-2 text-center px-2">
             <div>
               <p className="text-white/60 text-xs font-satoshi">Entry</p>
-              <p className="text-white text-sm font-satoshi-medium">{parseFloat(recommendation.entryPrice).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 2)}</p>
+              <p className="text-white text-sm font-satoshi-medium">{parseFloat(recommendation.entryPrice).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 4)}</p>
             </div>
             <div>
               <p className="text-green-400/80 text-xs font-satoshi">Target</p>
-              <p className="text-green-400 text-sm font-satoshi-medium">{parseFloat(recommendation.targetPrice).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 2)}</p>
+              <p className="text-green-400 text-sm font-satoshi-medium">{parseFloat(recommendation.targetPrice).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 4)}</p>
             </div>
             <div>
               <p className="text-red-400/80 text-xs font-satoshi">Stop Loss</p>
-              <p className="text-red-400 text-sm font-satoshi-medium">{parseFloat(recommendation.stopLoss).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 2)}</p>
+              <p className="text-red-400 text-sm font-satoshi-medium">{parseFloat(recommendation.stopLoss).toFixed(recommendation.symbol.includes("USD") && !recommendation.symbol.includes("JPY") ? 5 : 4)}</p>
             </div>
           </div>
           <div className="mt-2 grid grid-cols-3 gap-2 px-2 text-center">

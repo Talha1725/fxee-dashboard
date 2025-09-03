@@ -52,13 +52,13 @@ export default function DashboardStatusDetailPT() {
           <DashboardStatusDetailSubcardContainer>
             <Text12 className="dark:text-green text-[#079744] font-satoshi-medium">Entry Price</Text12>
             <Text16 className="font-satoshi-medium dark:text-white text-black">
-              ${proposedTrade ? parseFloat(proposedTrade.entryPrice).toFixed(2) : "58,246.75"}
+              ${proposedTrade ? parseFloat(proposedTrade.entryPrice).toFixed(4) : "58,246.7500"}
             </Text16>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer>
             <Text12 className="text-blue font-satoshi-medium">Target</Text12>
             <Text16 className="font-satoshi-medium dark:text-white text-black">
-              ${proposedTrade ? parseFloat(proposedTrade.targetPrice).toFixed(2) : "62,000.00"}
+              ${proposedTrade ? parseFloat(proposedTrade.targetPrice).toFixed(4) : "62,000.0000"}
             </Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
@@ -66,7 +66,7 @@ export default function DashboardStatusDetailPT() {
           <DashboardStatusDetailSubcardContainer>
             <Text12 className="dark:text-danger text-[#FF0000] font-satoshi-medium">Stop Loss</Text12>
             <Text16 className="font-satoshi-medium dark:text-white text-black">
-              ${proposedTrade ? parseFloat(proposedTrade.stopLossPrice).toFixed(2) : "56,500.00"}
+              ${proposedTrade ? parseFloat(proposedTrade.stopLossPrice).toFixed(4) : "56,500.0000"}
             </Text16>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer>

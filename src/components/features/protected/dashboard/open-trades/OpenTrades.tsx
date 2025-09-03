@@ -14,9 +14,13 @@ import { IconACP } from "@/components/ui/icon";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import OpenTradeCard from "./OpenTradeCard";
 import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
+import { useAccountType } from "@/lib/contexts/AccountTypeContext";
+import { LockOverlay } from "@/components/ui/lock-overlay";
+import { cn } from "@/lib/utils";
 
 export default function OpenTrades() {
   const [isOpen, setIsOpen] = useState(true);
+  const { isVirtualAccount } = useAccountType();
   const { data: dailyRecommendations, error, isLoading } = useGetDailyRecommendationsQuery();
 
   // Transform API recommendations into trading data format or use static fallback
@@ -100,10 +104,16 @@ export default function OpenTrades() {
 
   const tradingData = getTradingData();
 
-  return (
-    <div className="flex flex-col items-center gap-2.5 p-3 sm:p-5 self-stretch rounded-[16px] border border-black/15 md:border-transparent dark:border-white/5 bg-transparent bg-popover-gradient dark:backdrop-blur-[7px] my-10 sm:my-0 mb-5">
+  // Force collapsed state in virtual account mode
+  const shouldBeOpen = isOpen && !isVirtualAccount;
+
+  const openTradesContent = (
+    <div className={cn(
+      "flex flex-col items-center gap-2.5 p-3 sm:p-5 self-stretch rounded-[16px] border border-black/15 md:border-transparent dark:border-white/5 bg-transparent dark:backdrop-blur-[7px] my-10 sm:my-0 mb-5",
+      isVirtualAccount && "opacity-50 pointer-events-none"
+    )}>
       <div className="w-full">
-        <div  onClick={() => setIsOpen(!isOpen)} className="flex items-center justify-between gap-2 self-stretch cursor-pointer">
+        <div  onClick={() => !isVirtualAccount && setIsOpen(!isOpen)} className="flex items-center justify-between gap-2 self-stretch cursor-pointer">
           <div className="flex items-center justify-between gap-2 self-stretch">
             <DashboardHeadBadge>
               <IconACP width={14} height={14} />
@@ -121,9 +131,10 @@ export default function OpenTrades() {
           </div>
           <button 
             className="flex items-center gap-1 transition-transform duration-300 ease-in-out hover:scale-110 cursor-pointer"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => !isVirtualAccount && setIsOpen(!isOpen)}
+            disabled={isVirtualAccount}
           >
-            {isOpen ? (
+            {shouldBeOpen ? (
               <ChevronUp className="w-6 h-6 dark:text-white/50 text-black/50 transition-all duration-300" />
             ) : (
               <ChevronDown className="w-6 h-6 dark:text-white/50 text-black/50 transition-all duration-300" />
@@ -132,7 +143,7 @@ export default function OpenTrades() {
         </div>
 
         <div className={`transition-all duration-500 ease-in-out  ${
-          isOpen ? 'max-h-[1100px] opacity-100 mt-5 overflow-auto scrollbar-hide' : 'max-h-[0px] opacity-0 overflow-hidden mt-0'
+          shouldBeOpen ? 'max-h-[1100px] opacity-100 mt-5 overflow-auto scrollbar-hide' : 'max-h-[0px] opacity-0 overflow-hidden mt-0'
         }`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 self-stretch mb-5">
             <DashboardStatusCardContainer>
@@ -163,7 +174,7 @@ export default function OpenTrades() {
               <div className="flex flex-col items-start gap-2.5 self-stretch">
                 <div className="flex items-start gap-1">
                   <Text20 className="dark:text-white text-black font-satoshi-medium">
-                    99,997.49
+                    99,997.4900
                   </Text20>
                   <p className="text-xs dark:text-white text-black font-satoshi-medium ">
                     USD
@@ -224,4 +235,14 @@ export default function OpenTrades() {
       
     </div>
   );
+
+  if (isVirtualAccount) {
+    return (
+      <LockOverlay>
+        {openTradesContent}
+      </LockOverlay>
+    );
+  }
+
+  return openTradesContent;
 }

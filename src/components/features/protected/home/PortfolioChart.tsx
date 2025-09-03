@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
 interface DataPoint {
   month: string;
@@ -21,6 +22,8 @@ export default function PortfolioChart({
   height = 300,
   highlightMonth = "MAY"
 }: PortfolioChartProps) {
+  const { theme } = useTheme();
+  const { isVirtualAccount } = useAccountType();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -34,7 +37,6 @@ export default function PortfolioChart({
     data: null
   });
   const [hasAnimated, setHasAnimated] = useState(false);
-  const { theme } = useTheme();
 
   // Sample data with monthly progression
   const defaultData: DataPoint[] = [
@@ -404,8 +406,11 @@ export default function PortfolioChart({
         className="overflow-visible"
       />
       
-      {/* Tooltip */}
-      {tooltip.show && tooltip.data && (
+      {isVirtualAccount && (
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/30 to-white/20 dark:from-white/10 dark:via-white/20 dark:to-white/10 backdrop-blur-[2px] rounded-lg pointer-events-none" />
+      )}
+      
+      {tooltip.show && tooltip.data && !isVirtualAccount && (
         <div
           ref={tooltipRef}
           className={`absolute pointer-events-none z-10 px-3 py-2 text-sm rounded-lg shadow-lg border transition-opacity duration-200 ${

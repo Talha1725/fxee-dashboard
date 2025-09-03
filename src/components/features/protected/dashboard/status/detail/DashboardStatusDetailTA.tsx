@@ -43,7 +43,7 @@ export default function DashboardStatusDetailTA() {
             <Text14 className="font-satoshi-medium dark:text-white text-black">Potential Win</Text14>
             <div>
               <Text20 className="dark:text-green text-[#079744] font-satoshi-medium">
-                ${proposedTrade ? parseFloat(proposedTrade.potentialWin).toFixed(2) : "58,246.75"}
+                ${proposedTrade ? parseFloat(proposedTrade.potentialWin).toFixed(4) : "58,246.7500"}
               </Text20>
               <div className="flex items-center self-stretch gap-1">
                 <IconTradeUp
@@ -160,7 +160,7 @@ export default function DashboardStatusDetailTA() {
           <div className="flex justify-end items-center gap-1">
             <IconTradeUp width={16} height={16} color={theme === "dark" ? "var(--color-green)" : "#079744"} />
             <Text14 className="dark:text-green text-[#079744]">
-              +{proposedTrade ? (parseFloat(proposedTrade.winRatePercentage) - 50).toFixed(1) : "24.8"}%
+              +{proposedTrade ? (parseFloat(proposedTrade.winRatePercentage) - 50).toFixed(4) : "24.8000"}%
             </Text14>
           </div>
         </div>

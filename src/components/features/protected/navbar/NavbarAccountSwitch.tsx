@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
 import NavbarSwitchToggleItem from "@/components/features/protected/navbar/NavbarSwitchToggleItem";
 import NavbarSwitchContainer from "@/components/features/protected/navbar/NavbarSwitchContainer";
@@ -35,10 +36,12 @@ export default function NavbarAccountSwitch({
   customPadding,
 }: NavbarAccountSwitchProps) {
   const { theme } = useTheme();
-  const [activeTab, setActiveTab] = useState(defaultValue || items[0]?.value || "virtual-account");
+  const { accountType, setAccountType } = useAccountType();
+  const [activeTab, setActiveTab] = useState(defaultValue || accountType || "virtual-account");
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    setAccountType(value as "virtual-account" | "demo-account");
     onValueChange?.(value);
   };
 

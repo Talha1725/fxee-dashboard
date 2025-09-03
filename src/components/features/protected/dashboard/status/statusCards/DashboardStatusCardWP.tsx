@@ -13,7 +13,7 @@ export default function DashboardStatusCardWP() {
       <Text14 className="z-1 font-satoshi-medium dark:text-white text-black">Win Probability</Text14>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
         <div>
-          <Text20 className="dark:text-white text-black font-satoshi-medium">+5.50%</Text20>
+          <Text20 className="dark:text-white text-black font-satoshi-medium">+5.5000%</Text20>
           <Text12 className="dark:text-white/60 text-black/60 font-satoshi-medium">84% out of 100%</Text12>
         </div>
         <DashboardStatusCardFooter title="Yesterday Probability" value={84} />
