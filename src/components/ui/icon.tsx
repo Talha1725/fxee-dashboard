@@ -6570,3 +6570,59 @@ export const MaxEllipse = ({ className }: { className?: string }) => {
     </svg>
   );
 };
+
+export function TutorialIcon({ 
+  number, 
+  width = 200, 
+  height = 200, 
+  ...props 
+}: IconProps & { number: string }) {
+  const { theme } = useTheme();
+  
+  return (
+    <svg 
+      width={width} 
+      height={height} 
+      viewBox="0 0 200 200" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      {/* Background circle with gradient */}
+      <circle 
+        cx="100" 
+        cy="100" 
+        r="90" 
+        fill={theme === "dark" ? "url(#darkGradient)" : "url(#lightGradient)"}
+        stroke={theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}
+        strokeWidth="2"
+      />
+      
+      {/* Number text */}
+      <text
+        x="100"
+        y="110"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontSize="60"
+        fontWeight="700"
+        fill={theme === "dark" ? "black" : "white"}
+        fontFamily="Satoshi-Bold, Satoshi, Arial, sans-serif"
+      >
+        {number}
+      </text>
+      
+      {/* Gradients */}
+      <defs>
+        <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#114FEE" />
+          <stop offset="100%" stopColor="#15B0F8" />
+        </linearGradient>
+        <linearGradient id="darkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#F0F0F0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
