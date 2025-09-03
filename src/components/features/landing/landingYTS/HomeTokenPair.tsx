@@ -14,7 +14,7 @@ export default function HomeTokenPair({
   const Icon = (
     Icons as Record<
       string,
-      React.ComponentType<{ width: number; height: number; className?: string }>
+      React.ComponentType<any>
     >
   )[iconName];
 
