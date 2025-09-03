@@ -10,8 +10,6 @@ import {
   Moon,
   Sun,
   Settings,
-  Search,
-  Bell,
   User,
   Wallet,
   LogOut,
@@ -30,20 +28,30 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import { logout } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { showToast } from "@/lib/utils/toast";
-import { IconSearch, IconUK } from "@/components/ui/icon";
-import { IconNotification } from "@/components/ui/icon";
+import { IconUK } from "@/components/ui/icon";
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
 import NavbarAccountSwitch from "./NavbarAccountSwitch";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectGroup } from "@/components/ui/select";
 import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
 import { useUpdateLanguageMutation } from "@/lib/redux/services/userApi";
 import { updateUser } from "@/lib/redux/features/auth/authSlice";
+import LimitReachModal from "@/components/common/LimitReachModal";
 
 export default function NavbarProfile() {
   const { theme } = useTheme();
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
+  
+  const handleOpenUpgradeModal = () => {
+    setIsOpenLimitReach(true);
+  };
+
+  const handleCloseUpgradeModal = () => {
+    setIsOpenLimitReach(false);
+  };
+
   const handleLogout = () => {
     // Clear token from localStorage
     localStorage.removeItem("token");
@@ -114,6 +122,7 @@ export default function NavbarProfile() {
       <Button
         variant="ghost"
         className="bg-black text-white dark:!text-black dark:bg-white font-[700] dark:hover:bg-white/80 hover:bg-black/80 py-2 md:flex hidden"
+        onClick={handleOpenUpgradeModal}
       >
         Upgrade
         <ChevronUp
@@ -165,6 +174,7 @@ export default function NavbarProfile() {
               <Button
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-[120px] sm:w-[141px] text-xs sm:text-sm"
+                onClick={handleOpenUpgradeModal}
               >
                 <p>Upgrade</p> <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 dark:text-black text-white" />
               </Button>
@@ -197,20 +207,7 @@ export default function NavbarProfile() {
           <div className="flex flex-col gap-2">
             <NavbarAccountSwitch className="text-[12px] sm:text-[14px] md:hidden" dropdown={true} />
             <div className="flex items-center gap-2 md:hidden">
-            <div className="flex items-center gap-2 md:hidden">
-              <Button
-                variant="ghost"
-                className={`${theme === "light" && "bg-light-gradient"}`}
-              >
-                <IconSearch width={20} height={20} />
-              </Button>
-              <Button
-                variant="ghost"
-                className={`${theme === "light" && "bg-light-gradient"}`}
-              >
-                <IconNotification width={20} height={20} />
-              </Button>
-            </div>
+
             <Select
                 value={selectedLanguage}
                 onValueChange={handleLanguageChange}
@@ -254,6 +251,11 @@ export default function NavbarProfile() {
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
+      
+      <LimitReachModal
+        isOpenLimitReach={isOpenLimitReach}
+        onCloseLimitReach={handleCloseUpgradeModal}
+      />
     </div>
   );
 }

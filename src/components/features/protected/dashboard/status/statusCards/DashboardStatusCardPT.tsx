@@ -22,7 +22,7 @@ export default function DashboardStatusCardPT() {
       <div className="flex flex-col items-start gap-1.5 self-stretch">
         <div>
           <Text16 className="dark:text-white text-black font-satoshi-medium">
-            ${proposedTrade ? parseFloat(proposedTrade.entryPrice).toFixed(2) : "0.00"} → ${proposedTrade ? parseFloat(proposedTrade.targetPrice).toFixed(2) : "0.00"}
+            ${proposedTrade ? parseFloat(proposedTrade.entryPrice).toFixed(4) : "0.0000"} → ${proposedTrade ? parseFloat(proposedTrade.targetPrice).toFixed(4) : "0.0000"}
           </Text16>
           <Text12 className="dark:text-white/60 text-black/60 font-satoshi-medium line-clamp-2 break-words">
             {proposedTrade?.aiAnalysis ? 

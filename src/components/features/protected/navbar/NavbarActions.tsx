@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
 import { Button } from "@/components/ui/button";
-import { IconNotification, IconSearch, IconUK } from "@/components/ui/icon";
+import { IconUK } from "@/components/ui/icon";
 import {
   Select,
   SelectContent,
@@ -66,12 +66,6 @@ export default function NavbarActions() {
 
   return (
     <div className="hidden sm:flex items-center gap-1">
-      <Button variant="ghost" className={`${theme === "light" && "bg-light-gradient"}`} >
-        <IconSearch width={20} height={20} />
-      </Button>
-      <Button variant="ghost" className={`${theme === "light" && "bg-light-gradient"}`}>
-        <IconNotification width={20} height={20} />
-      </Button>
       <Select
         value={selectedLanguage}
         onValueChange={handleLanguageChange}

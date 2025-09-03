@@ -10,6 +10,7 @@ export interface User {
   language?: string;
   timezone?: string;
   twoFAMethod?: "sms" | "email" | "authenticator" | null;
+  accountType?: "virtual_account" | "demo_account";
   emailVerified?: boolean;
   createdAt: string;
   updatedAt: string;

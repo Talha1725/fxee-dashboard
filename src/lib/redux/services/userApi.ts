@@ -60,6 +60,7 @@ interface UserProfile {
   language?: string;
   timezone?: string;
   twoFAMethod?: "sms" | "email" | "authenticator" | null;
+  accountType?: "virtual_account" | "demo_account";
   emailVerified: boolean;
   createdAt: string;
   updatedAt: string;
@@ -143,6 +144,16 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    getUserProfile: builder.query<
+      { message: string; result: UserProfile },
+      void
+    >({
+      query: () => ({
+        url: "/users/profile",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
   }),
 });
 
@@ -153,5 +164,6 @@ export const {
   useChangePasswordMutation,
   useGetTradingPreferencesQuery,
   useUpdateTradingPreferencesMutation,
-  useUpdate2FAPreferencesMutation
+  useUpdate2FAPreferencesMutation,
+  useGetUserProfileQuery
 } = userApi;
