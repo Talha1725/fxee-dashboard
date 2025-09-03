@@ -10,8 +10,6 @@ import {
   Moon,
   Sun,
   Settings,
-  Search,
-  Bell,
   User,
   Wallet,
   LogOut,
@@ -30,8 +28,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import { logout } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { showToast } from "@/lib/utils/toast";
-import { IconSearch, IconUK } from "@/components/ui/icon";
-import { IconNotification } from "@/components/ui/icon";
+import { IconUK } from "@/components/ui/icon";
 import NavbarThemeSwitch from "@/components/features/protected/navbar/NavbarThemeSwitch";
 import NavbarAccountSwitch from "./NavbarAccountSwitch";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectGroup } from "@/components/ui/select";
@@ -210,20 +207,7 @@ export default function NavbarProfile() {
           <div className="flex flex-col gap-2">
             <NavbarAccountSwitch className="text-[12px] sm:text-[14px] md:hidden" dropdown={true} />
             <div className="flex items-center gap-2 md:hidden">
-            <div className="flex items-center gap-2 md:hidden">
-              <Button
-                variant="ghost"
-                className={`${theme === "light" && "bg-light-gradient"}`}
-              >
-                <IconSearch width={20} height={20} />
-              </Button>
-              <Button
-                variant="ghost"
-                className={`${theme === "light" && "bg-light-gradient"}`}
-              >
-                <IconNotification width={20} height={20} />
-              </Button>
-            </div>
+
             <Select
                 value={selectedLanguage}
                 onValueChange={handleLanguageChange}
