@@ -1,20 +1,14 @@
-// SMS Test Mode Utility with Console Logs
+// Optimized SMS Test Mode Utility
+import { SMS_CONFIG } from '@/lib/constants';
+import { delay, isTestPhoneNumber } from '@/lib/utils';
+import { SMSConfig } from '@/types/api';
+
 export const SMS_TEST_MODE = {
-  ENABLED: process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_SMS_TEST_MODE === 'true',
-  
-  TEST_CODE: '123456',
-  
-  TEST_PHONE_NUMBERS: [
-    '+1234567890',
-    '+1987654321',
-    '+1555123456',
-    '1234567890',
-    '9876543210',
-    '+923019511251' 
-  ],
-  
-  TWILIO_NUMBER: '+19862350580',
-  SMS_MESSAGE: 'Your FXEE verification code is: {code}. This code will expire in 10 minutes.',
+  ENABLED: SMS_CONFIG.TEST_MODE_ENABLED,
+  TEST_CODE: SMS_CONFIG.TEST_CODE,
+  TEST_PHONE_NUMBERS: SMS_CONFIG.TEST_PHONE_NUMBERS,
+  TWILIO_NUMBER: SMS_CONFIG.TWILIO_NUMBER,
+  SMS_MESSAGE: SMS_CONFIG.SMS_MESSAGE,
   
   log: {
     sendSMS: (phoneNumber: string, code: string) => {
@@ -41,14 +35,8 @@ export const SMS_TEST_MODE = {
       console.log('┌─────────────────────────────────────┐');
       console.log(`│  PHONE: ${phoneNumber.padEnd(25)} │`);
       console.log(`│  CODE: ${code.padEnd(25)} │`);
-      console.log(`│  STATUS: ${success ? 'VERIFIED ✅' : 'INVALID ❌'}${success ? '' : ' (test mode)'} │`);
+      console.log(`│  RESULT: ${success ? '✅ VALID' : '❌ INVALID'}${success ? '         ' : '        '} │`);
       console.log('└─────────────────────────────────────┘');
-      if (success) {
-        console.log('🎉 SMS verification successful (TEST MODE)');
-      } else {
-        console.log('❌ SMS verification failed (TEST MODE)');
-        console.log(`💡 Test mode code is: ${SMS_TEST_MODE.TEST_CODE}`);
-      }
     },
     
     updatePhone: (phoneNumber: string) => {
@@ -71,22 +59,10 @@ export const SMS_TEST_MODE = {
     }
   },
   
-  isTestPhoneNumber: (phone: string) => {
-    const cleanPhone = phone.replace(/\D/g, '');
-    return SMS_TEST_MODE.TEST_PHONE_NUMBERS.some(testNum => 
-      testNum.replace(/\D/g, '') === cleanPhone
-    );
-  },
+  isTestPhoneNumber: (phone: string) => isTestPhoneNumber(phone, SMS_TEST_MODE.TEST_PHONE_NUMBERS),
+  simulateDelay: delay,
   
-  simulateDelay: (ms: number = 1000) => new Promise(resolve => setTimeout(resolve, ms)),
-  
-  updateConfig: (config: {
-    testMode: boolean;
-    testSMSCode: string;
-    testPhoneNumbers: string[];
-    twilioNumber: string;
-    smsMessage: string;
-  }) => {
+  updateConfig: (config: SMSConfig) => {
     SMS_TEST_MODE.ENABLED = config.testMode;
     SMS_TEST_MODE.TEST_CODE = config.testSMSCode;
     SMS_TEST_MODE.TEST_PHONE_NUMBERS = config.testPhoneNumbers;

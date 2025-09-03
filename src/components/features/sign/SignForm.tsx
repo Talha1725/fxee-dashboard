@@ -23,6 +23,7 @@ import { handleAuthentication } from "@/lib/utils/authUtils";
 import { showToast } from "@/lib/utils/toast";
 import { AuthResponse, AuthResponseData } from '@/types/api';
 import { loginSchema, registerSchema, LoginFormData, RegisterFormData } from "@/lib/validations/auth";
+import { TWO_FA_METHODS } from "@/lib/constants";
 
 export default function SignForm({ isSignup }: { isSignup: boolean }) {
   const router = useRouter();
@@ -78,9 +79,9 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       // Check if 2FA is required
       if (response.data && typeof response.data === 'object' && 'requiresTwoFA' in response.data) {
         const twoFAData = response.data as any;
-        const toastMessage = twoFAData.twoFAMethod === 'email' 
+        const toastMessage = twoFAData.twoFAMethod === TWO_FA_METHODS.EMAIL 
           ? "2FA code sent to your email"
-          : twoFAData.twoFAMethod === 'sms'
+          : twoFAData.twoFAMethod === TWO_FA_METHODS.SMS
           ? "2FA code sent to your phone"
           : "Please enter your authenticator code";
         showToast.success(toastMessage);

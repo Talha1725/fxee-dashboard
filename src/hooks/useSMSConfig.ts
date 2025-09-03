@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
 import { useGetTestConfigQuery } from '@/lib/redux/features/auth/authApi';
 import { SMS_TEST_MODE } from '@/lib/utils/smsTestMode';
+import { SMSConfig } from '@/types/api';
 
 export const useSMSConfig = () => {
   const { data: testConfig, isLoading, error } = useGetTestConfigQuery();
 
   useEffect(() => {
     if (testConfig?.success && testConfig.data) {
-      // Update SMS test mode configuration from backend
-      SMS_TEST_MODE.updateConfig(testConfig.data);
+      SMS_TEST_MODE.updateConfig(testConfig.data as SMSConfig);
     }
   }, [testConfig]);
 
   return {
-    testConfig: testConfig?.data,
+    testConfig: testConfig?.data as SMSConfig | undefined,
     isLoading,
     error,
     isTestModeEnabled: SMS_TEST_MODE.ENABLED,

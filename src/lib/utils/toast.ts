@@ -82,4 +82,29 @@ export const showToast = {
       duration: 5000,
     });
   },
+  
+  // SMS verification
+  smsCodeSent: (phoneNumber: string) => {
+    toast.success(`Verification code sent to ${phoneNumber}`, {
+      duration: 4000,
+    });
+  },
+  
+  smsCodeVerified: () => {
+    toast.success('SMS verification successful!', {
+      duration: 3000,
+    });
+  },
+  
+  smsCodeInvalid: () => {
+    toast.error('Invalid verification code. Please try again.', {
+      duration: 4000,
+    });
+  },
+  
+  smsTestMode: (code: string) => {
+    toast.success(`Test Mode: SMS sent! Use code: ${code}`, {
+      duration: 5000,
+    });
+  },
 };

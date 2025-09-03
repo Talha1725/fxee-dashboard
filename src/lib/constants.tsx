@@ -451,6 +451,31 @@ export const COPY_TRADING_HOW_TO = [
 
 
 
+// SMS Configuration
+export const SMS_CONFIG = {
+  TEST_MODE_ENABLED: process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_SMS_TEST_MODE === 'true',
+  TEST_CODE: '123456',
+  TEST_PHONE_NUMBERS: [
+    '+1234567890',
+    '+1987654321', 
+    '+1555123456',
+    '1234567890',
+    '9876543210',
+    '+923019511251'
+  ],
+  TWILIO_NUMBER: '+19862350580',
+  SMS_MESSAGE: 'Your FXEE verification code is: {code}. This code will expire in 10 minutes.',
+  COUNTDOWN_DURATION: 60,
+  SESSION_TIMEOUT: 10 * 60 * 1000, // 10 minutes
+} as const;
+
+// 2FA Methods
+export const TWO_FA_METHODS = {
+  EMAIL: 'email',
+  SMS: 'sms', 
+  AUTHENTICATOR: 'authenticator',
+} as const;
+
 export const countries = [
   { code: "US", name: "United States", phoneCode: "+1", flag: AllCountry.US },
   { code: "GB", name: "United Kingdom", phoneCode: "+44", flag: AllCountry.GB },

@@ -13,12 +13,15 @@ import { updateUser } from "@/lib/redux/features/auth/authSlice";
 import { toast } from "sonner";
 import AuthenticatorSetupModal from "./authenticator-setup-modal";
 import SmsSetupModal from "./sms-setup-modal";
+import { TWO_FA_METHODS } from "@/lib/constants";
 
 export default function FASecuritySection() {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { user, token, isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const { data: profileData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
+  const { data: profileData, isLoading: profileLoading, error: profileError } = useGetProfileQuery(undefined, {
+    skip: true // Temporarily disable to test Redux user data only
+  });
   const [selectedFA, setSelectedFA] = useState<string>("");
   const [originalFA, setOriginalFA] = useState<string>("");
   const [showAuthenticatorModal, setShowAuthenticatorModal] = useState(false);
@@ -27,6 +30,10 @@ export default function FASecuritySection() {
   const [pendingSmsSelection, setPendingSmsSelection] = useState(false);
   const [update2FAPreferences, { isLoading }] = useUpdate2FAPreferencesMutation();
 
+  // Debug auth state
+  console.log('Auth Debug:', { token: !!token, isAuthenticated, user: !!user, profileError });
+  console.log('Full user object:', user);
+  console.log('User twoFAMethod:', user?.twoFAMethod);
 
   // Sync profile data to Redux store when it's fetched
   useEffect(() => {
@@ -38,20 +45,24 @@ export default function FASecuritySection() {
     }
   }, [profileData, user, dispatch]);
 
-  // Initialize 2FA state from user data
+  // Initialize 2FA state from user data (prefer profile data from API, fallback to Redux user data)
   useEffect(() => {
-    const current2FA = (user as any)?.twoFaMethod || (profileData as any)?.twoFaMethod || "";
-    
-    if (current2FA) {
-      setSelectedFA(current2FA);
-      setOriginalFA(current2FA);
-    }
-  }, [user, profileData]);
+    const current2FA = profileData?.twoFAMethod || user?.twoFAMethod || "";
+    console.log('2FA Debug - Setting state:', { 
+      profileData: profileData?.twoFAMethod, 
+      user: user?.twoFAMethod, 
+      final: current2FA,
+      typeof: typeof current2FA 
+    });
+    setSelectedFA(current2FA);
+    setOriginalFA(current2FA);
+  }, [profileData?.twoFAMethod, user?.twoFAMethod]);
 
+  // Debug: Log current state
+  console.log('2FA Debug - Current state:', { selectedFA, originalFA });
 
   const handleApplyChanges = async () => {
     try {
-      // Check if user is authenticated
       if (!isAuthenticated || !token) {
         toast.error("Please log in to update 2FA preferences");
         return;
@@ -63,27 +74,25 @@ export default function FASecuritySection() {
       }
 
       // If authenticator is selected and not already enabled, show setup modal
-      if (selectedFA === "authenticator" && originalFA !== "authenticator") {
+      if (selectedFA === TWO_FA_METHODS.AUTHENTICATOR && originalFA !== TWO_FA_METHODS.AUTHENTICATOR) {
         setPendingAuthenticatorSelection(true);
         setShowAuthenticatorModal(true);
         return;
       }
 
-      // If SMS is selected and not already enabled, show setup modal
-      if (selectedFA === "sms" && originalFA !== "sms") {
+      if (selectedFA === TWO_FA_METHODS.SMS && originalFA !== TWO_FA_METHODS.SMS) {
         setPendingSmsSelection(true);
         setShowSmsModal(true);
         return;
       }
 
-      // If SMS is already enabled and user wants to change phone number, show setup modal
-      if (selectedFA === "sms" && originalFA === "sms") {
+      if (selectedFA === TWO_FA_METHODS.SMS && originalFA === TWO_FA_METHODS.SMS) {
         setPendingSmsSelection(true);
         setShowSmsModal(true);
         return;
       }
 
-      const twoFAMethod = selectedFA as "sms" | "email" | "authenticator" | null;
+      const twoFAMethod = selectedFA as typeof TWO_FA_METHODS.SMS | typeof TWO_FA_METHODS.EMAIL | typeof TWO_FA_METHODS.AUTHENTICATOR | null;
       const result = await update2FAPreferences({ twoFAMethod }).unwrap();
       
       // Update Redux store with new user data
@@ -124,9 +133,6 @@ export default function FASecuritySection() {
     );
   }
 
-<<<<<<< Updated upstream
-=======
-  // Show message if user is not authenticated
   if (!isAuthenticated || !token) {
     return (
       <div className="mt-5">
@@ -146,7 +152,6 @@ export default function FASecuritySection() {
     profileData: profileData?.twoFAMethod, 
     user: user?.twoFAMethod 
   });
->>>>>>> Stashed changes
 
   return (
     <div className="mt-5">
@@ -163,7 +168,7 @@ export default function FASecuritySection() {
         {/* SMS Code Option */}
         <div
           className={`p-4 border cursor-pointer transition-all duration-200 hover:border-[#3EDC81]/50 ${
-            selectedFA === "sms"
+            selectedFA === TWO_FA_METHODS.SMS
               ? "border-[#3EDC81] dark:!bg-gradient-to-b dark:from-white/5 dark:to-white/2"
               : "dark:border-white/10 border-black/5"
           } rounded-lg`}
@@ -177,7 +182,7 @@ export default function FASecuritySection() {
                 ? "linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%)"
                 : "linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%)",
           }}
-          onClick={() => setSelectedFA("sms")}
+          onClick={() => setSelectedFA(TWO_FA_METHODS.SMS)}
         >
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
@@ -191,10 +196,10 @@ export default function FASecuritySection() {
               </div>
             </div>
             <RadioGroupItem
-              value="sms"
-              id="sms"
+              value={TWO_FA_METHODS.SMS}
+              id={TWO_FA_METHODS.SMS}
               className={`${
-                selectedFA === "sms" && "!border-[#3EDC81] !bg-[#3EDC81]"
+                selectedFA === TWO_FA_METHODS.SMS && "!border-[#3EDC81] !bg-[#3EDC81]"
               }`}
             />
           </div>
@@ -243,7 +248,7 @@ export default function FASecuritySection() {
         {/* Authenticator App Option */}
         <div
           className={`p-4 border cursor-pointer transition-all duration-200 hover:border-[#3EDC81]/50 ${
-            selectedFA === "authenticator"
+            selectedFA === TWO_FA_METHODS.AUTHENTICATOR
               ? "border-[#3EDC81] dark:!bg-gradient-to-b dark:from-white/5 dark:to-white/2"
               : "dark:border-white/10 border-black/5"
           } rounded-lg`}
@@ -274,7 +279,7 @@ export default function FASecuritySection() {
               value="authenticator"
               id="authenticator"
               className={`${
-                selectedFA === "authenticator" && "!border-[#3EDC81] !bg-[#3EDC81]"
+                selectedFA === TWO_FA_METHODS.AUTHENTICATOR && "!border-[#3EDC81] !bg-[#3EDC81]"
               }`}
             />
           </div>
@@ -313,12 +318,10 @@ export default function FASecuritySection() {
         }}
       />
 
-      {/* SMS Setup Modal */}
       <SmsSetupModal
         isOpen={showSmsModal}
         onClose={() => {
           setShowSmsModal(false);
-          // Revert selection if setup was cancelled
           if (pendingSmsSelection) {
             setSelectedFA(originalFA);
             setPendingSmsSelection(false);
@@ -326,10 +329,8 @@ export default function FASecuritySection() {
         }}
         onSuccess={async () => {
           try {
-            // Update 2FA preferences to SMS after successful verification
-            const result = await update2FAPreferences({ twoFAMethod: "sms" }).unwrap();
+            const result = await update2FAPreferences({ twoFAMethod: TWO_FA_METHODS.SMS }).unwrap();
             
-            // Update Redux store with new user data
             dispatch(updateUser({
               ...result.result,
               role: (result.result.role as "user" | "admin" | "trader") || user?.role || "user"
@@ -337,8 +338,8 @@ export default function FASecuritySection() {
             
             setShowSmsModal(false);
             setPendingSmsSelection(false);
-            setOriginalFA("sms");
-            toast.success(originalFA === "sms" ? "SMS 2FA updated successfully!" : "SMS 2FA enabled successfully!");
+            setOriginalFA(TWO_FA_METHODS.SMS);
+            toast.success(originalFA === TWO_FA_METHODS.SMS ? "SMS 2FA updated successfully!" : "SMS 2FA enabled successfully!");
           } catch (error: any) {
             console.error('Error updating 2FA preference after SMS verification:', error);
             toast.error(error?.data?.message || "Failed to enable SMS 2FA");
@@ -347,7 +348,7 @@ export default function FASecuritySection() {
           }
         }}
         phoneNumber={user?.phoneNumber || ""}
-        isUpdating={originalFA === "sms"}
+        isUpdating={originalFA === TWO_FA_METHODS.SMS}
       />
     </div>
   );

@@ -13,7 +13,7 @@ import { Title32, Description14 } from "@/components/ui/typography";
 import { showToast } from "@/lib/utils/toast";
 import { handle2FAAuthentication } from "@/lib/utils/authUtils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { useVerify2FAMutation, useResend2FAMutation } from "@/lib/redux/features/auth/authApi";
+import { API_BASE_URL, SMS_CONFIG, TWO_FA_METHODS } from "@/lib/constants";
 import { ArrowLeftIcon } from "lucide-react";
 import { useSendSMSVerificationMutation, useVerifySMSMutation } from "@/lib/redux/features/auth/authApi";
 import { SMS_TEST_MODE } from "@/lib/utils/smsTestMode";
@@ -30,8 +30,7 @@ export default function Verify2FAForm() {
   const searchParams = useSearchParams();
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const [verify2FA, { isLoading: isVerifying }] = useVerify2FAMutation();
-  const [resend2FA, { isLoading: isResending }] = useResend2FAMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [userInfo, setUserInfo] = useState<{
     userId: number;
@@ -55,8 +54,8 @@ export default function Verify2FAForm() {
       if (storedData) {
         const data = JSON.parse(storedData);
         
-        // Check if data is recent (within 10 minutes)
-        const isExpired = Date.now() - data.timestamp > 10 * 60 * 1000;
+        // Check if data is recent (within session timeout)
+        const isExpired = Date.now() - data.timestamp > SMS_CONFIG.SESSION_TIMEOUT;
         
         // Verify userId matches URL param
         const userIdMatches = urlUserId && parseInt(urlUserId) === data.userId;
@@ -107,75 +106,46 @@ export default function Verify2FAForm() {
   const onSubmit = async (data: Verify2FAFormData) => {
     if (!userInfo) return;
 
+    setIsLoading(true);
     try {
-<<<<<<< Updated upstream
-      const result = await verify2FA({
-        userId: userInfo.userId,
-        code: data.code
-      }).unwrap();
-
-      if (result.data) {
-        // Extract the correct structure for handle2FAAuthentication
-        const authData = typeof result.data === 'object' && 'userData' in result.data && 'token' in result.data
-          ? { token: result.data.token || '', userData: result.data.userData }
-          : result.token && result.data
-          ? { token: result.token, userData: result.data }
-          : null;
-
-        if (authData) {
-          await handle2FAAuthentication(authData, router, dispatch);
-          sessionStorage.removeItem('2fa_verification_data');
-          showToast.success("Login successful!");
-        } else {
-          showToast.error("Invalid response format");
-=======
-      if (userInfo.twoFAMethod === 'sms' && userInfo.phoneNumber) {
-        // Handle SMS verification
+      if (userInfo.twoFAMethod === TWO_FA_METHODS.SMS && userInfo.phoneNumber) {
         if (isTestModeEnabled) {
-          // Test mode: Check if code matches test code
-          console.log('🧪 SMS TEST MODE - Verifying SMS code...');
+          console.log('SMS TEST MODE - Verifying SMS code...');
           const isValid = data.code === testCode;
           SMS_TEST_MODE.log.verifySMS(userInfo.phoneNumber, data.code, isValid);
           await SMS_TEST_MODE.simulateDelay(800);
           
           if (isValid) {
-            // Simulate successful authentication with test data
             await handle2FAAuthentication(SMS_TEST_MODE.responses.verifySMS.data, router, dispatch);
             
-            // Clear session storage on successful verification
             sessionStorage.removeItem('2fa_verification_data');
             
-            showToast.success(" Test Mode: Login successful!");
+            showToast.success("Test Mode: Login successful!");
           } else {
-            showToast.error(` Test Mode: Invalid code! Use: ${testCode}`);
+            showToast.error(`Test Mode: Invalid code! Use: ${testCode}`);
           }
         } else {
-          // Production mode: Real API call
-          console.log(' PRODUCTION MODE - Verifying SMS...');
+          console.log('PRODUCTION MODE - Verifying SMS...');
           const response = await verifySMS({
             phoneNumber: userInfo.phoneNumber,
             code: data.code
           }).unwrap();
 
           if (response.success && response.data) {
-            // Handle successful authentication
             const authData = {
               token: (response.data as any).token || (response.data as any).accessToken,
               userData: (response.data as any).user || (response.data as any).userData || response.data
             };
             await handle2FAAuthentication(authData, router, dispatch);
             
-            // Clear session storage on successful verification
             sessionStorage.removeItem('2fa_verification_data');
             
             showToast.success("Login successful!");
           } else {
             showToast.error("Verification failed");
           }
->>>>>>> Stashed changes
         }
       } else {
-        // Handle email/authenticator verification
         const response = await fetch(`${API_BASE_URL}/auth/verify-2fa`, {
           method: "POST",
           headers: {
@@ -207,50 +177,32 @@ export default function Verify2FAForm() {
         }
       }
     } catch (error: any) {
-<<<<<<< Updated upstream
-      showToast.error(error.data?.message || "Verification failed");
-=======
       console.error("2FA verification error:", error);
       showToast.error(error?.data?.message || "Network error. Please try again.");
     } finally {
       setIsLoading(false);
->>>>>>> Stashed changes
     }
   };
 
   const handleResendCode = async () => {
     if (!userInfo || countdown > 0) return;
 
+    setIsLoading(true);
     try {
-<<<<<<< Updated upstream
-      await resend2FA({
-        userId: userInfo.userId,
-        email: userInfo.email
-      }).unwrap();
-      
-      setCountdown(60);
-      showToast.success("New verification code sent to your email");
-    } catch (error: any) {
-      showToast.error(error.data?.message || "Failed to resend code");
-=======
-      if (userInfo.twoFAMethod === 'sms' && userInfo.phoneNumber) {
-        // Resend SMS code
+      if (userInfo.twoFAMethod === TWO_FA_METHODS.SMS && userInfo.phoneNumber) {
         if (isTestModeEnabled) {
-          // Test mode: Simulate SMS resend
           console.log(' SMS TEST MODE - Resending SMS...');
           SMS_TEST_MODE.log.sendSMS(userInfo.phoneNumber, testCode);
           await SMS_TEST_MODE.simulateDelay(1000);
           setCountdown(60);
           showToast.success(` Test Mode: SMS resent! Use code: ${testCode}`);
         } else {
-          // Production mode: Real API call
           console.log(' PRODUCTION MODE - Resending SMS...');
           const response = await sendSMSVerification({ phoneNumber: userInfo.phoneNumber }).unwrap();
           setCountdown(60);
           showToast.success(response.message || "New verification code sent to your phone");
         }
       } else if (userInfo.twoFAMethod === 'email') {
-        // Resend email code
         const response = await fetch(`${API_BASE_URL}/auth/resend-2fa`, {
           method: "POST",
           headers: {
@@ -276,7 +228,6 @@ export default function Verify2FAForm() {
       showToast.error(error?.data?.message || "Failed to resend code");
     } finally {
       setIsLoading(false);
->>>>>>> Stashed changes
     }
   };
 
@@ -372,11 +323,11 @@ export default function Verify2FAForm() {
 
         <Button
           type="submit"
-          disabled={isVerifying || codeValue.length !== 6}
+          disabled={isLoading || codeValue.length !== 6}
           className="w-full h-12"
           variant={"fancy"}
         >
-          {isVerifying ? "Verifying..." : "Verify & Sign In"}
+          {isLoading ? "Verifying..." : "Verify & Sign In"}
         </Button>
 
         {userInfo.twoFAMethod === 'email' && (
@@ -388,7 +339,7 @@ export default function Verify2FAForm() {
               type="button"
               variant="ghost"
               onClick={handleResendCode}
-              disabled={countdown > 0 || isResending}
+              disabled={countdown > 0 || isLoading}
               className="text-sm"
             >
               {countdown > 0 ? `Resend in ${countdown}s` : "Resend Code"}

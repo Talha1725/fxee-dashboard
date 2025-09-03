@@ -10,6 +10,9 @@ import { toast } from "sonner";
 import { useUpdatePhoneMutation, useSendSMSVerificationMutation, useVerifySMSMutation } from "@/lib/redux/features/auth/authApi";
 import { SMS_TEST_MODE } from "@/lib/utils/smsTestMode";
 import { useSMSConfig } from "@/hooks/useSMSConfig";
+import { SMS_CONFIG } from "@/lib/constants";
+import { showToast } from "@/lib/utils/toast";
+import { isValidPhoneNumber } from "@/lib/utils";
 
 interface SmsSetupModalProps {
   isOpen: boolean;
@@ -40,8 +43,8 @@ export default function SmsSetupModal({
   const [verifySMS, { isLoading: isVerifyingSMS }] = useVerifySMSMutation();
 
   const handleSendCode = async () => {
-    if (!phone || phone.length < 10) {
-      toast.error("Please enter a valid phone number");
+    if (!isValidPhoneNumber(phone)) {
+      showToast.error("Please enter a valid phone number");
       return;
     }
 
@@ -59,7 +62,7 @@ export default function SmsSetupModal({
         await SMS_TEST_MODE.simulateDelay(1000);
         
         setCodeSent(true);
-        setCountdown(60);
+        setCountdown(SMS_CONFIG.COUNTDOWN_DURATION);
         const timer = setInterval(() => {
           setCountdown(prev => {
             if (prev <= 1) {
@@ -70,7 +73,7 @@ export default function SmsSetupModal({
           });
         }, 1000);
         
-        toast.success(` Test Mode: SMS sent! Use code: ${testCode}`);
+        showToast.smsTestMode(testCode);
         return;
       }
 
@@ -84,7 +87,7 @@ export default function SmsSetupModal({
       const response = await sendSMSVerification({ phoneNumber: phone }).unwrap();
       
       setCodeSent(true);
-      setCountdown(60);
+      setCountdown(SMS_CONFIG.COUNTDOWN_DURATION);
       const timer = setInterval(() => {
         setCountdown(prev => {
           if (prev <= 1) {
@@ -95,16 +98,16 @@ export default function SmsSetupModal({
         });
       }, 1000);
       
-      toast.success(response.message || "Verification code sent to your phone");
+      showToast.smsCodeSent(phone);
     } catch (error: any) {
       console.error('SMS send error:', error);
-      toast.error(error?.data?.message || "Failed to send verification code");
+      showToast.error(error?.data?.message || "Failed to send verification code");
     }
   };
 
   const handleVerifyCode = async () => {
     if (!verificationCode || verificationCode.length !== 6) {
-      toast.error("Please enter the 6-digit verification code");
+      showToast.error("Please enter the 6-digit verification code");
       return;
     }
 
@@ -116,10 +119,10 @@ export default function SmsSetupModal({
         await SMS_TEST_MODE.simulateDelay(800);
         
         if (isValid) {
-          toast.success(" Test Mode: Phone verified successfully!");
+          showToast.smsCodeVerified();
           onSuccess();
         } else {
-          toast.error(` Test Mode: Invalid code! Use: ${testCode}`);
+          showToast.smsCodeInvalid();
         }
         return;
       }
@@ -131,11 +134,11 @@ export default function SmsSetupModal({
         code: verificationCode 
       }).unwrap();
       
-      toast.success("Phone number verified successfully!");
+      showToast.smsCodeVerified();
       onSuccess();
     } catch (error: any) {
       console.error('SMS verify error:', error);
-      toast.error(error?.data?.message || "Invalid verification code");
+      showToast.error(error?.data?.message || "Invalid verification code");
     }
   };
 

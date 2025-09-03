@@ -330,3 +330,70 @@ export interface ApiErrorWithData extends Error {
   status?: number;
   error?: string;
 }
+
+// SMS Types
+export interface SMSConfig {
+  testMode: boolean;
+  testSMSCode: string;
+  testPhoneNumbers: string[];
+  twilioNumber: string;
+  smsMessage: string;
+}
+
+export interface SMSConfigResponse extends ApiResponse<SMSConfig> {}
+
+export interface UpdatePhoneRequest {
+  phoneNumber: string;
+}
+
+export interface UpdatePhoneResponse extends ApiResponse<{
+  message: string;
+  phoneNumber: string;
+}> {}
+
+export interface SendSMSVerificationRequest {
+  phoneNumber: string;
+}
+
+export interface SendSMSVerificationResponse extends ApiResponse<{
+  message: string;
+  success: boolean;
+}> {}
+
+export interface VerifySMSRequest {
+  phoneNumber: string;
+  code: string;
+}
+
+export interface VerifySMSResponse extends ApiResponse<{
+  success: boolean;
+  message: string;
+  data?: {
+    token: string;
+    userData: {
+      id: string;
+      email: string;
+      phoneNumber: string;
+      twoFAMethod: string;
+    };
+  };
+}> {}
+
+export interface LoginWithPhoneRequest {
+  phoneNumber: string;
+  code: string;
+}
+
+export interface LoginWithPhoneResponse extends ApiResponse<{
+  success: boolean;
+  message: string;
+  data?: {
+    token: string;
+    userData: {
+      id: string;
+      email: string;
+      phoneNumber: string;
+      twoFAMethod: string;
+    };
+  };
+}> {}
