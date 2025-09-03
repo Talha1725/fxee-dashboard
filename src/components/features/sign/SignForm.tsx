@@ -13,7 +13,7 @@ import SignupInputs from "@/components/features/sign/SignupInputs";
 import SignSupport from "@/components/features/sign/SignSupport";
 import { Button } from "@/components/ui/button";
 
-import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/auth/authApi";
+import { useLoginMutation, useRegisterMutation, useLoginWithPhoneMutation } from "@/lib/redux/features/auth/authApi";
 import { setLoading } from "@/lib/redux/features/auth/authSlice";
 import { RootState } from "@/lib/redux/store";
 import { 
@@ -34,6 +34,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   // RTK Query mutations
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [registerUser, { isLoading: isRegisterLoading }] = useRegisterMutation();
+  const [loginWithPhone, { isLoading: isPhoneLoginLoading }] = useLoginWithPhoneMutation();
   
   // React Hook Form with Zod validation
   const {
@@ -79,6 +80,8 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
         const twoFAData = response.data as any;
         const toastMessage = twoFAData.twoFAMethod === 'email' 
           ? "2FA code sent to your email"
+          : twoFAData.twoFAMethod === 'sms'
+          ? "2FA code sent to your phone"
           : "Please enter your authenticator code";
         showToast.success(toastMessage);
         
@@ -87,6 +90,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
           userId: twoFAData.userId,
           email: twoFAData.email,
           twoFAMethod: twoFAData.twoFAMethod,
+          phoneNumber: twoFAData.phoneNumber,
           timestamp: Date.now()
         }));
         

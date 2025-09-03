@@ -15,6 +15,9 @@ import { handle2FAAuthentication } from "@/lib/utils/authUtils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useVerify2FAMutation, useResend2FAMutation } from "@/lib/redux/features/auth/authApi";
 import { ArrowLeftIcon } from "lucide-react";
+import { useSendSMSVerificationMutation, useVerifySMSMutation } from "@/lib/redux/features/auth/authApi";
+import { SMS_TEST_MODE } from "@/lib/utils/smsTestMode";
+import { useSMSConfig } from "@/hooks/useSMSConfig";
 
 const verify2FASchema = z.object({
   code: z.string().min(6, "Code must be 6 digits").max(6, "Code must be 6 digits")
@@ -34,7 +37,13 @@ export default function Verify2FAForm() {
     userId: number;
     email: string;
     twoFAMethod: string;
+    phoneNumber?: string;
   } | null>(null);
+  
+  const { isTestModeEnabled, testCode, twilioNumber, smsMessage } = useSMSConfig();
+  
+  const [sendSMSVerification, { isLoading: isSendingSMS }] = useSendSMSVerificationMutation();
+  const [verifySMS, { isLoading: isVerifyingSMS }] = useVerifySMSMutation();
   
   // Get user info from session storage and URL params
   const urlUserId = searchParams.get("userId");
@@ -56,7 +65,8 @@ export default function Verify2FAForm() {
           setUserInfo({
             userId: data.userId,
             email: data.email,
-            twoFAMethod: data.twoFAMethod
+            twoFAMethod: data.twoFAMethod,
+            phoneNumber: data.phoneNumber
           });
           return;
         }
@@ -98,6 +108,7 @@ export default function Verify2FAForm() {
     if (!userInfo) return;
 
     try {
+<<<<<<< Updated upstream
       const result = await verify2FA({
         userId: userInfo.userId,
         code: data.code
@@ -117,19 +128,101 @@ export default function Verify2FAForm() {
           showToast.success("Login successful!");
         } else {
           showToast.error("Invalid response format");
+=======
+      if (userInfo.twoFAMethod === 'sms' && userInfo.phoneNumber) {
+        // Handle SMS verification
+        if (isTestModeEnabled) {
+          // Test mode: Check if code matches test code
+          console.log('🧪 SMS TEST MODE - Verifying SMS code...');
+          const isValid = data.code === testCode;
+          SMS_TEST_MODE.log.verifySMS(userInfo.phoneNumber, data.code, isValid);
+          await SMS_TEST_MODE.simulateDelay(800);
+          
+          if (isValid) {
+            // Simulate successful authentication with test data
+            await handle2FAAuthentication(SMS_TEST_MODE.responses.verifySMS.data, router, dispatch);
+            
+            // Clear session storage on successful verification
+            sessionStorage.removeItem('2fa_verification_data');
+            
+            showToast.success(" Test Mode: Login successful!");
+          } else {
+            showToast.error(` Test Mode: Invalid code! Use: ${testCode}`);
+          }
+        } else {
+          // Production mode: Real API call
+          console.log(' PRODUCTION MODE - Verifying SMS...');
+          const response = await verifySMS({
+            phoneNumber: userInfo.phoneNumber,
+            code: data.code
+          }).unwrap();
+
+          if (response.success && response.data) {
+            // Handle successful authentication
+            const authData = {
+              token: (response.data as any).token || (response.data as any).accessToken,
+              userData: (response.data as any).user || (response.data as any).userData || response.data
+            };
+            await handle2FAAuthentication(authData, router, dispatch);
+            
+            // Clear session storage on successful verification
+            sessionStorage.removeItem('2fa_verification_data');
+            
+            showToast.success("Login successful!");
+          } else {
+            showToast.error("Verification failed");
+          }
+>>>>>>> Stashed changes
         }
       } else {
-        showToast.error("Verification failed");
+        // Handle email/authenticator verification
+        const response = await fetch(`${API_BASE_URL}/auth/verify-2fa`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userInfo.userId,
+            code: data.code
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          showToast.error(result.message || "Verification failed");
+          return;
+        }
+
+        if (result.success && result.data) {
+          // Handle successful authentication
+          await handle2FAAuthentication(result.data, router, dispatch);
+          
+          // Clear session storage on successful verification
+          sessionStorage.removeItem('2fa_verification_data');
+          
+          showToast.success("Login successful!");
+        } else {
+          showToast.error("Verification failed");
+        }
       }
     } catch (error: any) {
+<<<<<<< Updated upstream
       showToast.error(error.data?.message || "Verification failed");
+=======
+      console.error("2FA verification error:", error);
+      showToast.error(error?.data?.message || "Network error. Please try again.");
+    } finally {
+      setIsLoading(false);
+>>>>>>> Stashed changes
     }
   };
 
   const handleResendCode = async () => {
-    if (!userInfo || countdown > 0 || userInfo.twoFAMethod !== 'email') return;
+    if (!userInfo || countdown > 0) return;
 
     try {
+<<<<<<< Updated upstream
       await resend2FA({
         userId: userInfo.userId,
         email: userInfo.email
@@ -139,6 +232,51 @@ export default function Verify2FAForm() {
       showToast.success("New verification code sent to your email");
     } catch (error: any) {
       showToast.error(error.data?.message || "Failed to resend code");
+=======
+      if (userInfo.twoFAMethod === 'sms' && userInfo.phoneNumber) {
+        // Resend SMS code
+        if (isTestModeEnabled) {
+          // Test mode: Simulate SMS resend
+          console.log(' SMS TEST MODE - Resending SMS...');
+          SMS_TEST_MODE.log.sendSMS(userInfo.phoneNumber, testCode);
+          await SMS_TEST_MODE.simulateDelay(1000);
+          setCountdown(60);
+          showToast.success(` Test Mode: SMS resent! Use code: ${testCode}`);
+        } else {
+          // Production mode: Real API call
+          console.log(' PRODUCTION MODE - Resending SMS...');
+          const response = await sendSMSVerification({ phoneNumber: userInfo.phoneNumber }).unwrap();
+          setCountdown(60);
+          showToast.success(response.message || "New verification code sent to your phone");
+        }
+      } else if (userInfo.twoFAMethod === 'email') {
+        // Resend email code
+        const response = await fetch(`${API_BASE_URL}/auth/resend-2fa`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userInfo.userId,
+            email: userInfo.email
+          }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setCountdown(60);
+          showToast.success("New verification code sent to your email");
+        } else {
+          showToast.error(result.message || "Failed to resend code");
+        }
+      }
+    } catch (error: any) {
+      console.error("Resend error:", error);
+      showToast.error(error?.data?.message || "Failed to resend code");
+    } finally {
+      setIsLoading(false);
+>>>>>>> Stashed changes
     }
   };
 
@@ -175,9 +313,24 @@ export default function Verify2FAForm() {
         <Description14 className="text-center font-satoshi">
           {userInfo.twoFAMethod === 'email' 
             ? `We've sent a 6-digit code to ${userInfo.email}`
+            : userInfo.twoFAMethod === 'sms' && userInfo.phoneNumber
+            ? `We've sent a 6-digit code to ${userInfo.phoneNumber}`
             : 'Enter the 6-digit code from your authenticator app'
           }
         </Description14>
+        {isTestModeEnabled && userInfo.twoFAMethod === 'sms' && (
+          <div className="mt-3 p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <Description14 className="text-blue-800 dark:text-blue-200 font-satoshi-medium text-center">
+              Test Mode Active - Check console for SMS logs
+            </Description14>
+            <Description14 className="text-blue-600 dark:text-blue-300 font-satoshi text-center mt-1">
+              Use code: {testCode}
+            </Description14>
+            <Description14 className="text-blue-500 dark:text-blue-400 font-satoshi text-center mt-1 text-xs">
+              From: {twilioNumber}
+            </Description14>
+          </div>
+        )}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-8">
