@@ -20,7 +20,7 @@ export default function ProtectedLayout({
           style={{
             transform: "scaleX(-1)",
           }}
-          className="pointer-events-none fixed top-0 left-0 w-screen h-screen z-50 opacity-10"
+          className="pointer-events-none fixed top-0 left-0 w-screen h-screen z-50 dark:opacity-10 opacity-5"
         >
           <Image src={shade} alt="shade" className="w-full h-full scale-125" />
         </div>

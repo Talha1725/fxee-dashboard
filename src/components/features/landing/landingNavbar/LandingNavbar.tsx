@@ -19,7 +19,7 @@ export default function LandingNavbar() {
     { href: "/challenge-support", label: "Challenge Support" },
     { href: "/community", label: "Community" },
     { href: "/about", label: "About us" },
-    { href: isAuthenticated ? "/home" : "/signin", label: isAuthenticated ? "Home" : "Login" },
+    { href: isAuthenticated ? "/home" : "/signin", label: isAuthenticated ? "Dashboard" : "Login" },
   ];
 
   useEffect(() => {

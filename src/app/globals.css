@@ -1411,7 +1411,7 @@ body {
     border-radius: 12px;
     background-image: linear-gradient(transparent, transparent),
       /* Transparent background */
-        linear-gradient(310deg, #3edc8085 14.37%, #0276db6e  82.05%); /* Blue to green gradient */
+        linear-gradient(310deg, #3edc8085 14.37%, #0276db6e 82.05%); /* Blue to green gradient */
     background-origin: border-box;
     background-clip: padding-box, border-box;
   }
@@ -1533,7 +1533,13 @@ body {
   }
 
   .bull-gradient {
-    background: linear-gradient(29.31deg, #0276db1a 13.99%, #3edc812b 102.63%), radial-gradient(99.93% 99.93% at 50.06% .07%, #161616 0%, #161616f1 74.01%, #161616 100%);
+    background: linear-gradient(29.31deg, #0276db1a 13.99%, #3edc812b 102.63%),
+      radial-gradient(
+        99.93% 99.93% at 50.06% 0.07%,
+        #161616 0%,
+        #161616f1 74.01%,
+        #161616 100%
+      );
   }
 }
 
@@ -1572,4 +1578,17 @@ body {
 .animate-marquee-right-to-left:hover,
 .animate-marquee-left-to-right-slow:hover {
   animation-play-state: paused;
+}
+
+.claim-gradient {
+  background: 
+  radial-gradient(
+    99.93% 99.93% at 50.06% 0.07%, 
+    rgba(22, 22, 22, 0.6) 0%, 
+    rgba(22, 22, 22, 0.946662) 74.01%, 
+    #161616 100%
+  ),
+  linear-gradient(10deg, #0276DB 13.99%, #3EDC81 102.63%);
+
+
 }

@@ -22,7 +22,7 @@ export default function LandingFooter() {
   return (
     <div className="relative">
       <LandingMax1440Container className="pt-25 pb-10 gap-10">
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 justify-between items-start self-stretch">
+        <div className="flex flex-col md:flex-row gap-10 lg:gap-0 justify-between items-start self-stretch">
           <div className="flex flex-col items-start gap-10 lg:gap-[70px]">
             <Link href="/">
               <IconLogo1 width={150} height={38} className="shrink-0" />
@@ -39,7 +39,7 @@ export default function LandingFooter() {
               </Button>
             </div>
           </div>
-          <div className="flex flex-wrap lg:flex-nowrap items-start gap-10 md:gap-25 px-0 lg:px-12.5 shrink-0">
+          <div className="flex flex-col sm:flex-row flex-wrap lg:flex-nowrap justify-between items-start gap-10 sm:gap-20 md:gap-10 px-0 lg:px-12.5 shrink-0">
             <LandingFooterLinks title="Quick Links" items={QUICK_LINKS} />
             <LandingFooterLinks title="Legal Links" items={LEGAL_LINKS} />
             <div className="flex flex-col items-start gap-12.5 shrink-0">
