@@ -18,6 +18,7 @@ import LandingFooter from "@/components/features/landing/landingFooter/LandingFo
 import LandingContainer from "@/components/features/landing/LandingContainer";
 import LandingPFSPartner from "./landingPFS/LandingPFSPartner";
 import LandingEBS from "./LandingEBS/LandingEBS";
+import LandingVideoSection from "./LandingVideoSection";
 
 export default function Landing() {
   return (
@@ -25,6 +26,7 @@ export default function Landing() {
       <LandingHero />
       <LandingPFSPartner />
       <LandingWhyFxee />
+      <LandingVideoSection />
       <LandingATC />
       <LandingEBS />
       <LandingHIW />

@@ -1401,6 +1401,15 @@ body {
     background-origin: border-box;
     background-clip: padding-box, border-box;
   }
+  .rounded-gradient-border-2 {
+    border: double 1.2px transparent;
+    border-radius: 12px;
+    background-image: linear-gradient(transparent, transparent),
+      /* Transparent background */
+        linear-gradient(310deg, #3edc8085 14.37%, #0276db6e  82.05%); /* Blue to green gradient */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
 
   /* Alternative with white background for light themes */
   .rounded-gradient-border-white {

@@ -11,7 +11,7 @@ import { EllipsLight } from "@/components/ui/icon";
 export default function LandingATCHead() {
   return (
     <motion.div className="flex flex-col items-center gap-5 relative" {...fadeInUpView}>
-      <EllipsLight className="absolute top-[-100px] md:top-[-300px] -rotate-45 left-[-600px] md:left-[-100px]" />
+      <EllipsLight className="absolute top-[-100px] md:top-[-300px] -rotate-45 left-[-600px] md:left-[-100px] opacity-50" />
       <LandingTitle className="text-center tracking-[-3.6px] leading-[120%] text-white">
         FXEE as Your AI Trading Companion
       </LandingTitle>
