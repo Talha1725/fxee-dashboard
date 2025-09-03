@@ -102,7 +102,7 @@ export default function LandingPFSContent({ className }: { className?: string })
   } = usePrevNextButtons(emblaApi as EmblaCarouselType);
 
   return (
-    <div className={`w-full md:w-auto flex flex-col items-center justify-center gap-5 pt-[50px] bg-landing-card-green-gradient ${isMobile ? "border-b border-[#0276DB]" : "border-green-gradient"} rounded-none overflow-hidden ${className}`}>
+    <div className={`w-full md:w-auto flex flex-col items-center justify-center gap-5 pt-[50px] bg-landing-card-green-gradient lg:rounded-lg ${isMobile ? "border-b border-[#0276DB]" : "border-green-gradient"} overflow-hidden ${className}`}>
       <div className="relative w-full mx-auto md:w-[760px] h-[400px] md:h-[400px] lg:w-[960px] lg:h-[490px]">
         <div className="overflow-hidden h-full" ref={emblaRef}>
           <div className="flex h-full ml-5 md:ml-0">

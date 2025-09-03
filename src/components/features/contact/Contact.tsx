@@ -15,8 +15,9 @@ export default function Contact() {
       <LandingNavbar />
       <ContactHero />
       <ContactCenter />
-      <LandingTextFlow />
       <LandingJOT />
+      <LandingTextFlow />
+      <div className="mb-20"></div>
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>

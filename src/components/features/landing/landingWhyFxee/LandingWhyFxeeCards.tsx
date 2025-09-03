@@ -6,7 +6,7 @@ import transparentBg from "@/public/images/why-fxee-transparent.svg"
 import Image from "next/image";
 
 export default function LandingWhyFxeeCards() {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [, setHoveredCard] = useState<string | null>(null);
   const [activeCard, setActiveCard] = useState<string>('ai-trade');
   const [isUserInteracting, setIsUserInteracting] = useState(false);
 

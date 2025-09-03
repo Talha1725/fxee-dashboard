@@ -6,18 +6,18 @@ import LandingTitle from "@/components/features/landing/LandingTitle";
 import AboutFOIKCards from "@/components/features/about/aboutFOIK/AboutFOIKCards";
 
 import FOIKBg from "@/public/images/hiw-bg.png";
+import { EllipsLight } from "@/components/ui/icon";
 
 export default function AboutFOIK() {
   return (
     <div className="relative">
-      <Image
-        src={FOIKBg}
-        alt="FOIK Background"
-        className="absolute top-0 right-0 w-[1000px] md:h-[800px] object-cover -z-1"
+      <LandingMax1440Container className="pt-0 gap-[50px] sm:gap-[70px] relative">
+      <EllipsLight
+        className="absolute left-1/2 -translate-x-1/2 top-[-300px] opacity-50"
+        opacity="0.15"
       />
-      <LandingMax1440Container className="py-20 gap-[50px] sm:gap-[70px]">
         <LandingTitle className="text-center">
-          What Makes FXEE <br className="block lg:hidden" /> First-of-Its-Kind
+          What Makes FXEE <br className="lg:block hidden" /> First-of-Its-Kind
         </LandingTitle>
         <AboutFOIKCards />
       </LandingMax1440Container>

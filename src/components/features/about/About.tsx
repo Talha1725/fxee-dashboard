@@ -25,6 +25,7 @@ export default function About() {
       <AboutVision />
       <LandingJOT />
       <LandingTextFlow />
+      <div className="mb-20"></div>
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>

@@ -1,117 +1,90 @@
 import React from "react";
 
-import LandingHIWContentStepContainer from "@/components/features/landing/landingHIW/LandingHIWContentStepContainer";
-import LandingHIWContentTitle from "@/components/features/landing/landingHIW/LandingHIWContentTitle";
-import LandingHIWContentNumber from "@/components/features/landing/landingHIW/LandingHIWContentNumber";
-import HIWTextContainer from "@/components/features/landing/landingHIW/LandingHIWContentTextContainer";
-import SupportHIWStep1 from "@/components/features/challenge-support/supportHIW/SupportHIWStep1";
-import SupportHIWStep2 from "@/components/features/challenge-support/supportHIW/SupportHIWStep2";
-import SupportHIWStep3 from "@/components/features/challenge-support/supportHIW/SupportHIWStep3";
-import SupportHIWStep4 from "@/components/features/challenge-support/supportHIW/SupportHIWStep4";
-import SupportHIWStep5 from "@/components/features/challenge-support/supportHIW/SupportHIWStep5";
-import { Separator } from "@/components/ui/separator";
+import StepContainer from "@/components/features/landing/landingHIW/StepContainer";
+import SupportHIWStep1 from "@/public/images/support-hiw-1.svg";
+import SupportHIWStep2 from "@/public/images/support-hiw-2.svg";
+import SupportHIWStep3 from "@/public/images/support-hiw-3.svg";
+import SupportHIWStep4 from "@/public/images/support-hiw-4.svg";
+import SupportHIWStep5 from "@/public/images/support-hiw-5.svg";
+import { LongEllipse } from "@/components/ui/icon";
 
-const steps = [
+interface SupportStep {
+  id: number;
+  image: any;
+  title: string;
+  description: string;
+  buttonText: string;
+  reverseOnDesktop?: boolean;
+  onRight?: boolean;
+}
+
+const steps: SupportStep[] = [
   {
     id: 1,
-    component: SupportHIWStep1,
+    image: SupportHIWStep1,
     title: "Subscribe",
-    description: "Subscribe to Pro or VIP plan.",
-    number: "01",
+    description: "Select your Pro or VIP plan.",
+    buttonText: "Subscribe",
     reverseOnDesktop: false,
+    onRight: false,
   },
   {
     id: 2,
-    component: SupportHIWStep2,
+    image: SupportHIWStep2,
     title: "Account Mode",
     description: "Activate Simulation Account Mode.",
-    number: "02",
+    buttonText: "Activate",
     reverseOnDesktop: true,
+    onRight: true,
   },
   {
     id: 3,
-    component: SupportHIWStep3,
+    image: SupportHIWStep3,
     title: "Connect",
     description: "Connect your external MT4/MT5 prop firm account",
-    number: "03",
+    buttonText: "Connect",
     reverseOnDesktop: false,
+    onRight: false,
   },
   {
     id: 4,
-    component: SupportHIWStep4,
+    image: SupportHIWStep4,
     title: "Risk-Managed Strategies",
     description:
-      "Our AI begins trading your account using smart, risk-managed strategies",
-    number: "04",
+      "Our AI analyzes, trading your account using smart risk-managed strategies.",
+    buttonText: "Start Trading",
     reverseOnDesktop: true,
+    onRight: true,
   },
   {
     id: 5,
-    component: SupportHIWStep5,
+    image: SupportHIWStep5,
     title: "Monitor Progress",
-    description: (
-      <p className="max-w-[300px]">
-        Monitor your progress and get closer to a payout — hands-free
-      </p>
-    ),
-    number: "05",
+    description:
+      "Monitor your progress and get closer to a payout — hassle-free.",
+    buttonText: "View Progress",
     reverseOnDesktop: false,
+    onRight: false,
   },
 ];
 
 export default function CommunityHIWSteps() {
   return (
-    <div className="flex flex-col items-center gap-7.5 max-w-[700px] lg:max-w-[1000px]">
-      {steps.map((step, index) => {
-        const StepComponent = step.component;
-        const isLastStep = index === steps.length - 1;
+    <div className="flex flex-col items-center gap-7.5 max-w-[700px] lg:max-w-[950px] relative">
+      <LongEllipse className="absolute -top-36 -right-[60%] sm:right-1/2 sm:translate-x-1/2 opacity-60" />
 
-        return (
-          <React.Fragment key={step.id}>
-            <LandingHIWContentStepContainer>
-              {step.reverseOnDesktop ? (
-                <>
-                  <HIWTextContainer
-                    className="hidden lg:flex min-h-[150px] md:min-h-[180px]"
-                    reverseOnDesktop={step.reverseOnDesktop}
-                  >
-                    <LandingHIWContentTitle title={step.title}>
-                      {step.description}
-                    </LandingHIWContentTitle>
-                    <LandingHIWContentNumber number={step.number} />
-                  </HIWTextContainer>
-                  <StepComponent />
-                  <HIWTextContainer
-                    className="flex lg:hidden min-h-[180px]"
-                    reverseOnDesktop={step.reverseOnDesktop}
-                  >
-                    <LandingHIWContentTitle title={step.title}>
-                      {step.description}
-                    </LandingHIWContentTitle>
-                    <LandingHIWContentNumber number={step.number} />
-                  </HIWTextContainer>
-                </>
-              ) : (
-                <>
-                  <StepComponent />
-                  <HIWTextContainer
-                    className="min-h-[140px] md:min-h-[180px]"
-                    reverseOnDesktop={step.reverseOnDesktop}
-                  >
-                    <LandingHIWContentTitle title={step.title}>
-                      {step.description}
-                    </LandingHIWContentTitle>
-                    <LandingHIWContentNumber number={step.number} />
-                  </HIWTextContainer>
-                </>
-              )}
-            </LandingHIWContentStepContainer>
-            {!isLastStep && (
-              <Separator className="bg-landing-hiw-separator-gradient" />
-            )}
-          </React.Fragment>
-        );
-      })}
+      {steps.map((step, index) => (
+        <React.Fragment key={step.id}>
+          <StepContainer
+            title={step.title}
+            description={step.description}
+            imageSrc={step.image.src}
+            imageAlt={step.title}
+            reverseOnDesktop={step.reverseOnDesktop}
+            onRight={step.onRight}
+          />
+        </React.Fragment>
+      ))}
     </div>
   );
 }

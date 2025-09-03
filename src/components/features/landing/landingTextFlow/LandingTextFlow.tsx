@@ -12,7 +12,9 @@ export default function LandingTextFlow() {
   );
 
   return (
-    <div className="marquee-container overflow-hidden">
+    <div className="marquee-container overflow-hidden relative">
+      <div className="absolute top-0 -left-20 w-[200px] h-[200px] blur-2xl rounded-full bg-[#0a0a0a] z-50"></div>
+      <div className="absolute bottom-0 -right-20 w-[200px] h-[200px] blur-2xl rounded-full bg-[#0a0a0a] z-50"></div>
       <div className="marquee-content py-4 flex items-center">
         <div className="flex justify-center items-center shrink-0">
           {textFlowItem}

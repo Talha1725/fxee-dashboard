@@ -5,6 +5,7 @@ import LandingNavbarLink from "@/components/features/landing/landingNavbar/Landi
 import { IconMenu } from "@/components/ui/icon";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Button } from "@/components/ui/button";
 
 interface NavbarResponsiveClientProps {
   navLinks: { href: string; label: string }[];
@@ -23,11 +24,12 @@ export default function LandingNavbarResponsiveClient({
         ))}
         {/* <ThemeToggle variant="minimal" size="sm" className="border-white/20" /> */}
       </div>
-      <LandingButton
-        color="white"
-        text="Get $100 Bonus"
-        className="border border-white/20 xs:px-4 px-2.5"
-      />
+      <Button
+        variant={"white"}
+        className="font-satoshi-medium px-3"
+      >
+        Get $100 Bonus
+      </Button>
       <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>

@@ -14,7 +14,7 @@ export default function LandingPFSHead() {
       <LandingTitle className="text-center leading-[120%]">
         FXEE for Prop Firm Success
       </LandingTitle>
-      <LandingDescription className="text-center">
+      <LandingDescription className="text-center mt-2">
         Your AI Advantage for Passing Challenges
       </LandingDescription>
     </motion.div>

@@ -16,12 +16,15 @@ export default function SupportWhyFxeeCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
+    <div className={`w-full min-h-[238px] lg:min-h-[255px] self-stretch ${isHovered ? "border-gradient-blue-green-rounded" : "border-gradient-left-rounded"} p-[1px] relative overflow-hidden`}>
+      <div className="w-full h-full rounded-md self-stretch overflow-hidden bg-[#0A0A0A]">
     <LandingWhyFxeeCardContainer 
-      className={`w-full max-w-[525px] lg:min-w-[525px] sm:min-h-[288px] min-h-[325px] self-stretch overflow-hidden ${isHovered ? "border-gradient-blue-green" : "border-gradient-left"}`}
+      className={`${isHovered ? "hover-card-green-gradient" : "bg-gradient-to-r from-white/5 to-[#ffffff06]"} w-full h-full rounded-md self-stretch overflow-hidden`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex flex-col items-start gap-2.5 self-stretch">
+      
+      <div className="flex flex-col items-start gap-2.5 self-stretch h-[238px] lg:h-[255px] overflow-hidden">
         <p className="text-white/90 text-[22px] font-regular font-[700] tracking-[-0.44px]">
           {title}
         </p>
@@ -29,5 +32,7 @@ export default function SupportWhyFxeeCard({
       </div>
       {children}
     </LandingWhyFxeeCardContainer>
+      </div>
+      </div>
   );
 }

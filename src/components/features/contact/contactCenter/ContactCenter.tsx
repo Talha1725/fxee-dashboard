@@ -8,12 +8,15 @@ import TelegramImage from "@/public/images/contact-tg.png";
 import EmailImage from "@/public/images/contact-email.png";
 import PartnerImage from "@/public/images/contact-partner.png";
 import DocImage from "@/public/images/contact-doc.png";
+import { LongEllipse } from "@/components/ui/icon";
 
 export default function ContactCenter() {
   return (
-    <LandingMax1440Container className="py-25 gap-12.5 sm:gap-[70px]">
-      <div className="flex flex-col items-center w-full max-w-[525px] md:max-w-[1050px] lg:min-w-[1050px]">
-        <div className="flex flex-col md:flex-row items-center self-stretch">
+    <LandingMax1440Container className="py-25 md:pb-5 gap-12.5 sm:gap-[70px] relative">
+      <LongEllipse className="absolute -top-[50%] -right-[60%] sm:right-1/2 sm:translate-x-1/2 opacity-60 z-50 pointer-events-none hidden lg:block" />
+
+      <div className="flex flex-col items-center w-full max-w-[525px] md:max-w-[1050px] lg:min-w-[1050px] gap-5">
+        <div className="flex flex-col md:flex-row items-center self-stretch gap-5">
           <ContactCenterCard
             title="Telegram Support"
             subtitle="(Fast Response)"
@@ -34,7 +37,7 @@ export default function ContactCenter() {
             </div>
           </ContactCenterCard>
         </div>
-        <div className="flex flex-col md:flex-row items-center self-stretch">
+        <div className="flex flex-col md:flex-row items-center self-stretch gap-5">
           <ContactCenterCard
             title="Partnerships & Collaborations"
             description="Looking to collaborate, integrate, or promote FXEE? We're always open to new partnerships and collaborations."

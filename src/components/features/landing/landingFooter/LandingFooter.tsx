@@ -16,20 +16,11 @@ import { QUICK_LINKS, LEGAL_LINKS, CONTACT_INFO } from "@/lib/constants";
 
 import LandingFooterImage from "@/public/images/landing-footer.png";
 import LandingFooterImageMobile from "@/public/images/footer-second-image.png";
+import { Button } from "@/components/ui/button";
 
 export default function LandingFooter() {
   return (
     <div className="relative">
-      <Image
-        src={LandingFooterImage}
-        alt="Landing Footer Image"
-        className="absolute right-0 top-0 h-[600px] w-[800px] md:block hidden"
-      />
-      <Image
-        src={LandingFooterImageMobile}
-        alt="Landing Footer Image"
-        className="absolute right-0 top-[100px] h-[900px] w-[800px] md:hidden block"
-      />
       <LandingMax1440Container className="pt-25 pb-10 gap-10">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 justify-between items-start self-stretch">
           <div className="flex flex-col items-start gap-10 lg:gap-[70px]">
@@ -40,13 +31,12 @@ export default function LandingFooter() {
               <p className="text-white/90 text-[26px] sm:text-[34px] font-space-grotesk font-[700] tracking-[-1.02px]">
                 Trade Smarter with FXEE
               </p>
-              <LandingButton
-                color="black"
-                icon={
-                  <IconLandingBtn1 className="absolute -z-1 w-full h-full top-0 left-0" />
-                }
-                text="Join FXEE Today"
-              />
+              <Button
+              variant={"white"}
+              className="font-satoshi-medium"
+              >
+                Join FXEE Today
+              </Button>
             </div>
           </div>
           <div className="flex flex-wrap lg:flex-nowrap items-start gap-10 md:gap-25 px-0 lg:px-12.5 shrink-0">
@@ -71,7 +61,7 @@ export default function LandingFooter() {
           </div>
         </div>
         <Separator className="h-[1px] bg-white/10 self-stretch" />
-        <p className="text-white/70 text-[12px] sm:text-[16px] font-regular tracking-[-0.32px]">
+        <p className="text-white/60 text-[12px] sm:text-[16px] font-regular tracking-[-0.32px]">
           Trading cryptocurrencies involves significant risks, and you should
           carefully consider your investment objectives and risk tolerance
           before trading. The cryptocurrency market is highly volatile and can
