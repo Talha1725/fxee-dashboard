@@ -14,6 +14,7 @@ import {
 import { handleAuthentication, validateProviderConfig, getProviderErrorMessage } from "@/lib/utils/authUtils";
 import { showToast } from "@/lib/utils/toast";
 import { OAUTH_CONFIG } from '@/lib/config/oauth';
+import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
 
 export default function SignSocialButtons() {
   const { theme } = useTheme();
@@ -25,8 +26,8 @@ export default function SignSocialButtons() {
   const [linkedinLogin, { isLoading: isLinkedinLoginLoading }] = useLinkedinLoginMutation();
   const [appleLogin, { isLoading: isAppleLoginLoading }] = useAppleLoginMutation();
 
-  // Google OAuth login
-  const googleOAuthLogin = useGoogleLogin({
+  // Google OAuth login - only initialize if provider is available
+  const googleOAuthLogin = GOOGLE_OAUTH_CONFIG.CLIENT_ID ? useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       if (!validateProviderConfig('google')) return;
       
@@ -40,7 +41,7 @@ export default function SignSocialButtons() {
     onError: () => {
       showToast.apiError(getProviderErrorMessage('google'));
     }
-  });
+  }) : null;
 
   // LinkedIn OAuth login
   const handleLinkedinClick = async () => {
@@ -78,11 +79,13 @@ export default function SignSocialButtons() {
 
   // Handle Google button click
   const handleGoogleClick = () => {
-    if (!OAUTH_CONFIG.GOOGLE.CLIENT_ID) {
+    if (!GOOGLE_OAUTH_CONFIG.CLIENT_ID) {
       showToast.apiError("Google OAuth is not configured. Please set NEXT_PUBLIC_GOOGLE_CLIENT_ID in your environment variables.");
       return;
     }
-    googleOAuthLogin();
+    if (googleOAuthLogin) {
+      googleOAuthLogin();
+    }
   };
 
   return (
@@ -96,8 +99,9 @@ export default function SignSocialButtons() {
       </Button>
       <Button 
         onClick={handleGoogleClick}
-        disabled={isGoogleLoginLoading}
+        disabled={isGoogleLoginLoading || !GOOGLE_OAUTH_CONFIG.CLIENT_ID}
         className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-dark-gradient" : "bg-[#24242409]"} dark:text-foreground dark:shadow-subtle dark:border-white/30 hover:opacity-50 shadow-none`}
+        title={!GOOGLE_OAUTH_CONFIG.CLIENT_ID ? "Google OAuth not configured" : ""}
       >
         <IconGoogle width={20} height={20} />
       </Button>

@@ -85,6 +85,56 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    updatePhone: builder.mutation<{ success: boolean; message: string }, { phoneNumber: string }>({
+      query: (data) => ({
+        url: "/update-phone",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    sendSMSVerification: builder.mutation<{ success: boolean; message: string }, { phoneNumber: string }>({
+      query: (data) => ({
+        url: "/send-sms-verification",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    verifySMS: builder.mutation<AuthResponse, { phoneNumber: string; code: string }>({
+      query: (data) => ({
+        url: "/verify-sms",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    loginWithPhone: builder.mutation<AuthResponse, { phoneNumber: string; password: string }>({
+      query: (data) => ({
+        url: "/login-with-phone",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    getTestConfig: builder.query<{
+      success: boolean;
+      data: {
+        testMode: boolean;
+        testSMSCode: string;
+        testPhoneNumbers: string[];
+        twilioNumber: string;
+        smsMessage: string;
+      };
+    }, void>({
+      query: () => ({
+        url: "/test-config",
+        method: "GET",
+      }),
+    }),
+
     refreshToken: builder.mutation<AuthResponse, void>({
       query: () => ({
         url: "/auth/refresh",
@@ -152,6 +202,11 @@ export const {
   useResetPasswordMutation,
   useVerifyEmailMutation,
   useResendVerificationMutation,
+  useUpdatePhoneMutation,
+  useSendSMSVerificationMutation,
+  useVerifySMSMutation,
+  useLoginWithPhoneMutation,
+  useGetTestConfigQuery,
   useRefreshTokenMutation,
   useVerify2FAMutation,
   useResend2FAMutation,

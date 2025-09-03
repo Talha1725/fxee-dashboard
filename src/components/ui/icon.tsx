@@ -6467,6 +6467,7 @@ export const RedditLogo = ({ className }: { className?: string }) => {
     </svg>
   );
 };
+<<<<<<< Updated upstream
 
 export const LongEllipse = ({ className }: { className?: string }) => {
   return (
@@ -6514,3 +6515,5 @@ export const LongEllipse = ({ className }: { className?: string }) => {
     </svg>
   );
 };
+=======
+>>>>>>> Stashed changes
