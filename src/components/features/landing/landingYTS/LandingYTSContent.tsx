@@ -15,7 +15,7 @@ export default function LandingYTSContent() {
       <Image src={riskAnalyzer} alt="bracket" className="w-full sm:w-auto"/>
      </div>
      <Image src={bracket} alt="bracket" className="sm:block hidden" />
-     <div className="bg-gradient-to-b from-white/5 to-white/0 sm:bg-transparent rounded-md w-full sm:w-auto">
+     <div className="rounded-md w-full sm:w-auto">
       <Image src={GoldChart} alt="bracket" className="w-full sm:w-auto" />
      </div>
      <Image src={bracket} alt="bracket" className="rotate-180 sm:block hidden" />

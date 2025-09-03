@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import AboutFOIKCard from "@/components/features/about/aboutFOIK/AboutFOIKCard";
@@ -7,57 +8,75 @@ import FOIKImage1 from "@/public/images/foik-1.png";
 import FOIKImage2 from "@/public/images/foik-2.png";
 import FOIKImage3 from "@/public/images/foik-3.png";
 import FOIKImage4 from "@/public/images/landing-hiw-2.png";
+import LandingWhyFxeeCard from "../../landing/landingWhyFxee/LandingWhyFxeeCard";
+import firstKind from "@/public/images/first-kind.svg";
 
 export default function AboutFOIKCards() {
+  const [, setHoveredCard] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<string>("ai-trade");
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+
+  const cardIds = ["ai-trade", "prop-firm", "trade-execution", "ai-dashboard"];
+
+  // Autoplay functionality
+  useEffect(() => {
+    if (isUserInteracting) return;
+
+    const interval = setInterval(() => {
+      setActiveCard((prev) => {
+        const currentIndex = cardIds.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % cardIds.length;
+        return cardIds[nextIndex];
+      });
+    }, 3000); // Change card every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [isUserInteracting, cardIds]);
+
+  const handleMouseEnter = (cardId: string) => {
+    setIsUserInteracting(true);
+    setHoveredCard(cardId);
+    setActiveCard(cardId);
+  };
+
+  const handleMouseLeave = () => {
+    setIsUserInteracting(false);
+    setHoveredCard(null);
+  };
   return (
-    <div className="flex flex-col items-center gap-5 sm:gap-10 self-stretch">
-      <div className="flex flex-col lg:flex-row justify-center items-center gap-5 sm:gap-10 self-stretch">
-        <AboutFOIKCard
+    <div className="flex flex-col sm:flex-row gap-10 items-center md:items-start self-stretch xl:w-[84%] mx-auto">
+      <div className="flex flex-col items-center sm:w-1/2">
+        <LandingWhyFxeeCard
           title="Simulation-First Core"
           description="Built entirely around simulation-first architecture."
-        >
-          <React.Fragment>
-            <div className="absolute -bottom-5 right-0 w-[200px] sm:w-[270px] h-[200px] sm:h-[250px]">
-              <Image src={FOIKImage1} alt="FOIK Image 1" fill />
-            </div>
-            <div className="w-[197px] h-[197px] absolute right-0 -bottom-[81px] bg-green blur-[160px] block lg:hidden"></div>
-          </React.Fragment>
-        </AboutFOIKCard>
-        <AboutFOIKCard
+          onMouseEnter={() => handleMouseEnter("ai-trade")}
+          onMouseLeave={handleMouseLeave}
+          isActive={activeCard === "ai-trade"}
+        />
+        <LandingWhyFxeeCard
           title="Unified Trading Hub"
-          description="Combines Forex and Crypto trading in one unified AI dashboard."
-        >
-          <React.Fragment>
-            <div className="absolute bottom-0 right-3 w-[180px] sm:w-[232px] h-[150px] sm:h-[220px] z-1">
-              <Image src={FOIKImage2} alt="FOIK Image 2" fill />
-            </div>
-            <div className="w-[197px] h-[197px] absolute right-0 -bottom-[81px] bg-green blur-[160px]"></div>
-          </React.Fragment>
-        </AboutFOIKCard>
-      </div>
-      <div className="flex flex-col lg:flex-row justify-center items-center gap-5 sm:gap-10 self-stretch">
-        <AboutFOIKCard
+          description="Simulated charts auto-drawn with support/resistance, patterns, indicators (MA, RSI, Fibonacci) helping people passs their prop firm challenges - 92% passing rate."
+          onMouseEnter={() => handleMouseEnter("prop-firm")}
+          onMouseLeave={handleMouseLeave}
+          isActive={activeCard === "prop-firm"}
+        />
+        <LandingWhyFxeeCard
           title="AI-Powered Insights"
-          description="Powered by real market data, sentiment engines, and deep technical analysis."
-        >
-          <React.Fragment>
-            <div className="absolute bottom-0 right-2 sm:bottom-5 sm:right-5 w-[150px] sm:w-[192px] h-[150px] sm:h-[192px] z-1">
-              <Image src={FOIKImage3} alt="FOIK Image 3" fill />
-            </div>
-            <div className="w-[197px] h-[197px] absolute right-[102px] -bottom-[22px] bg-green blur-[160px]"></div>
-          </React.Fragment>
-        </AboutFOIKCard>
-        <AboutFOIKCard
-          title="Unified Trading Hub"
-          description="Combines Forex and Crypto trading in one unified AI dashboard."
-        >
-          <React.Fragment>
-            <div className="absolute bottom-0 right-0 w-[200px] sm:w-[260px] h-[160px] sm:h-[212px] z-1">
-              <Image src={FOIKImage4} alt="FOIK Image 4" fill />
-            </div>
-            <div className="w-[197px] h-[197px] absolute right-0 -bottom-[81px] bg-green blur-[160px] block lg:hidden"></div>
-          </React.Fragment>
-        </AboutFOIKCard>
+          description="Place and manage trades directly on our custom FXEE dashboard (no broker needed)."
+          onMouseEnter={() => handleMouseEnter("trade-execution")}
+          onMouseLeave={handleMouseLeave}
+          isActive={activeCard === "trade-execution"}
+        />
+        <LandingWhyFxeeCard
+          title="Expert-Built System"
+          description="AI tools for sentiment, news impact, portfolio balance, risk alerts (Premium upgrade). Premium ai analysis with 86% accuracy rate. "
+          onMouseEnter={() => handleMouseEnter("ai-dashboard")}
+          onMouseLeave={handleMouseLeave}
+          isActive={activeCard === "ai-dashboard"}
+        />
+      </div>
+      <div className="w-full sm:w-1/2 h-full">
+        <Image src={firstKind} alt="Base Chart" className="w-full h-full object-cover" />
       </div>
     </div>
   );

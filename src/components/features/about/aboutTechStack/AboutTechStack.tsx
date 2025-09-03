@@ -7,20 +7,24 @@ import AboutTechStackCards from "@/components/features/about/aboutTechStack/Abou
 
 import AboutTechStackImage from "@/public/images/about-tech-stack-bg.png";
 import LandingHero2 from "@/public/images/landing-hero1-low.png";
-
+import { LongEllipse, MaxEllipse } from "@/components/ui/icon";
+import maxEllipse from "@/public/images/max-ellipse.svg";
+import { Button } from "@/components/ui/button";
 
 export default function AboutTechStack() {
   return (
-    <div className="relative">
-      <div className="absolute -left-20 -top-5 md:top-0 w-[300px] h-[450px] sm:w-[500px] sm:h-[750px] md:w-[700px] md:h-[950px]">
-        <Image src={AboutTechStackImage} alt="About Tech Stack" fill className="md:block hidden" />
-        <Image src={LandingHero2} alt="About Tech Stack" fill className=" md:hidden" />
-      </div>
-      <LandingMax1440Container className="py-25 gap-[50px] sm:gap-[70px]">
+    <div className="relative lg:mt-10">
+      <MaxEllipse className="absolute top-0 md:top-[-40%] -right-[80%] sm:right-[20%] z-50 pointer-events-none" />
+      <MaxEllipse className="absolute top-[50%] -right-[80%] sm:right-[10%] z-50 pointer-events-none hidden lg:block" />
+
+      <LandingMax1440Container className="py-15 gap-[50px] sm:gap-[70px]">
         <LandingTitle className="text-center">
           Our Technology Stack Includes
         </LandingTitle>
         <AboutTechStackCards />
+        <Button variant={"white"} className="font-satoshi-medium">
+          See the AI in action
+        </Button>
       </LandingMax1440Container>
     </div>
   );

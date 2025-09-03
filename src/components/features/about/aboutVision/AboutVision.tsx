@@ -6,27 +6,35 @@ import LandingButton from "@/components/features/landing/LandingButton";
 import AboutVisionHead from "@/components/features/about/aboutVision/AboutVisionHead";
 import { IconLandingBtn1 } from "@/components/ui/icon";
 
+import LandingTitle from "@/components/features/landing/LandingTitle";
+import LandingDescription from "@/components/features/landing/LandingDescription";
+import { Button } from "@/components/ui/button";
+
 import AboutVisionBg from "@/public/images/about-vision-bg.png";
 import AboutVisionImage from "@/public/images/vission.svg";
 
 export default function AboutVision() {
   return (
     <div className="relative">
-      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] -z-1">
-        <Image src={AboutVisionBg} alt="About Vision" fill />
-      </div>
-      <LandingMax1440Container className="py-25 gap-[30px] sm:gap-[50px]">
-        <AboutVisionHead />
-        <div className="w-[350px] h-[250px] sm:w-[600px] sm:h-[400px] md:w-[700px] md:h-[450px] lg:w-[873px] lg:h-[582px] translate-y-5">
-          <Image src={AboutVisionImage} alt="About Vision" fill />
+      <LandingMax1440Container className="py-25 pb-10 gap-[30px] sm:gap-[50px]">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center lg:w-[85%] mx-auto gap-10">
+        <div className="md:w-1/2">
+          <div className="flex flex-col gap-5 items-start w-full">
+            <LandingTitle className="">Our Vision</LandingTitle>
+            <LandingDescription className="max-w-[445px]">
+              To lead the global shift toward automated, intelligent,
+              simulation-based trading — where humans and AI work together to
+              make smarter decisions.
+            </LandingDescription>
+            <Button variant={"white"} className="font-satoshi-medium">
+              Join Now
+            </Button>
+          </div>
         </div>
-        <LandingButton
-          color="black"
-          icon={
-            <IconLandingBtn1 className="absolute -z-1 w-full h-full top-0 left-0" />
-          }
-          text="Join Now"
-        />
+        <div className="md:w-1/2">
+          <Image src={AboutVisionImage} alt="About Vision" />
+        </div>
+        </div>
       </LandingMax1440Container>
     </div>
   );
