@@ -104,7 +104,6 @@ export default function OpenTrades() {
 
   const tradingData = getTradingData();
 
-  // Force collapsed state in virtual account mode
   const shouldBeOpen = isOpen && !isVirtualAccount;
 
   const openTradesContent = (

@@ -20,7 +20,6 @@ interface AccountTypeProviderProps {
 export function AccountTypeProvider({ children }: AccountTypeProviderProps) {
   const [accountType, setAccountTypeState] = useState<AccountType>('virtual-account');
 
-  // Load account type from localStorage on mount
   useEffect(() => {
     const savedAccountType = localStorage.getItem('accountType') as AccountType;
     if (savedAccountType && (savedAccountType === 'virtual-account' || savedAccountType === 'demo-account')) {
