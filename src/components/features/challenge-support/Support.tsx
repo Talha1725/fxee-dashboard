@@ -10,6 +10,7 @@ import SupportHero from "@/components/features/challenge-support/supportHero/Sup
 import LandingPFS from "@/components/features/landing/landingPFS/LandingPFS";
 import SupportHIW from "@/components/features/challenge-support/supportHIW/SupportHIW";
 import SupportWhyFxee from "@/components/features/challenge-support/supportWhyFxee/SupportWhyFxee";
+import SupportResult from "./SupportResult";
 
 export default function Support() {
   return (
@@ -20,7 +21,9 @@ export default function Support() {
       <SupportHIW />
       <SupportWhyFxee />
       <LandingJOT />
+      <SupportResult />
       <LandingTextFlow />
+      <div className="mb-20"></div>
       <LandingClaim />
       <LandingFooter />
     </LandingContainer>

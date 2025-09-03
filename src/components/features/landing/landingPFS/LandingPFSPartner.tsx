@@ -9,14 +9,16 @@ import {
 } from "@/components/ui/icon";
 import { Text18 } from "@/components/ui/typography";
 
-export default function LandingPFSPartner() {
+export default function LandingPFSPartner({ heading = true, className }: { heading?: boolean, className?: string }) {
   return (
-    <div className="mt-28 sm:mt-20">
-      <div className="w-[60%] mx-auto sm:w-full sm:mb-10 mb-5">
+    <div className={`mt-28 sm:mt-20 ${className}`}>
+      {heading && (
+        <div className="w-[60%] mx-auto sm:w-full sm:mb-10 mb-5">
         <Text18 className="!text-white text-center uppercase font-satoshi z-50">
         Your AI Advantage for Passing Challenges
         </Text18>
-      </div>
+        </div>
+      )}
       <div className="relative max-w-[1000px] mx-auto marquee-container mask-landing-pfs-partner">
       
       <div className="marquee-content py-4 flex items-center">

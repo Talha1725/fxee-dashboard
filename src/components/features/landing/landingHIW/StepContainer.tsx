@@ -27,7 +27,7 @@ export default function StepContainer({
   title: string;
   description?: string;
   points?: string[];
-  buttonText: string;
+  buttonText?: string;
   imageSrc: string;
   imageAlt: string;
 }) {
@@ -57,7 +57,9 @@ export default function StepContainer({
             {description}
           </p>
         )}
+        {buttonText && (
         <Button variant={"white"} className="font-satoshi-medium mt-4">{buttonText}</Button>
+        )}
       </div>
       <div className={cn(
         "w-full min-[780px]:w-1/2 h-[220px] min-[450px]:h-[250px] md:h-auto",
