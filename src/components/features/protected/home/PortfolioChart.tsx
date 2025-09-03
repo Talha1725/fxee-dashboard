@@ -407,7 +407,7 @@ export default function PortfolioChart({
       />
       
       {isVirtualAccount && (
-        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/30 to-white/20 dark:from-white/10 dark:via-white/20 dark:to-white/10 backdrop-blur-[2px] rounded-lg pointer-events-none" />
+        <div className="absolute inset-0 bg-white/30 dark:bg-[#1A1A1A]/70 backdrop-blur-[3px] rounded-lg pointer-events-none" />
       )}
       
       {tooltip.show && tooltip.data && !isVirtualAccount && (

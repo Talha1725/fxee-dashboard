@@ -40,6 +40,9 @@ export default function NavbarAccountSwitch({
   const [activeTab, setActiveTab] = useState(defaultValue || accountType || "virtual-account");
 
   const handleTabChange = (value: string) => {
+    if (value === "demo-account") {
+      return;
+    }
     setActiveTab(value);
     setAccountType(value as "virtual-account" | "demo-account");
     onValueChange?.(value);
@@ -53,6 +56,7 @@ export default function NavbarAccountSwitch({
           isActive={activeTab === item.value}
           onClick={() => handleTabChange(item.value)}
           fontSize={fontSize}
+          className={item.value === "demo-account" ? "cursor-not-allowed opacity-50" : ""}
         >
           {item.icon && (
             <span className="mr-2">

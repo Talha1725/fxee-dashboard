@@ -17,7 +17,7 @@ export default function HomeTotalPortfolio() {
       <div className="relative">
         <Title40 className="font-satoshi text-black dark:text-white">$24,982.00</Title40>
         {isVirtualAccount && (
-          <div className="absolute -inset-1 bg-gradient-to-br from-white/40 via-white/60 to-white/40 dark:from-white/30 dark:via-white/50 dark:to-white/30 backdrop-blur-[5px] rounded-md" />
+          <div className="absolute -inset-1 bg-white/40 dark:bg-[#1A1A1A]/80 backdrop-blur-[4px] rounded-md" />
         )}
       </div>
       <div className="flex justify-center items-center gap-1 relative">
@@ -26,7 +26,7 @@ export default function HomeTotalPortfolio() {
         </TextSuccess>
         <IconTradeUp width={24} height={24} color="#079744" />
         {isVirtualAccount && (
-          <div className="absolute -inset-1 bg-gradient-to-br from-white/20 via-white/30 to-white/20 dark:from-white/10 dark:via-white/20 dark:to-white/10 backdrop-blur-[3px] rounded-md" />
+          <div className="absolute -inset-1 bg-white/25 dark:bg-[#1A1A1A]/60 backdrop-blur-[3px] rounded-md" />
         )}
       </div>
     </div>
