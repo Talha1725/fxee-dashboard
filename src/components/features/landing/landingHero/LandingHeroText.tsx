@@ -3,14 +3,16 @@
 import React from "react";
 import * as motion from "motion/react-client";
 
-import LandingButton from "@/components/features/landing/LandingButton";
 import LandingTitle from "@/components/features/landing/LandingTitle";
 import LandingDescription from "@/components/features/landing/LandingDescription";
-import { IconLandingBtn1 } from "@/components/ui/icon";
 import { fadeInUp } from "@/lib/motion-variants";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { usePricingNavigation } from "@/lib/utils/navigationUtils";
 
 export default function LandingHeroText() {
+  const router = useRouter();
+  const { navigateToPricing } = usePricingNavigation();
   return (
     <motion.div
       {...fadeInUp}
@@ -23,10 +25,14 @@ export default function LandingHeroText() {
       The most advanced AI-powered trading simulator for forex, crypto, and indices. Trade smarter, train harder, and pass prop firm challenges with precision.
       </LandingDescription>
       <div className="flex justify-center items-start gap-2.5 sm:gap-5">
-       <Button variant={'white'} className="font-satoshi-medium px-4 w-1/2 sm:w-auto h-[42px] text-[16px]">
+       <Button variant={'white'} onClick={() => router.push('/signup')} className="font-satoshi-medium px-4 w-1/2 sm:w-auto h-[42px] text-[16px]">
        Start Trading Now
        </Button>
-       <Button variant={'white'} className="font-satoshi-medium px-4 w-1/2 sm:w-auto h-[42px] text-[16px] bg-transparent text-white border-white">
+       <Button 
+         variant={'white'} 
+         onClick={navigateToPricing}
+         className="font-satoshi-medium px-4 w-1/2 sm:w-auto h-[42px] text-[16px] bg-transparent text-white border-white hover:bg-white hover:text-black"
+       >
        View Pricing
        </Button>
       </div>

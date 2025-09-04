@@ -19,6 +19,7 @@ export default function StepContainer({
   buttonText,
   imageSrc,
   imageAlt,
+  onButtonClick,
 }: {
   children?: React.ReactNode;
   className?: string;
@@ -30,6 +31,7 @@ export default function StepContainer({
   buttonText?: string;
   imageSrc: string;
   imageAlt: string;
+  onButtonClick?: () => void;
 }) {
   const motionVariant = reverseOnDesktop ? fadeInLeftView : fadeInRightView;
 
@@ -58,7 +60,7 @@ export default function StepContainer({
           </p>
         )}
         {buttonText && (
-        <Button variant={"white"} className="font-satoshi-medium mt-4">{buttonText}</Button>
+        <Button variant={"white"} onClick={onButtonClick} className="font-satoshi-medium mt-4">{buttonText}</Button>
         )}
       </div>
       <div className={cn(

@@ -4,6 +4,7 @@ import React from "react";
 
 import * as motion from "motion/react-client";
 import { staggerContainer } from "@/lib/motion-variants";
+import { usePricingNavigation, useAuthNavigation } from "@/lib/utils/navigationUtils";
 
 import LandingHIW1 from "@/public/images/create-account-image.svg";
 import LandingHIW2 from "@/public/images/simulate-train.svg";
@@ -44,6 +45,23 @@ const steps = [
 ];
 
 export default function LandingHIWContent() {
+  const { navigateToPricing } = usePricingNavigation();
+  const { navigateToSignup, navigateToHome } = useAuthNavigation();
+
+  const getButtonClickHandler = (buttonText: string) => {
+    switch (buttonText) {
+      case "Get Started Today":
+      case "Get Started":
+        return navigateToSignup;
+      case "View Pricing Plans":
+        return navigateToPricing;
+      case "Get A Demo Account":
+        return navigateToHome;
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <motion.div
       className="flex flex-col items-center gap-10 md:gap-7.5 max-w-[900px]"
@@ -59,6 +77,7 @@ export default function LandingHIWContent() {
           imageAlt={step.imageAlt}
           reverseOnDesktop={step.reverseOnDesktop}
           onRight={step.onRight}
+          onButtonClick={getButtonClickHandler(step.buttonText)}
         />
       ))}
     </motion.div>

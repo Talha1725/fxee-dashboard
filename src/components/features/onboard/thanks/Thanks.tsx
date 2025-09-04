@@ -52,9 +52,10 @@ export default function Thanks() {
     }
   };
 
-  // Clear trackId from localStorage on component unmount or when going to dashboard
+  // Clear trackId and selected pricing plan from localStorage when going to dashboard
   const handleGoToDashboard = () => {
     localStorage.removeItem("paymentTrackId");
+    localStorage.removeItem('selectedPricingPlan');
     router.push("/home");
   };
 
@@ -72,7 +73,7 @@ export default function Thanks() {
   };
 
   return (
-    <div className={`flex flex-col self-stretch flex-[1_0_0] ${theme === "dark" ? "bg-dark-green-linear" : ""}`}>
+    <div className={`flex flex-col self-stretch h-screen ${theme === "dark" ? "bg-dark-green-linear" : ""}`}>
       <Image
         priority
         src={theme === "dark" ? Thanks1 : ThanksHeader}
@@ -185,7 +186,7 @@ export default function Thanks() {
           <div className="flex sm:flex-row flex-col gap-4 mt-2">
           <Button
             variant={"fancy"}
-            className="flex-wrap self-center px-8 py-2.5 gap-1 z-50 bg-transparent"
+            className="flex-wrap self-center px-8 py-2.5 gap-1 z-50 bg-transparent !text-black dark:!text-white"
             onClick={refreshPaymentStatus}
             disabled={isLoading || !trackId}
           >

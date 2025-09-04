@@ -117,6 +117,9 @@ export default function OnboardSummary({
           localStorage.setItem("paymentTrackId", result.data.payment.trackId);
         }
 
+        // Clear selected pricing plan from localStorage after successful checkout initiation
+        localStorage.removeItem('selectedPricingPlan');
+
         // Redirect to checkout URL
         if (result.data?.checkoutUrl) {
           window.location.href = result.data.checkoutUrl;
@@ -129,6 +132,8 @@ export default function OnboardSummary({
       }
     } else if (isCheckout) {
       // For non-VIP plans, redirect to thanks directly
+      // Clear selected pricing plan from localStorage after successful checkout
+      localStorage.removeItem('selectedPricingPlan');
       router.push("/thanks");
     } else {
       router.push("/onboard/3");

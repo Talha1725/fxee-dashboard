@@ -35,7 +35,7 @@ export default function CommunityFLGSocialCard({
             {description}
           </p>
         </div>
-        <Button variant={"white"} className="font-satoshi-medium text-[16px]">{buttonText}</Button>
+        <Button variant={"white"} className="font-satoshi-medium text-[16px] bg-white/90">{buttonText}</Button>
       </div>
       <div className="w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] rotate-[15deg] absolute -right-[70px] -bottom-[60px]">
         <Image src={image} alt={title} fill />

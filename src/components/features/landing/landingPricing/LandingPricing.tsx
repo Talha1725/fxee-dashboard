@@ -9,10 +9,10 @@ import { EllipsLight } from "@/components/ui/icon";
 
 export default function LandingPricing() {
   return (
-    <div className="relative">
+    <div id="pricing" className="relative">
       <LandingMax1440Container className="z-1">
         <LandingPricingHead />
-        <LandingPricingSwitch />
+        {/* <LandingPricingSwitch /> */}
         <LandingPricingPlans />
       </LandingMax1440Container>
       <EllipsLight

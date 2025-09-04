@@ -141,7 +141,7 @@ export default function OpenTrades() {
           </button>
         </div>
 
-        <div className={`transition-all duration-500 ease-in-out  ${
+        <div id="open-trades" className={`transition-all duration-500 ease-in-out  ${
           shouldBeOpen ? 'max-h-[1100px] opacity-100 mt-5 overflow-auto scrollbar-hide' : 'max-h-[0px] opacity-0 overflow-hidden mt-0'
         }`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 self-stretch mb-5">
