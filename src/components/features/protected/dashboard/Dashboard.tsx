@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 
 import ProtectedContentContainer from "@/components/features/protected/ProtectedContentContainer";
@@ -8,8 +9,10 @@ import HomeTrades from "../home/homeStatus/HomeTrades";
 import CommonSelect from "@/components/ui/common-select";
 import SymbolModal from "@/components/common/SymbolModal";
 import OpenTrades from "./open-trades/OpenTrades";
+import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
-export default function Dashboard() {
+  export default function Dashboard() {
+  const { isVirtualAccount } = useAccountType();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -20,7 +23,7 @@ export default function Dashboard() {
     isOpen={isModalOpen} 
     onClose={closeModal} 
   />
-    <ProtectedContentContainer className="sm:gap-10">
+    <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
         <div className="lg:col-span-2">
           <DashboardWidget dashboard={true} currency="BTC/ETH" openModal={openModal} />

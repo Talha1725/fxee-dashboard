@@ -36,8 +36,6 @@ export default function Landing() {
       <LandingJOT />
       <LandingATI />
       <LandingReview />
-
-      
       <LandingClaim />
       <LandingFooter />
       <LandingNavbar />

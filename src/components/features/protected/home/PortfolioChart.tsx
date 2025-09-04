@@ -406,10 +406,6 @@ export default function PortfolioChart({
         className="overflow-visible"
       />
       
-      {isVirtualAccount && (
-        <div className="absolute inset-0 bg-white/30 dark:bg-[#1A1A1A]/70 backdrop-blur-[3px] rounded-lg pointer-events-none" />
-      )}
-      
       {tooltip.show && tooltip.data && !isVirtualAccount && (
         <div
           ref={tooltipRef}

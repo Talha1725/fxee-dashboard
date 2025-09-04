@@ -20,16 +20,16 @@ export default function TradesDetailFilter() {
             Manual
           </TabsTrigger>
         </TabsList>
-        <div className="flex justify-end items-center gap-3 flex-[1_0_0] self-stretch">
-          <Input
+        {/* <div className="flex justify-end items-center gap-3 flex-[1_0_0] self-stretch">
+        <Input
             placeholder="Search..."
-            className="px-3 py-1 gap-1 border-none w-full md:w-[260px] self-stretch"
+            className="px-3 py-1 gap-1 border-none w-full md:w-[260px] self-stretch dark:bg-gradient-to-b dark:from-[#ffffff08] dark:to-[#FFFFFF05] bg-gradient-to-b from-[#00000010] to-[#00000008]"
             icon={<IconSearch height={20} width={20} />}
           />
-          <Button className="border-none">
+          <Button className="border-none dark:bg-gradient-to-b dark:from-[#ffffff23] dark:to-[#FFFFFF18] bg-gradient-to-b from-[#00000010] to-[#00000008]">
             <IconFilter width={20} height={20} />
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

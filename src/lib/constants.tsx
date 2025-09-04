@@ -246,7 +246,7 @@ export const QUICK_LINKS = [
   { link: "/", text: "Prop Firm Challenges" },
   { link: "/", text: "Community" },
   { link: "/", text: "Success Stories" },
-  { link: "/", text: "Contact Us" },
+  { link: "/contact", text: "Contact Us" },
   { link: "/", text: "Support" },
 ];
 

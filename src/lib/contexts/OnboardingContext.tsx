@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PlanType } from '@/types/common';
 
@@ -20,8 +20,18 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const router = useRouter();
 
+  // Load selected plan from localStorage on mount
+  useEffect(() => {
+    const storedPlan = localStorage.getItem('selectedPricingPlan') as PlanType;
+    if (storedPlan && ['Free', 'Basic', 'Pro', 'VIP'].includes(storedPlan)) {
+      setSelectedPlan(storedPlan);
+    }
+  }, []);
+
   const selectPlanAndNavigate = (plan: PlanType) => {
     setSelectedPlan(plan);
+    // Store selected plan in localStorage
+    localStorage.setItem('selectedPricingPlan', plan);
     
     // Navigate based on plan type
     if (plan === "Free") {
@@ -34,6 +44,8 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const clearOnboardingData = () => {
     setSelectedPlan(null);
     setSelectedAddOns([]);
+    // Clear localStorage as well
+    localStorage.removeItem('selectedPricingPlan');
   };
 
   return (

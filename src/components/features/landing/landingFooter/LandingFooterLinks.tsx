@@ -20,7 +20,7 @@ export default function LandingFooterLinks({
       </p>
       {items.map((item, index) => (
         <div className="flex flex-col items-start gap-1.5" key={index}>
-          <Link href={`/${item.link}`}>
+          <Link href={`${item.link}`}>
             <p className="text-white/60 text-center text-[16px] sm:text-[18px] font-satoshi tracking-[-0.36px]">
               {item.text}
             </p>

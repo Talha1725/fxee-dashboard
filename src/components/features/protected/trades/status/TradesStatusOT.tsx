@@ -18,12 +18,12 @@ export default function TradesStatusOT() {
         />
       </div>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
-        <Text20>6.00</Text20>
+        <Text20 className="!font-semibold">6.00</Text20>
         <div className="flex justify-between items-center self-stretch">
-          <Text12 className="text-white/60 font-[400]">
+          <Text12 className="dark:!text-white/60 !text-black/60 font-[400]">
             Open Trades Decreased
           </Text12>
-          <Text12 className="text-danger font-[400]">12.44%</Text12>
+          <Text12 className="!text-[#EE5050] font-[400]">-12.44%</Text12>
         </div>
       </div>
     </PerformanceStatusCardContainer>

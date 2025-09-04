@@ -1,12 +1,11 @@
+"use client";
+
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
-import LandingButton from "@/components/features/landing/LandingButton";
 import LandingFooterLinks from "@/components/features/landing/landingFooter/LandingFooterLinks";
 import {
-  IconLandingBtn1,
   IconLogo1,
   IconTGLink,
   IconXLink,
@@ -14,11 +13,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { QUICK_LINKS, LEGAL_LINKS, CONTACT_INFO } from "@/lib/constants";
 
-import LandingFooterImage from "@/public/images/landing-footer.png";
-import LandingFooterImageMobile from "@/public/images/footer-second-image.png";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function LandingFooter() {
+  const router = useRouter();
   return (
     <div className="relative">
       <LandingMax1440Container className="pt-25 pb-10 gap-10">
@@ -34,6 +33,7 @@ export default function LandingFooter() {
               <Button
               variant={"white"}
               className="font-satoshi-medium"
+              onClick={() => router.push('/signup')}
               >
                 Join FXEE Today
               </Button>

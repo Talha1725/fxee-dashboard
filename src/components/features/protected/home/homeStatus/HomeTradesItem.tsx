@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import HomeTokenPair from "@/components/features/protected/home/HomeTokenPair";
@@ -18,6 +19,7 @@ import {
   TooltipProvider, 
   TooltipTrigger 
 } from "@/components/ui/tooltip";
+import { useRouter } from "next/navigation";
 
 interface HomeTradesItemProps {
   long?: boolean;
@@ -25,6 +27,7 @@ interface HomeTradesItemProps {
 }
 
 export default function HomeTradesItem({ long = false, recommendation }: HomeTradesItemProps) {
+  const router = useRouter();
   // Helper function to get time ago
   const getTimeAgo = (createdAt: string) => {
     const now = new Date();
@@ -178,7 +181,7 @@ export default function HomeTradesItem({ long = false, recommendation }: HomeTra
       )}
       
       <div className="flex items-start self-stretch gap-2.5">
-        <Button variant={direction === "Long" ? "green" : "danger"} size="default" className="text-white flex-[1_0_0] font-satoshi-medium">
+        <Button onClick={() => router.push('/dashboard#open-trades')} variant={direction === "Long" ? "green" : "danger"} size="default" className="text-white flex-[1_0_0] font-satoshi-medium">
           <p>{direction}</p>
           {direction === "Long" ? 
             <IconTradeUp width={20} height={20} color="#FFF" /> : 
