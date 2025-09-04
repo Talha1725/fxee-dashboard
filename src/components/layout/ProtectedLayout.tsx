@@ -15,7 +15,7 @@ export default function ProtectedLayout({
   const home = pathname === "/home";
   return (
     <div className="flex items-start p-2.5 w-full min-h-screen rounded-[10px] bg-center bg-cover bg-no-repeat bg-[#ecf3f8] dark:bg-background overflow-hidden">
-      {home && (
+      {/* {home && (
         <div
           style={{
             transform: "scaleX(-1)",
@@ -24,7 +24,7 @@ export default function ProtectedLayout({
         >
           <Image src={shade} alt="shade" className="w-full h-full scale-125" />
         </div>
-      )}
+      )} */}
 
       <div className="xl:relative xl:left-0 absolute left-[-100%]">
         <Sidebar />
