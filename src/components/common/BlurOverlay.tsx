@@ -9,7 +9,7 @@ export default function BlurOverlay({ className }: { className?: string }) {
           className={`absolute inset-0
           bg-white/20 dark:bg-[#1A1A1A]/60 
           rounded-2xl 
-          pointer-events-none 
+          cursor-not-allowed
           flex items-center justify-center 
           z-50 border border-white/40 dark:border-white/20
           ${className || 'scale-105 translate-y-[-6px]'}`}
