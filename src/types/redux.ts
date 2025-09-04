@@ -109,6 +109,7 @@ export interface ChatMessage {
 export interface ChatRequest {
   message: string;
   conversationHistory?: ChatMessage[];
+  tradeId?: number; // Optional trade ID for trade-specific analysis
 }
 
 export interface ChatResponse {

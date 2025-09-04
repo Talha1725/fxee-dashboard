@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-
 import ProtectedContentContainer from "@/components/features/protected/ProtectedContentContainer";
 import DashboardACP from "@/components/features/protected/dashboard/ACP/DashboardACP";
 import DashboardStatus from "@/components/features/protected/dashboard/status/DashboardStatus";
@@ -9,46 +8,54 @@ import HomeTrades from "../home/homeStatus/HomeTrades";
 import CommonSelect from "@/components/ui/common-select";
 import SymbolModal from "@/components/common/SymbolModal";
 import OpenTrades from "./open-trades/OpenTrades";
+import DashboardAIPanel from "./chatbot/DashboardAIPanel";
+import { TradeProvider } from "@/lib/contexts/TradeContext";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
-  export default function Dashboard() {
+export default function Dashboard() {
   const { isVirtualAccount } = useAccountType();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  
   return (
     <>
-    <SymbolModal 
-    isOpen={isModalOpen} 
-    onClose={closeModal} 
-  />
-    <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
-        <div className="lg:col-span-2">
-          <DashboardWidget dashboard={true} currency="BTC/ETH" openModal={openModal} />
-        </div>
-        <div className="flex flex-col">
-          <HomeTrades className="bg-card-green-gradient flex-1" />
-          {/* <div className="w-full mt-5">
-            <CommonSelect
-            placeholder="Select a category"
-            defaultValue="Seasonal"
-            options={[
-              { value: "Seasonal", label: "Seasonal" },
-              { value: "Trending", label: "Trending" },
-              { value: "Popular", label: "Popular" }
-            ]}
-            className="min-w-full"
-          />
-      
-        </div> */}
-        </div>
-      </div>
-      <OpenTrades />
-      <DashboardStatus />
-      <DashboardACP />
-    </ProtectedContentContainer>
+      <SymbolModal 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+      />
+      <TradeProvider>
+        <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
+            <div className="lg:col-span-2">
+              <DashboardWidget dashboard={true} currency="BTC/ETH" openModal={openModal} />
+            </div>
+            <div className="flex flex-col">
+              <HomeTrades className="bg-card-green-gradient flex-1" />
+              {/* <div className="w-full mt-5">
+                <CommonSelect
+                placeholder="Select a category"
+                defaultValue="Seasonal"
+                options={[
+                  { value: "Seasonal", label: "Seasonal" },
+                  { value: "Trending", label: "Trending" },
+                  { value: "Popular", label: "Popular" }
+                ]}
+                className="min-w-full"
+              />
+            </div> */}
+            </div>
+          </div>
+          <OpenTrades />
+          <DashboardStatus />
+          <DashboardACP />
+          
+          {/* AI Chatbot Panel */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <DashboardAIPanel />
+          </div>
+        </ProtectedContentContainer>
+      </TradeProvider>
     </>
   );
 }

@@ -2,14 +2,15 @@ import React from "react";
 
 import { Text12, Text18 } from "@/components/ui/typography";
 import { Progress } from "@/components/ui/progress";
-import { IconAIBrain } from "@/components/ui/icon";
+import { IconAIBrain, IconClose } from "@/components/ui/icon";
 import agentImage from "@/public/images/ai-agent-avatar.svg"
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
-export default function HomeAIMessageHead() {
+export default function HomeAIMessageHead({ isExpanded, clearConversation }: { isExpanded: boolean, clearConversation: () => void, setIsExpanded: (isExpanded: boolean) => void }) {
   return (
-    <div className="flex justify-between items-start self-stretch">
-      <div className="flex items-start gap-2">
+    <div className="w-full flex items-start self-stretch">
+      <div className="flex items-start gap-2 flex-1">
         <div className="w-[54px] h-[54px] flex items-center justify-center">
           <Image src={agentImage} alt="Agent" width={54} height={54} />
         </div>
