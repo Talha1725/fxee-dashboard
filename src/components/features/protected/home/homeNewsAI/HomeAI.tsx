@@ -12,7 +12,7 @@ export default function HomeAI() {
   return (
     <ProtectedCardContainer className={`db:max-w-[397px] h-[471px] p-5 flex flex-col justify-between items-center border-black/5 ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"}`}>
       <HomeAIMessage />
-      <HomeAIChat />
+      {/* <HomeAIChat /> */}
     </ProtectedCardContainer>
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { IconSend, IconRobot, IconClose } from '@/components/ui/icon';
 import { Text14, Text16 } from '@/components/ui/typography';
+import HomeAIMessageHead from '@/components/features/protected/home/homeNewsAI/HomeAIMessageHead';
 import { useSendProposedTradeChatMessageMutation, useSendChatMessageMutation, useGetChatHistoryQuery } from '@/lib/redux/features/chatbot/chatbotApi';
 import { useGetLastProposedTradeQuery } from '@/lib/redux/features/proposed-trades/proposedTradesApi';
 import { useTrade } from '@/lib/contexts/TradeContext';
@@ -231,7 +232,6 @@ The AI will always consider this trade context when answering your questions, wh
           }
         }
       } else {
-        console.log('No trade data available, sending to regular chatbot');
         try {
           response = await sendRegularMessage({
             message: currentMessage,
@@ -288,6 +288,7 @@ The AI will always consider this trade context when answering your questions, wh
   const clearConversation = () => {
     setConversationHistory([]);
     setSelectedTrade(null);
+    setMessage(''); // Also clear the current message input
   };
 
   const sendTestMessage = () => {
@@ -489,13 +490,10 @@ The AI will always consider this trade context when answering your questions, wh
   };
 
   return (
-    <Card className={`w-full ${className} ${theme === "dark" ? "bg-card-main-gradient border-white/5" : "bg-white border-black/10"}`}>
+    <Card className="flex flex-col items-start gap-4 flex-[1_0_0] self-stretch rounded-[10px] bg-white/3 border dark:border-white/4 border-black/15 p-5 overflow-hidden py-5 px-5 justify-between">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <IconRobot width={20} height={20} className="text-blue-500" />
-            <Text16 className="font-satoshi-medium">Fxee AI Assistant</Text16>
-          </CardTitle>
+        <HomeAIMessageHead />
           <div className="flex items-center gap-2">
             {isExpanded && (
               <Button
@@ -517,7 +515,7 @@ The AI will always consider this trade context when answering your questions, wh
         </div>
         <div className="flex items-center gap-2">
           <div className={`w-2 h-2 rounded-full ${tradeToUse ? 'bg-green-500' : 'bg-gray-400'}`} />
-          <Text14 className="text-gray-600 dark:text-gray-400 text-xs">
+          <Text14 className="text-black/80 dark:text-white/80 text-xs">
             {getContextInfo()}
           </Text14>
         </div>
@@ -526,7 +524,7 @@ The AI will always consider this trade context when answering your questions, wh
       {isExpanded && (
         <CardContent className="space-y-4">
           {/* Chat Messages */}
-          <div className="h-64 overflow-y-auto border rounded-lg p-3 space-y-3 bg-gray-50 dark:bg-gray-900/50">
+          <div className="h-64 overflow-y-auto p-3 space-y-3">
             {conversationHistory.length === 0 && !isLoadingHistory && (
               <div className="text-center text-gray-500 dark:text-gray-400 py-6">
                 <IconRobot width={32} height={32} className="mx-auto mb-3 opacity-50" />
@@ -570,10 +568,10 @@ The AI will always consider this trade context when answering your questions, wh
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] px-3 py-2 rounded-lg ${
+                  className={`max-w-[80%] px-3 py-2 rounded-[90px] ${
                     msg.role === 'user'
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+                      ? 'bg-black/10 dark:bg-white/10 dark:border-white/20 text-white/90 dark:text-white/90'
+                      : 'text-white/90 dark:text-white/90'
                   }`}
                 >
                   <Text14 className="text-sm whitespace-pre-wrap">{msg.content}</Text14>
@@ -601,18 +599,19 @@ The AI will always consider this trade context when answering your questions, wh
 
           {/* Input Area */}
           <div className="flex gap-2">
-            <Input
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={
-                tradeToUse
-                  ? `Ask about ${tradeToUse.symbol} trade...`
-                  : "Ask about trading strategies, risk management..."
-              }
-              disabled={isSending}
-              className="flex-1"
-            />
+                <Input
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder={
+                    tradeToUse
+                      ? `Ask about ${tradeToUse.symbol} trade...`
+                      : "Ask about trading strategies, risk management..."
+                  }
+                  disabled={isSending}
+                  className="flex-1 px-4 py-4 gap-3 border h-full font-satoshi-medium dark:placeholder:text-white/40 placeholder:text-black/70 dark:border-transparent border-black/10"
+                  InputStyles="!dark:placeholder:text-white/40 !placeholder:text-black/50 !text-[16px] !font-satoshi-medium"
+                />
             <Button
               onClick={() => {
                 console.log('Send button clicked');
