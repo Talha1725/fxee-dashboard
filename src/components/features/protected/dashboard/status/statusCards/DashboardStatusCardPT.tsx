@@ -5,13 +5,10 @@ import Image from "next/image";
 import DashboardStatusCardContainer from "@/components/features/protected/dashboard/status/statusCards/DashboardStatusCardContainer";
 import DashboardStatusCardFooter from "@/components/features/protected/dashboard/status/statusCards/DashboardStatusCardFooter";
 import { Text12, Text14, Text16 } from "@/components/ui/typography";
-import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
-
 import AreaImage from "@/public/images/area-chart.png";
+import { ProposedTrade } from "@/types/redux";
 
-export default function DashboardStatusCardPT() {
-  const { data: lastTradeData } = useGetLastProposedTradeQuery();
-  const proposedTrade = lastTradeData?.data;
+export default function DashboardStatusCardPT({proposedTrade}: {proposedTrade: ProposedTrade | undefined}) {
 
   return (
     <DashboardStatusCardContainer>
@@ -25,14 +22,14 @@ export default function DashboardStatusCardPT() {
             ${proposedTrade ? parseFloat(proposedTrade.entryPrice).toFixed(4) : "0.0000"} → ${proposedTrade ? parseFloat(proposedTrade.targetPrice).toFixed(4) : "0.0000"}
           </Text16>
           <Text12 className="dark:text-white/60 text-black/60 font-satoshi-medium line-clamp-2 break-words">
-            {proposedTrade?.aiAnalysis ? 
-              (proposedTrade.aiAnalysis.length > 80 ? 
-                proposedTrade.aiAnalysis.substring(0, 80) + "..." : 
+            {proposedTrade?.aiAnalysis ?
+              (proposedTrade.aiAnalysis.length > 80 ?
+                proposedTrade.aiAnalysis.substring(0, 80) + "..." :
                 proposedTrade.aiAnalysis
               ) : "Awaiting analysis..."}
           </Text12>
         </div>
-        <DashboardStatusCardFooter title="Yesterday’s Trade" value={proposedTrade ? parseFloat(proposedTrade.averagePerTrade) / 100 : 3.45} />
+        <DashboardStatusCardFooter title="Risk Reward Ratio" value={proposedTrade?.averageRr ? parseFloat(proposedTrade.averageRr) : 0} />
       </div>
     </DashboardStatusCardContainer>
   );

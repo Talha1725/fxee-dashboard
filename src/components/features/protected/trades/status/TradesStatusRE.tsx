@@ -14,16 +14,16 @@ export default function TradesStatusRE() {
         <Image
           src={WRTChartImage}
           alt="ATT Chart Image"
-          className="absolute right-0 w-10 h-10 object-contain"
+          className="absolute right-0 w-13 h-13 object-cover"
         />
       </div>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
-        <Text20>+ 66.7%</Text20>
+        <Text20 className="!font-semibold">+ 66.7%</Text20>
         <div className="flex justify-between items-center self-stretch">
-          <Text12 className="text-white/60 font-[400]">
+          <Text12 className="dark:!text-white/60 !text-black/60 font-[400]">
             Capital Increased
           </Text12>
-          <Text12 className="text-green font-[400]">+66.7%</Text12>
+          <Text12 className="!text-[#3EDC81] font-[400]">+66.7%</Text12>
         </div>
       </div>
     </PerformanceStatusCardContainer>

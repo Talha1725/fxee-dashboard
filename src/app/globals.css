@@ -1127,13 +1127,13 @@ body {
 
   /* Safari-specific SVG font fallbacks */
   @supports (-webkit-appearance: none) {
-  .satoshi-svg-text svg text {
-    font-family: "Satoshi-Bold", "Satoshi", Arial, sans-serif !important;
-    font-weight: 700 !important;
-    -webkit-font-smoothing: antialiased;
+    .satoshi-svg-text svg text {
+      font-family: "Satoshi-Bold", "Satoshi", Arial, sans-serif !important;
+      font-weight: 700 !important;
+      -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
   }
-}
 
   /* Ensure SVG text renders properly across browsers */
   svg text {
@@ -1152,7 +1152,7 @@ body {
 
   /* Dark mode SVG text styling for tutorial cards */
   .dark svg text {
-    fill: black !important;
+    fill: white;
   }
 
   /* Override Google Chrome autofill styles */
@@ -1581,14 +1581,38 @@ body {
 }
 
 .claim-gradient {
+  background: radial-gradient(
+      99.93% 99.93% at 50.06% 0.07%,
+      rgba(22, 22, 22, 0.6) 0%,
+      rgba(22, 22, 22, 0.946662) 74.01%,
+      #161616 100%
+    ),
+    linear-gradient(10deg, #0276db 13.99%, #3edc81 102.63%);
+}
+
+.trade-card-gradient {
+  background: linear-gradient(
+      17.18deg,
+      rgba(62, 220, 129, 0.2) 14.37%,
+      rgba(2, 118, 219, 0.2) 82.05%
+    ),
+    linear-gradient(
+      236.84deg,
+      rgba(15, 15, 15, 0.06) 5.53%,
+      rgba(15, 15, 15, 0.198576) 56.04%,
+      rgba(15, 15, 15, 0.224522) 75.37%,
+      rgba(15, 15, 15, 0.27) 96.4%
+    );
+}
+
+.trade-card-light-gradient {
   background: 
-  radial-gradient(
-    99.93% 99.93% at 50.06% 0.07%, 
-    rgba(22, 22, 22, 0.6) 0%, 
-    rgba(22, 22, 22, 0.946662) 74.01%, 
-    #161616 100%
-  ),
-  linear-gradient(10deg, #0276DB 13.99%, #3EDC81 102.63%);
-
-
+    linear-gradient(
+      236.84deg,
+      rgba(15, 15, 15, 0.12) 5.53%,
+      rgba(15, 15, 15, 0.397153) 56.04%,
+      rgba(15, 15, 15, 0.449044) 75.37%,
+      rgba(15, 15, 15, 0.54) 96.4%
+    ),
+    linear-gradient(17.18deg, #3edc81 14.37%, #0276db 82.05%);
 }

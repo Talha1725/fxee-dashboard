@@ -36,12 +36,12 @@ export default function SidebarSupportingContent() {
       iconFill: IconSettingFill,
       href: "/settings",
     },
-    {
-      title: "Wallet",
-      icon: IconWallet,
-      iconFill: IconWalletFill,
-      href: "/wallet",
-    },
+    // {
+    //   title: "Wallet",
+    //   icon: IconWallet,
+    //   iconFill: IconWalletFill,
+    //   href: "/wallet",
+    // },
   ];
   return (
     <div className="flex flex-col items-start gap-1.5 self-stretch">

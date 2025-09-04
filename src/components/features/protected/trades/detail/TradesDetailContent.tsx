@@ -2,17 +2,17 @@ import React from "react";
 
 import { TabsContent } from "@/components/ui/tabs";
 import TradesDetailCard from "./TradesDetailCard";
-import { IconEquity, IconLineChart } from "@/components/ui/icon";
+import { IconDollar, IconEquity, IconLineChart2, IconFund, PieChart } from "@/components/ui/icon";
 
 export default function TradesDetailContent() {
   const items = [
     {
       title: "Account Balance",
-      icon: <IconEquity width={16} height={16} />,
+      icon: <IconDollar width={16} height={16} />,
       value: "99,997.49",
       isUSD: true,
-      description: "Total Equity Increased",
-      change: "12.44%",
+      description: "Total Unrealized P&L",
+      change: "0%",
       isIncreased: true,
       isBalance: true,
     },
@@ -27,20 +27,38 @@ export default function TradesDetailContent() {
     },
     {
       title: "Realized P&L",
-      icon: <IconLineChart width={16} height={16} />,
-      value: "99,997.49",
+      icon: <IconLineChart2 width={16} height={16} />,
+      value: "-2.51",
       isUSD: true,
-      description: "Total Equity Increased",
+      description: "Realized P&L Decreased",
       change: "12.44%",
       isIncreased: true,
     },
     {
       title: "Unrealized P&L",
-      icon: <IconEquity width={16} height={16} />,
+      icon: <PieChart width={16} height={16} />,
+      value: "0.00",
+      isUSD: false,
+      description: "Total Unrealized P&L",
+      change: "0%",
+      isIncreased: true,
+    },
+    {
+      title: "Account Margin",
+      icon: <PieChart width={16} height={16} />,
+      value: "0.00",
+      isUSD: false,
+      description: "Total Account Margin",
+      change: "0%",
+      isIncreased: true,
+    },
+    {
+      title: "Available Funds",
+      icon: <IconFund width={16} height={16} />,
       value: "99,997.49",
       isUSD: false,
-      description: "Total Equity Increased",
-      change: "12.44%",
+      description: "Available Funds Decreased",
+      change: "-2.5%",
       isIncreased: false,
     },
   ];

@@ -396,6 +396,8 @@ export interface ProposedTrade {
   validUntil: string;
   createdAt: string;
   updatedAt: string;
+  winProbability: string;
+  marketVolatility: string;
 }
 
 export interface ProposedTradesRequest {

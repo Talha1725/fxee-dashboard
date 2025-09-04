@@ -4491,6 +4491,42 @@ export function IconLineChart({ width, height, ...props }: IconProps) {
   );
 }
 
+export function IconLineChart2({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 20 20"
+      fill="none"
+      {...props}
+    >
+      <g clipPath="url(#clip0_1350_81559)">
+        <path
+          d="M3.33594 15.834H16.6693"
+          stroke={theme === "dark" ? "white" : "white"}
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M3.33594 12.5L6.66927 7.5L10.0026 9.16667L13.3359 5L16.6693 8.33333"
+          stroke={theme === "dark" ? "white" : "white"}
+          strokeWidth="1.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1350_81559">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
 export function IconFibo({ width, height, ...props }: IconProps) {
   const { theme } = useTheme();
   return (
@@ -5526,6 +5562,7 @@ export function IconInfoFill({ width, height, ...props }: IconProps) {
 }
 
 export function IconFilter({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -5537,7 +5574,7 @@ export function IconFilter({ width, height, ...props }: IconProps) {
     >
       <path
         d="M8.5 14.5H11.5V13H8.5V14.5ZM3.25 5.5V7H16.75V5.5H3.25ZM5.5 10.75H14.5V9.25H5.5V10.75Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
         fillOpacity="0.6"
       />
     </svg>
@@ -6415,7 +6452,7 @@ export const ForexLogo = ({ className }: { className?: string }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_1500_2631)">
+      <g clipPath="url(#clip0_1500_2631)">
         <path
           d="M35.5735 9.5129C35.5735 9.31946 35.5735 9.15351 35.5735 8.96007H37.7726L38.3572 7.27365H35.3786C34.5713 2.62914 31.1473 -0.163086 25.9975 -0.163086C20.2072 -0.163086 16.4492 3.67967 16.4492 9.62353C16.4492 15.5674 20.0959 19.3272 25.9975 19.2996C30.8133 19.2996 34.2372 16.6732 35.2672 12.3329H37.2716L37.8839 10.6464H35.5178C35.5735 10.2594 35.5735 9.89997 35.5735 9.5129ZM26.1087 16.6179C23.1301 16.6179 21.961 13.4663 21.961 9.56828C21.961 5.67016 22.8797 2.5462 25.9139 2.51855C28.2801 2.51855 29.5049 4.48141 29.9224 7.27365H27.3614L26.7491 8.96007H30.0616C30.0616 9.15351 30.0616 9.37471 30.0616 9.56828C30.0616 9.92766 30.0616 10.287 30.0338 10.6464H26.8882L26.2757 12.3329H29.8946C29.477 14.8486 28.3915 16.6179 26.1087 16.6179Z"
           fill="white"
@@ -6571,33 +6608,33 @@ export const MaxEllipse = ({ className }: { className?: string }) => {
   );
 };
 
-export function TutorialIcon({ 
-  number, 
-  width = 200, 
-  height = 200, 
-  ...props 
+export function TutorialIcon({
+  number,
+  width = 200,
+  height = 200,
+  ...props
 }: IconProps & { number: string }) {
   const { theme } = useTheme();
-  
+
   return (
-    <svg 
-      width={width} 
-      height={height} 
-      viewBox="0 0 200 200" 
-      fill="none" 
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 200 200"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       {/* Background circle with gradient */}
-      <circle 
-        cx="100" 
-        cy="100" 
-        r="90" 
+      <circle
+        cx="100"
+        cy="100"
+        r="90"
         fill={theme === "dark" ? "url(#darkGradient)" : "url(#lightGradient)"}
         stroke={theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}
         strokeWidth="2"
       />
-      
+
       {/* Number text */}
       <text
         x="100"
@@ -6611,7 +6648,7 @@ export function TutorialIcon({
       >
         {number}
       </text>
-      
+
       {/* Gradients */}
       <defs>
         <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -6622,6 +6659,282 @@ export function TutorialIcon({
           <stop offset="0%" stopColor="#FFFFFF" />
           <stop offset="100%" stopColor="#F0F0F0" />
         </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+export const IconPerformanceTTT = ({
+  className,
+  value = "48",
+}: {
+  className?: string;
+  value?: string;
+}) => {
+  const { theme } = useTheme();
+
+  return (
+    <svg
+      width="100"
+      height="51"
+      viewBox="0 0 100 51"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M92.75 50.375C92.75 39.1365 88.2855 28.3582 80.3387 20.4114C72.3918 12.4645 61.6136 8 50.375 8C39.1365 8 28.3582 12.4645 20.4114 20.4113C12.4645 28.3582 8 39.1364 8 50.375"
+        stroke="url(#paint0_linear_1350_150832)"
+        stroke-width="14.3644"
+      />
+      <path
+        d="M80.3008 20.4114C72.3581 12.4645 61.5855 8 50.3529 8C39.1202 8 28.3476 12.4645 20.4049 20.4113C12.4622 28.3582 8 39.1364 8 50.375"
+        stroke="url(#paint1_linear_1350_150832)"
+        stroke-opacity="0.8"
+        stroke-width="14.3644"
+      />
+      <path
+        d="M75.0391 25.4664L85.3336 15.1719"
+        stroke="white"
+        stroke-width="1.19703"
+      />
+      <path
+        d="M78.991 49.1849C78.991 41.5679 75.9651 34.2628 70.579 28.8768C65.193 23.4907 57.8879 20.4648 50.2709 20.4648C42.6538 20.4648 35.3488 23.4907 29.9627 28.8768C24.5766 34.2628 21.5508 41.5679 21.5508 49.1849"
+        stroke="url(#paint2_linear_1350_150832)"
+        stroke-opacity="0.4"
+        stroke-width="0.791"
+        stroke-linecap="round"
+        stroke-dasharray="0 0.26 2.63 0 0.26 2.63"
+      />
+      {/* Dynamic text */}
+      <text
+        x="50"
+        y="35"
+        opacity="0.7"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontSize="8"
+        fontWeight="500"
+        fill={theme === "dark" ? "white" : "black"}
+        fontFamily="Satoshi-Medium, Satoshi, Arial, sans-serif"
+        className={
+          theme === "dark" ? "fill-white !important" : "fill-black !important"
+        }
+      >
+        {value}
+      </text>
+      <text
+        x="50"
+        y="45"
+        opacity="0.7"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontSize="8"
+        fontWeight="500"
+        fill={theme === "dark" ? "white" : "black"}
+        fontFamily="Satoshi-Medium, Satoshi, Arial, sans-serif"
+        className={
+          theme === "dark" ? "fill-white !important" : "fill-black !important"
+        }
+      >
+        Total Trades
+      </text>
+      <defs>
+        <linearGradient
+          id="paint0_linear_1350_150832"
+          x1="50.375"
+          y1="8"
+          x2="50.375"
+          y2="50.375"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="white" stop-opacity="0.05" />
+          <stop offset="1" stop-color="white" stop-opacity="0.1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_1350_150832"
+          x1="8"
+          y1="50.375"
+          x2="49.1031"
+          y2="-12.4206"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0276DB" />
+          <stop offset="0.495192" stop-color="#15B0F8" />
+          <stop offset="1" stop-color="#3EDC81" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_1350_150832"
+          x1="21.5508"
+          y1="49.1849"
+          x2="47.4296"
+          y2="2.84081"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0276DB" />
+          <stop offset="0.495192" stop-color="#15B0F8" />
+          <stop offset="1" stop-color="#3EDC81" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+
+export function IconDollar({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_1617_44730)">
+        <path
+          d="M2 8.00195C2 8.78988 2.15519 9.5701 2.45672 10.2981C2.75825 11.026 3.20021 11.6874 3.75736 12.2446C4.31451 12.8017 4.97595 13.2437 5.7039 13.5452C6.43185 13.8468 7.21207 14.002 8 14.002C8.78793 14.002 9.56815 13.8468 10.2961 13.5452C11.0241 13.2437 11.6855 12.8017 12.2426 12.2446C12.7998 11.6874 13.2417 11.026 13.5433 10.2981C13.8448 9.5701 14 8.78988 14 8.00195C14 7.21402 13.8448 6.43381 13.5433 5.70585C13.2417 4.9779 12.7998 4.31646 12.2426 3.75931C11.6855 3.20216 11.0241 2.7602 10.2961 2.45868C9.56815 2.15715 8.78793 2.00195 8 2.00195C7.21207 2.00195 6.43185 2.15715 5.7039 2.45868C4.97595 2.7602 4.31451 3.20216 3.75736 3.75931C3.20021 4.31646 2.75825 4.9779 2.45672 5.70585C2.15519 6.43381 2 7.21402 2 8.00195Z"
+          stroke={theme === "dark" ? "white" : "black"}
+          stroke-width="1.15"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M9.86667 6.00141C9.7459 5.79191 9.57043 5.61921 9.35905 5.50177C9.14768 5.38434 8.90834 5.3266 8.66667 5.33474H7.33333C6.97971 5.33474 6.64057 5.47522 6.39052 5.72526C6.14048 5.97531 6 6.31445 6 6.66807C6 7.02169 6.14048 7.36083 6.39052 7.61088C6.64057 7.86093 6.97971 8.00141 7.33333 8.00141H8.66667C9.02029 8.00141 9.35943 8.14188 9.60948 8.39193C9.85952 8.64198 10 8.98112 10 9.33474C10 9.68836 9.85952 10.0275 9.60948 10.2775C9.35943 10.5276 9.02029 10.6681 8.66667 10.6681H7.33333C7.09166 10.6762 6.85232 10.6185 6.64095 10.501C6.42957 10.3836 6.2541 10.2109 6.13333 10.0014"
+          stroke={theme === "dark" ? "white" : "black"}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M8 4.66992V11.3366"
+          stroke={theme === "dark" ? "white" : "black"}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1617_44730">
+          <rect
+            width="16"
+            height="16"
+            fill={theme === "dark" ? "white" : "black"}
+            transform="translate(0 0.00195312)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function IconFund({ width, height, ...props }: IconProps) {
+  return (
+    <svg
+      width="17"
+      height="16"
+      viewBox="0 0 17 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_1811_38012)">
+        <path
+          d="M2.5 14H14.5"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M2.5 6.66797H14.5"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M3.83594 4L8.5026 2L13.1693 4"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M3.16406 6.66797V14.0013"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M13.8359 6.66797V14.0013"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M5.83594 9.33203V11.332"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M8.5 9.33203V11.332"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M11.1641 9.33203V11.332"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1811_38012">
+          <rect
+            width="16"
+            height="16"
+            fill="white"
+            transform="translate(0.5)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function PieChart({ width, height, ...props }: IconProps) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_1811_37997)">
+        <path
+          d="M6.66843 2.133C5.62557 2.37476 4.66638 2.89113 3.89035 3.62855C3.11433 4.36598 2.54973 5.2976 2.25512 6.32678C1.96051 7.35596 1.94662 8.44523 2.21489 9.48159C2.48316 10.5179 3.02383 11.4637 3.7808 12.2206C4.53777 12.9776 5.48348 13.5183 6.51984 13.7865C7.5562 14.0548 8.64546 14.0409 9.67465 13.7463C10.7038 13.4517 11.6355 12.8871 12.3729 12.1111C13.1103 11.335 13.6267 10.3759 13.8684 9.333C13.8684 9.15618 13.7982 8.98662 13.6732 8.86159C13.5481 8.73657 13.3786 8.66633 13.2018 8.66633H8.66843C8.31481 8.66633 7.97567 8.52585 7.72562 8.2758C7.47558 8.02576 7.3351 7.68662 7.3351 7.333V2.66633C7.32682 2.58735 7.30294 2.51079 7.26484 2.44111C7.22675 2.37142 7.1752 2.31 7.11319 2.26038C7.05117 2.21077 6.97993 2.17397 6.90358 2.1521C6.82723 2.13023 6.74731 2.12374 6.66843 2.133Z"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M10 2.33203C10.8465 2.63009 11.6153 3.11423 12.2499 3.7488C12.8845 4.38338 13.3686 5.15222 13.6667 5.9987H10.6667C10.4899 5.9987 10.3203 5.92846 10.1953 5.80344C10.0702 5.67841 10 5.50884 10 5.33203V2.33203Z"
+          stroke="white"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1811_37997">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
       </defs>
     </svg>
   );

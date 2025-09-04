@@ -37,7 +37,7 @@ export default function DashboardWidget({
         <div className={`flex justify-between items-center self-stretch ${dashboard ? "mb-0" : "mb-2"}`}>
           <div className="flex items-center gap-2">
             <div 
-              className="flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 bg-dark-gradient"
+              className={`flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 ${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`}
               onClick={openModal}
               style={{ cursor: openModal ? 'pointer' : 'default' }}
             >

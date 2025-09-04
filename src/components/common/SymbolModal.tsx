@@ -22,154 +22,36 @@ import binance from "@/public/images/Binance.svg";
 import america from "@/public/images/america-circle.svg";
 import CurrencyToCountryFlagConverter from "../features/CurrencyToCountryFlagConverter";
 import { Plus } from "lucide-react";
+import { TRADING_SYMBOLS } from "@/lib/constants";
 
-// Data mapped from the images
-const symbolsData = [
-  {
-    id: 1,
-    symbol: "XAUUSD",
-    name: "Gold",
-    category: "commodity",
-    type: "cfd",
-    provider: "OANDA",
-    icon: five,
-    providerIcon: oanda,
-    tab: "All",
-  },
-  {
-    id: 2,
-    symbol: "BTCUSD",
-    name: "Bitcoin / US Dollar",
-    category: "spot crypto",
-    type: "crypto",
-    provider: "Binance",
-    icon: null,
-    currency: "BTC/USD",
-    providerIcon: binance,
-    tab: "Crypto",
-  },
-  {
-    id: 3,
-    symbol: "DJI",
-    name: "Dow Jones Industrial Average Index",
-    category: "fund etf",
-    type: "index",
-    provider: "TVC",
-    icon: dji,
-    providerIcon: america,
-    tab: "Indices",
-  },
-  {
-    id: 4,
-    symbol: "VIX",
-    name: "US Volatility Index",
-    category: "spot crypto",
-    type: "index",
-    provider: "Capital Com",
-    icon: vix,
-    providerIcon: america,
-    tab: "Indices",
-  },
-  {
-    id: 5,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 6,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 7,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 8,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 9,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 10,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 11,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 12,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-  {
-    id: 13,
-    symbol: "DXY",
-    name: "US Dollar Currency Index",
-    category: "futures",
-    type: "currency",
-    provider: "TVC",
-    icon: dxy,
-    providerIcon: america,
-    tab: "Forex",
-  },
-];
+// Get icon based on symbol type
+const getSymbolIcon = (type: string) => {
+  switch (type) {
+    case "Forex":
+      return "💱";
+    case "Commodities":
+      return "🥇";
+    case "Crypto":
+      return "₿";
+    default:
+      return "📈";
+  }
+};
+
+// Transform trading symbols data to match modal structure
+const symbolsData = TRADING_SYMBOLS.map((symbol, index) => ({
+  id: symbol.id,
+  symbol: symbol.symbol,
+  name: symbol.displayName,
+  category: symbol.type.toLowerCase(),
+  type: symbol.type.toLowerCase(),
+  provider: "FXEE",
+  icon: null,
+  currency: symbol.type === "Forex" ? symbol.displayName : null,
+  providerIcon: america,
+  tab: symbol.type,
+  iconEmoji: getSymbolIcon(symbol.type),
+}));
 
 export default function SymbolModal({
   isOpen,
@@ -184,14 +66,9 @@ export default function SymbolModal({
 
   const tabs = [
     "All",
-    "Indices",
     "Forex",
+    "Commodities", 
     "Crypto",
-    "Stocks",
-    "Funds",
-    "Futures",
-    "Bonds",
-    "Economy",
   ];
 
   const handleTabClick = (tab: string) => {
@@ -247,32 +124,34 @@ export default function SymbolModal({
               </button>
             ))}
           </div>
+        </DialogHeader>
 
-          <DialogDescription>
-            <div
-              style={{
-                transform: "scaleX(-1)",
-              }}
-              className="pointer-events-none fixed top-0 left-0 z-50 dark:opacity-5 opacity-15"
-            >
-              <Image
-                src={shade}
-                alt="shade"
-                className="w-full h-full scale-125"
-              />
-            </div>
+        {/* Background shade */}
+        <div
+          style={{
+            transform: "scaleX(-1)",
+          }}
+          className="pointer-events-none fixed w-full top-0 left-0 z-50 dark:opacity-5 opacity-15"
+        >
+          <Image
+            src={shade}
+            alt="shade"
+            className="w-full h-full scale-125"
+          />
+        </div>
 
-            <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
+        <DialogDescription>
+          <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
               <table className="w-full font-satoshi">
                 <tbody>
-                  {filteredData.map((item) => (
+                  {filteredData.map((item, index) => (
                     <tr
                       key={item.id}
-                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${item.id % 2 === 0 ? "dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" : ""}`}
+                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${index % 2 === 1 ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" : ""}`}
                     >
                       {/* Symbol + Icon */}
                       <td className="flex items-center gap-1 min-h-[40px] w-[80px] md:w-[100px]">
-                        <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0">
+                        <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
                           {item.icon ? (
                             <Image
                               src={item.icon}
@@ -285,6 +164,8 @@ export default function SymbolModal({
                             <CurrencyToCountryFlagConverter
                               currency={item.currency}
                             />
+                          ) : item.iconEmoji ? (
+                            <span className="text-sm md:text-base">{item.iconEmoji}</span>
                           ) : (
                             <div className="w-full h-full bg-gray-300 rounded-full"></div>
                           )}
@@ -380,7 +261,6 @@ export default function SymbolModal({
               )}
             </div>
           </DialogDescription>
-        </DialogHeader>
       </DialogContent>
     </Dialog>
   );

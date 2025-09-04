@@ -10,7 +10,7 @@ export default function LandingWhyFxee() {
   return (
     <LandingMax1440Container className="px-5 sm:px-10 py-25 2xl:px-25 gap-12.5 sm:gap-[70px] relative">
 
-      <EllipsLight className="absolute top-[-2%] md:top-[-20%] left-1/2 -translate-x-1/2" />
+      <EllipsLight className="absolute top-[-2%] md:top-[-20%] left-1/2 -translate-x-1/2 pointer-events-none" />
 
       <LandingWhyFxeeHead />
       <LandingWhyFxeeCards />
