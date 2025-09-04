@@ -20,7 +20,7 @@ export default function Home() {
       />
       <ProtectedContentContainer>
         <HomeStatus />
-        {/* <HomeNewsAI /> */}
+        <HomeNewsAI />
         <HomeTopScore openModal={openModal} />
       </ProtectedContentContainer>
     </>
