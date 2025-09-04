@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { IconRobot } from '@/components/ui/icon';
 import { Text14 } from '@/components/ui/typography';
+import SuggestedQuestions from './SuggestedQuestions';
 import type { ChatMessage } from '@/types/redux';
 
 interface DashboardChatbotBodyProps {
@@ -9,8 +9,6 @@ interface DashboardChatbotBodyProps {
   isLoadingHistory: boolean;
   isSending: boolean;
   tradeToUse: any;
-  tradeSpecificQuestions: string[];
-  suggestedQuestions: string[];
   handleSuggestedQuestion: (question: string) => void;
 }
 
@@ -19,8 +17,6 @@ export default function DashboardChatbotBody({
   isLoadingHistory, 
   isSending, 
   tradeToUse, 
-  tradeSpecificQuestions, 
-  suggestedQuestions, 
   handleSuggestedQuestion 
 }: DashboardChatbotBodyProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -47,23 +43,10 @@ export default function DashboardChatbotBody({
           </Text14>
           
           {/* Suggested Questions */}
-          <div className="space-y-2">
-            <Text14 className="text-xs text-gray-400 mb-2">
-              {tradeToUse ? "Trade-specific questions:" : "Suggested questions:"}
-            </Text14>
-            <div className="grid grid-cols-1 gap-2">
-              {(tradeToUse ? tradeSpecificQuestions : suggestedQuestions).slice(0, 4).map((question, index) => (
-                <Button
-                  key={index}
-                  variant="ghost"
-                  onClick={() => handleSuggestedQuestion(question)}
-                  className="text-xs text-left justify-start p-2 h-auto border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
-                >
-                  {question}
-                </Button>
-              ))}
-            </div>
-          </div>
+          <SuggestedQuestions 
+            tradeToUse={tradeToUse}
+            handleSuggestedQuestion={handleSuggestedQuestion}
+          />
         </div>
       )}
       
