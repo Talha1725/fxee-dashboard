@@ -115,18 +115,6 @@ export default function DashboardStatusDetailPT() {
         </div>
       </div>
       <div className="flex flex-col items-start gap-2.5 self-stretch">
-        <div className="flex items-center gap-2.5 self-stretch">
-          <DashboardStatusDetailUpgrade
-            title="Upgrade to VIP"
-            description="Access advanced trading features and premium indicators"
-            profitability={`Profitability ${proposedTrade?.winRatePercentage || "82"}%`}
-          />
-          <DashboardStatusDetailUpgrade
-            title="Enable Pro Tools"
-            description="Unlock professional trading tools and analysis"
-            profitability={`Accuracy ${proposedTrade?.winRatePercentage || "82"}%`}
-          />
-        </div>
         <div className="flex flex-wrap items-start content-start gap-[10px] self-stretch">
           {proToolsData.map((proTool) => (
             <DashboardStatusDetailBadge
