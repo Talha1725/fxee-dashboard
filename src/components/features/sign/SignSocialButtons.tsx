@@ -48,7 +48,7 @@ function GoogleOAuthButton({
 
   return (
     <Button 
-      onClick={googleOAuthLogin}
+      onClick={() => googleOAuthLogin()}
       disabled={isGoogleLoginLoading}
       className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-dark-gradient" : "bg-[#24242409]"} dark:text-foreground dark:shadow-subtle dark:border-white/30 hover:opacity-50 shadow-none`}
     >
@@ -129,7 +129,7 @@ export default function SignSocialButtons() {
       </Button>
       {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
         <GoogleOAuthButton 
-          theme={theme}
+          theme={theme || 'light'}
           isGoogleLoginLoading={isGoogleLoginLoading}
           googleLogin={googleLogin}
           dispatch={dispatch}
@@ -137,7 +137,7 @@ export default function SignSocialButtons() {
         />
       ) : (
         <GoogleFallbackButton 
-          theme={theme}
+          theme={theme || 'light'}
           isGoogleLoginLoading={isGoogleLoginLoading}
         />
       )}

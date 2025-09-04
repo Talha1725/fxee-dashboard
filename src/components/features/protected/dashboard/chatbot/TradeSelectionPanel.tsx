@@ -23,7 +23,7 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
   const proposedTrade = lastTradeData?.data;
   
   // Mock trade data for testing when no real data is available
-  const mockTradeData = {
+  const mockTradeData: ProposedTrade = {
     id: 123,
     userId: 1,
     symbol: "EURUSD",
@@ -33,14 +33,37 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
     stopLossPrice: "1.0800",
     profitTarget: "100.00",
     maximumRisk: "50.00",
+    profitTargetPercentage: "5.00",
+    maximumRiskPercentage: "2.50",
+    potentialProfit: "100.00",
+    maximumLoss: "50.00",
     riskRewardRatio: "2.00",
     riskLevel: "medium" as const,
     tradingType: "day_trade" as const,
+    tradingVersion: "basic" as const,
     aiAnalysis: "Strong bullish momentum with RSI at 65, MACD showing positive divergence, and price breaking above key resistance at 1.0840.",
     confidence: 85,
+    winRatePercentage: "68.5",
+    totalWins: 12,
+    totalLosses: 5,
+    averageRr: "2.1",
+    totalProfit: "1250.00",
+    averagePerTrade: "73.53",
+    successRate: "70.6",
+    totalAnalyses: 100,
+    analysesUsed: 17,
+    analysesRemainingPercentage: "83",
+    potentialWin: "100.00",
+    maxRiskAmount: "50.00",
+    accountRiskPercentage: "2.0",
     status: "active" as const,
+    analysisCount: 1,
+    maxAnalysisLimit: 10,
+    validUntil: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
+    winProbability: "68.5",
+    marketVolatility: "medium"
   };
   
   // Use mock data only when no real data is available and we're in mock mode
@@ -61,6 +84,12 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
 
   const handleClearSelection = () => {
     setSelectedTrade(null);
+  };
+
+  const getTradeDirection = (trade: ProposedTrade): string => {
+    const entry = parseFloat(trade.entryPrice);
+    const target = parseFloat(trade.targetPrice);
+    return target > entry ? 'long' : 'short';
   };
 
   const getDirectionIcon = (direction: string) => {
@@ -107,7 +136,7 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
           {isTradeSelected && (
             <Button
               variant="ghost"
-              size="sm"
+              size="default"
               onClick={handleClearSelection}
               className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             >
@@ -124,7 +153,7 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
           <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                {getDirectionIcon(selectedTrade.direction || 'long')}
+                {getDirectionIcon(getTradeDirection(selectedTrade))}
                 <Text14 className="font-medium text-green-800 dark:text-green-200">
                   Selected for Analysis
                 </Text14>
@@ -137,8 +166,8 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
               </div>
               <div>
                 <span className="text-gray-600 dark:text-gray-400">Direction:</span>
-                <span className={`ml-1 font-medium ${getDirectionColor(selectedTrade.direction || 'long')}`}>
-                  {selectedTrade.direction || 'Long'}
+                <span className={`ml-1 font-medium ${getDirectionColor(getTradeDirection(selectedTrade))}`}>
+                  {getTradeDirection(selectedTrade) === 'long' ? 'Long' : 'Short'}
                 </span>
               </div>
               <div>
@@ -157,7 +186,7 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
         <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              {getDirectionIcon(tradeToShow.direction || 'long')}
+              {getDirectionIcon(getTradeDirection(tradeToShow))}
               <Text14 className="font-medium">
                 {tradeToShow.symbol} - {tradeToShow.timeframe}
               </Text14>
@@ -201,8 +230,8 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
           <Button
             onClick={() => handleTradeSelect(tradeToShow)}
             disabled={isTradeSelected && selectedTrade?.id === tradeToShow.id}
-            variant={isTradeSelected && selectedTrade?.id === tradeToShow.id ? "secondary" : "default"}
-            size="sm"
+            variant={isTradeSelected && selectedTrade?.id === tradeToShow.id ? "ghost" : "default"}
+            size="default"
             className="w-full"
           >
             {isTradeSelected && selectedTrade?.id === tradeToShow.id 

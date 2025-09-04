@@ -11,12 +11,7 @@ export default function HomeTokenPair({
   pair: string;
   iconName: string;
 }) {
-  const Icon = (
-    Icons as Record<
-      string,
-      React.ComponentType<any>
-    >
-  )[iconName];
+  const Icon = (Icons as any)[iconName];
 
   return (
     <div className="flex items-center gap-2.5 z-1">
