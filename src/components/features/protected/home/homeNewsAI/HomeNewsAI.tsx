@@ -7,7 +7,8 @@ export default function HomeNewsAI() {
   return (
     <div className="flex flex-col db:flex-row items-start gap-5 self-stretch">
       <HomeNews />
-      <HomeAI />
+      <HomeAI            />
     </div>
   );
 }
+  

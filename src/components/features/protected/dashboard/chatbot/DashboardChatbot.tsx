@@ -4,8 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { IconSend, IconRobot, IconClose } from '@/components/ui/icon';
-import { Text14, Text16 } from '@/components/ui/typography';
+import { IconSend, IconRobot, IconClose, IconTradeUp } from '@/components/ui/icon';
+import { Text12, Text14, Text16 } from '@/components/ui/typography';
 import HomeAIMessageHead from '@/components/features/protected/home/homeNewsAI/HomeAIMessageHead';
 import { useSendProposedTradeChatMessageMutation, useSendChatMessageMutation, useGetChatHistoryQuery } from '@/lib/redux/features/chatbot/chatbotApi';
 import { useGetLastProposedTradeQuery } from '@/lib/redux/features/proposed-trades/proposedTradesApi';
@@ -14,6 +14,7 @@ import { useTheme } from '@/lib/contexts/ThemeContext';
 import { handleApiError } from '@/lib/utils/apiUtils';
 import { showToast } from '@/lib/utils/toast';
 import type { ChatMessage } from '@/types/redux';
+import HomeAIMessageBodyIcon from '../../home/homeNewsAI/HomeAIMessageBodyIcon';
 
 interface DashboardChatbotProps {
   className?: string;
@@ -286,9 +287,11 @@ The AI will always consider this trade context when answering your questions, wh
   };
 
   const clearConversation = () => {
+    console.log('Clearing conversation...');
     setConversationHistory([]);
     setSelectedTrade(null);
-    setMessage(''); // Also clear the current message input
+    setMessage('');
+    console.log('Conversation cleared');
   };
 
   const sendTestMessage = () => {
@@ -484,44 +487,44 @@ The AI will always consider this trade context when answering your questions, wh
   const getContextInfo = () => {
     if (tradeToUse) {
       const isMockData = useMockResponses && !latestTrade && !selectedTrade;
-      return `Auto-context: ${tradeToUse.symbol} (${tradeToUse.timeframe})${isMockData ? ' [Mock Data]' : ''}`;
+      return (
+        <div className="flex items-center gap-2">
+        <HomeAIMessageBodyIcon />
+        <div className="flex flex-col items-start gap-1">
+          <Text16 className="text-[#079744] dark:text-green font-satoshi-medium">TradeMind AI</Text16>
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${tradeToUse ? 'bg-green-500' : 'bg-gray-400'}`} />
+            <Text12 className="text-white/60 dark:text-white/60 text-xs">
+            Auto-context: ${tradeToUse.symbol} (${tradeToUse.timeframe})${isMockData ? ' [Mock Data]' : ''}
+            </Text12>
+          </div>
+        </div>
+        </div>
+          
+        )
     }
-    return "No trade data available";
+    return (
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" />
+        <Text12 className="text-white/60 dark:text-white/60 text-xs">No trade data available</Text12>
+      </div>
+    )
   };
 
   return (
     <Card className="flex flex-col items-start gap-4 flex-[1_0_0] self-stretch rounded-[10px] bg-white/3 border dark:border-white/4 border-black/15 p-5 overflow-hidden py-5 px-5 justify-between">
-      <CardHeader className="pb-3">
+      <div className="w-full pb-3">
         <div className="flex items-center justify-between">
-        <HomeAIMessageHead />
-          <div className="flex items-center gap-2">
-            {isExpanded && (
-              <Button
-                variant="ghost"
-                onClick={clearConversation}
-                className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-2 py-1"
-              >
-                Clear
-              </Button>
-            )}
-            <Button
-              variant="ghost"
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="p-1"
-            >
-              <IconClose width={16} height={16} className={`transition-transform ${isExpanded ? 'rotate-45' : 'rotate-0'}`} />
-            </Button>
-          </div>
+        <HomeAIMessageHead isExpanded={isExpanded} clearConversation={clearConversation} setIsExpanded={setIsExpanded} />
+         
         </div>
-        <div className="flex items-center gap-2">
-          <div className={`w-2 h-2 rounded-full ${tradeToUse ? 'bg-green-500' : 'bg-gray-400'}`} />
+        <div className="flex items-center gap-2 mt-5">
           <Text14 className="text-black/80 dark:text-white/80 text-xs">
             {getContextInfo()}
           </Text14>
         </div>
-      </CardHeader>
+      </div>
       
-      {isExpanded && (
         <CardContent className="space-y-4">
           {/* Chat Messages */}
           <div className="h-64 overflow-y-auto p-3 space-y-3">
@@ -581,12 +584,12 @@ The AI will always consider this trade context when answering your questions, wh
             
             {isSending && (
               <div className="flex justify-start">
-                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-2 rounded-lg">
+                <div className="max-w-[80%] px-3 py-2 rounded-[90px] bg-black/10 dark:bg-white/10 dark:border-white/20 text-white/90 dark:text-white/90">
                   <div className="flex items-center gap-2">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                      <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                      <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                     </div>
                     <Text14 className="text-sm text-gray-500">AI is thinking...</Text14>
                   </div>
@@ -597,9 +600,9 @@ The AI will always consider this trade context when answering your questions, wh
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
-          <div className="flex gap-2">
-                <Input
+    <div className="flex flex-col items-start gap-4.5 self-stretch">
+      <div className="flex flex-col items-center gap-5 self-stretch">
+      <Input
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
@@ -609,28 +612,27 @@ The AI will always consider this trade context when answering your questions, wh
                       : "Ask about trading strategies, risk management..."
                   }
                   disabled={isSending}
-                  className="flex-1 px-4 py-4 gap-3 border h-full font-satoshi-medium dark:placeholder:text-white/40 placeholder:text-black/70 dark:border-transparent border-black/10"
+                  backIcon={<IconSend height={20} width={20} onClick={handleSendMessage} className='cursor-pointer' />}
+                  className="flex-1 px-4 py-4 gap-3 border h-full dark:border-transparent border-black/10"
                   InputStyles="!dark:placeholder:text-white/40 !placeholder:text-black/50 !text-[16px] !font-satoshi-medium"
                 />
-            <Button
-              onClick={() => {
-                console.log('Send button clicked');
-                console.log('Message value:', message);
-                console.log('Message trimmed:', message.trim());
-                console.log('Is sending:', isSending);
-                handleSendMessage();
-              }}
-              disabled={!message.trim() || isSending}
-              className="px-3"
-            >
-              <IconSend width={16} height={16} />
-            </Button>
+        <div className="flex justify-between items-center self-stretch">
+          <div className="flex items-center gap-1">
+            <IconTradeUp width={20} height={20} color={theme === "dark" ? "#3EDC81" : "#079744"} />
+            <Text14 className="text-[#079744] dark:text-green font-satoshi-medium">Bullish Market</Text14>
           </div>
-
+          <div className="flex items-center gap-1">
+            <Text14 className="font-satoshi dark:text-white text-black">
+              AI Confidence: <span className="text-[#079744] dark:text-green">81%</span>
+            </Text14>
+          </div>
+        </div>
+      </div>
+    </div>
           {/* Trade Context Display */}
           {tradeToUse && (
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-              <Text14 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">
+            <div className="bg-[#0276DB0A] dark:bg-white/3 border border-[#3edc81] dark:border-[#3edc81] rounded-lg p-3">
+              <Text14 className="text-sm font-medium text-[#079744] dark:text-[#3edc81] mb-1">
                 Auto Trade Context:
               </Text14>
               <div className="grid grid-cols-2 gap-2 text-xs">
@@ -651,7 +653,7 @@ The AI will always consider this trade context when answering your questions, wh
                   <span className="ml-1 font-medium">{tradeToUse.targetPrice}</span>
                 </div>
               </div>
-              <Text14 className="text-xs text-blue-700 dark:text-blue-300 mt-2">
+              <Text14 className="text-xs text-[#079744] dark:text-[#3edc81] mt-2">
                 💡 AI automatically considers this trade data in all responses
                 {useMockResponses && !latestTrade && !selectedTrade && (
                   <span className="text-orange-600 dark:text-orange-400"> (Using mock data for testing)</span>
@@ -660,7 +662,6 @@ The AI will always consider this trade context when answering your questions, wh
             </div>
           )}
         </CardContent>
-      )}
     </Card>
   );
 }

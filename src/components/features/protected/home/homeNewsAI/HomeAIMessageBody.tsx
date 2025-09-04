@@ -285,9 +285,11 @@ The AI will always consider this trade context when answering your questions, wh
   };
 
   const clearConversation = () => {
+    console.log('Clearing conversation...');
     setConversationHistory([]);
     setSelectedTrade(null);
-    setMessage(''); // Also clear the current message input
+    setMessage('');
+    console.log('Conversation cleared');
   };
 
   const suggestedQuestions = [
@@ -350,7 +352,10 @@ The AI will always consider this trade context when answering your questions, wh
           {isExpanded && (
             <Button
               variant="ghost"
-              onClick={clearConversation}
+              onClick={() => {
+                console.log('Clear button clicked');
+                clearConversation();
+              }}
               className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-2 py-1"
             >
               Clear
