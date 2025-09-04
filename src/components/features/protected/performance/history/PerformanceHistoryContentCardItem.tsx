@@ -10,8 +10,8 @@ export default function PerformanceHistoryContentCardItem({
 }) {
   return (
     <div className="flex justify-between items-center self-stretch">
-      <Text14 className="font-[400]">{title}</Text14>
-      <Text14 className="font-[400]">{value}</Text14>
+      <Text14 className="font-satoshi dark:text-white/80 text-black">{title}</Text14>
+      <Text14 className="font-satoshi dark:text-white/80 text-black">{value}</Text14>
     </div>
   );
 }

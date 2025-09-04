@@ -10,20 +10,20 @@ export default function PerformanceStatusWRT() {
   return (
     <PerformanceStatusCardContainer>
       <div className="relative flex justify-between items-start gap-1.5 self-stretch">
-        <Text14>Win Rate Today</Text14>
+        <Text14 className="font-satoshi">Win Rate Today</Text14>
         <Image
           src={WRTChartImage}
           alt="ATT Chart Image"
-          className="absolute right-0 w-10 h-10 object-contain"
+          className="absolute right-0 w-12 h-12 object-contain"
         />
       </div>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
-        <Text20>+ 66.7%</Text20>
+        <Text20 className="font-satoshi-medium">+ 66.7%</Text20>
         <div className="flex justify-between items-center self-stretch">
-          <Text12 className="text-white/60 font-[400]">
+          <Text12 className="dark:text-white/50 text-black/50 font-satoshi">
             Win Rate Increased
           </Text12>
-          <Text12 className="text-green font-[400]">+66.7%</Text12>
+          <Text12 className="dark:text-[#3EDC81] text-[#079744] font-satoshi">+66.7%</Text12>
         </div>
       </div>
     </PerformanceStatusCardContainer>

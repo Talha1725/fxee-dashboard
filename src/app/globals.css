@@ -1152,7 +1152,7 @@ body {
 
   /* Dark mode SVG text styling for tutorial cards */
   .dark svg text {
-    fill: black !important;
+    fill: white;
   }
 
   /* Override Google Chrome autofill styles */

@@ -10,7 +10,7 @@ export default function PerformanceStatusATT() {
   return (
     <PerformanceStatusCardContainer>
       <div className="relative flex justify-between items-start gap-1.5 self-stretch">
-        <Text14>Auto Trades Today</Text14>
+        <Text14 className="font-satoshi">Auto Trades Today</Text14>
         <Image
           src={ATTChartImage}
           alt="ATT Chart Image"
@@ -18,12 +18,12 @@ export default function PerformanceStatusATT() {
         />
       </div>
       <div className="flex flex-col items-start gap-1.5 self-stretch">
-        <Text20>12</Text20>
+        <Text20 className="font-satoshi-medium">12</Text20>
         <div className="flex justify-between items-center self-stretch">
-          <Text12 className="text-white/60 font-[400]">
+          <Text12 className="dark:text-white/50 text-black/50 font-satoshi">
             Total Equity Increased
           </Text12>
-          <Text12 className="text-green font-[400]">12.44%</Text12>
+          <Text12 className="dark:text-[#3EDC81] text-[#079744] font-satoshi">12.44%</Text12>
         </div>
       </div>
     </PerformanceStatusCardContainer>

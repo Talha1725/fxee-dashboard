@@ -5526,6 +5526,7 @@ export function IconInfoFill({ width, height, ...props }: IconProps) {
 }
 
 export function IconFilter({ width, height, ...props }: IconProps) {
+  const { theme } = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -5537,7 +5538,7 @@ export function IconFilter({ width, height, ...props }: IconProps) {
     >
       <path
         d="M8.5 14.5H11.5V13H8.5V14.5ZM3.25 5.5V7H16.75V5.5H3.25ZM5.5 10.75H14.5V9.25H5.5V10.75Z"
-        fill="white"
+        fill={theme === "dark" ? "white" : "black"}
         fillOpacity="0.6"
       />
     </svg>
@@ -6571,33 +6572,33 @@ export const MaxEllipse = ({ className }: { className?: string }) => {
   );
 };
 
-export function TutorialIcon({ 
-  number, 
-  width = 200, 
-  height = 200, 
-  ...props 
+export function TutorialIcon({
+  number,
+  width = 200,
+  height = 200,
+  ...props
 }: IconProps & { number: string }) {
   const { theme } = useTheme();
-  
+
   return (
-    <svg 
-      width={width} 
-      height={height} 
-      viewBox="0 0 200 200" 
-      fill="none" 
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 200 200"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       {/* Background circle with gradient */}
-      <circle 
-        cx="100" 
-        cy="100" 
-        r="90" 
+      <circle
+        cx="100"
+        cy="100"
+        r="90"
         fill={theme === "dark" ? "url(#darkGradient)" : "url(#lightGradient)"}
         stroke={theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}
         strokeWidth="2"
       />
-      
+
       {/* Number text */}
       <text
         x="100"
@@ -6611,7 +6612,7 @@ export function TutorialIcon({
       >
         {number}
       </text>
-      
+
       {/* Gradients */}
       <defs>
         <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -6626,3 +6627,115 @@ export function TutorialIcon({
     </svg>
   );
 }
+
+export const IconPerformanceTTT = ({ 
+  className, 
+  value = "48" 
+}: { 
+  className?: string;
+  value?: string;
+}) => {
+  const { theme } = useTheme();
+  
+  return (
+    <svg
+      width="100"
+      height="51"
+      viewBox="0 0 100 51"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M92.75 50.375C92.75 39.1365 88.2855 28.3582 80.3387 20.4114C72.3918 12.4645 61.6136 8 50.375 8C39.1365 8 28.3582 12.4645 20.4114 20.4113C12.4645 28.3582 8 39.1364 8 50.375"
+        stroke="url(#paint0_linear_1350_150832)"
+        stroke-width="14.3644"
+      />
+      <path
+        d="M80.3008 20.4114C72.3581 12.4645 61.5855 8 50.3529 8C39.1202 8 28.3476 12.4645 20.4049 20.4113C12.4622 28.3582 8 39.1364 8 50.375"
+        stroke="url(#paint1_linear_1350_150832)"
+        stroke-opacity="0.8"
+        stroke-width="14.3644"
+      />
+      <path
+        d="M75.0391 25.4664L85.3336 15.1719"
+        stroke="white"
+        stroke-width="1.19703"
+      />
+      <path
+        d="M78.991 49.1849C78.991 41.5679 75.9651 34.2628 70.579 28.8768C65.193 23.4907 57.8879 20.4648 50.2709 20.4648C42.6538 20.4648 35.3488 23.4907 29.9627 28.8768C24.5766 34.2628 21.5508 41.5679 21.5508 49.1849"
+        stroke="url(#paint2_linear_1350_150832)"
+        stroke-opacity="0.4"
+        stroke-width="0.791"
+        stroke-linecap="round"
+        stroke-dasharray="0 0.26 2.63 0 0.26 2.63"
+      />
+      {/* Dynamic text */}
+      <text
+        x="50"
+        y="35"
+        opacity="0.7"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontSize="8"
+        fontWeight="500"
+        fill={theme === "dark" ? "white" : "black"}
+        fontFamily="Satoshi-Medium, Satoshi, Arial, sans-serif"
+        className={theme === "dark" ? "fill-white !important" : "fill-black !important"}
+      >
+        {value}
+      </text>
+      <text
+        x="50"
+        y="45"
+        opacity="0.7"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontSize="8"
+        fontWeight="500"
+        fill={theme === "dark" ? "white" : "black"}
+        fontFamily="Satoshi-Medium, Satoshi, Arial, sans-serif"
+        className={theme === "dark" ? "fill-white !important" : "fill-black !important"}
+      >
+        Total Trades
+      </text>
+      <defs>
+        <linearGradient
+          id="paint0_linear_1350_150832"
+          x1="50.375"
+          y1="8"
+          x2="50.375"
+          y2="50.375"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="white" stop-opacity="0.05" />
+          <stop offset="1" stop-color="white" stop-opacity="0.1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_1350_150832"
+          x1="8"
+          y1="50.375"
+          x2="49.1031"
+          y2="-12.4206"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0276DB" />
+          <stop offset="0.495192" stop-color="#15B0F8" />
+          <stop offset="1" stop-color="#3EDC81" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_1350_150832"
+          x1="21.5508"
+          y1="49.1849"
+          x2="47.4296"
+          y2="2.84081"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0276DB" />
+          <stop offset="0.495192" stop-color="#15B0F8" />
+          <stop offset="1" stop-color="#3EDC81" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
