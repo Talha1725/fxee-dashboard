@@ -14,18 +14,22 @@ import {
 import { handleAuthentication, validateProviderConfig, getProviderErrorMessage } from "@/lib/utils/authUtils";
 import { showToast } from "@/lib/utils/toast";
 import { OAUTH_CONFIG } from '@/lib/config/oauth';
+import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
 
-export default function SignSocialButtons() {
-  const { theme } = useTheme();
-  const dispatch = useDispatch();
-  const router = useRouter();
-  
-  // RTK Query mutations
-  const [googleLogin, { isLoading: isGoogleLoginLoading }] = useGoogleLoginMutation();
-  const [linkedinLogin, { isLoading: isLinkedinLoginLoading }] = useLinkedinLoginMutation();
-  const [appleLogin, { isLoading: isAppleLoginLoading }] = useAppleLoginMutation();
-
-  // Google OAuth login
+// Google OAuth Button Component - only renders when Google OAuth is configured
+function GoogleOAuthButton({ 
+  theme, 
+  isGoogleLoginLoading, 
+  googleLogin, 
+  dispatch, 
+  router 
+}: {
+  theme: string;
+  isGoogleLoginLoading: boolean;
+  googleLogin: any;
+  dispatch: any;
+  router: any;
+}) {
   const googleOAuthLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       if (!validateProviderConfig('google')) return;
@@ -41,6 +45,44 @@ export default function SignSocialButtons() {
       showToast.apiError(getProviderErrorMessage('google'));
     }
   });
+
+  return (
+    <Button 
+      onClick={googleOAuthLogin}
+      disabled={isGoogleLoginLoading}
+      className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-dark-gradient" : "bg-[#24242409]"} dark:text-foreground dark:shadow-subtle dark:border-white/30 hover:opacity-50 shadow-none`}
+    >
+      <IconGoogle width={20} height={20} />
+    </Button>
+  );
+}
+
+// Fallback Google Button when OAuth is not configured
+function GoogleFallbackButton({ theme, isGoogleLoginLoading }: { theme: string; isGoogleLoginLoading: boolean }) {
+  const handleClick = () => {
+    showToast.apiError("Google OAuth is not configured. Please set NEXT_PUBLIC_GOOGLE_CLIENT_ID in your environment variables.");
+  };
+
+  return (
+    <Button 
+      onClick={handleClick}
+      disabled={isGoogleLoginLoading}
+      className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-dark-gradient" : "bg-[#24242409]"} dark:text-foreground dark:shadow-subtle dark:border-white/30 hover:opacity-50 shadow-none`}
+    >
+      <IconGoogle width={20} height={20} />
+    </Button>
+  );
+}
+
+export default function SignSocialButtons() {
+  const { theme } = useTheme();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  
+  // RTK Query mutations
+  const [googleLogin, { isLoading: isGoogleLoginLoading }] = useGoogleLoginMutation();
+  const [linkedinLogin, { isLoading: isLinkedinLoginLoading }] = useLinkedinLoginMutation();
+  const [appleLogin, { isLoading: isAppleLoginLoading }] = useAppleLoginMutation();
 
   // LinkedIn OAuth login
   const handleLinkedinClick = async () => {
@@ -76,15 +118,6 @@ export default function SignSocialButtons() {
     // });
   };
 
-  // Handle Google button click
-  const handleGoogleClick = () => {
-    if (!OAUTH_CONFIG.GOOGLE.CLIENT_ID) {
-      showToast.apiError("Google OAuth is not configured. Please set NEXT_PUBLIC_GOOGLE_CLIENT_ID in your environment variables.");
-      return;
-    }
-    googleOAuthLogin();
-  };
-
   return (
     <div className="flex justify-center items-start gap-3 self-stretch">
       <Button 
@@ -94,13 +127,20 @@ export default function SignSocialButtons() {
       >
         <IconApple width={20} height={20} />
       </Button>
-      <Button 
-        onClick={handleGoogleClick}
-        disabled={isGoogleLoginLoading}
-        className={`flex-[1_0_0] self-stretch ${theme === "dark" ? "bg-dark-gradient" : "bg-[#24242409]"} dark:text-foreground dark:shadow-subtle dark:border-white/30 hover:opacity-50 shadow-none`}
-      >
-        <IconGoogle width={20} height={20} />
-      </Button>
+      {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
+        <GoogleOAuthButton 
+          theme={theme}
+          isGoogleLoginLoading={isGoogleLoginLoading}
+          googleLogin={googleLogin}
+          dispatch={dispatch}
+          router={router}
+        />
+      ) : (
+        <GoogleFallbackButton 
+          theme={theme}
+          isGoogleLoginLoading={isGoogleLoginLoading}
+        />
+      )}
       <Button 
         onClick={handleLinkedinClick}
         disabled={isLinkedinLoginLoading}

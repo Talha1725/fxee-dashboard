@@ -4,7 +4,8 @@ import DashboardHeadBadge from "@/components/features/protected/dashboard/Dashbo
 import { IconACP } from "@/components/ui/icon";
 import { Text14, Text16 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
-import { useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useGetUsageLimitsQuery, useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useGetMyAnalysesQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 
 interface AIEngineStatusTGSHeadProps {
   onRunAnalysis?: () => void;
@@ -16,10 +17,37 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
   // Fetch usage limits
   const { data: usageLimitsResponse, error, isLoading } = useGetUsageLimitsQuery();
   
+  // Fetch last analysis data to show timestamp
+  const { data: lastTradeData } = useGetLastProposedTradeQuery();
+  const { data: lastAnalysisData } = useGetMyAnalysesQuery({ limit: 1 });
+  
   // Get the appropriate limit based on active tab
   const currentLimit = activeTab === "custom_goal" 
     ? usageLimitsResponse?.data?.usageLimits?.custom_analysis
     : usageLimitsResponse?.data?.usageLimits?.proposed_trade;
+    
+  // Format last analysis timestamp
+  const getLastAnalysisTime = () => {
+    if (activeTab === "best_trade" && lastTradeData?.data?.createdAt) {
+      const date = new Date(lastTradeData.data.createdAt);
+      return {
+        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        time: date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+      };
+    } else if (activeTab === "custom_goal" && lastAnalysisData?.data) {
+      const latestAnalysis = Array.isArray(lastAnalysisData.data) ? lastAnalysisData.data[0] : lastAnalysisData.data;
+      if (latestAnalysis?.createdAt) {
+        const date = new Date(latestAnalysis.createdAt);
+        return {
+          date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          time: date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+        };
+      }
+    }
+    return null;
+  };
+  
+  const lastAnalysisTime = getLastAnalysisTime();
   return (
     <div className="flex items-start gap-2 self-stretch">
       <DashboardHeadBadge>
@@ -29,7 +57,10 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
         <div className="flex flex-col justify-center items-start gap-1 flex-[1_0_0]">
           <Text16 className="text-white dark:text-white">Trade Goal Setting</Text16>
           <Text14 className="font-satoshi-regular text-white/80 dark:text-white/80">
-            Define your trading parameters
+            {lastAnalysisTime 
+              ? `Last analysis: ${lastAnalysisTime.date} at ${lastAnalysisTime.time}`
+              : "Define your trading parameters"
+            }
           </Text14>
         </div>
         <div className="flex items-center gap-2">

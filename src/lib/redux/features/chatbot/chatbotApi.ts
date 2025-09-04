@@ -17,6 +17,15 @@ export const chatbotApi = baseApi.injectEndpoints({
       invalidatesTags: ["Chat"],
     }),
 
+    sendProposedTradeChatMessage: builder.mutation<ChatResponse, ChatRequest>({
+      query: (chatData) => ({
+        url: "/chatbot/proposed-trade",
+        method: "POST",
+        body: chatData,
+      }),
+      invalidatesTags: ["Chat"],
+    }),
+
     getChatHistory: builder.query<ChatHistoryResponse, {
       page?: string;
       limit?: string;
@@ -38,6 +47,7 @@ export const chatbotApi = baseApi.injectEndpoints({
 
 export const {
   useSendChatMessageMutation,
+  useSendProposedTradeChatMessageMutation,
   useGetChatHistoryQuery,
   useGetChatbotInfoQuery,
 } = chatbotApi;
