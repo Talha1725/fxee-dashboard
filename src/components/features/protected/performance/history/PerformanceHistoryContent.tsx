@@ -3,12 +3,14 @@ import React from "react";
 import PerformanceHistoryContentCard from "./PerformanceHistoryContentCard";
 import { TabsContent } from "@/components/ui/tabs";
 import { mockTrades, Trade } from "@/data/tradesData";
+import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
 interface PerformanceHistoryContentProps {
   activeTab: string;
 }
 
 export default function PerformanceHistoryContent({ activeTab }: PerformanceHistoryContentProps) {
+  const { isVirtualAccount } = useAccountType();
   // Filter trades based on active tab
   const getFilteredTrades = (): Trade[] => {
     switch (activeTab) {
@@ -21,7 +23,7 @@ export default function PerformanceHistoryContent({ activeTab }: PerformanceHist
     }
   };
 
-  const filteredTrades = getFilteredTrades();
+  const filteredTrades = isVirtualAccount ? [] : getFilteredTrades();
 
   return (
     <TabsContent

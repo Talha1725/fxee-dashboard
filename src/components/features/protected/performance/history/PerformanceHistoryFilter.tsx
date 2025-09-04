@@ -7,7 +7,7 @@ import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function PerformanceHistoryFilter() {
   return (
-    <div className="flex items-start gap-1 self-stretch">
+    <div className="flex items-start gap-1 self-stretch relative">
       <div className="flex flex-col md:flex-row gap-2.5 md:gap-0 justify-between items-center flex-[1_0_0]">
         <TabsList className="self-stretch w-full md:w-fit">
           <TabsTrigger value="all" className="w-full md:w-25">

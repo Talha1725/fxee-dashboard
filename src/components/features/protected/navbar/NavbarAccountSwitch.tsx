@@ -96,7 +96,7 @@ export default function NavbarAccountSwitch({
                       theme === 'dark' 
                         ? 'bg-black text-white border-gray-800' 
                         : 'bg-white text-gray-900 border-gray-200'
-                    }`}
+                    } z-[999]`}
                     side="bottom"
                   >
                     <div className="flex items-center gap-2">
