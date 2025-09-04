@@ -32,7 +32,7 @@ export default function PerformanceHistoryContent({ activeTab }: PerformanceHist
         <PerformanceHistoryContentCard
           key={trade.id}
           trade={trade}
-          borderRight={index % 3 !== 2} // Add border right for first two columns
+          borderRight={index % 3 !== 2 && filteredTrades.length !== index + 1} // Add border right for first two columns, hide on last card
         />
       ))}
     </TabsContent>
