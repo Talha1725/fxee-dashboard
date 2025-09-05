@@ -1461,26 +1461,6 @@ body {
     z-index: 10 !important;
   }
 
-  /* Toast Backdrop Overlay Effect */
-  .toaster::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 9998;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .toaster:has([data-sonner-toast])::before {
-    opacity: 1;
-  }
 
   /* Toast auto-dismiss animations */
   @keyframes toastSlideIn {

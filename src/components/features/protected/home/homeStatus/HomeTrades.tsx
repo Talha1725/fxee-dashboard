@@ -14,6 +14,10 @@ export default function HomeTrades({ className }: { className?: string }) {
   const { data: dailyRecommendations, error, isLoading } = useGetDailyRecommendationsQuery();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [skippedCards, setSkippedCards] = useState<any[]>([]);
+  const [activeCards, setActiveCards] = useState<any[]>([]);
+  const [skippingCardId, setSkippingCardId] = useState<string | null>(null);
+  const [restoringCardId, setRestoringCardId] = useState<string | null>(null);
 
   const handleScrollRight = () => {
     if (scrollContainerRef.current) {
@@ -29,6 +33,80 @@ export default function HomeTrades({ className }: { className?: string }) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 10; // 10px tolerance
       setCanScrollRight(!isAtEnd);
+    }
+  };
+
+  // Initialize active cards when data loads
+  useEffect(() => {
+    if (dailyRecommendations?.data) {
+      // Filter out cards that are already skipped
+      const skippedIds = skippedCards.map(card => card.id);
+      const filteredCards = dailyRecommendations.data.filter(
+        card => !skippedIds.includes(card.id)
+      );
+      setActiveCards(filteredCards);
+    }
+  }, [dailyRecommendations, skippedCards]);
+
+  // Load skipped cards from localStorage on component mount
+  useEffect(() => {
+    const savedSkippedCards = localStorage.getItem('skippedCards');
+    if (savedSkippedCards) {
+      try {
+        setSkippedCards(JSON.parse(savedSkippedCards));
+      } catch (error) {
+        console.error('Error loading skipped cards from localStorage:', error);
+      }
+    }
+  }, []);
+
+  // Save skipped cards to localStorage whenever it changes
+  useEffect(() => {
+    if (skippedCards.length > 0) {
+      localStorage.setItem('skippedCards', JSON.stringify(skippedCards));
+    } else {
+      localStorage.removeItem('skippedCards');
+    }
+  }, [skippedCards]);
+
+  const handleSkipCard = (cardId: string) => {
+    // Start animation
+    setSkippingCardId(cardId);
+    
+    const cardToSkip = activeCards.find(card => card.id?.toString() === cardId || card.id === cardId);
+    if (cardToSkip) {
+      // Wait for animation to complete before moving card
+      setTimeout(() => {
+        setActiveCards(prev => prev.filter(card => card.id?.toString() !== cardId && card.id !== cardId));
+        setSkippedCards(prev => [...prev, cardToSkip]);
+        setSkippingCardId(null);
+      }, 300);
+    } else if (cardId.startsWith('fallback-')) {
+      // Handle fallback cards
+      const fallbackCard = {
+        id: cardId,
+        symbol: 'DEMO',
+        direction: cardId.includes('1') || cardId.includes('3') ? 'Long' : 'Short',
+        title: 'Demo trade recommendation'
+      };
+      setTimeout(() => {
+        setSkippedCards(prev => [...prev, fallbackCard]);
+        setSkippingCardId(null);
+      }, 300);
+    }
+  };
+
+  const handleRestoreCard = (cardId: string) => {
+    setRestoringCardId(cardId);
+    
+    const cardToRestore = skippedCards.find(card => card.id === cardId);
+    if (cardToRestore) {
+      // Wait for animation to complete before moving card
+      setTimeout(() => {
+        setSkippedCards(prev => prev.filter(card => card.id !== cardId));
+        setActiveCards(prev => [...prev, cardToRestore]);
+        setRestoringCardId(null);
+      }, 300);
     }
   };
 
@@ -68,30 +146,79 @@ export default function HomeTrades({ className }: { className?: string }) {
       </div>
       <div 
         ref={scrollContainerRef}
-        className="flex items-start gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide"
+        className="flex items-start h-full gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide"
         style={{ scrollBehavior: 'smooth' }}
       >
-        {dailyRecommendations?.data ? (
-          dailyRecommendations.data.map((recommendation, index) => (
-            <React.Fragment key={recommendation.id}>
-              <HomeTradesItem 
-                recommendation={recommendation}
-                long={recommendation.direction === "Long"}
-              />
-              {index < dailyRecommendations.data.length - 1 && (
-                <Separator orientation="vertical" className="h-full bg-white/5" />
-              )}
-            </React.Fragment>
-          ))
+        {/* Active Cards */}
+        {activeCards.length > 0 ? (
+          activeCards.map((recommendation, index) => {
+            const isSkipping = skippingCardId === (recommendation.id?.toString() || index.toString());
+            return (
+              <React.Fragment key={recommendation.id}>
+                <div className={`transition-all duration-300 ease-in-out ${
+                  isSkipping 
+                    ? 'transform translate-x-full opacity-0 scale-95' 
+                    : 'transform translate-x-0 opacity-100 scale-100'
+                } h-full`}>
+                  <HomeTradesItem 
+                    recommendation={recommendation}
+                    long={recommendation.direction === "Long"}
+                    onSkip={() => handleSkipCard(recommendation.id?.toString() || index.toString())}
+                  />
+                </div>
+                {index < activeCards.length - 1 && (
+                  <Separator orientation="vertical" className="h-full bg-white/5" />
+                )}
+              </React.Fragment>
+            );
+          })
         ) : (
           <>
-            <HomeTradesItem long={true} />
+            <HomeTradesItem long={true} onSkip={() => handleSkipCard('fallback-1')} />
             <Separator orientation="vertical" className="h-full bg-white/5" />
-            <HomeTradesItem long={false} />
+            <HomeTradesItem long={false} onSkip={() => handleSkipCard('fallback-2')} />
             <Separator orientation="vertical" className="h-full bg-white/5" />
-            <HomeTradesItem long={true} />
+            <HomeTradesItem long={true} onSkip={() => handleSkipCard('fallback-3')} />
             <Separator orientation="vertical" className="h-full bg-white/5" />
-            <HomeTradesItem long={false} />
+            <HomeTradesItem long={false} onSkip={() => handleSkipCard('fallback-4')} />
+          </>
+        )}
+
+        {/* Skipped Cards Stack */}
+        {skippedCards.length > 0 && (
+          <>
+            <Separator orientation="vertical" className="h-full bg-white/10" />
+            <div className="flex gap-5 h-full">
+              {/* <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-orange-400 rounded-full"></div>
+                <Text18 className="font-satoshi-medium text-white">Skipped Trades</Text18>
+                <div className="px-3 py-1 bg-orange-400/20 text-orange-300 text-sm font-satoshi-medium rounded-full">
+                  {skippedCards.length}
+                </div>
+              </div> */}
+                                 {skippedCards.map((card, index) => {
+                   const isRestoring = restoringCardId === card.id;
+                   return (
+                     <React.Fragment key={card.id}>
+                       <div className={`relative h-full transition-all duration-300 ease-in-out ${
+                         isRestoring 
+                           ? 'transform -translate-x-full opacity-0 scale-95' 
+                           : 'transform translate-x-0 opacity-100 scale-100'
+                       }`}>
+                         <HomeTradesItem 
+                           recommendation={card}
+                           long={card.direction === "Long"}
+                           skipped={true}
+                           handleRestoreCard={() => handleRestoreCard(card.id)}
+                         />
+                       </div>
+                       {index < skippedCards.length - 1 && (
+                         <Separator orientation="vertical" className="w-full bg-white/5" />
+                       )}
+                     </React.Fragment>
+                   );
+                 })}
+              </div>
           </>
         )}
       </div>

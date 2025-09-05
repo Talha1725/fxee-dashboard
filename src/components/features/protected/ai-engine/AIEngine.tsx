@@ -182,7 +182,7 @@ function AIEngineContent() {
   }, [isSuccess, analysesData, setAnalysisData]);
 
   return (
-    <ProtectedContentContainer className="sm:gap-10">
+    <ProtectedContentContainer className="sm:gap-10 overflow-visible">
       <AIEngineStatus />
       <AIEngineTools />
     </ProtectedContentContainer>

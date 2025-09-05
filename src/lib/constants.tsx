@@ -519,6 +519,51 @@ export const COPY_TRADING_HOW_TO = [
 
 
 
+// Crypto currency mapping for display names to symbols
+export const CRYPTO_MAP: Record<string, string> = {
+  'bitcoin': 'btc',
+  'ethereum': 'eth',
+  'binance coin': 'bnb',
+  'dogecoin': 'doge',
+  'ripple': 'xrp',
+  'solana': 'sol',
+  'cardano': 'ada',
+  'polkadot': 'dot',
+  'chainlink': 'link',
+  'litecoin': 'ltc',
+  'bitcoin cash': 'bch',
+  'stellar': 'xlm',
+  'monero': 'xmr',
+  'dash': 'dash',
+  'zcash': 'zec',
+  'ethereum classic': 'etc',
+  'nem': 'xem',
+  'vechain': 'vet',
+  'tron': 'trx',
+  'eos': 'eos',
+  'tezos': 'xtz',
+  'neo': 'neo',
+  'icon': 'icx',
+  'qtum': 'qtum',
+  'lisk': 'lsk',
+  'waves': 'waves',
+  'stratis': 'strax',
+  'ark': 'ark',
+  'steem': 'steem',
+  'bitshares': 'bts',
+  'siacoin': 'sc',
+  'decred': 'dcr',
+  'verge': 'xvg',
+  'pivx': 'pivx',
+  'reddcoin': 'rdd',
+  'nxt': 'nxt',
+  'burst': 'burst',
+  'factom': 'fct',
+  'maidsafecoin': 'maid',
+  'counterparty': 'xcp',
+  'omni': 'omni'
+};
+
 export const countries = [
   { code: "US", name: "United States", phoneCode: "+1", flag: AllCountry.US },
   { code: "GB", name: "United Kingdom", phoneCode: "+44", flag: AllCountry.GB },
