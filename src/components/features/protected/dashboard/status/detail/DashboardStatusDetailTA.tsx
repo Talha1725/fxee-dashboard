@@ -32,7 +32,7 @@ export default function DashboardStatusDetailTA() {
   const proposedTrade = lastTradeData?.data;
 
   return (
-    <DashboardStatusDetailCardContainer className="py-3.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-80 lg:h-full overflow-y-auto scrollbar-hide">
+    <DashboardStatusDetailCardContainer className="py-3.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-[350px] sm:h-[400px] overflow-y-auto scrollbar-hide">
       <div className="flex flex-col items-start gap-5 self-stretch">
         <DashboardStatusDetailCardHead
           title="Trade Analysis"
