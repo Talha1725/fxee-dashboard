@@ -96,7 +96,7 @@ export default function CustomAnalysisForm() {
                 <SelectValue placeholder="Select a trading symbol" />
               </SelectTrigger>
               <SelectContent>
-                {supportedSymbols.map((symbol) => (
+                {supportedSymbols.map((symbol: any) => (
                   <SelectItem key={symbol.id} value={symbol.symbol}>
                     {symbol.symbol} ({symbol.type})
                   </SelectItem>
