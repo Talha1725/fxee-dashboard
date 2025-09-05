@@ -20,7 +20,7 @@ function AccordionItem({
     <AccordionPrimitive.Item
       data-slot="accordion-item"
       className={cn(
-        "transition-all duration-300 ease-out flex flex-col items-start gap-4 p-5 border-green-gradient-0 data-[state=open]:before:opacity-100 data-[state=open]:bg-[radial-gradient(126.8%_109.9%_at_95.59%_0%,rgba(0,0,0,0.63)_0%,rgba(0,0,0,0.90)_100%),linear-gradient(17deg,#0276DB_14.37%,#3EDC81_82.05%)]",
+        "transition-all duration-300 ease-out flex flex-col items-start gap-4 p-5 border-green-gradient-0 data-[state=open]:before:opacity-100 dark:data-[state=open]:bg-[radial-gradient(126.8%_109.9%_at_95.59%_0%,rgba(0,0,0,0.63)_0%,rgba(0,0,0,0.90)_100%),linear-gradient(17deg,#0276DB_14.37%,#3EDC81_82.05%)] data-[state=open]:bg-[radial-gradient(126.8%_109.9%_at_95.59%_0%,rgba(255,255,255,0.63)_0%,rgba(255,255,255,0.90)_100%),linear-gradient(17deg,#0276DB_14.37%,#3EDC81_82.05%)]",
         className
       )}
       {...props}

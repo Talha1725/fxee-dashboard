@@ -44,7 +44,7 @@ export default function DashboardChatbotHead({
     return (
       <div className="flex items-center gap-2">
         <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" />
-        <Text12 className="text-white/60 dark:text-white/60 text-xs">No trade data available</Text12>
+        <Text12 className="text-black/60 dark:text-white/60 text-xs">No trade data available</Text12>
       </div>
     )
   };

@@ -363,16 +363,36 @@ export const FAQS = [
     category: "General",
     faq: [
       {
-        question: "What is Fxee?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "How do I activate my FXEEAI Trading Plan after purchase?",
+        answer: "After your purchase, your plan will be activated automatically. You'll receive a confirmation email with login instructions and access to your dashboard.",
       },
       {
-        question: "What is Fxee?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "Is FXEEAI compatible with my broker account?",
+        answer: "FXEEAI is compatible with most major brokers including MetaTrader 4, MetaTrader 5, and other popular trading platforms. Check our supported brokers list for specific compatibility details.",
       },
       {
-        question: "What is Fxee?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "Can I cancel or change my trading plan anytime?",
+        answer: "Yes, you can cancel or change your trading plan at any time from your account settings. Changes will take effect at the next billing cycle.",
+      },
+      {
+        question: "What is the difference between AI Auto-Trading and AI Trade Advisor?",
+        answer: "AI Auto-Trading automatically executes trades based on AI signals, while AI Trade Advisor provides recommendations that you can review and execute manually. Both use the same advanced AI algorithms.",
+      },
+      {
+        question: "How accurate are the AI trading signals?",
+        answer: "Our AI trading signals have shown an average accuracy of 85-92% in backtesting. However, past performance doesn't guarantee future results, and trading always involves risk.",
+      },
+      {
+        question: "Where can I track my trades and performance?",
+        answer: "You can track all your trades and performance in real-time through your personalized dashboard, which includes detailed analytics, profit/loss reports, and performance metrics.",
+      },
+      {
+        question: "Is there a free trial available before purchasing?",
+        answer: "Yes, we offer a 7-day free trial for new users. This allows you to experience our AI trading features before committing to a paid plan.",
+      },
+      {
+        question: "How can I contact support if I face any issues?",
+        answer: "You can contact our support team 24/7 through live chat, email at support@fxee.ai, or by submitting a ticket through your dashboard. We typically respond within 2 hours.",
       },
     ],
   },
@@ -380,8 +400,20 @@ export const FAQS = [
     category: "Orders & Billing",
     faq: [
       {
-        question: "What is Fxee? Why Fxee? How does it work?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "What payment methods do you accept?",
+        answer: "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, bank transfers, and cryptocurrency payments including Bitcoin and Ethereum.",
+      },
+      {
+        question: "How does the billing work?",
+        answer: "Billing is processed monthly or annually depending on your chosen plan. You'll receive an invoice via email before each billing cycle, and payments are automatically processed.",
+      },
+      {
+        question: "Can I get a refund if I'm not satisfied?",
+        answer: "We offer a 30-day money-back guarantee for all new subscriptions. If you're not satisfied with our service, you can request a full refund within the first 30 days.",
+      },
+      {
+        question: "What happens if my payment fails?",
+        answer: "If a payment fails, we'll notify you via email and give you 3 days to update your payment method. Your account will remain active during this grace period.",
       },
     ],
   },
@@ -389,8 +421,20 @@ export const FAQS = [
     category: "Platforms",
     faq: [
       {
-        question: "What is Fxee?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "Which trading platforms are supported?",
+        answer: "FXEEAI supports MetaTrader 4, MetaTrader 5, cTrader, and our proprietary web-based platform. We're constantly adding support for new platforms based on user demand.",
+      },
+      {
+        question: "Do I need to install any software?",
+        answer: "For our web-based platform, no installation is required. For MetaTrader integration, you'll need to install our custom indicators and expert advisors.",
+      },
+      {
+        question: "Is there a mobile app available?",
+        answer: "Yes, we have mobile apps for both iOS and Android that provide full access to your trading dashboard, AI signals, and account management features.",
+      },
+      {
+        question: "Can I use multiple devices simultaneously?",
+        answer: "Yes, you can access your FXEEAI account from multiple devices simultaneously. Your settings and preferences sync across all devices in real-time.",
       },
     ],
   },
@@ -398,8 +442,20 @@ export const FAQS = [
     category: "Rules",
     faq: [
       {
-        question: "What is Fxee?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "What are the trading rules and restrictions?",
+        answer: "Our AI follows strict risk management rules including maximum drawdown limits, position sizing guidelines, and market condition filters to protect your capital.",
+      },
+      {
+        question: "Can I customize the AI trading parameters?",
+        answer: "Yes, advanced users can customize various parameters including risk level, trading hours, currency pairs, and signal sensitivity to match their trading style.",
+      },
+      {
+        question: "What happens during high volatility periods?",
+        answer: "During high volatility, our AI automatically adjusts position sizes and may temporarily pause trading to protect your account from excessive risk.",
+      },
+      {
+        question: "Are there any trading limits?",
+        answer: "Trading limits depend on your account type and risk settings. We have built-in safeguards to prevent over-trading and excessive risk exposure.",
       },
     ],
   },
@@ -407,8 +463,20 @@ export const FAQS = [
     category: "Payout",
     faq: [
       {
-        question: "What is Fxee?",
-        answer: "Fxee is a platform that allows you to trade forex and CFDs.",
+        question: "How do I withdraw my profits?",
+        answer: "You can withdraw profits directly to your registered bank account, PayPal, or cryptocurrency wallet. Withdrawals are processed within 1-3 business days.",
+      },
+      {
+        question: "What are the withdrawal fees?",
+        answer: "Withdrawal fees vary by method: Bank transfers are free, PayPal charges 2.9%, and cryptocurrency withdrawals have minimal network fees.",
+      },
+      {
+        question: "Is there a minimum withdrawal amount?",
+        answer: "Yes, the minimum withdrawal amount is $50 for bank transfers and $25 for digital wallets. This helps keep processing costs reasonable.",
+      },
+      {
+        question: "How are taxes handled on my profits?",
+        answer: "We provide detailed profit/loss reports for tax purposes, but you're responsible for reporting and paying taxes according to your local regulations.",
       },
     ],
   },
