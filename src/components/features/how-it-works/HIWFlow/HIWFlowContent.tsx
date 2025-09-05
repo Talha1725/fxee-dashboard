@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import { StaticImageData } from "next/image";
+import { useRouter } from "next/navigation";
 
 import StepContainer from "@/components/features/landing/landingHIW/StepContainer";
 
@@ -84,6 +86,7 @@ const HIW_STEPS: HIWStep[] = [
 ];
 
 export default function HIWFlowContent() {
+  const router = useRouter();
   return (
     <div className="flex flex-col items-center gap-9 sm:gap-7.5 max-w-[700px] lg:max-w-[900px] relative">
       <LongEllipse className="absolute top-0 -right-[80%] sm:right-1/2 sm:translate-x-1/2 opacity-70 sm:opacity-80" />
@@ -98,6 +101,7 @@ export default function HIWFlowContent() {
             imageAlt={step.title}
             reverseOnDesktop={step.reverseOnDesktop}
             onRight={step.onRight}
+            onButtonClick={()=>{router.push("/signup")}}
           />
         </React.Fragment>
       ))}
