@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { IconAdd, IconAIMagic } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { TradingSymbol } from "@/lib/constants";
+import { getChartSymbol } from "@/lib/utils/symbolFallback";
 
 const AdvancedRealTimeChart = dynamic(
   () =>
@@ -49,10 +50,11 @@ export default function DashboardWidget({
     [symbolData?.type]
   );
 
-  const chartSymbol = useMemo(() => 
-    displayName.includes("/") ? displayName.replace("/", "") : displayName,
-    [displayName]
-  );
+  const chartSymbol = useMemo(() => {
+    // Use the fallback mechanism for crypto symbols
+    const baseSymbol = displayName.includes("/") ? displayName.replace("/", "") : displayName;
+    return getChartSymbol(baseSymbol, symbolType);
+  }, [displayName, symbolType]);
 
   // Memoized icon component to prevent re-creation on every render
   const symbolIconComponent = useMemo(() => {

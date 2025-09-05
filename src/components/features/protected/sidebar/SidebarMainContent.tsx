@@ -66,13 +66,10 @@ export default function SidebarMainContent() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col items-start self-stretch gap-2">
-      <div className="flex flex-col items-start self-stretch gap-1">
+    <div className="flex flex-col items-start w-full gap-2">
+      <div className="flex flex-col items-start w-full gap-1">
         {sidebarItems.map((item) => (
-          <React.Fragment key={item.title}>
-            <SidebarItem item={item} pathname={pathname} />
-            <Link href={item.href} prefetch={true} className="hidden" />
-          </React.Fragment>
+          <SidebarItem key={item.title} item={item} pathname={pathname} />
         ))}
       </div>
     </div>

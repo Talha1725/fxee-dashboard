@@ -111,14 +111,21 @@ export default function SymbolModal({
         </DialogHeader>
 
 
-        <DialogDescription>
-          <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
+        <DialogDescription className="p-0">
+          <div className="max-h-[400px] overflow-y-auto scrollbar-hide w-full">
               <table className="w-full font-satoshi table-fixed">
+                <colgroup>
+                  <col className="w-12" />
+                  <col className="w-1/4" />
+                  <col className="w-1/4" />
+                  <col className="w-1/4" />
+                </colgroup>
                 <thead>
                   <tr className="border-b border-black/10 dark:border-white/10">
-                    <th className="w-1/3 text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Symbol</th>
-                    <th className="w-1/3 text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Name</th>
-                    <th className="w-1/3 text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Category</th>
+                    <th className="text-center py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">#</th>
+                    <th className="text-left py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Symbol</th>
+                    <th className="text-left py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Name</th>
+                    <th className="text-left py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Category</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,31 +141,40 @@ export default function SymbolModal({
                       }`}
                       onClick={() => handleRowClick(item, index)}
                     >
-                      {/* Symbol + Icon */}
-                      <td className="w-1/3 flex items-center gap-1 min-h-[40px] py-2 px-2">
-                        <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
-                          {item.type === "forex" ? (
-                            <CurrencyToCountryFlagConverter
-                              currency={item.currency || item.name}
-                            />
-                          ) : (
-                            <span className="text-sm md:text-base">{item.iconEmoji}</span>
-                          )}
-                        </div>
-                        <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
-                          {item.symbol}
+                      {/* Number */}
+                      <td className="text-center py-2 px-1">
+                        <p className="dark:text-white text-black text-xs md:text-sm font-medium">
+                          {index + 1}
                         </p>
                       </td>
 
+                      {/* Symbol + Icon */}
+                      <td className="py-2 px-1">
+                        <div className="flex items-center gap-2 min-h-[40px]">
+                          <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
+                            {item.type === "forex" ? (
+                              <CurrencyToCountryFlagConverter
+                                currency={item.currency || item.name}
+                              />
+                            ) : (
+                              <span className="text-sm md:text-base">{item.iconEmoji}</span>
+                            )}
+                          </div>
+                          <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
+                            {item.symbol}
+                          </p>
+                        </div>
+                      </td>
+
                       {/* Name */}
-                      <td className="w-1/3 py-2 px-2">
+                      <td className="py-2 px-1">
                         <p className="dark:text-white text-black text-xs md:text-base">
                           {item.name}
                         </p>
                       </td>
 
                       {/* Category */}
-                      <td className="w-1/3 py-2 px-2">
+                      <td className="py-2 px-1">
                         <p className="dark:text-white text-black text-xs md:text-base">
                           {item.category}
                         </p>

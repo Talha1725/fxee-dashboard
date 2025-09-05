@@ -21,9 +21,14 @@ export default function DashboardChatbotBody({
 }: DashboardChatbotBodyProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom
+  // Auto-scroll to bottom within the chat container only
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      const chatContainer = messagesEndRef.current.closest('.overflow-y-auto');
+      if (chatContainer) {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+    }
   };
 
   useEffect(() => {

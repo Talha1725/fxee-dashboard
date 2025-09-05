@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import PerformanceHistoryContentCard from "./PerformanceHistoryContentCard";
 import { TabsContent } from "@/components/ui/tabs";
@@ -11,8 +11,11 @@ interface PerformanceHistoryContentProps {
 
 export default function PerformanceHistoryContent({ activeTab }: PerformanceHistoryContentProps) {
   const { isVirtualAccount } = useAccountType();
-  // Filter trades based on active tab
-  const getFilteredTrades = (): Trade[] => {
+  
+  // Memoized filtered trades to prevent unnecessary re-filtering
+  const filteredTrades = useMemo(() => {
+    if (isVirtualAccount) return [];
+    
     switch (activeTab) {
       case "open":
         return mockTrades.filter(trade => trade.status === "open");
@@ -21,9 +24,7 @@ export default function PerformanceHistoryContent({ activeTab }: PerformanceHist
       default:
         return mockTrades;
     }
-  };
-
-  const filteredTrades = isVirtualAccount ? [] : getFilteredTrades();
+  }, [activeTab, isVirtualAccount]);
 
   return (
     <TabsContent

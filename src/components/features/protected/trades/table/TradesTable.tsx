@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 
 import CurrencyToCryptoPairConverter from "@/components/features/CurrencyToCryptoPairConverter";
 import CurrencyToCountryFlagConverter from "@/components/features/CurrencyToCountryFlagConverter";
@@ -16,8 +16,6 @@ import { Button } from "@/components/ui/button";
 import { IconEdit } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import shade from "@/public/images/shade.png"
-import Image from "next/image";
 
 interface TableRowItemProps {
   type: "forex" | "crypto";
@@ -33,7 +31,8 @@ interface TableRowItemProps {
 
 export default function TradesTable() {
   const { theme } = useTheme();
-  const rowItems: TableRowItemProps[] = [
+  
+  const rowItems: TableRowItemProps[] = useMemo(() => [
     {
       type: "forex",
       symbol: "USD/AUD",
@@ -144,17 +143,9 @@ export default function TradesTable() {
       executionMode: "Manual",
       isOpen: true,
     },
-  ];
+  ], []);
   return (
     <div className={`flex flex-col gap-5 self-stretch max-h-[520px] p-5 rounded-[16px] border dark:border-white/5 border-black/5 ${theme === "dark" ? "bg-card-dashboard-main-gradient" : "bg-white/80"} relative overflow-hidden`}>
-       <div
-          style={{
-            transform: "scaleX(-1)",
-          }}
-          className="pointer-events-none absolute top-0 left-0 w-full h-full z-50 lg:dark:opacity-5 opacity-0"
-        >
-          <Image src={shade} alt="shade" className="w-full h-full scale-125" />
-        </div>
       <Text18>Trades</Text18>
       <Table className="">
         <TableHeader className="dark:bg-gradient-to-b dark:from-[#ffffff03] dark:to-[#FFFFFF09] bg-gradient-to-b from-[#00000003] to-[#00000009] rounded-[16px] border-none">
@@ -179,7 +170,7 @@ export default function TradesTable() {
   );
 }
 
-const TableRowItem = ({
+const TableRowItem = React.memo(({
   type,
   symbol,
   entryPrice,
@@ -245,4 +236,4 @@ const TableRowItem = ({
       </TableCell>
     </TableRow>
   );
-};
+});

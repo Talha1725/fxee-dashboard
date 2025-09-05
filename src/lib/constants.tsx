@@ -51,19 +51,19 @@ export const TRADING_SYMBOLS: TradingSymbol[] = [
   { id: 46, symbol: "USDZAR", type: "Forex", displayName: "USD/ZAR" },
 
   // Commodities
-  { id: 80, symbol: "Brent", type: "Commodities", displayName: "Brent Oil" },
-  { id: 85, symbol: "Crude", type: "Commodities", displayName: "Crude Oil" },
-  { id: 87, symbol: "GOLDInd", type: "Commodities", displayName: "Gold Index" },
-  { id: 101, symbol: "XAGUSD", type: "Commodities", displayName: "Silver/USD" },
-  { id: 107, symbol: "XAUUSD", type: "Commodities", displayName: "Gold/USD" },
+  { id: 80, symbol: "Brent", type: "Commodities", displayName: "UKOIL" },
+  { id: 85, symbol: "Crude", type: "Commodities", displayName: "WTI" },
+  { id: 87, symbol: "GOLDInd", type: "Commodities", displayName: "XAUUSD" },
+  { id: 101, symbol: "XAGUSD", type: "Commodities", displayName: "XAGUSD" },
+  { id: 107, symbol: "XAUUSD", type: "Commodities", displayName: "XAUUSD" },
 
   // Crypto
-  { id: 52, symbol: "BITCOIN", type: "Crypto", displayName: "Bitcoin" },
-  { id: 54, symbol: "BNB", type: "Crypto", displayName: "Binance Coin" },
-  { id: 58, symbol: "DOGECOIN", type: "Crypto", displayName: "Dogecoin" },
-  { id: 59, symbol: "ETHEREUM", type: "Crypto", displayName: "Ethereum" },
-  { id: 69, symbol: "RIPPLE", type: "Crypto", displayName: "Ripple (XRP)" },
-  { id: 70, symbol: "SOLANA", type: "Crypto", displayName: "Solana" },
+  { id: 52, symbol: "BITCOIN", type: "Crypto", displayName: "BTC/USD" },
+  { id: 54, symbol: "BNB", type: "Crypto", displayName: "BNB/USD" },
+  { id: 58, symbol: "DOGECOIN", type: "Crypto", displayName: "DOGE/USD" },
+  { id: 59, symbol: "ETHEREUM", type: "Crypto", displayName: "ETH/USD" },
+  { id: 69, symbol: "RIPPLE", type: "Crypto", displayName: "XRP/USD" },
+  { id: 70, symbol: "SOLANA", type: "Crypto", displayName: "SOL/USD" },
 ];
 
 // Organized by type

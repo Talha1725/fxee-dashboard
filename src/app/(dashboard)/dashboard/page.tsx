@@ -10,7 +10,21 @@ export default function page() {
 
   const { isDemoAccountEnabled } = useAccountType();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    
+    document.addEventListener('scroll', preventScroll, { passive: false });
+    setTimeout(() => {
+      document.removeEventListener('scroll', preventScroll);
+    }, 1000);
   }, []);
 
   return (
