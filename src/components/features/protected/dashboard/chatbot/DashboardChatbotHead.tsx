@@ -55,9 +55,7 @@ export default function DashboardChatbotHead({
         <HomeAIMessageHead isExpanded={isExpanded} clearConversation={clearConversation} setIsExpanded={setIsExpanded} />
       </div>
       <div className="flex items-center gap-2 mt-5">
-        <Text14 className="text-black/80 dark:text-white/80 text-xs">
-          {getContextInfo()}
-        </Text14>
+        {getContextInfo()}
       </div>
     </div>
   );
