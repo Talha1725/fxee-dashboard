@@ -46,12 +46,12 @@ export default function Dashboard() {
         </div>
         <OpenTrades />
         <DashboardStatus />
-        <DashboardACP />
+        {/* <DashboardACP /> */}
         
         {/* AI Chatbot Panel */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <DashboardAIPanel />
-        </div>
+        </div> */}
       </ProtectedContentContainer>
     </>
   );
