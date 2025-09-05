@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { IconSend, IconTradeUp } from '@/components/ui/icon';
 import { Text14 } from '@/components/ui/typography';
 import { useTheme } from '@/lib/contexts/ThemeContext';
+import { useAIConfidence } from '@/hooks/useAIConfidence';
 
 interface DashboardChatbotInputProps {
   message: string;
@@ -22,6 +23,7 @@ export default function DashboardChatbotInput({
   tradeToUse 
 }: DashboardChatbotInputProps) {
   const { theme } = useTheme();
+  const { confidence, isUpdating } = useAIConfidence();
 
   return (
     <div className="flex flex-col items-start gap-4.5 self-stretch">
@@ -50,7 +52,9 @@ export default function DashboardChatbotInput({
           </div>
           <div className="flex items-center gap-1">
             <Text14 className="font-satoshi dark:text-white text-black">
-              AI Confidence: <span className="text-[#079744] dark:text-green">81%</span>
+              AI Confidence: <span className={`text-[#079744] dark:text-green transition-all duration-500 ${isUpdating ? 'animate-pulse' : ''}`}>
+                {confidence}%
+              </span>
             </Text14>
           </div>
         </div>

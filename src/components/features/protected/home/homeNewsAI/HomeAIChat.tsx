@@ -8,11 +8,13 @@ import { Text14 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useTrade } from "@/lib/contexts/TradeContext";
 import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useAIConfidence } from "@/hooks/useAIConfidence";
 
 export default function HomeAIChat() {
   const { theme } = useTheme();
   const { selectedTrade } = useTrade();
   const { data: lastTradeData } = useGetLastProposedTradeQuery();
+  const { confidence, isUpdating } = useAIConfidence();
   
   const latestTrade = lastTradeData?.data;
   const tradeToUse = selectedTrade || latestTrade;
@@ -37,7 +39,9 @@ export default function HomeAIChat() {
           </div>
           <div className="flex items-center gap-1">
             <Text14 className="font-satoshi dark:text-white text-black">
-              AI Confidence: <span className="text-[#079744] dark:text-green">81%</span>
+              AI Confidence: <span className={`text-[#079744] dark:text-green transition-all duration-500 ${isUpdating ? 'animate-pulse' : ''}`}>
+                {confidence}%
+              </span>
             </Text14>
           </div>
         </div>
