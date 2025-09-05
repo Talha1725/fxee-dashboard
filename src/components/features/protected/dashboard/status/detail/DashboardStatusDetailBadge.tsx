@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Text10, Text12 } from "@/components/ui/typography";
+import { Text10, Text12, Text14, Text16 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
@@ -29,7 +29,7 @@ export default function DashboardStatusDetailBadge({
       )}
     >
       {icon}
-      <Text12 className="font-satoshi-medium dark:text-white text-black">{title}</Text12>
+      <Text14 className="font-satoshi-medium dark:text-white text-black">{title}</Text14>
       {isVip && (
         <div className="flex justify-center items-center py-0.5 px-1.5 gap-2.5 rounded-[2px] dark:bg-green/10 bg-green/40">
           <Text10 className="dark:text-green text-[#079744] font-[700]">VIP</Text10>

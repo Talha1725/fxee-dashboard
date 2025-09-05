@@ -111,7 +111,7 @@ export default function FASecuritySection() {
         className="mt-5"
       >
         {/* SMS Code Option */}
-        <div
+        {/* <div
           className={`p-4 border cursor-pointer transition-all duration-200 hover:border-[#3EDC81]/50 ${
             selectedFA === "sms"
               ? "border-[#3EDC81] dark:!bg-gradient-to-b dark:from-white/5 dark:to-white/2"
@@ -148,7 +148,7 @@ export default function FASecuritySection() {
               }`}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Email Code Option */}
         <div
