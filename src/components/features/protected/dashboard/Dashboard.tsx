@@ -10,23 +10,35 @@ import SymbolModal from "@/components/common/SymbolModal";
 import OpenTrades from "./open-trades/OpenTrades";
 import DashboardAIPanel from "./chatbot/DashboardAIPanel";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
+import { TRADING_SYMBOLS } from "@/lib/constants";
 
 export default function Dashboard() {
   const { isVirtualAccount } = useAccountType();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSymbol, setSelectedSymbol] = useState("EURUSD");
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  
+  const handleSymbolSelect = (symbol: string) => {
+    setSelectedSymbol(symbol);
+    closeModal();
+  };
+    const getDisplayName = (symbol: string) => {
+    const tradingSymbol = TRADING_SYMBOLS.find(s => s.symbol === symbol);
+    return tradingSymbol ? tradingSymbol.displayName : symbol;
+  };
   
   return (
     <>
       <SymbolModal 
         isOpen={isModalOpen} 
-        onClose={closeModal} 
+        onClose={closeModal}
+        onSymbolSelect={handleSymbolSelect}
       />
       <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
           <div className="lg:col-span-2">
-            <DashboardWidget dashboard={true} currency="BTC/ETH" openModal={openModal} />
+            <DashboardWidget dashboard={true} currency={getDisplayName(selectedSymbol)} openModal={openModal} />
           </div>
           <div className="flex flex-col">
             <HomeTrades className="bg-card-green-gradient flex-1" />

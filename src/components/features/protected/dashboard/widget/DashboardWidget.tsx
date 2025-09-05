@@ -30,6 +30,12 @@ export default function DashboardWidget({
   openModal?: () => void;
   dashboard?: boolean;
 }) {
+  const getSymbolForChart = (displayName: string) => {
+    if (displayName.includes("/")) {
+      return displayName.replace("/", "");
+    }
+    return displayName;
+  };
   const { theme } = useTheme();
   return (
     <div className="flex items-start gap-5 self-stretch">
@@ -72,7 +78,7 @@ export default function DashboardWidget({
         <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-dark-gradient z-50 pointer-events-none"></div>
           <AdvancedRealTimeChart
-            symbol={currency.replace("/", "")}
+            symbol={getSymbolForChart(currency)}
             interval="60"
             timezone="Etc/UTC"
             width="100%"

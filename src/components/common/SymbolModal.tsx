@@ -56,9 +56,11 @@ const symbolsData = TRADING_SYMBOLS.map((symbol, index) => ({
 export default function SymbolModal({
   isOpen,
   onClose,
+  onSymbolSelect,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onSymbolSelect?: (symbol: string) => void;
 }) {
   const { theme } = useTheme();
   const [selected, setSelected] = useState<string>("All");
@@ -242,6 +244,7 @@ export default function SymbolModal({
                           className="hover:bg-black/10 dark:hover:bg-white/10 p-1 rounded"
                           onClick={() => {
                             console.log(`Adding symbol: ${item.symbol}`);
+                            onSymbolSelect?.(item.symbol);
                           }}
                         >
                           <Plus className="w-4 h-4 text-black/50 dark:text-white/50" />
