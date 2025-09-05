@@ -31,7 +31,7 @@ export default function DashboardChatbotBody({
   }, [conversationHistory]);
 
   return (
-    <div className="p-3 space-y-3">
+    <div className="space-y-3">
       {conversationHistory.length === 0 && !isLoadingHistory && (
         <div className="text-center text-gray-500 dark:text-gray-400 py-6">
           <IconRobot width={32} height={32} className="mx-auto mb-3 opacity-50" />
@@ -51,8 +51,15 @@ export default function DashboardChatbotBody({
       )}
       
       {isLoadingHistory && (
-        <div className="text-center text-gray-500 dark:text-gray-400 py-4">
-          <Text14 className="text-sm">Loading recent conversations...</Text14>
+        <div className="flex justify-center py-6">
+          <div className="flex items-center gap-3">
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" />
+              <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+              <div className="w-2 h-2 bg-[#3edc81] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+            </div>
+            <Text14 className="text-sm text-white/70">Loading recent conversations...</Text14>
+          </div>
         </div>
       )}
 
@@ -62,7 +69,7 @@ export default function DashboardChatbotBody({
           className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
         >
           <div
-            className={`max-w-[80%] px-3 py-2 rounded-[50px] ${
+            className={`max-w-[80%] px-3 py-2 rounded-[15px] ${
               msg.role === 'user'
                 ? 'bg-black/10 dark:bg-white/10 dark:border-white/20 text-white/90 dark:text-white/90'
                 : 'text-white/90 dark:text-white/90'

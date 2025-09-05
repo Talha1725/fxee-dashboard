@@ -40,7 +40,7 @@ export default function DashboardChatbot() {
         selectedTrade={selectedTrade}
       />
       
-      <CardContent className="flex flex-col h-full min-h-0">
+      <div className="w-full flex flex-col h-full min-h-0">
         {/* Chat Body - Flexible height with proper constraints */}
         <div className="flex-1 overflow-y-auto min-h-[8rem] sm:min-h-[10rem] md:min-h-[12rem]">
           <DashboardChatbotBody 
@@ -71,7 +71,7 @@ export default function DashboardChatbot() {
             selectedTrade={selectedTrade}
           />
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }

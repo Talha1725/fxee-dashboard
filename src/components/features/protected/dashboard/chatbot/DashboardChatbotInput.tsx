@@ -36,9 +36,12 @@ export default function DashboardChatbotInput({
               : "Ask about trading strategies, risk management..."
           }
           disabled={isSending}
-          backIcon={<IconSend height={20} width={20} onClick={handleSendMessage} className='cursor-pointer' />}
-          className="flex-1 px-4 py-4 gap-3 border h-full dark:border-transparent border-black/10"
-          InputStyles="!dark:placeholder:text-white/40 !placeholder:text-black/50 !text-[16px] !font-satoshi-medium"
+          className="w-full !p-4 gap-3 border-none text-white placeholder:text-white"
+          backIcon={
+            <div className="flex items-center gap-3">
+              <IconSend width={20} height={20} opacity={1} className="text-white/60 cursor-pointer" onClick={handleSendMessage} />
+            </div>
+          }
         />
         <div className="flex justify-between items-center self-stretch">
           <div className="flex items-center gap-1">
