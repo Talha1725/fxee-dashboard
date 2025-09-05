@@ -118,7 +118,7 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
     const forex: any[] = [];
     const crypto: any[] = [];
     
-    dailyRecommendations.data.forEach(rec => {
+    dailyRecommendations.data.forEach((rec: any) => {
       if (rec.symbol.includes("USD") || rec.symbol.includes("EUR") || rec.symbol.includes("GBP") || rec.symbol.includes("JPY")) {
         forex.push(rec);
       } else {
