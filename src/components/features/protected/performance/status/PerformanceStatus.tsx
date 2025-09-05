@@ -11,9 +11,9 @@ import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 export default function PerformanceStatus() {
   const { isVirtualAccount } = useAccountType();
   return (
-    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 self-stretch relative overflow-hidden ${isVirtualAccount ? "border-none pointer-events-none shadow-xl rounded-xl" : ""}`}>
+    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 self-stretch relative overflow-hidden ${isVirtualAccount ? "!border-none pointer-events-none shadow-xl rounded-lg !overflow-visible" : ""}`}>
       {isVirtualAccount && (
-       <BlurOverlay className="translate-y-[0] rounded-[10px]" /> 
+       <BlurOverlay className="translate-y-[0] rounded-[10px] dark:!bg-[#1A1A1A]/95 dark:!backdrop-blur-[200px] !border-none" /> 
       )}
       <PerformanceStatusATT />
       <PerformanceStatusTPT />

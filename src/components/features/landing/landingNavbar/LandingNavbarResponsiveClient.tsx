@@ -1,11 +1,11 @@
+"use client";
 import React from "react";
 
-import LandingButton from "@/components/features/landing/LandingButton";
 import LandingNavbarLink from "@/components/features/landing/landingNavbar/LandingNavbarLink";
 import { IconMenu } from "@/components/ui/icon";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface NavbarResponsiveClientProps {
   navLinks: { href: string; label: string }[];
@@ -14,6 +14,7 @@ interface NavbarResponsiveClientProps {
 export default function LandingNavbarResponsiveClient({
   navLinks,
 }: NavbarResponsiveClientProps) {
+  const router = useRouter();
   return (
     <>
       <div className="hidden lg:flex lg:items-center lg:gap-3 shrink-0">
@@ -27,6 +28,7 @@ export default function LandingNavbarResponsiveClient({
       <Button
         variant={"white"}
         className="font-satoshi-medium px-3"
+        onClick={()=>{router.push("/signup")}}
       >
         Get $100 Bonus
       </Button>

@@ -71,7 +71,7 @@ export default function DashboardChatbotBody({
           <div
             className={`max-w-[80%] px-3 py-2 rounded-[15px] ${
               msg.role === 'user'
-                ? 'bg-black/10 dark:bg-white/10 dark:border-white/20 text-white/90 dark:text-white/90'
+                ? 'bg-black/10 dark:bg-white/10 px-3 dark:border-white/20 text-white/90 dark:text-white/90'
                 : 'text-white/90 dark:text-white/90'
             }`}
           >

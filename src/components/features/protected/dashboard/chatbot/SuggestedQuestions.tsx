@@ -38,7 +38,7 @@ export default function SuggestedQuestions({ tradeToUse, handleSuggestedQuestion
             variant="ghost"
             size="default"
             onClick={() => handleSuggestedQuestion(question)}
-            className="text-xs px-3 py-1 h-auto"
+            className="text-xs px-3 py-1 h-auto text-wrap"
           >
             {question}
           </Button>

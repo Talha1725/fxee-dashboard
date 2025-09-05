@@ -29,7 +29,7 @@ export default function DashboardChatbot() {
 
 
   return (
-    <Card className="flex flex-col items-start gap-4 flex-[1_0_0] self-stretch rounded-[10px] bg-white/3 border dark:border-white/4 border-black/15 p-5 overflow-hidden py-5 px-5 h-[40rem] sm:h-[44rem] md:h-[48rem] lg:h-[58rem]">
+    <Card className="flex flex-col items-center gap-4 flex-[1_0_0] self-stretch rounded-[10px] bg-white/3 border dark:border-white/4 border-black/15 p-5 overflow-hidden py-5 px-5 h-[40rem] sm:h-[44rem] md:h-[48rem] lg:h-[58rem]">
       <DashboardChatbotHead 
         isExpanded={isExpanded}
         clearConversation={clearConversation}
@@ -39,7 +39,7 @@ export default function DashboardChatbot() {
         latestTrade={latestTrade}
         selectedTrade={selectedTrade}
       />
-      
+
       <div className="w-full flex flex-col h-full min-h-0">
         {/* Chat Body - Flexible height with proper constraints */}
         <div className="flex-1 scrollbar-hide overflow-y-auto min-h-[8rem] sm:min-h-[10rem] md:min-h-[12rem]">
