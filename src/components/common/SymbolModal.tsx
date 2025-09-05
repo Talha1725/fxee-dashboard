@@ -200,6 +200,57 @@ export default function SymbolModal({
                           {item.category}
                         </p>
                       </td>
+
+                      {/* Type */}
+                      <td className="text-center w-[60px] md:w-[100px]">
+                        {/* Mobile */}
+                        <p className="dark:text-white text-black text-xs md:hidden">
+                          {truncateText(item.type, 5)}
+                        </p>
+                        {/* Desktop */}
+                        <p className="dark:text-white text-black text-sm hidden md:block">
+                          {item.type}
+                        </p>
+                      </td>
+
+                      {/* Provider */}
+                      <td className="text-center w-[60px] md:w-[80px]">
+                        {/* Mobile */}
+                        <p className="dark:text-white text-black text-xs md:hidden">
+                          {truncateText(item.provider, 4)}
+                        </p>
+                        {/* Desktop */}
+                        <p className="dark:text-white text-black text-sm hidden md:block text-nowrap">
+                          {item.provider}
+                        </p>
+                      </td>
+
+                      {/* Provider Icon */}
+                      <td className="w-[22px] md:w-[30px]">
+                        <div className="w-[18px] h-[18px] md:w-[22px] md:h-[22px]">
+                          <Image
+                            src={item.providerIcon}
+                            alt="provider"
+                            width={22}
+                            height={22}
+                            className="object-contain w-full h-full"
+                          />
+                        </div>
+                      </td>
+
+                      {/* Add button */}
+                      <td className="w-[30px]">
+                        <button
+                          className="hover:bg-black/10 dark:hover:bg-white/10 p-1 rounded"
+                          onClick={() => {
+                            console.log(`Adding symbol: ${item.symbol}`);
+                            onSymbolSelect?.(item.symbol);
+                          }}
+                        >
+                          <Plus className="w-4 h-4 text-black/50 dark:text-white/50" />
+                        </button>
+                      </td>
+
                     </tr>
                   ))}
                 </tbody>
