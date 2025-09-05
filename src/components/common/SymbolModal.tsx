@@ -13,15 +13,8 @@ import { Input } from "../ui/input";
 import { IconSearch } from "../ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useState } from "react";
-import five from "@/public/images/500.svg";
-import dji from "@/public/images/DJI.svg";
-import vix from "@/public/images/VIX.svg";
-import dxy from "@/public/images/DXY.svg";
-import oanda from "@/public/images/oanda.svg";
-import binance from "@/public/images/Binance.svg";
 import america from "@/public/images/america-circle.svg";
 import CurrencyToCountryFlagConverter from "../features/CurrencyToCountryFlagConverter";
-import { Plus } from "lucide-react";
 import { TRADING_SYMBOLS } from "@/lib/constants";
 
 // Get icon based on symbol type
@@ -145,31 +138,34 @@ export default function SymbolModal({
         <DialogDescription>
           <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
               <table className="w-full font-satoshi">
+                <thead>
+                  <tr className="border-b border-black/10 dark:border-white/10">
+                    <th className="text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Symbol</th>
+                    <th className="text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Name</th>
+                    <th className="text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Category</th>
+                    <th className="text-left py-2 px-2 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Type</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {filteredData.map((item, index) => (
                     <tr
                       key={item.id}
-                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${index % 2 === 1 ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" : ""}`}
+                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer ${index % 2 === 1 ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" : ""}`}
+                      onClick={() => {
+                        console.log(`Adding symbol: ${item.symbol}`);
+                        onSymbolSelect?.(item.symbol);
+                        onClose();
+                      }}
                     >
                       {/* Symbol + Icon */}
                       <td className="flex items-center gap-1 min-h-[40px] w-[80px] md:w-[100px]">
                         <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
-                          {item.icon ? (
-                            <Image
-                              src={item.icon}
-                              alt="symbol"
-                              width={20}
-                              height={20}
-                              className="object-cover w-full h-full"
-                            />
-                          ) : item.currency ? (
+                          {item.type === "forex" ? (
                             <CurrencyToCountryFlagConverter
-                              currency={item.currency}
+                              currency={item.currency || item.name}
                             />
-                          ) : item.iconEmoji ? (
-                            <span className="text-sm md:text-base">{item.iconEmoji}</span>
                           ) : (
-                            <div className="w-full h-full bg-gray-300 rounded-full"></div>
+                            <span className="text-sm md:text-base">{item.iconEmoji}</span>
                           )}
                         </div>
                         <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
@@ -211,44 +207,6 @@ export default function SymbolModal({
                         <p className="dark:text-white text-black text-sm hidden md:block">
                           {item.type}
                         </p>
-                      </td>
-
-                      {/* Provider */}
-                      <td className="text-center w-[60px] md:w-[80px]">
-                        {/* Mobile */}
-                        <p className="dark:text-white text-black text-xs md:hidden">
-                          {truncateText(item.provider, 4)}
-                        </p>
-                        {/* Desktop */}
-                        <p className="dark:text-white text-black text-sm hidden md:block text-nowrap">
-                          {item.provider}
-                        </p>
-                      </td>
-
-                      {/* Provider Icon */}
-                      <td className="w-[22px] md:w-[30px]">
-                        <div className="w-[18px] h-[18px] md:w-[22px] md:h-[22px]">
-                          <Image
-                            src={item.providerIcon}
-                            alt="provider"
-                            width={22}
-                            height={22}
-                            className="object-contain w-full h-full"
-                          />
-                        </div>
-                      </td>
-
-                      {/* Add button */}
-                      <td className="w-[30px]">
-                        <button
-                          className="hover:bg-black/10 dark:hover:bg-white/10 p-1 rounded"
-                          onClick={() => {
-                            console.log(`Adding symbol: ${item.symbol}`);
-                            onSymbolSelect?.(item.symbol);
-                          }}
-                        >
-                          <Plus className="w-4 h-4 text-black/50 dark:text-white/50" />
-                        </button>
                       </td>
 
                     </tr>

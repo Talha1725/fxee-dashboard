@@ -23,9 +23,10 @@ export default function Dashboard() {
     setSelectedSymbol(symbol);
     closeModal();
   };
-    const getDisplayName = (symbol: string) => {
+  
+  const getSymbolData = (symbol: string) => {
     const tradingSymbol = TRADING_SYMBOLS.find(s => s.symbol === symbol);
-    return tradingSymbol ? tradingSymbol.displayName : symbol;
+    return tradingSymbol || { id: 0, symbol, type: "Forex" as const, displayName: symbol };
   };
   
   return (
@@ -38,7 +39,11 @@ export default function Dashboard() {
       <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
           <div className="lg:col-span-2">
-            <DashboardWidget dashboard={true} currency={getDisplayName(selectedSymbol)} openModal={openModal} />
+            <DashboardWidget 
+              dashboard={true} 
+              symbolData={getSymbolData(selectedSymbol)} 
+              openModal={openModal} 
+            />
           </div>
           <div className="flex flex-col">
             <HomeTrades className="bg-card-green-gradient flex-1" />

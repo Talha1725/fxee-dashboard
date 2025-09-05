@@ -4,10 +4,12 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import CurrencyToCryptoPairConverter from "@/components/features/CurrencyToCryptoPairConverter";
+import CurrencyToCountryFlagConverter from "@/components/features/CurrencyToCountryFlagConverter";
 import { Text14, Text16, Text20 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { IconAdd, IconAIMagic } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { TradingSymbol } from "@/lib/constants";
 
 const AdvancedRealTimeChart = dynamic(
   () =>
@@ -19,12 +21,14 @@ const AdvancedRealTimeChart = dynamic(
 
 export default function DashboardWidget({ 
   currency, 
+  symbolData,
   actionButton, 
   showPlusIcon = false, 
   openModal,
   dashboard=false
 }: { 
-  currency: string;
+  currency?: string;
+  symbolData?: TradingSymbol;
   actionButton?: React.ReactNode;
   showPlusIcon?: boolean;
   openModal?: () => void;
@@ -36,7 +40,26 @@ export default function DashboardWidget({
     }
     return displayName;
   };
+
+  // Get icon based on symbol type
+  const getSymbolIcon = (type: string) => {
+    switch (type) {
+      case "Forex":
+        return "💱";
+      case "Commodities":
+        return "🥇";
+      case "Crypto":
+        return "₿";
+      default:
+        return "📈";
+    }
+  };
+
   const { theme } = useTheme();
+  
+  // Use symbolData if available, otherwise fall back to currency
+  const displayName = symbolData?.displayName || currency || "EUR/USD";
+  const symbolType = symbolData?.type || "Forex";
   return (
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
@@ -47,10 +70,18 @@ export default function DashboardWidget({
               onClick={openModal}
               style={{ cursor: openModal ? 'pointer' : 'default' }}
             >
-              <CurrencyToCryptoPairConverter currency={currency} size={38} />
+              <div className="w-[38px] h-[38px] flex items-center justify-center">
+                {symbolType === "Forex" ? (
+                  <CurrencyToCountryFlagConverter currency={displayName} size={38} />
+                ) : symbolType === "Crypto" ? (
+                  <CurrencyToCryptoPairConverter currency={displayName} size={38} />
+                ) : (
+                  <span className="text-2xl">{getSymbolIcon(symbolType)}</span>
+                )}
+              </div>
               <div className="flex flex-col justify-center items-start">
                 <Text20 className="font-satoshi-medium dark:text-white text-black">
-                  {currency}
+                  {displayName}
                 </Text20>
                 <Text14 className="font-satoshi-medium dark:text-white/60 text-black/40">
                   $0.06642
@@ -78,7 +109,7 @@ export default function DashboardWidget({
         <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-dark-gradient z-50 pointer-events-none"></div>
           <AdvancedRealTimeChart
-            symbol={getSymbolForChart(currency)}
+            symbol={getSymbolForChart(displayName)}
             interval="60"
             timezone="Etc/UTC"
             width="100%"
