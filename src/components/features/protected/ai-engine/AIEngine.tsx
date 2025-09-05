@@ -8,12 +8,20 @@ import { AnalysisProvider, useAnalysis } from "@/lib/contexts/AnalysisContext";
 import { useGetMyAnalysesQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 
 function AIEngineContent() {
-  const { setAnalysisData } = useAnalysis();
+  const { setAnalysisData, refreshTrigger } = useAnalysis();
   
   // Auto-load the latest analysis when component mounts
-  const { data: analysesData, isSuccess } = useGetMyAnalysesQuery({ 
+  const { data: analysesData, isSuccess, refetch } = useGetMyAnalysesQuery({ 
     limit: 1 // Get only the most recent analysis
   });
+
+  // Listen for refresh trigger and refetch data
+  React.useEffect(() => {
+    if (refreshTrigger > 0) {
+      console.log('Refresh trigger received, refetching analysis data...', refreshTrigger);
+      refetch();
+    }
+  }, [refreshTrigger, refetch]);
 
   // Transform analysis data to match expected ToolResult format
   const transformAnalysisData = (rawAnalysis: any) => {

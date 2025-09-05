@@ -48,8 +48,7 @@ export default function AIEngineStatusTGS({
   setCustomAnalysis,
 }: AIEngineStatusTGSProps) {
   const { theme } = useTheme();
-  const { setAnalysisData } = useAnalysis();
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const { setAnalysisData, triggerRefresh, isAnalyzing, setIsAnalyzing } = useAnalysis();
 
   // State for user selections in Best Trade tab
   const [selectedTradingPair, setSelectedTradingPair] =
@@ -144,6 +143,8 @@ export default function AIEngineStatusTGS({
         }).unwrap();
         setBestTrade(result.data || null);
         // The usage limits will automatically refetch due to invalidatesTags: ["ProposedTrade"]
+        // Trigger refresh of analysis data
+        triggerRefresh();
       } catch (err) {
         console.error("Failed to create proposed trades:", err);
       } finally {
@@ -191,6 +192,9 @@ export default function AIEngineStatusTGS({
 
         // Refetch usage limits to update the UI
         refetchUsageLimits();
+        
+        // Trigger refresh of analysis data
+        triggerRefresh();
       } catch (err) {
         console.error("Failed to create custom analysis:", err);
       } finally {

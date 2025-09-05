@@ -34,23 +34,37 @@ interface AnalysisContextType {
   analysisData: AnalysisData | null;
   setAnalysisData: (data: AnalysisData | null) => void;
   getToolData: (toolKey: string) => ToolResult | null;
+  refreshTrigger: number;
+  triggerRefresh: () => void;
+  isAnalyzing: boolean;
+  setIsAnalyzing: (analyzing: boolean) => void;
 }
 
 const AnalysisContext = createContext<AnalysisContextType | undefined>(undefined);
 
 export const AnalysisProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const getToolData = (toolKey: string): ToolResult | null => {
     if (!analysisData?.toolsResults) return null;
     return analysisData.toolsResults.find(tool => tool.toolKey === toolKey) || null;
   };
 
+  const triggerRefresh = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
+
   return (
     <AnalysisContext.Provider value={{
       analysisData,
       setAnalysisData,
-      getToolData
+      getToolData,
+      refreshTrigger,
+      triggerRefresh,
+      isAnalyzing,
+      setIsAnalyzing
     }}>
       {children}
     </AnalysisContext.Provider>

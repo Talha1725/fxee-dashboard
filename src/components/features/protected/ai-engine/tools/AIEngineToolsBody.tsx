@@ -6,6 +6,7 @@ import { Text16 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAddOns } from "@/lib/contexts/AddOnsContext";
 import { useUser } from "@/lib/contexts/UserContext";
+import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 import { IconChevronLeft, IconChevronRight } from "@/components/ui/icon";
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -44,6 +45,9 @@ export default function AIEngineToolsBody() {
   const { theme } = useTheme();
   const { savedAddOns } = useAddOns();
   const { isPremium } = useUser();
+  const { isAnalyzing } = useAnalysis();
+
+  console.log("AIEngineToolsBody - isAnalyzing:", isAnalyzing);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -111,16 +115,16 @@ export default function AIEngineToolsBody() {
 
     const { scrollLeft, scrollWidth, clientWidth } = container;
     const canScrollRightValue = scrollLeft < scrollWidth - clientWidth - 5; // Increased tolerance
-    
-    console.log('Scroll Debug:', {
+
+    console.log("Scroll Debug:", {
       scrollLeft,
       scrollWidth,
       clientWidth,
       canScrollRight: canScrollRightValue,
       difference: scrollWidth - clientWidth,
-      isScrollable: scrollWidth > clientWidth
+      isScrollable: scrollWidth > clientWidth,
     });
-    
+
     setCanScrollLeft(scrollLeft > 5); // Increased tolerance
     setCanScrollRight(canScrollRightValue);
   };
@@ -128,34 +132,34 @@ export default function AIEngineToolsBody() {
   const handleScrollLeft = () => {
     const container = scrollContainerRef.current;
     if (!container) {
-      console.log('Left scroll: No container found');
+      console.log("Left scroll: No container found");
       return;
     }
 
-    console.log('Left scroll: Before scroll', {
+    console.log("Left scroll: Before scroll", {
       scrollLeft: container.scrollLeft,
       scrollWidth: container.scrollWidth,
-      clientWidth: container.clientWidth
+      clientWidth: container.clientWidth,
     });
 
     // Calculate how much we can actually scroll
     const scrollAmount = Math.min(200, container.scrollLeft);
-    
+
     if (scrollAmount > 0) {
       container.scrollBy({
         left: -scrollAmount,
         behavior: "smooth",
       });
     } else {
-      console.log('Left scroll: Already at start position');
+      console.log("Left scroll: Already at start position");
     }
 
     // Check after scroll
     setTimeout(() => {
-      console.log('Left scroll: After scroll', {
+      console.log("Left scroll: After scroll", {
         scrollLeft: container.scrollLeft,
         scrollWidth: container.scrollWidth,
-        clientWidth: container.clientWidth
+        clientWidth: container.clientWidth,
       });
     }, 100);
   };
@@ -163,37 +167,37 @@ export default function AIEngineToolsBody() {
   const handleScrollRight = () => {
     const container = scrollContainerRef.current;
     if (!container) {
-      console.log('Right scroll: No container found');
+      console.log("Right scroll: No container found");
       return;
     }
 
-    console.log('Right scroll: Before scroll', {
+    console.log("Right scroll: Before scroll", {
       scrollLeft: container.scrollLeft,
       scrollWidth: container.scrollWidth,
       clientWidth: container.clientWidth,
-      maxScroll: container.scrollWidth - container.clientWidth
+      maxScroll: container.scrollWidth - container.clientWidth,
     });
 
     // Calculate how much we can actually scroll
     const maxScrollLeft = container.scrollWidth - container.clientWidth;
     const scrollAmount = Math.min(200, maxScrollLeft - container.scrollLeft);
-    
+
     if (scrollAmount > 0) {
       container.scrollBy({
         left: scrollAmount,
         behavior: "smooth",
       });
     } else {
-      console.log('Right scroll: Already at max scroll position');
+      console.log("Right scroll: Already at max scroll position");
     }
 
     // Check after scroll
     setTimeout(() => {
-      console.log('Right scroll: After scroll', {
+      console.log("Right scroll: After scroll", {
         scrollLeft: container.scrollLeft,
         scrollWidth: container.scrollWidth,
         clientWidth: container.clientWidth,
-        maxScroll: container.scrollWidth - container.clientWidth
+        maxScroll: container.scrollWidth - container.clientWidth,
       });
     }, 100);
   };
@@ -286,19 +290,31 @@ export default function AIEngineToolsBody() {
     isDark ? "border-white/5" : "border-black/5",
   ].join(" ");
 
-  return (
+  return isAnalyzing ? (
+    <div className="flex flex-col justify-center items-center h-22 top-0 left-0 w-full bg-black/20 dark:bg-white/10 backdrop-blur-xl z-[999] rounded-[16px]">
+      <div className="flex items-center gap-2 mb-3">
+        <div className="flex space-x-1">
+          <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+          <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+          <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+        </div>
+      </div>
+      <div className="text-white text-sm font-satoshi">
+        Analyzing market data...
+      </div>
+    </div>
+  ) : (
     <>
       <style
         dangerouslySetInnerHTML={{ __html: getCustomScrollbarStyles(isDark) }}
       />
       <div className="relative flex items-center w-full">
         <div className="absolute right-0 -top-8 flex items-center gap-2">
-        
-        {/* Left Arrow Button */}
+          {/* Left Arrow Button */}
           <button
             onClick={handleScrollLeft}
             className={`z-10 w-8 h-8 transition-all duration-200 cursor-pointer ${
-              canScrollLeft ? 'opacity-100' : 'opacity-30 cursor-not-allowed'
+              canScrollLeft ? "opacity-100" : "opacity-30 cursor-not-allowed"
             }`}
             title="Scroll Left"
             disabled={!canScrollLeft}
@@ -310,7 +326,7 @@ export default function AIEngineToolsBody() {
           <button
             onClick={handleScrollRight}
             className={`z-10 w-8 h-8 transition-all duration-200 cursor-pointer ${
-              canScrollRight ? 'opacity-100' : 'opacity-30 cursor-not-allowed'
+              canScrollRight ? "opacity-100" : "opacity-30 cursor-not-allowed"
             }`}
             title="Scroll Right"
             disabled={!canScrollRight}
@@ -365,7 +381,7 @@ export default function AIEngineToolsBody() {
         {/* Right Arrow Button */}
       </div>
 
-      <div className={contentClasses}>
+      <div className={`${contentClasses} relative`}>
         {activeTab === "no-addons" ? (
           <div className="flex flex-col items-center justify-center h-full w-full text-center">
             <div className="mb-4">
