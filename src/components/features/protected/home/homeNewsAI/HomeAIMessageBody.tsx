@@ -374,7 +374,7 @@ The AI will always consider this trade context when answering your questions, wh
       {/* Chat Messages */}
       {isExpanded && (
         <div className="w-full space-y-4">
-          <div className="h-64 overflow-y-auto p-3 space-y-3">
+          <div className="h-64 overflow-y-auto space-y-3">
             {conversationHistory.length === 0 && !isLoadingHistory && (
               <div className="text-center text-white/60 dark:text-white/60 py-6">
                 <IconRobot width={32} height={32} className="mx-auto mb-3 opacity-50" />
