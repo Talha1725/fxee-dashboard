@@ -8,6 +8,7 @@ import { Text14, Text16, Text20 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { IconAdd, IconAIMagic } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useRouter } from "next/navigation";
 
 const AdvancedRealTimeChart = dynamic(
   () =>
@@ -31,6 +32,7 @@ export default function DashboardWidget({
   dashboard?: boolean;
 }) {
   const { theme } = useTheme();
+  const router = useRouter();
   return (
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
@@ -60,7 +62,7 @@ export default function DashboardWidget({
           </div>
 
           {actionButton ?? (
-            <Button variant="popular">
+            <Button onClick={()=> router.push("/ai-engine")} variant="popular">
               <IconAIMagic />
               <Text16 className="font-satoshi-medium text-white">
                 Analyze with AI

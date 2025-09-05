@@ -56,11 +56,11 @@ export default function AIEngineToolsAllSections() {
   };
 
   return (
-    <div className="flex flex-col items-start gap-10 self-stretch">
+    <div className="flex flex-col w-full gap-10 self-stretch">
       {accessibleActiveAddOns.map((addOn) => (
         <div key={addOn.title} id={addOn.title.toLowerCase().replace(/\s+/g, '-')}>
           <AIEngineToolsCardContainer>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 w-full">
               <AIEngineToolsCardHead
                 title={addOn.title}
                 description={addOn.description}
