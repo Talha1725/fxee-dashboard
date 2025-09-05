@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { RootState } from '@/lib/redux/store';
-import { logout } from '@/lib/redux/features/auth/authSlice';
+import { logout, resetAuthState, setLoading } from '@/lib/redux/features/auth/authSlice';
+import { useLogoutMutation } from '@/lib/redux/features/auth/authApi';
+import { showToast } from '@/lib/utils/toast';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -10,6 +12,9 @@ export const useAuth = () => {
   const { user, token, isAuthenticated, isLoading, error } = useSelector(
     (state: RootState) => state.auth
   );
+
+  // RTK Query logout mutation
+  const [logoutMutation, { isLoading: isLoggingOut }] = useLogoutMutation();
 
   // Check if token exists in localStorage on mount
   useEffect(() => {
@@ -21,25 +26,54 @@ export const useAuth = () => {
     }
   }, [token]);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
+    if (isLoggingOut || isLoading) return;
+    
     try {
+      dispatch(setLoading(true));
+      
+      // Call logout API if available
+      try {
+        await logoutMutation().unwrap();
+      } catch (apiError) {
+        // Continue with logout even if API call fails
+        console.warn('Logout API call failed, continuing with local logout:', apiError);
+      }
+
+      // Clear localStorage
       localStorage.removeItem('token');
-      dispatch(logout());
+      
+      // Reset Redux state completely
+      dispatch(resetAuthState());
+      
+      // Show success message
+      showToast.success('Logged out successfully');
+      
+      // Small delay to ensure state is updated
       await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Redirect to signin page
       router.replace('/signin');
     } catch (error) {
+      console.error('Logout error:', error);
+      
       // Still clear the Redux state even if there's an error
-      dispatch(logout());
+      dispatch(resetAuthState());
+      localStorage.removeItem('token');
+      
+      showToast.error('Failed to logout properly, but you have been signed out');
+      router.replace('/signin');
     }
-  };
+  }, [dispatch, router, logoutMutation, isLoggingOut, isLoading]);
 
   const isAuthenticatedUser = isAuthenticated && !!token;
+  const isAuthLoading = isLoading || isLoggingOut;
 
   return {
     user,
     token,
     isAuthenticated: isAuthenticatedUser,
-    isLoading,
+    isLoading: isAuthLoading,
     error,
     logout: handleLogout,
   };

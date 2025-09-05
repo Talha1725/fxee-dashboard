@@ -26,7 +26,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Label, PopularBadge } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { logout } from "@/lib/redux/features/auth/authSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { RootState } from "@/lib/redux/store";
 import { showToast } from "@/lib/utils/toast";
 import { IconUK } from "@/components/ui/icon";
@@ -43,9 +43,8 @@ export default function NavbarProfile() {
   const { theme } = useTheme();
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const { user, isLoading: isAuthLoading, logout: handleLogout } = useAuth();
   const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { isDemoAccountEnabled } = useAccountType();
   
   const handleOpenUpgradeModal = () => {
@@ -54,32 +53,6 @@ export default function NavbarProfile() {
 
   const handleCloseUpgradeModal = () => {
     setIsOpenLimitReach(false);
-  };
-
-  const handleLogout = async () => {
-    if (isLoggingOut) return;
-    
-    try {
-      setIsLoggingOut(true);
-      
-      // Clear token from localStorage
-      localStorage.removeItem("token");
-
-      // Dispatch logout action
-      dispatch(logout());
-
-      // Show success toast
-      showToast.success("Logged out successfully");
-
-      // Small delay to ensure toast is visible before redirect
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      // Redirect to signin page and prevent going back          
-      router.replace("/signin");
-    } catch (error) {
-      showToast.error("Failed to logout. Please try again.");
-      setIsLoggingOut(false);
-    }
   };                                             
                                                              
   const [updateLanguage] = useUpdateLanguageMutation();         
@@ -265,9 +238,9 @@ export default function NavbarProfile() {
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-full"
                 onClick={handleLogout}
-                disabled={isLoggingOut}
+                disabled={isAuthLoading}
               >
-                {isLoggingOut ? (
+                {isAuthLoading ? (
                   <div className="flex items-center gap-2">
                     <Spinner size="sm" className={theme === "dark" ? "text-black" : "text-white"} />
                     <p>Logging out...</p>

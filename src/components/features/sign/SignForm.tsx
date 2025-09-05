@@ -131,6 +131,8 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       showToast.success("Registration successful! Please check your email to verify your account before logging in.");
       await new Promise(resolve => setTimeout(resolve, 1000));
       
+      // Ensure loading state is reset before redirect
+      dispatch(setLoading(false));
       router.push("/signin");
 
     } catch (error: any) {
@@ -138,6 +140,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       
       showToast.apiError(errorMessage);
       
+      // Ensure loading state is reset on error
       dispatch(setLoading(false));
     }
   };
