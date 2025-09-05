@@ -8,6 +8,7 @@ import AIEngineToolData from "./AIEngineToolData";
 import DashboardWidget from "@/components/features/protected/dashboard/widget/DashboardWidget";
 import { useAddOns } from "@/lib/contexts/AddOnsContext";
 import { useUser } from "@/lib/contexts/UserContext";
+import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 import { 
   IconAnalyse, 
   IconBull, 
@@ -18,6 +19,7 @@ import {
 export default function AIEngineToolsAllSections() {
   const { savedAddOns } = useAddOns();
   const { isPremium } = useUser();
+  const { isAnalyzing } = useAnalysis();
 
   const accessibleActiveAddOns = savedAddOns.filter(addOn => {
     if (!addOn.active) return false;
@@ -56,7 +58,8 @@ export default function AIEngineToolsAllSections() {
   };
 
   return (
-    <div className="flex flex-col w-full gap-10 self-stretch">
+    <div className="flex flex-col w-full gap-10 self-stretch relative overflow-hidden">
+      
       {accessibleActiveAddOns.map((addOn) => (
         <div key={addOn.title} id={addOn.title.toLowerCase().replace(/\s+/g, '-')}>
           <AIEngineToolsCardContainer>

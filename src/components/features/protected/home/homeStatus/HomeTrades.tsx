@@ -40,9 +40,9 @@ export default function HomeTrades({ className }: { className?: string }) {
   useEffect(() => {
     if (dailyRecommendations?.data) {
       // Filter out cards that are already skipped
-      const skippedIds = skippedCards.map(card => card.id);
+      const skippedIds = skippedCards.map((card: any) => card.id);
       const filteredCards = dailyRecommendations.data.filter(
-        card => !skippedIds.includes(card.id)
+        (card: any) => !skippedIds.includes(card.id)
       );
       setActiveCards(filteredCards);
     }

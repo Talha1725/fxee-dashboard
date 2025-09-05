@@ -58,7 +58,7 @@ export const recommendationsApi = baseApi.injectEndpoints({
       providesTags: ["Recommendation"],
     }),
   }),
-});
+}) as any;
 
 export const {
   useCreateCustomAnalysisMutation,

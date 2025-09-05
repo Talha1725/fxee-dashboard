@@ -31,7 +31,7 @@ export default function OpenTrades() {
   // Transform API recommendations into trading data format or use static fallback
   const getTradingData = () => {
     if (dailyRecommendations?.data && dailyRecommendations.data.length > 0) {
-      return dailyRecommendations.data.slice(0, 6).map((rec, index) => ({
+      return dailyRecommendations.data.slice(0, 6).map((rec: any, index: any) => ({
         symbol: rec.symbol.includes("/") ? rec.symbol : `${rec.symbol}/USD`,
         realizedPL: `$${(Math.random() * 5000 + 1000).toFixed(2)}`,
         unrealizedPL:
@@ -255,7 +255,7 @@ export default function OpenTrades() {
           </div>
 
           <div className="p-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10">
-            {tradingData.map((data, index) => (
+            {tradingData.map((data: any, index: any) => (
               <OpenTradeCard key={index} tradingData={data} />
             ))}
           </div>
