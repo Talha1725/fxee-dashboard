@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import {
   ChevronDown,
   ChevronUp,
@@ -43,6 +44,7 @@ export default function NavbarProfile() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
   const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   
   const handleOpenUpgradeModal = () => {
     setIsOpenLimitReach(true);
@@ -52,18 +54,30 @@ export default function NavbarProfile() {
     setIsOpenLimitReach(false);
   };
 
-  const handleLogout = () => {
-    // Clear token from localStorage
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+    
+    try {
+      setIsLoggingOut(true);
+      
+      // Clear token from localStorage
+      localStorage.removeItem("token");
 
-    // Dispatch logout action
-    dispatch(logout());
+      // Dispatch logout action
+      dispatch(logout());
 
-    // Show success toast
-    showToast.success("Logged out successfully");
+      // Show success toast
+      showToast.success("Logged out successfully");
 
-    // Redirect to signin page and prevent going back          
-    router.replace("/signin");                                 
+      // Small delay to ensure toast is visible before redirect
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Redirect to signin page and prevent going back          
+      router.replace("/signin");
+    } catch (error) {
+      showToast.error("Failed to logout. Please try again.");
+      setIsLoggingOut(false);
+    }
   };                                             
                                                              
   const [updateLanguage] = useUpdateLanguageMutation();         
@@ -245,8 +259,18 @@ export default function NavbarProfile() {
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-full"
                 onClick={handleLogout}
+                disabled={isLoggingOut}
               >
-                <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
+                {isLoggingOut ? (
+                  <div className="flex items-center gap-2">
+                    <Spinner size="sm" className={theme === "dark" ? "text-black" : "text-white"} />
+                    <p>Logging out...</p>
+                  </div>
+                ) : (
+                  <>
+                    <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
+                  </>
+                )}
               </Button>
           </div>
         </DropdownMenuContent>

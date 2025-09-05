@@ -21,10 +21,16 @@ export const useAuth = () => {
     }
   }, [token]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    dispatch(logout());
-    router.push('/signin');
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem('token');
+      dispatch(logout());
+      await new Promise(resolve => setTimeout(resolve, 100));
+      router.replace('/signin');
+    } catch (error) {
+      // Still clear the Redux state even if there's an error
+      dispatch(logout());
+    }
   };
 
   const isAuthenticatedUser = isAuthenticated && !!token;

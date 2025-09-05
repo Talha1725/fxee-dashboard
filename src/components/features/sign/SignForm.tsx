@@ -12,6 +12,7 @@ import SigninInputs from "@/components/features/sign/SigninInputs";
 import SignupInputs from "@/components/features/sign/SignupInputs";
 import SignSupport from "@/components/features/sign/SignSupport";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/auth/authApi";
 import { setLoading } from "@/lib/redux/features/auth/authSlice";
@@ -66,6 +67,8 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
 
   // Login function
   const handleLogin = async (data: LoginFormData) => {
+    if (isLoading || authLoading) return;
+    
     try {
       dispatch(setLoading(true));
       
@@ -104,15 +107,17 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       );
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
+      
       showToast.apiError(errorMessage);
-    } 
-    finally {
+      
       dispatch(setLoading(false));
     }
   };
 
   // Register function
   const handleRegister = async (data: RegisterFormData) => {
+    if (isLoading || authLoading) return;
+    
     try {
       dispatch(setLoading(true));
 
@@ -124,12 +129,15 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       }).unwrap();
 
       showToast.success("Registration successful! Please check your email to verify your account before logging in.");
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       router.push("/signin");
 
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
+      
       showToast.apiError(errorMessage);
-    } finally {
+      
       dispatch(setLoading(false));
     }
   };
@@ -166,12 +174,16 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
             type="submit"
             variant="fancy" 
             className="flex-[1_0_0] self-stretch w-full mt-5"
-            disabled={isLoading}
+            disabled={isLoading || authLoading}
           >
-            {isLoading 
-              ? (isSignup ? "Registering..." : "Logging in...") 
-              : (isSignup ? "Register" : "Login")
-            }
+            {isLoading || authLoading ? (
+              <div className="flex items-center gap-2">
+                <Spinner size="sm" className="text-white" />
+                {isSignup ? "Registering..." : "Logging in..."}
+              </div>
+            ) : (
+              isSignup ? "Register" : "Login"
+            )}
           </Button>
         </form>
       </div>

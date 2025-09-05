@@ -58,8 +58,6 @@ export default function SignVerificationForm() {
         showToast.success('Email verified successfully!');
         
       } catch (error: any) {
-        console.error('Email verification error:', error);
-        
         if (error?.data?.message) {
           setMessage(error.data.message);
           
@@ -102,7 +100,6 @@ export default function SignVerificationForm() {
       showToast.success('Verification email sent! Please check your inbox.');
       setMessage(`A new verification email has been sent to ${userEmail}. Please check your inbox and click the verification link.`);
     } catch (error: any) {
-      console.error('Resend verification error:', error);
       const errorMessage = error?.data?.message || 'Failed to send verification email. Please try again.';
       showToast.error(errorMessage);
       setMessage(errorMessage);
