@@ -44,7 +44,7 @@ export default function SidebarSupportingContent() {
     // },
   ];
   return (
-    <div className="flex flex-col items-start gap-1.5 self-stretch">
+    <div className="flex flex-col items-start gap-1.5 w-full">
       {Items.map((item) => (
         <SidebarItem item={item} pathname={pathname} key={item.title} />
       ))}

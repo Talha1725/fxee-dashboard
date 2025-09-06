@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useMemo, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,89 +8,72 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import shade from "@/public/images/shade.png";
-import Image from "next/image";
 import { Input } from "../ui/input";
 import { IconSearch } from "../ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { useState } from "react";
-import five from "@/public/images/500.svg";
-import dji from "@/public/images/DJI.svg";
-import vix from "@/public/images/VIX.svg";
-import dxy from "@/public/images/DXY.svg";
-import oanda from "@/public/images/oanda.svg";
-import binance from "@/public/images/Binance.svg";
-import america from "@/public/images/america-circle.svg";
 import CurrencyToCountryFlagConverter from "../features/CurrencyToCountryFlagConverter";
-import { Plus } from "lucide-react";
 import { TRADING_SYMBOLS } from "@/lib/constants";
 
-// Get icon based on symbol type
-const getSymbolIcon = (type: string) => {
-  switch (type) {
-    case "Forex":
-      return "💱";
-    case "Commodities":
-      return "🥇";
-    case "Crypto":
-      return "₿";
-    default:
-      return "📈";
-  }
-};
+// Memoized symbol icon mapping
+const SYMBOL_ICONS = {
+  Forex: "💱",
+  Commodities: "🥇", 
+  Crypto: "₿",
+} as const;
 
 // Transform trading symbols data to match modal structure
-const symbolsData = TRADING_SYMBOLS.map((symbol, index) => ({
+const symbolsData = TRADING_SYMBOLS.map((symbol) => ({
   id: symbol.id,
   symbol: symbol.symbol,
   name: symbol.displayName,
   category: symbol.type.toLowerCase(),
   type: symbol.type.toLowerCase(),
-  provider: "FXEE",
-  icon: null,
   currency: symbol.type === "Forex" ? symbol.displayName : null,
-  providerIcon: america,
   tab: symbol.type,
-  iconEmoji: getSymbolIcon(symbol.type),
+  iconEmoji: SYMBOL_ICONS[symbol.type] || "📈",
 }));
 
 export default function SymbolModal({
   isOpen,
   onClose,
+  onSymbolSelect,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onSymbolSelect?: (symbol: string) => void;
 }) {
   const { theme } = useTheme();
   const [selected, setSelected] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
-  const tabs = [
-    "All",
-    "Forex",
-    "Commodities", 
-    "Crypto",
-  ];
+  const tabs = ["All", "Forex", "Commodities", "Crypto"] as const;
 
-  const handleTabClick = (tab: string) => {
+  // Memoized filtered data to prevent unnecessary re-filtering
+  const filteredData = useMemo(() => 
+    symbolsData.filter((item) => {
+      const matchesTab = selected === "All" || item.tab === selected;
+      const matchesSearch = searchTerm === "" || 
+        item.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesTab && matchesSearch;
+    }), [selected, searchTerm]
+  );
+
+  // Memoized event handlers
+  const handleTabClick = useCallback((tab: string) => {
     setSelected(tab);
-  };
+  }, []);
 
-  // Filter data based on selected tab and search term
-  const filteredData = symbolsData.filter((item) => {
-    const matchesTab = selected === "All" || item.tab === selected;
-    const matchesSearch =
-      searchTerm === "" ||
-      item.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.name.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesTab && matchesSearch;
-  });
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
 
-  // Function to truncate text for mobile
-  const truncateText = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
+  const handleRowClick = useCallback((item: typeof symbolsData[0], index: number) => {
+    setSelectedRow(index);
+    onSymbolSelect?.(item.symbol);
+    onClose();
+  }, [onSymbolSelect, onClose]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -99,7 +83,7 @@ export default function SymbolModal({
           <Input
             placeholder="Search..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             className={`px-3 gap-1 border-none w-full my-5 min-h-[36px] sm:h-full placeholder:dark:text-white/40 placeholder:!text-black ${
               theme === "dark" ? "bg-dark-gradient" : "bg-light-gradient"
             }`}
@@ -126,78 +110,77 @@ export default function SymbolModal({
           </div>
         </DialogHeader>
 
-        {/* Background shade */}
-        <div
-          style={{
-            transform: "scaleX(-1)",
-          }}
-          className="pointer-events-none fixed w-full top-0 left-0 z-50 dark:opacity-5 opacity-15"
-        >
-          <Image
-            src={shade}
-            alt="shade"
-            className="w-full h-full scale-125"
-          />
-        </div>
 
-        <DialogDescription>
-          <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
-              <table className="w-full font-satoshi">
+        <DialogDescription className="p-0">
+          <div className="max-h-[400px] overflow-y-auto scrollbar-hide w-full">
+              <table className="w-full font-satoshi table-fixed">
+                <colgroup>
+                  <col className="w-12" />
+                  <col className="w-1/4" />
+                  <col className="w-1/4" />
+                  <col className="w-1/4" />
+                </colgroup>
+                <thead>
+                  <tr className="border-b border-black/10 dark:border-white/10">
+                    <th className="text-center py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">#</th>
+                    <th className="text-left py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Symbol</th>
+                    <th className="text-left py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Name</th>
+                    <th className="text-left py-2 px-1 font-satoshi-medium text-sm text-black/60 dark:text-white/60">Category</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {filteredData.map((item, index) => (
                     <tr
                       key={item.id}
-                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${index % 2 === 1 ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" : ""}`}
+                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer ${
+                        selectedRow === index 
+                          ? "bg-blue-100 dark:bg-blue-900/30 border-l-4 border-blue-500" 
+                          : index % 2 === 1 
+                            ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" 
+                            : ""
+                      }`}
+                      onClick={() => handleRowClick(item, index)}
                     >
-                      {/* Symbol + Icon */}
-                      <td className="flex items-center gap-1 min-h-[40px] w-[80px] md:w-[100px]">
-                        <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
-                          {item.icon ? (
-                            <Image
-                              src={item.icon}
-                              alt="symbol"
-                              width={20}
-                              height={20}
-                              className="object-cover w-full h-full"
-                            />
-                          ) : item.currency ? (
-                            <CurrencyToCountryFlagConverter
-                              currency={item.currency}
-                            />
-                          ) : item.iconEmoji ? (
-                            <span className="text-sm md:text-base">{item.iconEmoji}</span>
-                          ) : (
-                            <div className="w-full h-full bg-gray-300 rounded-full"></div>
-                          )}
-                        </div>
-                        <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
-                          {truncateText(item.symbol, 6)}
+                      {/* Number */}
+                      <td className="text-center py-2 px-1">
+                        <p className="dark:text-white text-black text-xs md:text-sm font-medium">
+                          {index + 1}
                         </p>
                       </td>
 
+                      {/* Symbol + Icon */}
+                      <td className="py-2 px-1">
+                        <div className="flex items-center gap-2 min-h-[40px]">
+                          <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
+                            {item.type === "forex" ? (
+                              <CurrencyToCountryFlagConverter
+                                currency={item.currency || item.name}
+                              />
+                            ) : (
+                              <span className="text-sm md:text-base">{item.iconEmoji}</span>
+                            )}
+                          </div>
+                          <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
+                            {item.symbol}
+                          </p>
+                        </div>
+                      </td>
+
                       {/* Name */}
-                      <td className="hidden sm:table-cell w-[50%]">
+                      <td className="py-2 px-1">
                         <p className="dark:text-white text-black text-xs md:text-base">
                           {item.name}
                         </p>
                       </td>
-                      <td className="sm:hidden w-[50%] text-start">
-                        <p className="dark:text-white text-black text-xs">
-                          {truncateText(item.name, 6)}
-                        </p>
-                      </td>
 
                       {/* Category */}
-                      <td className="text-start w-[60px] md:w-[100px]">
-                        {/* Mobile */}
-                        <p className="dark:text-white text-black text-xs md:hidden">
-                          {truncateText(item.category, 5)}
-                        </p>
-                        {/* Desktop */}
-                        <p className="dark:text-white text-black text-sm hidden md:block">
+                      <td className="py-2 px-1">
+                        <p className="dark:text-white text-black text-xs md:text-base">
                           {item.category}
                         </p>
                       </td>
+
+
                     </tr>
                   ))}
                 </tbody>

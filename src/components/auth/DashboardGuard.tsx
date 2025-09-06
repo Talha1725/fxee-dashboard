@@ -12,7 +12,7 @@ interface DashboardGuardProps {
 export default function DashboardGuard({ children }: DashboardGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isChecking, setIsChecking] = useState(true);
+  const [isChecking, setIsChecking] = useState(false); // Start with false for faster navigation
   
   // Get auth state from Redux instead of localStorage
   const { token, isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -32,32 +32,20 @@ export default function DashboardGuard({ children }: DashboardGuardProps) {
   }, [pathname]);
   
   useEffect(() => {
-    const checkAuth = () => {
-      // Use Redux state first, fallback to localStorage only if needed
-      const hasValidAuth = isAuthenticated && token;
-      
-      if (!hasValidAuth && isOnDashboardRoute) {
-        // Double-check localStorage as fallback
-        const storedToken = localStorage.getItem('token');
-        if (!storedToken) {
-          console.log('No token found, redirecting to signin');
-          router.replace('/signin');
-          return;
-        }
-      }
-      
-      setIsChecking(false);
-    };
+    const hasValidAuth = isAuthenticated && token;
     
-    // Only check if we're on a dashboard route
-    if (isOnDashboardRoute) {
-      checkAuth();
-    } else {
-      setIsChecking(false);
+    if (!hasValidAuth && isOnDashboardRoute) {
+      const storedToken = localStorage.getItem('token');
+      if (!storedToken) {
+        setIsChecking(true);
+        router.replace('/signin');
+        return;
+      }
     }
+    
+    setIsChecking(false);
   }, [pathname, router, isAuthenticated, token, isOnDashboardRoute]);
   
-  // Show loading while checking authentication
   if (isChecking) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-white dark:bg-black">

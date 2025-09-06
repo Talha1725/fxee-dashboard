@@ -4,6 +4,7 @@ import React from "react";
 
 import { TokenIcon } from "@web3icons/react";
 import { US } from "country-flag-icons/react/1x1";
+import { CRYPTO_MAP } from "@/lib/constants";
 
 export default function CurrencyToCryptoPairConverter({
   currency,
@@ -13,6 +14,25 @@ export default function CurrencyToCryptoPairConverter({
   size?: number;
 }) {
   const subSize = (size * 6.5) / 10;
+  
+  if (!currency.includes("/")) {
+    const cryptoSymbol = CRYPTO_MAP[currency.toLowerCase()] || currency.toLowerCase();
+    
+    return (
+      <div
+        className="relative shrink-0 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center"
+        style={{ width: `${size}px`, height: `${size}px` }}
+      >
+        <TokenIcon
+          symbol={cryptoSymbol}
+          size={subSize}
+          variant="background"
+          className="rounded-full"
+        />
+      </div>
+    );
+  }
+  
   const tokens = currency.split("/").map((c) => c.toLowerCase());
 
   if (tokens[1] === "usd") {

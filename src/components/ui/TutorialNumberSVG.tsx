@@ -21,6 +21,7 @@ interface TutorialNumberSVGProps {
 
 export const TutorialNumberSVG = memo<TutorialNumberSVGProps>(({ number, theme }) => {
   const gradientId = `gradStroke-${number}`;
+
   const fillColor = (theme === "dark") ? "black" : "white";
   
   return (
@@ -43,6 +44,7 @@ export const TutorialNumberSVG = memo<TutorialNumberSVGProps>(({ number, theme }
         stroke={`url(#${gradientId})`}
         strokeWidth={SVG_TEXT_CONFIG.strokeWidth}
         fontFamily={SVG_TEXT_CONFIG.fontFamily}
+        style={{ fill: fillColor }}
       >
         {number}
       </text>

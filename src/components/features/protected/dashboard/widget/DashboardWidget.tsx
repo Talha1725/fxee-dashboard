@@ -1,14 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 import CurrencyToCryptoPairConverter from "@/components/features/CurrencyToCryptoPairConverter";
+import CurrencyToCountryFlagConverter from "@/components/features/CurrencyToCountryFlagConverter";
 import { Text14, Text16, Text20 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { IconAdd, IconAIMagic } from "@/components/ui/icon";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { useRouter } from "next/navigation";
+import { TradingSymbol } from "@/lib/constants";
+import { getChartSymbol } from "@/lib/utils/symbolFallback";
 
 const AdvancedRealTimeChart = dynamic(
   () =>
@@ -20,12 +23,14 @@ const AdvancedRealTimeChart = dynamic(
 
 export default function DashboardWidget({ 
   currency, 
+  symbolData,
   actionButton, 
   showPlusIcon = false, 
   openModal,
   dashboard=false
 }: { 
-  currency: string;
+  currency?: string;
+  symbolData?: TradingSymbol;
   actionButton?: React.ReactNode;
   showPlusIcon?: boolean;
   openModal?: () => void;
@@ -33,6 +38,61 @@ export default function DashboardWidget({
 }) {
   const { theme } = useTheme();
   const router = useRouter();
+
+  // Memoized values to prevent unnecessary re-renders
+  const displayName = useMemo(() => 
+    symbolData?.displayName || currency || "EUR/USD", 
+    [symbolData?.displayName, currency]
+  );
+  
+  const symbolType = useMemo(() => 
+    symbolData?.type || "Forex", 
+    [symbolData?.type]
+  );
+
+  const chartSymbol = useMemo(() => {
+    // Use the fallback mechanism for crypto symbols
+    const baseSymbol = displayName.includes("/") ? displayName.replace("/", "") : displayName;
+    return getChartSymbol(baseSymbol, symbolType);
+  }, [displayName, symbolType]);
+
+  // Memoized icon component to prevent re-creation on every render
+  const symbolIconComponent = useMemo(() => {
+    if (symbolType === "Forex") {
+      return <CurrencyToCountryFlagConverter currency={displayName} size={38} />;
+    }
+    
+    if (symbolType === "Crypto") {
+      return displayName.includes("/") ? (
+        <CurrencyToCryptoPairConverter currency={displayName} size={38} />
+      ) : (
+        <span className="text-2xl">₿</span>
+      );
+    }
+    
+    if (symbolType === "Commodities") {
+      const lowerDisplayName = displayName.toLowerCase();
+      if (lowerDisplayName.includes("gold")) return <span className="text-2xl">🥇</span>;
+      if (lowerDisplayName.includes("silver")) return <span className="text-2xl">🥈</span>;
+      if (lowerDisplayName.includes("oil")) return <span className="text-2xl">🛢️</span>;
+      return <span className="text-2xl">📈</span>;
+    }
+    
+    return <span className="text-2xl">📈</span>;
+  }, [symbolType, displayName]);
+
+  // Memoized event handlers
+  const handleSymbolClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openModal?.();
+  }, [openModal]);
+
+  const handleAIClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push("/ai-engine");
+  }, [router]);
   return (
     <div className="flex items-start gap-5 self-stretch">
       <div className="flex flex-col items-start flex-[1_0_0] self-stretch">
@@ -40,13 +100,15 @@ export default function DashboardWidget({
           <div className="flex items-center gap-2">
             <div 
               className={`flex items-center gap-2.5 py-3 px-4 rounded-t-[16px] border-t border-r border-l border-black/15 dark:border-white/15 ${theme === "dark" ? "bg-dark-gradient" : "bg-white"}`}
-              onClick={openModal}
+              onClick={handleSymbolClick}
               style={{ cursor: openModal ? 'pointer' : 'default' }}
             >
-              <CurrencyToCryptoPairConverter currency={currency} size={38} />
+              <div className="w-[38px] h-[38px] flex items-center justify-center">
+                {symbolIconComponent}
+              </div>
               <div className="flex flex-col justify-center items-start">
                 <Text20 className="font-satoshi-medium dark:text-white text-black">
-                  {currency}
+                  {displayName}
                 </Text20>
                 <Text14 className="font-satoshi-medium dark:text-white/60 text-black/40">
                   $0.06642
@@ -62,7 +124,7 @@ export default function DashboardWidget({
           </div>
 
           {actionButton ?? (
-            <Button onClick={()=> router.push("/ai-engine")} variant="popular">
+            <Button onClick={handleAIClick} variant="popular">
               <IconAIMagic />
               <Text16 className="font-satoshi-medium text-white">
                 Analyze with AI
@@ -74,7 +136,7 @@ export default function DashboardWidget({
         <div className="relative self-stretch border dark:border-white/5 border-black/15 rounded-tr-[16px] rounded-b-[16px] overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-dark-gradient z-50 pointer-events-none"></div>
           <AdvancedRealTimeChart
-            symbol={currency.replace("/", "")}
+            symbol={chartSymbol}
             interval="60"
             timezone="Etc/UTC"
             width="100%"

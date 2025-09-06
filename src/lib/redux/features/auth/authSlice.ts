@@ -20,6 +20,7 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isAuthenticated = true;
+      state.isLoading = false;
       state.error = null;
     },
     setToken: (
@@ -28,12 +29,14 @@ const authSlice = createSlice({
     ) => {
       state.token = action.payload;
       state.isAuthenticated = false; // Not fully authenticated until user data is loaded
+      state.isLoading = false;
       state.error = null;
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.isLoading = false;
       state.error = null;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -41,13 +44,22 @@ const authSlice = createSlice({
     },
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
     updateUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    resetAuthState: (state) => {
+      // Complete reset of auth state
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+      state.isLoading = false;
+      state.error = null;
+    },
   },
 });
 
-export const { setCredentials, setToken, logout, setLoading, setError, updateUser } =
+export const { setCredentials, setToken, logout, setLoading, setError, updateUser, resetAuthState } =
   authSlice.actions;
 export default authSlice.reducer;

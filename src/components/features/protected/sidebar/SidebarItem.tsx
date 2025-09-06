@@ -21,13 +21,26 @@ const SidebarItem = memo(function SidebarItem({
 }) {
   const isActive = pathname === item.href;
   const { theme } = useTheme();
+  
+  const handleClick = (e: React.MouseEvent) => {
+    const target = e.currentTarget as HTMLElement;
+    target.style.transform = 'translateX(4px)';
+    target.style.opacity = '1';
+    
+    setTimeout(() => {
+      target.style.transform = '';
+      target.style.opacity = '';
+    }, 150);
+  };
+  
   return (
-    <Link href={item.href} className="w-full">
+    <Link href={item.href} className="w-full" prefetch={true}>
       <div
+        onClick={handleClick}
         className={cn(
-          "relative flex items-center gap-2 self-stretch px-3 py-2 rounded-[8px] opacity-40 transition-all duration-200 hover:bg-white/20 hover:opacity-100 border border-transparent",
+          "relative flex items-center gap-2 w-full py-2 px-3 rounded-[8px] opacity-40 transition-all duration-150 hover:bg-white/20 hover:opacity-100 border border-transparent cursor-pointer",
           isActive
-            ? `opacity-100 border border-white/10 ${theme === "dark" ? "bg-dark-gradient" : "bg-gradient-to-b from-[#15B0F8]/10 to-[#0276DB]/10"}`
+            ? `opacity-100 border border-white/10 ${theme === "dark" ? "bg-dark-gradient" : "bg-gradient-to-b from-[#15B0F8]/10 to-[#0276DB]/10"} -mx-3 px-6`
             : "transform hover:translate-x-1"
         )}
       >

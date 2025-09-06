@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import {
   ChevronDown,
   ChevronUp,
@@ -25,7 +26,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Label, PopularBadge } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { logout } from "@/lib/redux/features/auth/authSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { RootState } from "@/lib/redux/store";
 import { showToast } from "@/lib/utils/toast";
 import { IconUK } from "@/components/ui/icon";
@@ -42,9 +43,8 @@ export default function NavbarProfile() {
   const { theme } = useTheme();
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const { user, isLoading: isAuthLoading, logout: handleLogout } = useAuth();
   const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
-
   const { isDemoAccountEnabled } = useAccountType();
   
   const handleOpenUpgradeModal = () => {
@@ -53,20 +53,6 @@ export default function NavbarProfile() {
 
   const handleCloseUpgradeModal = () => {
     setIsOpenLimitReach(false);
-  };
-
-  const handleLogout = () => {
-    // Clear token from localStorage
-    localStorage.removeItem("token");
-
-    // Dispatch logout action
-    dispatch(logout());
-
-    // Show success toast
-    showToast.success("Logged out successfully");
-
-    // Redirect to signin page and prevent going back          
-    router.replace("/signin");                                 
   };                                             
                                                              
   const [updateLanguage] = useUpdateLanguageMutation();         
@@ -252,8 +238,18 @@ export default function NavbarProfile() {
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-full"
                 onClick={handleLogout}
+                disabled={isAuthLoading}
               >
-                <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
+                {isAuthLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Spinner size="sm" className={theme === "dark" ? "text-black" : "text-white"} />
+                    <p>Logging out...</p>
+                  </div>
+                ) : (
+                  <>
+                    <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
+                  </>
+                )}
               </Button>
           </div>
         </DropdownMenuContent>

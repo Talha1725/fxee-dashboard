@@ -14,8 +14,66 @@ export default function CurrencyToCountryFlagConverter({
   const currencyParts = currency.split("/");
   const countries = currencyParts.map((c) => c.toUpperCase().slice(0, 2));
   
-  const Country1 = AllCountry[countries[0] as keyof typeof AllCountry];
-  const Country2 = currencyParts.length > 1 ? AllCountry[countries[1] as keyof typeof AllCountry] : null;
+  const currencyToCountry: Record<string, string> = {
+    'USD': 'US',
+    'EUR': 'EU',
+    'GBP': 'GB',
+    'JPY': 'JP',
+    'AUD': 'AU',
+    'CAD': 'CA',
+    'CHF': 'CH',
+    'NZD': 'NZ',
+    'TRY': 'TR',
+    'ZAR': 'ZA',
+    'CNY': 'CN',
+    'INR': 'IN',
+    'BRL': 'BR',
+    'MXN': 'MX',
+    'KRW': 'KR',
+    'SGD': 'SG',
+    'HKD': 'HK',
+    'NOK': 'NO',
+    'SEK': 'SE',
+    'DKK': 'DK',
+    'PLN': 'PL',
+    'CZK': 'CZ',
+    'HUF': 'HU',
+    'RUB': 'RU',
+    'ILS': 'IL',
+    'AED': 'AE',
+    'SAR': 'SA',
+    'QAR': 'QA',
+    'KWD': 'KW',
+    'BHD': 'BH',
+    'OMR': 'OM',
+    'JOD': 'JO',
+    'LBP': 'LB',
+    'EGP': 'EG',
+    'MAD': 'MA',
+    'TND': 'TN',
+    'DZD': 'DZ',
+    'LYD': 'LY',
+    'SDG': 'SD',
+    'ETB': 'ET',
+    'KES': 'KE',
+    'UGX': 'UG',
+    'TZS': 'TZ',
+    'ZMW': 'ZM',
+    'BWP': 'BW',
+    'SZL': 'SZ',
+    'LSL': 'LS',
+    'NAD': 'NA',
+    'MZN': 'MZ',
+    'AOA': 'AO',
+    'XOF': 'SN', 
+    'XAF': 'CM', 
+  };
+  
+  const country1Code = currencyToCountry[countries[0]] || countries[0];
+  const country2Code = currencyParts.length > 1 ? (currencyToCountry[countries[1]] || countries[1]) : null;
+  
+  const Country1 = AllCountry[country1Code as keyof typeof AllCountry];
+  const Country2 = country2Code ? AllCountry[country2Code as keyof typeof AllCountry] : null;
 
   // If it's a single currency or crypto, show just one flag or a placeholder
   if (!Country2 || !Country1) {

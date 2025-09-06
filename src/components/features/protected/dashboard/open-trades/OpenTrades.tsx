@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 import BlurOverlay from "@/components/common/BlurOverlay";
 
 export default function OpenTrades() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { isVirtualAccount } = useAccountType();
   const {
     data: dailyRecommendations,

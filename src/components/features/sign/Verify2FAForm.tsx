@@ -67,7 +67,6 @@ export default function Verify2FAForm() {
       sessionStorage.removeItem('2fa_verification_data');
       router.push("/signin");
     } catch (error) {
-      console.error("Error parsing 2FA data:", error);
       showToast.error("Invalid 2FA verification request");
       router.push("/signin");
     }

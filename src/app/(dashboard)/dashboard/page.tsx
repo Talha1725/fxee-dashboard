@@ -7,21 +7,24 @@ import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
 export default function page() {
   const [isOpenLimitReach, setIsOpenLimitReach] = useState(true);
+
   const { isDemoAccountEnabled } = useAccountType();
   useEffect(() => {
-    // Check for hash after a delay to ensure it's properly set
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    
+    document.addEventListener('scroll', preventScroll, { passive: false });
     setTimeout(() => {
-      if (window.location.hash) {
-        // If there's a hash, scroll to that element
-        const element = document.getElementById(window.location.hash.substring(1));
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // If no hash, scroll to top
-        window.scrollTo(0, 0);
-      }
-    }, 100);
+      document.removeEventListener('scroll', preventScroll);
+    }, 1000);
   }, []);
 
   return (

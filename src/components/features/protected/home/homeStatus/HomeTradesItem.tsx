@@ -259,7 +259,7 @@ export default function HomeTradesItem({
 
         <div className="flex items-start self-stretch gap-2.5">
           <Button
-            onClick={() => router.push("/dashboard#open-trades")}
+            onClick={() => router.push("/dashboard")}
             variant={direction === "Long" ? "green" : "danger"}
             size="default"
             className="text-white flex-[1_0_0] font-satoshi-medium"

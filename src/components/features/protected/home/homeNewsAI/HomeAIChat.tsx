@@ -8,11 +8,13 @@ import { Text14 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useTrade } from "@/lib/contexts/TradeContext";
 import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useAIConfidence } from "@/hooks/useAIConfidence";
 
 export default function HomeAIChat() {
   const { theme } = useTheme();
   const { selectedTrade } = useTrade();
   const { data: lastTradeData } = useGetLastProposedTradeQuery();
+  const { confidence, isUpdating } = useAIConfidence();
   
   const latestTrade = lastTradeData?.data;
   const tradeToUse = selectedTrade || latestTrade;
@@ -23,9 +25,12 @@ export default function HomeAIChat() {
           placeholder={tradeToUse
           ? `Ask about ${tradeToUse.symbol} trade...`
           : "Ask about trading strategies, risk management..."}
-          className="px-4 py-4 gap-3 border h-full font-satoshi-medium dark:placeholder:text-white/40 placeholder:text-black/70 dark:border-transparent border-black/10"
-          backIcon={<IconSend height={20} width={20} />}
-          InputStyles="dark:placeholder:text-white/40 placeholder:text-black/50 text-[16px] font-satoshi-medium"
+          className="w-full !p-4 gap-3 border-none text-white placeholder:text-white"
+          backIcon={
+            <div className="flex items-center gap-3">
+              <IconSend width={20} height={20} opacity={1} className="text-white/60" />
+            </div>
+          }
         />
         <div className="flex justify-between items-center self-stretch">
           <div className="flex items-center gap-1">
@@ -34,7 +39,9 @@ export default function HomeAIChat() {
           </div>
           <div className="flex items-center gap-1">
             <Text14 className="font-satoshi dark:text-white text-black">
-              AI Confidence: <span className="text-[#079744] dark:text-green">81%</span>
+              AI Confidence: <span className={`text-[#079744] dark:text-green transition-all duration-500 ${isUpdating ? 'animate-pulse' : ''}`}>
+                {confidence}%
+              </span>
             </Text14>
           </div>
         </div>
