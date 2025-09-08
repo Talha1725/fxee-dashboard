@@ -9,6 +9,7 @@ import CommonSelect from "@/components/ui/common-select";
 import SymbolModal from "@/components/common/SymbolModal";
 import OpenTrades from "./open-trades/OpenTrades";
 import DashboardAIPanel from "./chatbot/DashboardAIPanel";
+import DashboardChatbot from "./chatbot/DashboardChatbot";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 import { AddOnsProvider } from "@/lib/contexts/AddOnsContext";
 
@@ -56,7 +57,6 @@ export default function Dashboard() {
           <OpenTrades />
           <DashboardStatus />
           {/* <DashboardACP /> */}
-          
           {/* AI Chatbot Panel */}
           {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <DashboardAIPanel />

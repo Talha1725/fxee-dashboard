@@ -127,7 +127,7 @@ export default function DashboardStatusDetailPT() {
         </div>
       </div>
       <div className="flex flex-col items-start gap-2.5 self-stretch">
-        <div className="flex flex-wrap items-start content-start gap-[10px] self-stretch">
+        {/* <div className="flex flex-wrap items-start content-start gap-[10px] self-stretch">
           {proToolsData.map((proTool) => (
             <DashboardStatusDetailBadge
               key={proTool.title}
@@ -137,7 +137,7 @@ export default function DashboardStatusDetailPT() {
               className="py-3 px-2.5"
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </DashboardStatusDetailCardContainer>
   );
