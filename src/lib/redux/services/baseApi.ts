@@ -8,7 +8,7 @@ import { showToast } from "@/lib/utils/toast";
 // Base query with JWT expiration handling
 const baseQueryWithAuth = fetchBaseQuery({
   baseUrl: `${API_CONFIG.BASE_URL}/api`,
-  prepareHeaders: (headers, { getState, dispatch }) => {
+  prepareHeaders: (headers, { getState }) => {
     // Get token from state
     const token = (getState() as RootState).auth.token;
 
@@ -17,7 +17,6 @@ const baseQueryWithAuth = fetchBaseQuery({
       if (isTokenExpired(token)) {
         console.warn('Token expired before request, logging out');
         localStorage.removeItem('token');
-        dispatch(logout());
         showToast.apiError('Your session has expired. Please log in again.');
         
         // Redirect to login page

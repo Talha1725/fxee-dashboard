@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { setCredentials, setLoading } from '@/lib/redux/features/auth/authSlice';
+import { setCredentials, setLoading, logout } from '@/lib/redux/features/auth/authSlice';
 import { showToast } from '@/lib/utils/toast';
 import { handleApiError, handleApiResponse } from '@/lib/utils/apiUtils';
 import { AuthResponse } from '@/types/redux';
