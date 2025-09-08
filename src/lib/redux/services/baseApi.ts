@@ -17,11 +17,17 @@ const baseQueryWithAuth = fetchBaseQuery({
       if (isTokenExpired(token)) {
         console.warn('Token expired before request, logging out');
         localStorage.removeItem('token');
-        showToast.apiError('Your session has expired. Please log in again.');
         
-        // Redirect to login page
+        // Only show toast and redirect if not already on auth pages
         if (typeof window !== 'undefined') {
-          window.location.href = '/signin';
+          const currentPath = window.location.pathname;
+          const isOnAuthPage = currentPath.includes('/signin') || currentPath.includes('/signup') || 
+                              currentPath.includes('/forgot-password') || currentPath.includes('/reset-password');
+          
+          if (!isOnAuthPage) {
+            showToast.apiError('Your session has expired. Please log in again.');
+            window.location.href = '/signin';
+          }
         }
         
         return headers;
@@ -49,12 +55,16 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
     // Dispatch logout action
     api.dispatch(logout());
     
-    // Show error message
-    showToast.apiError('Your session has expired. Please log in again.');
-    
-    // Redirect to login page
+    // Only show toast and redirect if not already on auth pages
     if (typeof window !== 'undefined') {
-      window.location.href = '/signin';
+      const currentPath = window.location.pathname;
+      const isOnAuthPage = currentPath.includes('/signin') || currentPath.includes('/signup') || 
+                          currentPath.includes('/forgot-password') || currentPath.includes('/reset-password');
+      
+      if (!isOnAuthPage) {
+        showToast.apiError('Your session has expired. Please log in again.');
+        window.location.href = '/signin';
+      }
     }
   }
   

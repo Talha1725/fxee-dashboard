@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { RootState } from '@/lib/redux/store';
 import { logout } from '@/lib/redux/features/auth/authSlice';
 import { isTokenExpired, handleTokenExpired } from '@/lib/utils/authUtils';
@@ -8,6 +8,7 @@ import { isTokenExpired, handleTokenExpired } from '@/lib/utils/authUtils';
 export const useAuth = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
   const { user, token, isAuthenticated, isLoading, error } = useSelector(
     (state: RootState) => state.auth
   );
@@ -18,7 +19,19 @@ export const useAuth = () => {
     
     if (storedToken && isTokenExpired(storedToken)) {
       // Token is expired, remove it and logout
-      handleTokenExpired(dispatch, router);
+      localStorage.removeItem('token');
+      dispatch(logout());
+      // Don't redirect if already on auth pages
+      const isOnAuthPage = pathname && (
+        pathname.includes('/signin') || 
+        pathname.includes('/signup') || 
+        pathname.includes('/forgot-password') || 
+        pathname.includes('/reset-password')
+      );
+      
+      if (!isOnAuthPage) {
+        router.push('/signin');
+      }
       return;
     }
     
@@ -27,7 +40,7 @@ export const useAuth = () => {
       // This could happen on page refresh
       // Token is valid, let AuthInitializer handle it
     }
-  }, [token, dispatch, router]);
+  }, [token, dispatch, router, pathname]);
 
 
   const handleLogout = () => {
