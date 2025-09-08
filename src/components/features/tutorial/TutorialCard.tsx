@@ -40,10 +40,11 @@ export const TutorialCard = memo<TutorialCardProps>(({
         <div className={`relative pl-0 lg:pl-0 pr-0 lg:pr-0 pt-[26px] pb-0 flex items-end  xl:pl-0 xl:pr-0 tutorial-content-padding ${isImageLeft ? 'lg:pl-0 lg:pr-0 xl:pl-0 xl:pr-0' : ''}`}>
           <TutorialBackgroundNumber number={number} />
 
-          <div className={`relative w-full lg:w-[300px] h-[157px] top-[50px] -left-[60px] sm:-left-[200px] md:-left-[200px] lg:top-2 ${isImageLeft ? 'lg:left-[10px]' : 'lg:left-[10px]'}`}>
+          <div className={`relative mt-15 w-full lg:w-[300px] h-[157px] top-[50px] -left-[60px] sm:-left-[200px] md:-left-[200px] lg:top-2 tutorial-number-container ${isImageLeft ? 'lg:left-[10px]' : 'lg:left-[10px]'}`}>
             <div
-              className="absolute -inset-20 z-0 left-[20px] w-[35%]"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] z-0"
               style={{
+                width: "80%",
                 background: BACKGROUND_GRADIENT,
                 filter: "blur(84px)",
                 opacity: 1,
