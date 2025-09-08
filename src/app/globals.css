@@ -1885,7 +1885,6 @@ body {
   }
 }
 
-/* Tutorial card adjustments for smaller screens */
 @media (max-width: 1023px) {
   .tutorial-card-container {
     min-height: auto !important;
@@ -1902,7 +1901,6 @@ body {
   }
 }
 
-/* Tutorial card height adjustment for 1024px-1440px range */
 @media (min-width: 1024px) and (max-width: 1440px) {
   .tutorial-card-container {
     min-height: 400px !important;
@@ -1922,7 +1920,6 @@ body {
   }
 }
 
-/* Specific height adjustment for 1024px-1200px range */
 @media (min-width: 1024px) and (max-width: 1200px) {
   .tutorial-card-container {
     height: 380px !important;
@@ -1972,7 +1969,6 @@ body {
   border-image-source: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
 }
 
-/* Responsive border width adjustments */
 @media (max-width: 1200px) {
   .tutorial-card-border {
     width: 90%;
@@ -1994,7 +1990,6 @@ body {
   }
 }
 
-/* Add margin-top to tutorial numbers for screens >1440px or <1024px */
 @media (min-width: 1441px), (max-width: 1023px) {
   .tutorial-number-container {
     margin-top: 60px !important;
