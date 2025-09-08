@@ -38,6 +38,27 @@ const getSymbolIcon = (type: string) => {
   }
 };
 
+// Map symbols to TradingView format
+const getTradingViewSymbol = (symbol: string, type: string): string => {
+  const symbolMap: { [key: string]: string } = {
+    // Commodities
+    "Brent": "UKOIL",
+    "Crude": "USOIL",
+    "GOLDInd": "GOLD",
+    "XAGUSD": "SILVER",
+    "XAUUSD": "GOLD",
+    // Crypto
+    "BITCOIN": "BTCUSD",
+    "BNB": "BNBUSD",
+    "DOGECOIN": "DOGEUSD",
+    "ETHEREUM": "ETHUSD",
+    "RIPPLE": "XRPUSD",
+    "SOLANA": "SOLUSD",
+  };
+  
+  return symbolMap[symbol] || symbol;
+};
+
 // Transform trading symbols data to match modal structure
 const symbolsData = TRADING_SYMBOLS.map((symbol, index) => ({
   id: symbol.id,
@@ -51,14 +72,19 @@ const symbolsData = TRADING_SYMBOLS.map((symbol, index) => ({
   providerIcon: america,
   tab: symbol.type,
   iconEmoji: getSymbolIcon(symbol.type),
+  tradingViewSymbol: getTradingViewSymbol(symbol.symbol, symbol.type),
 }));
 
 export default function SymbolModal({
   isOpen,
   onClose,
+  onSelectSymbol,
+  currentSymbol,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onSelectSymbol?: (symbol: string) => void;
+  currentSymbol?: string;
 }) {
   const { theme } = useTheme();
   const [selected, setSelected] = useState<string>("All");
@@ -144,11 +170,23 @@ export default function SymbolModal({
           <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
               <table className="w-full font-satoshi">
                 <tbody>
-                  {filteredData.map((item, index) => (
-                    <tr
-                      key={item.id}
-                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${index % 2 === 1 ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" : ""}`}
-                    >
+                  {filteredData.map((item, index) => {
+                    const isSelected = currentSymbol === item.tradingViewSymbol;
+                    return (
+                      <tr
+                        key={item.id}
+                        className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer ${
+                          isSelected 
+                            ? "bg-black/10 dark:bg-white/10" 
+                            : index % 2 === 1 
+                              ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" 
+                              : ""
+                        }`}
+                        onClick={() => {
+                          onSelectSymbol?.(item.tradingViewSymbol);
+                          onClose();
+                        }}
+                      >
                       {/* Symbol + Icon */}
                       <td className="flex items-center gap-1 min-h-[40px] w-[80px] md:w-[100px]">
                         <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
@@ -199,7 +237,8 @@ export default function SymbolModal({
                         </p>
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
 
