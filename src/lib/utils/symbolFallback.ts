@@ -1,5 +1,5 @@
-// Symbol fallback mapping for crypto symbols that don't have data
-export const CRYPTO_SYMBOL_FALLBACKS: Record<string, string[]> = {
+// Symbol fallback mappings
+const CRYPTO_FALLBACKS: Record<string, string[]> = {
   'DOGECOIN': ['DOGEUSD', 'DOGE/USD', 'DOGEUSDT'],
   'BITCOIN': ['BTCUSD', 'BTC/USD', 'BTCUSDT', 'XBTUSD'],
   'ETHEREUM': ['ETHUSD', 'ETH/USD', 'ETHUSDT'],
@@ -22,8 +22,7 @@ export const CRYPTO_SYMBOL_FALLBACKS: Record<string, string[]> = {
   'ZCASH': ['ZECUSD', 'ZEC/USD', 'ZECUSDT'],
 };
 
-// Symbol fallback mapping for commodity symbols that don't have data
-export const COMMODITY_SYMBOL_FALLBACKS: Record<string, string[]> = {
+const COMMODITY_FALLBACKS: Record<string, string[]> = {
   'BRENT': ['UKOIL', 'BRENT', 'BZ=F', 'BZ1!'],
   'CRUDE': ['WTI', 'CRUDE', 'CL=F', 'CL1!', 'USOIL'],
   'GOLDIND': ['GOLD', 'XAUUSD', 'GC=F', 'GC1!', 'GOLD/USD'],
@@ -38,99 +37,75 @@ export const COMMODITY_SYMBOL_FALLBACKS: Record<string, string[]> = {
   'PALLADIUM': ['PA=F', 'PA1!', 'PALLADIUM'],
 };
 
-// Get the best fallback symbol for a given crypto symbol
-export const getCryptoFallbackSymbol = (symbol: string): string => {
+// Common crypto symbols for quick lookup
+const CRYPTO_SYMBOLS = new Set(['BTC', 'ETH', 'DOGE', 'XRP', 'SOL', 'BNB', 'LTC', 'ADA', 'DOT', 'LINK', 'UNI', 'AVAX', 'MATIC', 'ATOM', 'ALGO', 'XTZ', 'XLM', 'XMR', 'DASH', 'ZEC']);
+
+// Common commodity symbols for quick lookup
+const COMMODITY_SYMBOLS = new Set(['XAU', 'XAG', 'WTI', 'UKOIL', 'NG', 'HG', 'PL', 'PA']);
+
+// Generic fallback getter
+const getFallback = (symbol: string, fallbackMap: Record<string, string[]>, defaultGenerator: (s: string) => string): string => {
   const upperSymbol = symbol.toUpperCase();
-  const fallbacks = CRYPTO_SYMBOL_FALLBACKS[upperSymbol];
-  
-  if (fallbacks && fallbacks.length > 0) {
-    // Return the first fallback (most common trading pair)
-    return fallbacks[0];
-  }
-  
-  // If no specific fallback, try to create a USD pair
-  if (upperSymbol.includes('COIN') || upperSymbol.includes('TOKEN')) {
-    const baseSymbol = upperSymbol.replace('COIN', '').replace('TOKEN', '');
-    return `${baseSymbol}USD`;
-  }
-  
-  // Default fallback - add USD suffix
-  return `${upperSymbol}USD`;
+  const fallbacks = fallbackMap[upperSymbol];
+  return fallbacks?.[0] || defaultGenerator(upperSymbol);
 };
 
-// Get all possible fallback symbols for a given crypto symbol
-export const getAllCryptoFallbacks = (symbol: string): string[] => {
-  const upperSymbol = symbol.toUpperCase();
-  return CRYPTO_SYMBOL_FALLBACKS[upperSymbol] || [`${upperSymbol}USD`];
+// Crypto fallback logic
+const getCryptoDefault = (symbol: string): string => {
+  if (symbol.includes('COIN') || symbol.includes('TOKEN')) {
+    return `${symbol.replace(/COIN|TOKEN/g, '')}USD`;
+  }
+  return `${symbol}USD`;
 };
 
-// Get the best fallback symbol for a given commodity symbol
-export const getCommodityFallbackSymbol = (symbol: string): string => {
-  const upperSymbol = symbol.toUpperCase();
-  const fallbacks = COMMODITY_SYMBOL_FALLBACKS[upperSymbol];
-  
-  if (fallbacks && fallbacks.length > 0) {
-    // Return the first fallback (most common trading symbol)
-    return fallbacks[0];
-  }
-  
-  // If no specific fallback, try to create a common commodity symbol
-  if (upperSymbol.includes('GOLD')) {
-    return 'XAUUSD';
-  }
-  if (upperSymbol.includes('SILVER')) {
-    return 'XAGUSD';
-  }
-  if (upperSymbol.includes('OIL') || upperSymbol.includes('CRUDE')) {
-    return 'WTI';
-  }
-  if (upperSymbol.includes('BRENT')) {
-    return 'UKOIL';
-  }
-  
-  // Default fallback - return as is
-  return upperSymbol;
+// Commodity fallback logic
+const getCommodityDefault = (symbol: string): string => {
+  if (symbol.includes('GOLD')) return 'XAUUSD';
+  if (symbol.includes('SILVER')) return 'XAGUSD';
+  if (symbol.includes('OIL') || symbol.includes('CRUDE')) return 'WTI';
+  if (symbol.includes('BRENT')) return 'UKOIL';
+  return symbol;
 };
 
-// Get all possible fallback symbols for a given commodity symbol
-export const getAllCommodityFallbacks = (symbol: string): string[] => {
-  const upperSymbol = symbol.toUpperCase();
-  return COMMODITY_SYMBOL_FALLBACKS[upperSymbol] || [upperSymbol];
-};
-
-// Check if a symbol is a crypto symbol that might need fallback
+// Optimized symbol type checkers
 export const isCryptoSymbol = (symbol: string): boolean => {
   const upperSymbol = symbol.toUpperCase();
-  return Object.keys(CRYPTO_SYMBOL_FALLBACKS).includes(upperSymbol) ||
+  return CRYPTO_FALLBACKS[upperSymbol] !== undefined ||
          upperSymbol.includes('COIN') ||
          upperSymbol.includes('TOKEN') ||
-         ['BTC', 'ETH', 'DOGE', 'XRP', 'SOL', 'BNB', 'LTC', 'ADA', 'DOT', 'LINK', 'UNI', 'AVAX', 'MATIC', 'ATOM', 'ALGO', 'XTZ', 'XLM', 'XMR', 'DASH', 'ZEC'].includes(upperSymbol);
+         CRYPTO_SYMBOLS.has(upperSymbol);
 };
 
-// Check if a symbol is a commodity symbol that might need fallback
 export const isCommoditySymbol = (symbol: string): boolean => {
   const upperSymbol = symbol.toUpperCase();
-  return Object.keys(COMMODITY_SYMBOL_FALLBACKS).includes(upperSymbol) ||
+  return COMMODITY_FALLBACKS[upperSymbol] !== undefined ||
          upperSymbol.includes('GOLD') ||
          upperSymbol.includes('SILVER') ||
          upperSymbol.includes('OIL') ||
          upperSymbol.includes('CRUDE') ||
          upperSymbol.includes('BRENT') ||
-         ['XAU', 'XAG', 'WTI', 'UKOIL', 'NG', 'HG', 'PL', 'PA'].includes(upperSymbol);
+         COMMODITY_SYMBOLS.has(upperSymbol);
 };
 
-// Get the best chart symbol for TradingView widget
+// Main export functions
+export const getCryptoFallbackSymbol = (symbol: string): string => 
+  getFallback(symbol, CRYPTO_FALLBACKS, getCryptoDefault);
+
+export const getCommodityFallbackSymbol = (symbol: string): string => 
+  getFallback(symbol, COMMODITY_FALLBACKS, getCommodityDefault);
+
+export const getAllCryptoFallbacks = (symbol: string): string[] => 
+  CRYPTO_FALLBACKS[symbol.toUpperCase()] || [`${symbol.toUpperCase()}USD`];
+
+export const getAllCommodityFallbacks = (symbol: string): string[] => 
+  COMMODITY_FALLBACKS[symbol.toUpperCase()] || [symbol.toUpperCase()];
+
 export const getChartSymbol = (symbol: string, symbolType: string): string => {
-  // For crypto symbols, try fallback first
   if (symbolType === 'Crypto' && isCryptoSymbol(symbol)) {
     return getCryptoFallbackSymbol(symbol);
   }
-  
-  // For commodity symbols, try fallback first
   if (symbolType === 'Commodities' && isCommoditySymbol(symbol)) {
     return getCommodityFallbackSymbol(symbol);
   }
-  
-  // For other symbols, return as is
   return symbol;
 };

@@ -50,7 +50,6 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     resetAuthState: (state) => {
-      // Complete reset of auth state
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;

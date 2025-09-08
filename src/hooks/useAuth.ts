@@ -13,7 +13,6 @@ export const useAuth = () => {
     (state: RootState) => state.auth
   );
 
-  // RTK Query logout mutation
   const [logoutMutation, { isLoading: isLoggingOut }] = useLogoutMutation();
 
   // Check if token exists in localStorage on mount
@@ -30,32 +29,24 @@ export const useAuth = () => {
     if (isLoggingOut) return;
     
     try {
-      // Call logout API if available
       try {
         await logoutMutation().unwrap();
       } catch (apiError) {
-        // Continue with logout even if API call fails
         console.warn('Logout API call failed, continuing with local logout:', apiError);
       }
 
-      // Clear localStorage
       localStorage.removeItem('token');
       
-      // Reset Redux state completely
       dispatch(resetAuthState());
       
-      // Show success message
       showToast.success('Logged out successfully');
       
-      // Small delay to ensure state is updated
       await new Promise(resolve => setTimeout(resolve, 100));
       
-      // Redirect to signin page
       router.replace('/signin');
     } catch (error) {
       console.error('Logout error:', error);
       
-      // Still clear the Redux state even if there's an error
       dispatch(resetAuthState());
       localStorage.removeItem('token');
       

@@ -114,13 +114,8 @@ export default function HomeAIMessageBody({
     try {
       let response;
       
-      console.log('sendMessageDirectly called with:', messageText);
-      console.log('Latest trade data available:', latestTrade);
-      console.log('Selected trade:', selectedTrade);
-      console.log('Trade to use:', tradeToUse);
       
       if (useMockResponses) {
-        console.log('Using mock responses (backend disabled)');
         if (tradeToUse?.id) {
           // Mock response with automatic trade context
           const tradeContextResponse = `Based on your ${tradeToUse.symbol} trade analysis:
@@ -161,8 +156,6 @@ The AI will always consider this trade context when answering your questions, wh
           };
         }
       } else if (tradeToUse?.id) {
-        console.log('Sending to proposed trade endpoint with tradeId:', tradeToUse.id);
-        console.log('Using trade:', tradeToUse.symbol, tradeToUse.timeframe);
         
         try {
           response = await sendProposedTradeMessage({
@@ -170,17 +163,13 @@ The AI will always consider this trade context when answering your questions, wh
             conversationHistory: conversationHistory,
             tradeId: tradeToUse.id
           }).unwrap();
-          console.log('Proposed trade response received:', response);
         } catch (proposedTradeError) {
-          console.log('Proposed trade endpoint failed, trying regular chatbot:', proposedTradeError);
           try {
             response = await sendRegularMessage({
               message: messageText,
               conversationHistory: conversationHistory
             }).unwrap();
-            console.log('Regular chatbot response received:', response);
           } catch (regularError) {
-            console.log('Both endpoints failed, using mock response with trade context:', regularError);
             // Mock response with automatic trade context
             const tradeContextResponse = `Based on your ${tradeToUse.symbol} trade analysis:
 
@@ -211,15 +200,12 @@ The AI will always consider this trade context when answering your questions, wh
           }
         }
       } else {
-        console.log('No trade data available, sending to regular chatbot');
         try {
           response = await sendRegularMessage({
             message: messageText,
             conversationHistory: conversationHistory
           }).unwrap();
-          console.log('Regular chatbot response received:', response);
         } catch (apiError) {
-          console.log('Regular chatbot failed, using mock response:', apiError);
           // Mock response for general questions
           response = {
             success: true,
@@ -239,7 +225,6 @@ The AI will always consider this trade context when answering your questions, wh
         };
         setConversationHistory(prev => [...prev, botMessage]);
       } else {
-        console.error('Response not successful:', response);
         const errorChatMessage: ChatMessage = {
           role: 'assistant',
           content: 'Sorry, I received an invalid response from the server.'
@@ -247,7 +232,6 @@ The AI will always consider this trade context when answering your questions, wh
         setConversationHistory(prev => [...prev, errorChatMessage]);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
       const errorMessage = handleApiError(error as any);
       const errorChatMessage: ChatMessage = {
         role: 'assistant',
@@ -285,11 +269,9 @@ The AI will always consider this trade context when answering your questions, wh
   };
 
   const clearConversation = () => {
-    console.log('Clearing conversation...');
     setConversationHistory([]);
     setSelectedTrade(null);
     setMessage('');
-    console.log('Conversation cleared');
   };
 
   const suggestedQuestions = [
@@ -353,7 +335,6 @@ The AI will always consider this trade context when answering your questions, wh
             <Button
               variant="ghost"
               onClick={() => {
-                console.log('Clear button clicked');
                 clearConversation();
               }}
               className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-2 py-1"

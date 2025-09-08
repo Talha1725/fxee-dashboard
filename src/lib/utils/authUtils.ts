@@ -152,7 +152,6 @@ export const handleAuthentication = async (
   provider: 'google' | 'linkedin' | 'apple' | 'simple'
 ) => {
   try {
-    // Don't set loading here since it's already set in the calling function
     const response = await authPromise;
     const success = await handleSSOResponse(response, dispatch, router, provider);
     

@@ -27,7 +27,6 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   const router = useRouter();
   const dispatch = useDispatch();
   
-  // RTK Query mutations with their built-in loading states
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [registerUser, { isLoading: isRegisterLoading }] = useRegisterMutation();
   
@@ -46,7 +45,6 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   // Watch form values for input components
   const formData = watch();
 
-  // No need for manual loading state management - RTK Query handles this automatically
 
   // Handle form field changes for input components
   const handleFieldChange = (field: string, value: string) => {

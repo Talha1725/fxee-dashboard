@@ -12,7 +12,6 @@ interface PerformanceHistoryContentProps {
 export default function PerformanceHistoryContent({ activeTab }: PerformanceHistoryContentProps) {
   const { isVirtualAccount } = useAccountType();
   
-  // Memoized filtered trades to prevent unnecessary re-filtering
   const filteredTrades = useMemo(() => {
     if (isVirtualAccount) return [];
     

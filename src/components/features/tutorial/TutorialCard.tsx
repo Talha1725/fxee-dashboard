@@ -28,14 +28,12 @@ export const TutorialCard = memo<TutorialCardProps>(({
   return (
     <div className={`w-full max-w-[1000px] xl:max-w-full 2xl:max-w-full mx-auto flex flex-col lg:flex-row rounded-2xl bg-transparent min-h-[364px] lg:h-auto xl:h-auto tutorial-card-container ${isImageLeft ? 'lg:flex-row-reverse' : ''}`}>
       <div className="flex-1 flex flex-col relative p-5 bg-transparent">
-        {/* <div className="flex flex-col gap-2.5 flex-grow"> */}
           <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] xl:text-[26px] font-satoshi-bold text-black dark:text-white leading-tight">
             {heading}
           </h3>
           <p className="text-[16px] sm:text-[18px] leading-relaxed dark:text-white/50 text-black/50 font-satoshi-regular break-words">
             {description}
           </p>
-        {/* </div> */}
 
         <div className={`relative pl-0 lg:pl-0 pr-0 lg:pr-0 pt-[26px] pb-0 flex items-end  xl:pl-0 xl:pr-0 tutorial-content-padding ${isImageLeft ? 'lg:pl-0 lg:pr-0 xl:pl-0 xl:pr-0' : ''}`}>
           <TutorialBackgroundNumber number={number} />

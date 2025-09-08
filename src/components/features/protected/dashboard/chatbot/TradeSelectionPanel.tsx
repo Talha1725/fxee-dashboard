@@ -70,14 +70,7 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
   const useMockResponses = process.env.NEXT_PUBLIC_USE_MOCK_CHATBOT_RESPONSES === 'true';
   const tradeToShow = proposedTrade || (useMockResponses ? mockTradeData : null);
   
-  console.log('TradeSelectionPanel - lastTradeData:', lastTradeData);
-  console.log('TradeSelectionPanel - proposedTrade:', proposedTrade);
-  console.log('TradeSelectionPanel - selectedTrade:', selectedTrade);
-  console.log('TradeSelectionPanel - tradeToShow:', tradeToShow);
-
   const handleTradeSelect = (trade: ProposedTrade) => {
-    console.log('Trade selected:', trade);
-    console.log('Trade ID:', trade.id);
     setSelectedTrade(trade);
     setIsExpanded(false);
   };

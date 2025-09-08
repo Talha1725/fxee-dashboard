@@ -39,7 +39,6 @@ export default function DashboardWidget({
   const { theme } = useTheme();
   const router = useRouter();
 
-  // Memoized values to prevent unnecessary re-renders
   const displayName = useMemo(() => 
     symbolData?.displayName || currency || "EUR/USD", 
     [symbolData?.displayName, currency]
