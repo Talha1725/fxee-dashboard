@@ -27,11 +27,9 @@ export const useAuth = () => {
   }, [token]);
 
   const handleLogout = useCallback(async () => {
-    if (isLoggingOut || isLoading) return;
+    if (isLoggingOut) return;
     
     try {
-      dispatch(setLoading(true));
-      
       // Call logout API if available
       try {
         await logoutMutation().unwrap();
@@ -64,16 +62,15 @@ export const useAuth = () => {
       showToast.error('Failed to logout properly, but you have been signed out');
       router.replace('/signin');
     }
-  }, [dispatch, router, logoutMutation, isLoggingOut, isLoading]);
+  }, [dispatch, router, logoutMutation, isLoggingOut]);
 
   const isAuthenticatedUser = isAuthenticated && !!token;
-  const isAuthLoading = isLoading || isLoggingOut;
 
   return {
     user,
     token,
     isAuthenticated: isAuthenticatedUser,
-    isLoading: isAuthLoading,
+    isLoading: isLoggingOut,
     error,
     logout: handleLogout,
   };

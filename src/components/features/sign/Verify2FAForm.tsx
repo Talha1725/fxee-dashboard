@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,8 +15,6 @@ import { showToast } from "@/lib/utils/toast";
 import { handle2FAAuthentication } from "@/lib/utils/authUtils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useVerify2FAMutation, useResend2FAMutation } from "@/lib/redux/features/auth/authApi";
-import { setLoading } from "@/lib/redux/features/auth/authSlice";
-import { RootState } from "@/lib/redux/store";
 import { handleApiError } from "@/lib/utils/apiUtils";
 import { ArrowLeftIcon } from "lucide-react";
 
@@ -35,9 +33,7 @@ export default function Verify2FAForm() {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   
-  // Get loading state from Redux
-  const { isLoading: authLoading } = useSelector((state: RootState) => state.auth);
-  
+  // RTK Query mutations with their built-in loading states
   const [verify2FA, { isLoading: isVerifying }] = useVerify2FAMutation();
   const [resend2FA, { isLoading: isResending }] = useResend2FAMutation();
   const [countdown, setCountdown] = useState(0);
@@ -83,32 +79,6 @@ export default function Verify2FAForm() {
     }
   }, [urlUserId, router]);
 
-  // Reset loading state when component unmounts or user navigates away
-  useEffect(() => {
-    return () => {
-      // Cleanup: reset loading state when component unmounts
-      dispatch(setLoading(false));
-    };
-  }, [dispatch]);
-
-  // Reset loading state when user navigates away (browser back/forward)
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      dispatch(setLoading(false));
-    };
-
-    const handlePopState = () => {
-      dispatch(setLoading(false));
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [dispatch]);
 
   // Countdown timer for resend
   useEffect(() => {
@@ -132,11 +102,9 @@ export default function Verify2FAForm() {
   const [codeValue, setCodeValue] = useState<string[]>(['', '', '', '', '', '']);
 
   const onSubmit = async (data: Verify2FAFormData) => {
-    if (!userInfo || isVerifying || authLoading) return;
+    if (!userInfo || isVerifying) return;
 
     try {
-      dispatch(setLoading(true));
-      
       const result = await verify2FA({
         userId: userInfo.userId,
         code: data.code
@@ -151,24 +119,18 @@ export default function Verify2FAForm() {
           : null;
 
         if (authData) {
-          // Reset loading state before redirect
-          dispatch(setLoading(false));
-          
           await handle2FAAuthentication(authData, router, dispatch);
           sessionStorage.removeItem('2fa_verification_data');
           showToast.success("Login successful!");
         } else {
           showToast.error("Invalid response format");
-          dispatch(setLoading(false));
         }
       } else {
         showToast.error("Verification failed");
-        dispatch(setLoading(false));
       }
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
       showToast.apiError(errorMessage);
-      dispatch(setLoading(false));
     }
   };
 
@@ -239,10 +201,10 @@ export default function Verify2FAForm() {
                 placeholder="0"
                 value={codeValue[index] || ''}
                 onChange={(e) => handleCodeChange(index, e.target.value)}
-                disabled={isVerifying || authLoading}
+                disabled={isVerifying}
                 className={`text-center text-2xl tracking-widest font-mono h-12 w-12 sm:h-14 sm:w-14 border-black/5 ${
                   errors.code ? "border-red-500" : ""
-                } ${isVerifying || authLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+                } ${isVerifying ? "opacity-50 cursor-not-allowed" : ""}`}
                 maxLength={1}
                 onKeyDown={(e) => {
                   if (e.key === 'Backspace' && !codeValue[index] && index > 0) {
@@ -267,11 +229,11 @@ export default function Verify2FAForm() {
 
         <Button
           type="submit"
-          disabled={isVerifying || authLoading || codeValue.join('').length !== 6}
+          disabled={isVerifying || codeValue.join('').length !== 6}
           className="w-full h-12"
           variant={"fancy"}
         >
-          {isVerifying || authLoading ? (
+          {isVerifying ? (
             <div className="flex items-center gap-2">
               <Spinner size="sm" className="text-white" />
               Verifying...

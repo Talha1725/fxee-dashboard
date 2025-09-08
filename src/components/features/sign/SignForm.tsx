@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,8 +15,6 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 import { useLoginMutation, useRegisterMutation } from "@/lib/redux/features/auth/authApi";
-import { setLoading } from "@/lib/redux/features/auth/authSlice";
-import { RootState } from "@/lib/redux/store";
 import { 
   handleApiError
 } from "@/lib/utils/apiUtils";
@@ -29,10 +27,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   const router = useRouter();
   const dispatch = useDispatch();
   
-  // Get loading state from Redux
-  const { isLoading: authLoading } = useSelector((state: RootState) => state.auth);
-  
-  // RTK Query mutations
+  // RTK Query mutations with their built-in loading states
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [registerUser, { isLoading: isRegisterLoading }] = useRegisterMutation();
   
@@ -51,32 +46,7 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   // Watch form values for input components
   const formData = watch();
 
-  // Reset loading state when component unmounts or user navigates away
-  useEffect(() => {
-    return () => {
-      // Cleanup: reset loading state when component unmounts
-      dispatch(setLoading(false));
-    };
-  }, [dispatch]);
-
-  // Reset loading state when user navigates away (browser back/forward)
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      dispatch(setLoading(false));
-    };
-
-    const handlePopState = () => {
-      dispatch(setLoading(false));
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [dispatch]);
+  // No need for manual loading state management - RTK Query handles this automatically
 
   // Handle form field changes for input components
   const handleFieldChange = (field: string, value: string) => {
@@ -94,11 +64,9 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
 
   // Login function
   const handleLogin = async (data: LoginFormData) => {
-    if (isLoading || authLoading) return;
+    if (isLoginLoading) return;
     
     try {
-      dispatch(setLoading(true));
-      
       const response = await login({
         email: data.email,
         password: data.password,
@@ -120,8 +88,6 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
           timestamp: Date.now()
         }));
         
-        dispatch(setLoading(false));
-        
         // Redirect to 2FA verification page with only userId
         router.push(`/verify-2fa?userId=${twoFAData.userId}`);
         return;
@@ -136,20 +102,15 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       );
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
-      
       showToast.apiError(errorMessage);
-      
-      dispatch(setLoading(false));
     }
   };
 
   // Register function
   const handleRegister = async (data: RegisterFormData) => {
-    if (isLoading || authLoading) return;
+    if (isRegisterLoading) return;
     
     try {
-      dispatch(setLoading(true));
-
       const response = await registerUser({
         email: data.email,
         password: data.password,
@@ -160,17 +121,11 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
       showToast.success("Registration successful! Please check your email to verify your account before logging in.");
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Ensure loading state is reset before redirect
-      dispatch(setLoading(false));
       router.push("/signin");
 
     } catch (error: any) {
       const errorMessage = handleApiError(error as any);
-      
       showToast.apiError(errorMessage);
-      
-      // Ensure loading state is reset on error
-      dispatch(setLoading(false));
     }
   };
 
@@ -206,9 +161,9 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
             type="submit"
             variant="fancy" 
             className="flex-[1_0_0] self-stretch w-full mt-5"
-            disabled={isLoading || authLoading}
+            disabled={isLoading}
           >
-            {isLoading || authLoading ? (
+            {isLoading ? (
               <div className="flex items-center gap-2">
                 <Spinner size="sm" className="text-white" />
                 {isSignup ? "Registering..." : "Logging in..."}
