@@ -13,7 +13,9 @@ export default function CurrencyToCryptoPairConverter({
   size?: number;
 }) {
   const subSize = (size * 6.5) / 10;
-  const tokens = currency.split("/").map((c) => c.toLowerCase());
+  const currencyWithSlash = currency.includes("/") ? currency : 
+    currency.length > 3 ? `${currency.slice(0, 3)}/${currency.slice(3)}` : currency;
+  const tokens = currencyWithSlash.split("/").map((c) => c.toLowerCase());
 
   if (tokens[1] === "usd") {
     return (
