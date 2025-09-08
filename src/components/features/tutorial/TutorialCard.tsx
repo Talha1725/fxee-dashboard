@@ -26,7 +26,7 @@ export const TutorialCard = memo<TutorialCardProps>(({
   const isImageLeft = imagePosition === 'left';
 
   return (
-    <div className={`w-full max-w-[1000px] xl:max-w-full 2xl:max-w-full mx-auto flex flex-col lg:flex-row rounded-2xl overflow-hidden bg-transparent min-h-[364px] lg:h-auto xl:h-auto ${isImageLeft ? 'lg:flex-row-reverse' : ''}`}>
+    <div className={`w-full max-w-[1000px] xl:max-w-full 2xl:max-w-full mx-auto flex flex-col lg:flex-row rounded-2xl bg-transparent min-h-[364px] lg:h-auto xl:h-auto tutorial-card-container ${isImageLeft ? 'lg:flex-row-reverse' : ''}`}>
       <div className="flex-1 flex flex-col relative p-5 bg-transparent">
         {/* <div className="flex flex-col gap-2.5 flex-grow"> */}
           <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] xl:text-[26px] font-satoshi-bold text-black dark:text-white leading-tight">
@@ -42,7 +42,7 @@ export const TutorialCard = memo<TutorialCardProps>(({
 
           <div className={`relative w-full lg:w-[300px] h-[157px] top-[50px] -left-[60px] sm:-left-[200px] md:-left-[200px] lg:top-2 ${isImageLeft ? 'lg:left-[10px]' : 'lg:left-[10px]'}`}>
             <div
-              className="absolute inset-0 z-0"
+              className="absolute -inset-20 z-0 left-[20px] w-[35%]"
               style={{
                 background: BACKGROUND_GRADIENT,
                 filter: "blur(84px)",
