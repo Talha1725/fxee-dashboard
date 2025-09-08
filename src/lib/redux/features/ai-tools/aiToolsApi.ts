@@ -2,6 +2,7 @@ import { baseApi } from "../../services/baseApi";
 import type {
   AIToolsResponse,
   UpdateAIToolsRequest,
+  AITool,
 } from "@/types/redux";
 
 export const aiToolsApi = baseApi.injectEndpoints({

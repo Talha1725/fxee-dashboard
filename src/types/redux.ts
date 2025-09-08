@@ -436,9 +436,14 @@ export interface UsageLimitsResponse {
 }
 
 // AI Tools Types
+export interface AITool {
+  toolKey: string;
+  isEnabled: boolean;
+}
+
 export interface AIToolsData {
-  enabledTools: string[];
-  count: number;
+  tools: AITool[];
+  "engine-power": number;
 }
 
 export interface AIToolsResponse {
@@ -457,5 +462,6 @@ export interface AIToolsResponse {
 }
 
 export interface UpdateAIToolsRequest {
-  tools: string[];
+  tools: AITool[];
+  "engine-power": number;
 }

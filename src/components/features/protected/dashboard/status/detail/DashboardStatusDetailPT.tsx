@@ -17,9 +17,13 @@ import { useGetUserAIToolsQuery } from "@/lib/redux/features/ai-tools/aiToolsApi
 export default function DashboardStatusDetailPT() {
   const { theme } = useTheme();
   const { data: lastTradeData } = useGetLastProposedTradeQuery();
-  const { data: aiToolsData } = useGetUserAIToolsQuery();
+  const { data: aiToolsData, error: aiToolsError } = useGetUserAIToolsQuery();
   const proposedTrade = lastTradeData?.data;
-  const enabledTools = aiToolsData?.data?.enabledTools || [];
+  
+  // Handle API error - if error exists, show no enabled tools
+  const enabledTools = aiToolsError 
+    ? [] 
+    : (aiToolsData?.success && aiToolsData?.data?.tools?.filter(tool => tool.isEnabled).map(tool => tool.toolKey) || []);
 
   // Mapping between API tool names and display titles
   const toolNameMapping: { [key: string]: string } = {
@@ -83,7 +87,14 @@ export default function DashboardStatusDetailPT() {
           icon={<IconAddOns width={14} height={14} />}
         />
         <div className="flex flex-wrap items-start content-start gap-[14px_10px] self-stretch">
-          {addOnsData.map((addOn) => {
+          {aiToolsError ? (
+            <div className="w-full text-center p-4">
+              <p className="text-xs text-red-500 dark:text-red-400">
+                Unable to load AI tools. Please try again later.
+              </p>
+            </div>
+          ) : (
+            addOnsData.map((addOn) => {
               // Check if this add-on is enabled by looking up the mapping
               const enabledDisplayTitles = enabledTools.map(tool => toolNameMapping[tool]).filter(Boolean);
               const isEnabled = enabledDisplayTitles.includes(addOn.title);
@@ -111,7 +122,8 @@ export default function DashboardStatusDetailPT() {
                   />
                 </div>
               );
-            })}
+            })
+          )}
         </div>
       </div>
       <div className="flex flex-col items-start gap-2.5 self-stretch">

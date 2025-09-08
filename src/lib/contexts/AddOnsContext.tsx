@@ -20,6 +20,10 @@ interface AddOnsContextType {
   saveAddOns: () => void;
   hasUnsavedChanges: boolean;
   isUpdating: boolean;
+  enginePower: number;
+  setEnginePower: (power: number) => void;
+  isLoading: boolean;
+  error: any;
 }
 
 // Map add-on titles to API tool keys
@@ -40,7 +44,7 @@ const ADDON_TO_TOOL_MAP: Record<string, string> = {
 const AddOnsContext = createContext<AddOnsContextType | undefined>(undefined);
 
 export function AddOnsProvider({ children }: { children: React.ReactNode }) {
-  const { data: aiToolsData, isLoading } = useGetUserAIToolsQuery();
+  const { data: aiToolsData, isLoading, error } = useGetUserAIToolsQuery();
   const [updateAITools, { isLoading: isUpdating }] = useUpdateUserAIToolsMutation();
   
   // Initialize with all tools inactive until API responds
@@ -52,30 +56,50 @@ export function AddOnsProvider({ children }: { children: React.ReactNode }) {
   const [pendingAddOns, setPendingAddOns] = useState<AddOnData[]>(initialAddOns);
   const [savedAddOns, setSavedAddOns] = useState<AddOnData[]>(initialAddOns);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [enginePower, setEnginePower] = useState<number>(33);
+  const [savedEnginePower, setSavedEnginePower] = useState<number>(33);
 
-  // Update add-ons state when API data changes
+  // Update add-ons state when API data changes or fails
   useEffect(() => {
-    if (!isLoading && aiToolsData) {
-      let updatedAddOns = initialAddOns;
+    // Handle API loading completion (success or error)
+    if (!isLoading) {
+      let updatedAddOns = initialAddOns; // Default to all inactive
+      let currentEnginePower = 0; // Default to 0 on error
       
-      if (aiToolsData.success && aiToolsData.data?.enabledTools) {
-        const enabledTools = aiToolsData.data.enabledTools;
+      // Only update with API data if successful
+      if (aiToolsData && aiToolsData.success && aiToolsData.data?.tools && !error) {
+        const tools = aiToolsData.data.tools;
+        const enabledToolKeys = tools.filter(tool => tool.isEnabled).map(tool => tool.toolKey);
         
         // Update addons based on API data
         updatedAddOns = addOnsData.map(addOn => {
           const toolKey = ADDON_TO_TOOL_MAP[addOn.title];
           return {
             ...addOn,
-            active: toolKey ? enabledTools.includes(toolKey) : false
+            active: toolKey ? enabledToolKeys.includes(toolKey) : false
           };
         });
+
+        // Update engine power from API
+        if (aiToolsData.data['engine-power'] !== undefined) {
+          currentEnginePower = aiToolsData.data['engine-power'];
+        } else {
+          currentEnginePower = 33; // Default fallback if no engine-power in response
+        }
+      } else if (error) {
+        // On error, ensure everything is reset to defaults
+        console.error('AI Tools API error:', error);
+        updatedAddOns = initialAddOns; // All tools inactive
+        currentEnginePower = 0; // Engine power at 0
       }
       
       setPendingAddOns(updatedAddOns);
       setSavedAddOns(updatedAddOns);
+      setEnginePower(currentEnginePower);
+      setSavedEnginePower(currentEnginePower);
       setIsInitialized(true);
     }
-  }, [aiToolsData, isLoading]);
+  }, [aiToolsData, isLoading, error]);
 
   const toggleAddOn = (title: string) => {
     setPendingAddOns(prev => 
@@ -88,21 +112,33 @@ export function AddOnsProvider({ children }: { children: React.ReactNode }) {
   };
   
   const saveAddOns = async () => {
-    // Map pendingAddOns to tool keys for API
-    const selectedTools = pendingAddOns
-      .filter(addOn => addOn.active && ADDON_TO_TOOL_MAP[addOn.title])
-      .map(addOn => ADDON_TO_TOOL_MAP[addOn.title]);
+    // Map pendingAddOns to new API format
+    const toolsArray = Object.keys(ADDON_TO_TOOL_MAP).map(title => {
+      const toolKey = ADDON_TO_TOOL_MAP[title];
+      const addOn = pendingAddOns.find(a => a.title === title);
+      return {
+        toolKey,
+        isEnabled: addOn ? addOn.active : false
+      };
+    });
+
+    // Filter out tools that don't have a valid mapping
+    const validTools = toolsArray.filter(tool => tool.toolKey);
     
-    if (selectedTools.length === 0) {
+    if (validTools.filter(tool => tool.isEnabled).length === 0) {
       showToast.error("Please select at least one AI tool");
       return;
     }
     
     try {
-      const result = await updateAITools({ tools: selectedTools }).unwrap();
+      const result = await updateAITools({ 
+        tools: validTools,
+        "engine-power": enginePower 
+      }).unwrap();
       
       if (result.success) {
         setSavedAddOns([...pendingAddOns]);
+        setSavedEnginePower(enginePower);
         showToast.success("AI tools updated successfully!");
       } else {
         showToast.error("Failed to update AI tools");
@@ -134,7 +170,7 @@ export function AddOnsProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const hasUnsavedChanges = !compareAddOns(pendingAddOns, savedAddOns);
+  const hasUnsavedChanges = !compareAddOns(pendingAddOns, savedAddOns) || enginePower !== savedEnginePower;
 
   return (
     <AddOnsContext.Provider value={{ 
@@ -143,7 +179,11 @@ export function AddOnsProvider({ children }: { children: React.ReactNode }) {
       toggleAddOn, 
       saveAddOns, 
       hasUnsavedChanges,
-      isUpdating 
+      isUpdating,
+      enginePower,
+      setEnginePower,
+      isLoading,
+      error
     }}>
       {children}
     </AddOnsContext.Provider>

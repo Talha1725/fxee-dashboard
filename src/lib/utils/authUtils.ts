@@ -238,3 +238,53 @@ export const handle2FAAuthentication = async (
     return false;
   }
 };
+
+// JWT utility functions
+export const decodeJWT = (token: string) => {
+  try {
+    const payload = token.split('.')[1];
+    const decodedPayload = atob(payload);
+    return JSON.parse(decodedPayload);
+  } catch (error) {
+    console.error('Error decoding JWT:', error);
+    return null;
+  }
+};
+
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const decoded = decodeJWT(token);
+    if (!decoded || !decoded.exp) {
+      return true; // If we can't decode or no expiration, consider expired
+    }
+    
+    const currentTime = Math.floor(Date.now() / 1000);
+    return decoded.exp < currentTime;
+  } catch (error) {
+    console.error('Error checking token expiration:', error);
+    return true; // If error, consider expired
+  }
+};
+
+export const getTokenExpirationTime = (token: string): number | null => {
+  try {
+    const decoded = decodeJWT(token);
+    return decoded?.exp ? decoded.exp * 1000 : null; // Convert to milliseconds
+  } catch (error) {
+    console.error('Error getting token expiration:', error);
+    return null;
+  }
+};
+
+export const handleTokenExpired = (dispatch: Dispatch, router?: AppRouterInstance) => {
+  localStorage.removeItem('token');
+  dispatch(logout());
+  showToast.apiError('Your session has expired. Please log in again.');
+  
+  if (router) {
+    router.replace('/signin');
+  } else {
+    // If no router provided, try to redirect using window.location
+    window.location.href = '/signin';
+  }
+};

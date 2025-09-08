@@ -65,34 +65,43 @@ const getStaticDefaultData = (): DataPoint[] => [
 
 interface DashboardAPLProps {
   onPowerLevelChange?: (value: number) => void;
+  value?: number;
 }
 
-export default function DashboardAPL({ onPowerLevelChange }: DashboardAPLProps) {
+export default function DashboardAPL({ onPowerLevelChange, value = 33 }: DashboardAPLProps) {
   const { theme } = useTheme();
-  const [sliderValue, setSliderValue] = useState<number>(33);
+  const [sliderValue, setSliderValue] = useState<number>(value);
   const [chartData, setChartData] = useState<DataPoint[]>(getStaticDefaultData);
   const [isClient, setIsClient] = useState(false);
+
+  // Update slider value when prop changes (from API)
+  useEffect(() => {
+    if (sliderValue !== value) {
+      setSliderValue(value);
+      if (isClient) {
+        setChartData(generateRandomData(value));
+      }
+    }
+  }, [value, isClient, sliderValue]);
 
   // Ensure we're on the client side to avoid hydration mismatch
   useEffect(() => {
     setIsClient(true);
     // Generate initial random data only on client
-    setChartData(generateRandomData(33));
-    // Notify parent of initial value
-    onPowerLevelChange?.(33);
-  }, [onPowerLevelChange]);
+    setChartData(generateRandomData(value));
+  }, []); // Remove dependencies to avoid infinite loop
 
   // Handle slider value change and generate new random chart data
-  const handleSliderChange = useCallback((value: number) => {
-    if (!isClient) return; // Only update if on client side
+  const handleSliderChange = useCallback((newValue: number) => {
+    if (!isClient || newValue === sliderValue) return; // Only update if different and on client side
     
-    setSliderValue(value);
+    setSliderValue(newValue);
     // Generate completely new random data every time
-    const newData = generateRandomData(value);
+    const newData = generateRandomData(newValue);
     setChartData([...newData]); // Force new array reference
     // Notify parent component of the change
-    onPowerLevelChange?.(value);
-  }, [isClient, onPowerLevelChange]);
+    onPowerLevelChange?.(newValue);
+  }, [isClient, onPowerLevelChange, sliderValue]);
   return (
     <div className={`flex flex-col sm:flex-row justify-between items-center gap-2.5 overflow-hidden self-stretch rounded-[10px] border border-white/2 ${theme === "dark" ? "bg-dark-gradient" : "bg-black/5"} `}>
       <div className="flex flex-col items-start gap-2.5 shrink-0 self-stretch py-3.5 px-3 flex-[1_0_0]">
