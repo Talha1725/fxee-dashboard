@@ -29,24 +29,6 @@ export const useAuth = () => {
     }
   }, [token, dispatch, router]);
 
-  // Set up periodic token expiration check
-  useEffect(() => {
-    if (!token) return;
-
-    const checkTokenExpiration = () => {
-      if (isTokenExpired(token)) {
-        handleTokenExpired(dispatch, router);
-      }
-    };
-
-    // Check immediately
-    checkTokenExpiration();
-
-    // Check every 30 seconds
-    const intervalId = setInterval(checkTokenExpiration, 30000);
-
-    return () => clearInterval(intervalId);
-  }, [token, dispatch, router]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
