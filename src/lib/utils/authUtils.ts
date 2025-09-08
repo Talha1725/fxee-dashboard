@@ -118,6 +118,8 @@ export const handleSSOResponse = async (
               break;
           }
           
+          dispatch(setLoading(false));
+          
           // Redirect to home and prevent going back to login
           router.replace("/home");
         } else {
@@ -150,18 +152,21 @@ export const handleAuthentication = async (
   provider: 'google' | 'linkedin' | 'apple' | 'simple'
 ) => {
   try {
-    dispatch(setLoading(true));
-    
+    // Don't set loading here since it's already set in the calling function
     const response = await authPromise;
     const success = await handleSSOResponse(response, dispatch, router, provider);
+    
+    // Reset loading state after successful authentication
+    if (success) {
+      dispatch(setLoading(false));
+    }
     
     return success;
   } catch (error: any) {
     const errorMessage = handleApiError(error as any);
     showToast.apiError(errorMessage);
-    return false;
-  } finally {
     dispatch(setLoading(false));
+    return false;
   }
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -51,6 +51,33 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
   // Watch form values for input components
   const formData = watch();
 
+  // Reset loading state when component unmounts or user navigates away
+  useEffect(() => {
+    return () => {
+      // Cleanup: reset loading state when component unmounts
+      dispatch(setLoading(false));
+    };
+  }, [dispatch]);
+
+  // Reset loading state when user navigates away (browser back/forward)
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      dispatch(setLoading(false));
+    };
+
+    const handlePopState = () => {
+      dispatch(setLoading(false));
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [dispatch]);
+
   // Handle form field changes for input components
   const handleFieldChange = (field: string, value: string) => {
     setValue(field as keyof (LoginFormData | RegisterFormData), value);
@@ -92,6 +119,8 @@ export default function SignForm({ isSignup }: { isSignup: boolean }) {
           twoFAMethod: twoFAData.twoFAMethod,
           timestamp: Date.now()
         }));
+        
+        dispatch(setLoading(false));
         
         // Redirect to 2FA verification page with only userId
         router.push(`/verify-2fa?userId=${twoFAData.userId}`);

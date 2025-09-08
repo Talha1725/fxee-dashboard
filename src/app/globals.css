@@ -1199,32 +1199,36 @@ body {
     color: var(--foreground) !important;
   }
 
+  .toaster {
+    pointer-events: none !important;
+  }
+
   .toaster [data-sonner-toast] {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
     padding: 16px !important;
     border-radius: 16px !important;
-    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     backdrop-filter: blur(15px) saturate(1.2) brightness(1.05) !important;
     -webkit-backdrop-filter: blur(15px) saturate(1.2) brightness(1.05) !important;
     min-width: 320px !important;
     max-width: 480px !important;
-    background: rgba(120, 130, 140, 0.5) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-    color: rgb(0, 0, 0) !important;
+    background: rgba(30, 35, 40, 0.9) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    color: rgb(255, 255, 255) !important;
     font-family: var(--font-satoshi-regular) !important;
     font-weight: 700 !important;
     font-size: 15px !important;
     text-shadow: none !important;
     letter-spacing: 0.025em !important;
-    position: relative !important;
+    /* Removed position: relative to allow Sonner's absolute positioning for stacking */
     overflow: visible !important;
-    z-index: 9999 !important;
-    transform: translateZ(0) !important;
+    /* Removed z-index to allow Sonner's natural stacking order */
+    /* Removed transform: translateZ(0) to allow Sonner's transform-based stacking */
     will-change: transform !important;
-    isolation: isolate !important;
-    contain: layout style paint !important;
+    /* Removed isolation: isolate to allow proper stacking context */
+    /* Removed contain: layout style paint to allow proper stacking */
     animation: toastSlideIn 0.3s ease-out, toastSlideOut 0.3s ease-in 2.7s forwards !important;
   }
 
@@ -1294,18 +1298,18 @@ body {
     letter-spacing: 0.01em !important;
   }
 
-  /* Success toast - Blue base with green hints */
+  /* Success toast - Dark green background */
   .toaster [data-sonner-toast][data-type="success"] {
-    background: rgba(80, 160, 120, 0.5) !important;
-    border: 1px solid rgba(62, 220, 129, 0.4) !important;
-    color: rgb(0, 0, 0) !important;
+    background: rgba(34, 197, 94, 0.9) !important;
+    border: 1px solid rgba(62, 220, 129, 0.5) !important;
+    color: rgb(255, 255, 255) !important;
     font-weight: 700 !important;
     font-size: 15px !important;
     text-shadow: none !important;
     letter-spacing: 0.025em !important;
     backdrop-filter: blur(100px) saturate(3) brightness(1.2) !important;
     -webkit-backdrop-filter: blur(100px) saturate(3) brightness(1.2) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
   }
 
   .dark .toaster [data-sonner-toast][data-type="success"] {
@@ -1317,14 +1321,14 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   }
 
-  /* Error toast - Blue base with red hints */
+  /* Error toast - Dark red background */
   .toaster [data-sonner-toast][data-type="error"] {
-    background: rgba(180, 80, 80, 0.5) !important;
-    border: 1px solid rgba(239, 68, 68, 0.4) !important;
-    color: rgb(0, 0, 0) !important;
+    background: rgba(220, 38, 38, 0.9) !important;
+    border: 1px solid rgba(239, 68, 68, 0.5) !important;
+    color: rgb(255, 255, 255) !important;
     backdrop-filter: blur(100px) saturate(3) brightness(1.2) !important;
     -webkit-backdrop-filter: blur(100px) saturate(3) brightness(1.2) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
   }
 
   .dark .toaster [data-sonner-toast][data-type="error"] {
@@ -1363,9 +1367,9 @@ body {
     transition: none !important;
   }
 
-  /* Light mode icons should be black */
+  /* Light mode icons should be white for dark toast backgrounds */
   .toaster [data-sonner-toast] [data-icon] {
-    color: rgb(0, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
   }
 
   .toaster [data-sonner-toast] [data-icon]:hover {
@@ -1378,27 +1382,7 @@ body {
   }
 
   .toaster [data-sonner-toast] [data-close-button] {
-    color: rgb(0, 0, 0) !important;
-    opacity: 0.8 !important;
-    filter: none !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
-  .toaster [data-sonner-toast] [data-close-button]:hover {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
-
-  .dark .toaster [data-sonner-toast] [data-close-button] {
-    color: rgb(255, 255, 255) !important;
-    filter: none !important;
-  }
-
-  .dark .toaster [data-sonner-toast] [data-close-button]:hover {
-    color: rgb(255, 255, 255) !important;
-    filter: none !important;
+    display: none !important;
   }
 
   /* Remove any overlay effects */

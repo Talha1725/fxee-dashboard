@@ -37,7 +37,7 @@ export default function FASecuritySection() {
 
   // Initialize 2FA state from user data
   useEffect(() => {
-    const current2FA = (user as any)?.twoFaMethod || (profileData as any)?.twoFaMethod || "";
+    const current2FA = (user as any)?.twoFAMethod || (profileData as any)?.twoFAMethod || "";
     
     if (current2FA) {
       setSelectedFA(current2FA);
@@ -259,7 +259,6 @@ export default function FASecuritySection() {
           setShowAuthenticatorModal(false);
           setPendingAuthenticatorSelection(false);
           setOriginalFA("authenticator");
-          toast.success("Authenticator 2FA enabled successfully!");
         }}
       />
     </div>
