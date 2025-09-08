@@ -10,14 +10,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Title32, Description14 } from "@/components/ui/typography";
+import { Spinner } from "@/components/ui/spinner";
 import { showToast } from "@/lib/utils/toast";
 import { handle2FAAuthentication } from "@/lib/utils/authUtils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useVerify2FAMutation, useResend2FAMutation } from "@/lib/redux/features/auth/authApi";
+import { handleApiError } from "@/lib/utils/apiUtils";
 import { ArrowLeftIcon } from "lucide-react";
 
 const verify2FASchema = z.object({
-  code: z.string().min(6, "Code must be 6 digits").max(6, "Code must be 6 digits")
+  code: z.string()
+    .min(1, "Please enter the verification code")
+    .min(6, "Code must be 6 digits")
+    .max(6, "Code must be 6 digits")
 });
 
 type Verify2FAFormData = z.infer<typeof verify2FASchema>;
@@ -27,6 +32,8 @@ export default function Verify2FAForm() {
   const searchParams = useSearchParams();
   const { theme } = useTheme();
   const dispatch = useDispatch();
+  
+  // RTK Query mutations with their built-in loading states
   const [verify2FA, { isLoading: isVerifying }] = useVerify2FAMutation();
   const [resend2FA, { isLoading: isResending }] = useResend2FAMutation();
   const [countdown, setCountdown] = useState(0);
@@ -67,11 +74,11 @@ export default function Verify2FAForm() {
       sessionStorage.removeItem('2fa_verification_data');
       router.push("/signin");
     } catch (error) {
-      console.error("Error parsing 2FA data:", error);
       showToast.error("Invalid 2FA verification request");
       router.push("/signin");
     }
   }, [urlUserId, router]);
+
 
   // Countdown timer for resend
   useEffect(() => {
@@ -95,7 +102,7 @@ export default function Verify2FAForm() {
   const [codeValue, setCodeValue] = useState<string[]>(['', '', '', '', '', '']);
 
   const onSubmit = async (data: Verify2FAFormData) => {
-    if (!userInfo) return;
+    if (!userInfo || isVerifying) return;
 
     try {
       const result = await verify2FA({
@@ -122,12 +129,13 @@ export default function Verify2FAForm() {
         showToast.error("Verification failed");
       }
     } catch (error: any) {
-      showToast.error(error.data?.message || "Verification failed");
+      const errorMessage = handleApiError(error as any);
+      showToast.apiError(errorMessage);
     }
   };
 
   const handleResendCode = async () => {
-    if (!userInfo || countdown > 0 || userInfo.twoFAMethod !== 'email') return;
+    if (!userInfo || countdown > 0 || userInfo.twoFAMethod !== 'email' || isResending) return;
 
     try {
       await resend2FA({
@@ -138,7 +146,8 @@ export default function Verify2FAForm() {
       setCountdown(60);
       showToast.success("New verification code sent to your email");
     } catch (error: any) {
-      showToast.error(error.data?.message || "Failed to resend code");
+      const errorMessage = handleApiError(error as any);
+      showToast.apiError(errorMessage);
     }
   };
 
@@ -192,9 +201,10 @@ export default function Verify2FAForm() {
                 placeholder="0"
                 value={codeValue[index] || ''}
                 onChange={(e) => handleCodeChange(index, e.target.value)}
+                disabled={isVerifying}
                 className={`text-center text-2xl tracking-widest font-mono h-12 w-12 sm:h-14 sm:w-14 border-black/5 ${
                   errors.code ? "border-red-500" : ""
-                }`}
+                } ${isVerifying ? "opacity-50 cursor-not-allowed" : ""}`}
                 maxLength={1}
                 onKeyDown={(e) => {
                   if (e.key === 'Backspace' && !codeValue[index] && index > 0) {
@@ -219,11 +229,18 @@ export default function Verify2FAForm() {
 
         <Button
           type="submit"
-          disabled={isVerifying || codeValue.length !== 6}
+          disabled={isVerifying || codeValue.join('').length !== 6}
           className="w-full h-12"
           variant={"fancy"}
         >
-          {isVerifying ? "Verifying..." : "Verify & Sign In"}
+          {isVerifying ? (
+            <div className="flex items-center gap-2">
+              <Spinner size="sm" className="text-white" />
+              Verifying...
+            </div>
+          ) : (
+            "Verify & Sign In"
+          )}
         </Button>
 
         {userInfo.twoFAMethod === 'email' && (
@@ -238,7 +255,16 @@ export default function Verify2FAForm() {
               disabled={countdown > 0 || isResending}
               className="text-sm"
             >
-              {countdown > 0 ? `Resend in ${countdown}s` : "Resend Code"}
+              {isResending ? (
+                <div className="flex items-center gap-2">
+                  <Spinner size="sm" className="text-gray-500" />
+                  Sending...
+                </div>
+              ) : countdown > 0 ? (
+                `Resend in ${countdown}s`
+              ) : (
+                "Resend Code"
+              )}
             </Button>
           </div>
         )}

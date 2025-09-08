@@ -35,7 +35,7 @@ export default function DashboardStatusDetailPT() {
   };
 
   return (
-    <DashboardStatusDetailCardContainer className="py-3.5 px-3 h-80 lg:h-full overflow-y-auto scrollbar-hide">
+    <DashboardStatusDetailCardContainer className="py-3.5 px-3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
       <div className="flex flex-col items-start gap-5 self-stretch">
         <DashboardStatusDetailCardHead
           title="Proposed Trade"
