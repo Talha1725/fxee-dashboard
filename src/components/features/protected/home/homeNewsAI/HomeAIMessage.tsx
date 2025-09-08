@@ -10,14 +10,14 @@ export default function HomeAIMessage() {
   };
 
   return (
-    <div className="flex items-start gap-5 shrink-0 max-h-[262px] overflow-hidden">
+    <div className="flex items-start gap-5 shrink-0 max-h-[300px] sm:max-h-[350px] md:max-h-[400px] overflow-hidden">
       <div className="flex flex-col items-start gap-5 flex-[1_0_0]">
         <HomeAIMessageHead 
           isExpanded={isExpanded}
           clearConversation={clearConversation}
           setIsExpanded={setIsExpanded}
         />
-        <HomeAIMessageBody className="max-h-[190px] overflow-y-scroll homeAI-scrollbar" />
+        <HomeAIMessageBody className="max-h-[220px] sm:max-h-[250px] md:max-h-[280px] overflow-y-scroll homeAI-scrollbar" />
       </div>
     </div>
   );

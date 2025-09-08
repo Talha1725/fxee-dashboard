@@ -29,7 +29,7 @@ export default function DashboardChatbot() {
 
 
   return (
-    <Card className="flex flex-col items-center gap-4 flex-[1_0_0] self-stretch rounded-[10px] bg-white/3 border dark:border-white/4 border-black/15 p-5 overflow-hidden py-5 px-5 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px]">
+    <Card className="flex flex-col items-center gap-4 flex-[1_0_0] self-stretch rounded-[10px] bg-white/3 border dark:border-white/4 border-black/15 p-5 overflow-hidden py-5 px-5 h-[400px] sm:h-[450px] md:h-[500px] lg:max-h-[900px] lg:h-[900px]">
       <DashboardChatbotHead 
         isExpanded={isExpanded}
         clearConversation={clearConversation}
