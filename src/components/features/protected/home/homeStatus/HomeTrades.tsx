@@ -11,7 +11,11 @@ import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommenda
 
 export default function HomeTrades({ className }: { className?: string }) {
   const { theme } = useTheme();
-  const { data: dailyRecommendations, error, isLoading } = useGetDailyRecommendationsQuery();
+  const {
+    data: dailyRecommendations,
+    error,
+    isLoading,
+  } = useGetDailyRecommendationsQuery();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [skippedCards, setSkippedCards] = useState<any[]>([]);
@@ -23,14 +27,15 @@ export default function HomeTrades({ className }: { className?: string }) {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: 300,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
 
   const checkScrollPosition = () => {
     if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
       const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 10; // 10px tolerance
       setCanScrollRight(!isAtEnd);
     }
@@ -50,12 +55,12 @@ export default function HomeTrades({ className }: { className?: string }) {
 
   // Load skipped cards from localStorage on component mount
   useEffect(() => {
-    const savedSkippedCards = localStorage.getItem('skippedCards');
+    const savedSkippedCards = localStorage.getItem("skippedCards");
     if (savedSkippedCards) {
       try {
         setSkippedCards(JSON.parse(savedSkippedCards));
       } catch (error) {
-        console.error('Error loading skipped cards from localStorage:', error);
+        console.error("Error loading skipped cards from localStorage:", error);
       }
     }
   }, []);
@@ -63,34 +68,41 @@ export default function HomeTrades({ className }: { className?: string }) {
   // Save skipped cards to localStorage whenever it changes
   useEffect(() => {
     if (skippedCards.length > 0) {
-      localStorage.setItem('skippedCards', JSON.stringify(skippedCards));
+      localStorage.setItem("skippedCards", JSON.stringify(skippedCards));
     } else {
-      localStorage.removeItem('skippedCards');
+      localStorage.removeItem("skippedCards");
     }
   }, [skippedCards]);
 
   const handleSkipCard = (cardId: string) => {
     // Start animation
     setSkippingCardId(cardId);
-    
-    const cardToSkip = activeCards.find(card => card.id?.toString() === cardId || card.id === cardId);
+
+    const cardToSkip = activeCards.find(
+      (card) => card.id?.toString() === cardId || card.id === cardId
+    );
     if (cardToSkip) {
       // Wait for animation to complete before moving card
       setTimeout(() => {
-        setActiveCards(prev => prev.filter(card => card.id?.toString() !== cardId && card.id !== cardId));
-        setSkippedCards(prev => [...prev, cardToSkip]);
+        setActiveCards((prev) =>
+          prev.filter(
+            (card) => card.id?.toString() !== cardId && card.id !== cardId
+          )
+        );
+        setSkippedCards((prev) => [...prev, cardToSkip]);
         setSkippingCardId(null);
       }, 300);
-    } else if (cardId.startsWith('fallback-')) {
+    } else if (cardId.startsWith("fallback-")) {
       // Handle fallback cards
       const fallbackCard = {
         id: cardId,
-        symbol: 'DEMO',
-        direction: cardId.includes('1') || cardId.includes('3') ? 'Long' : 'Short',
-        title: 'Demo trade recommendation'
+        symbol: "DEMO",
+        direction:
+          cardId.includes("1") || cardId.includes("3") ? "Long" : "Short",
+        title: "Demo trade recommendation",
       };
       setTimeout(() => {
-        setSkippedCards(prev => [...prev, fallbackCard]);
+        setSkippedCards((prev) => [...prev, fallbackCard]);
         setSkippingCardId(null);
       }, 300);
     }
@@ -98,13 +110,13 @@ export default function HomeTrades({ className }: { className?: string }) {
 
   const handleRestoreCard = (cardId: string) => {
     setRestoringCardId(cardId);
-    
-    const cardToRestore = skippedCards.find(card => card.id === cardId);
+
+    const cardToRestore = skippedCards.find((card) => card.id === cardId);
     if (cardToRestore) {
       // Wait for animation to complete before moving card
       setTimeout(() => {
-        setSkippedCards(prev => prev.filter(card => card.id !== cardId));
-        setActiveCards(prev => [...prev, cardToRestore]);
+        setSkippedCards((prev) => prev.filter((card) => card.id !== cardId));
+        setActiveCards((prev) => [...prev, cardToRestore]);
         setRestoringCardId(null);
       }, 300);
     }
@@ -113,11 +125,11 @@ export default function HomeTrades({ className }: { className?: string }) {
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', checkScrollPosition);
+      scrollContainer.addEventListener("scroll", checkScrollPosition);
       checkScrollPosition(); // Check initial position
-      
+
       return () => {
-        scrollContainer.removeEventListener('scroll', checkScrollPosition);
+        scrollContainer.removeEventListener("scroll", checkScrollPosition);
       };
     }
   }, []);
@@ -128,13 +140,13 @@ export default function HomeTrades({ className }: { className?: string }) {
         theme === "dark"
           ? "bg-card-green-gradient"
           : "bg-card-green-gradient-light"
-      } border-none ${className}`}
+      } border-none min-h-[460px] sm:min-h-[481px] ${className}`}
     >
-      <button 
+      <button
         onClick={handleScrollRight}
         disabled={!canScrollRight}
         className={`absolute top-1/2 -translate-y-1/2 right-1 cursor-pointer transition-opacity duration-200 ${
-          canScrollRight ? 'opacity-100' : 'opacity-30 cursor-not-allowed'
+          canScrollRight ? "opacity-100" : "opacity-30 cursor-not-allowed"
         }`}
       >
         <ChevronRight className="w-8 h-8 text-white/70" />
@@ -144,43 +156,66 @@ export default function HomeTrades({ className }: { className?: string }) {
           AI Recommended Trades
         </Text18>
       </div>
-      <div 
+      <div
         ref={scrollContainerRef}
         className="flex items-start h-full gap-5 flex-[1_0_0] self-stretch overflow-x-scroll scrollbar-hide"
-        style={{ scrollBehavior: 'smooth' }}
+        style={{ scrollBehavior: "smooth" }}
       >
         {/* Active Cards */}
         {activeCards.length > 0 ? (
           activeCards.map((recommendation, index) => {
-            const isSkipping = skippingCardId === (recommendation.id?.toString() || index.toString());
+            const isSkipping =
+              skippingCardId ===
+              (recommendation.id?.toString() || index.toString());
             return (
               <React.Fragment key={recommendation.id}>
-                <div className={`transition-all duration-300 ease-in-out ${
-                  isSkipping 
-                    ? 'transform translate-x-full opacity-0 scale-95' 
-                    : 'transform translate-x-0 opacity-100 scale-100'
-                } h-full`}>
-                  <HomeTradesItem 
+                <div
+                  className={`transition-all duration-300 ease-in-out ${
+                    isSkipping
+                      ? "transform translate-x-full opacity-0 scale-95"
+                      : "transform translate-x-0 opacity-100 scale-100"
+                  } h-full`}
+                >
+                  <HomeTradesItem
                     recommendation={recommendation}
                     long={recommendation.direction === "Long"}
-                    onSkip={() => handleSkipCard(recommendation.id?.toString() || index.toString())}
+                    onSkip={() =>
+                      handleSkipCard(
+                        recommendation.id?.toString() || index.toString()
+                      )
+                    }
                   />
                 </div>
                 {index < activeCards.length - 1 && (
-                  <Separator orientation="vertical" className="h-full bg-white/5" />
+                  <Separator
+                    orientation="vertical"
+                    className="h-full bg-white/5"
+                  />
                 )}
               </React.Fragment>
             );
           })
         ) : (
           <>
-            <HomeTradesItem long={true} onSkip={() => handleSkipCard('fallback-1')} />
+            <HomeTradesItem
+              long={true}
+              onSkip={() => handleSkipCard("fallback-1")}
+            />
             <Separator orientation="vertical" className="h-full bg-white/5" />
-            <HomeTradesItem long={false} onSkip={() => handleSkipCard('fallback-2')} />
+            <HomeTradesItem
+              long={false}
+              onSkip={() => handleSkipCard("fallback-2")}
+            />
             <Separator orientation="vertical" className="h-full bg-white/5" />
-            <HomeTradesItem long={true} onSkip={() => handleSkipCard('fallback-3')} />
+            <HomeTradesItem
+              long={true}
+              onSkip={() => handleSkipCard("fallback-3")}
+            />
             <Separator orientation="vertical" className="h-full bg-white/5" />
-            <HomeTradesItem long={false} onSkip={() => handleSkipCard('fallback-4')} />
+            <HomeTradesItem
+              long={false}
+              onSkip={() => handleSkipCard("fallback-4")}
+            />
           </>
         )}
 
@@ -196,29 +231,34 @@ export default function HomeTrades({ className }: { className?: string }) {
                   {skippedCards.length}
                 </div>
               </div> */}
-                                 {skippedCards.map((card, index) => {
-                   const isRestoring = restoringCardId === card.id;
-                   return (
-                     <React.Fragment key={card.id}>
-                       <div className={`relative h-full transition-all duration-300 ease-in-out ${
-                         isRestoring 
-                           ? 'transform -translate-x-full opacity-0 scale-95' 
-                           : 'transform translate-x-0 opacity-100 scale-100'
-                       }`}>
-                         <HomeTradesItem 
-                           recommendation={card}
-                           long={card.direction === "Long"}
-                           skipped={true}
-                           handleRestoreCard={() => handleRestoreCard(card.id)}
-                         />
-                       </div>
-                       {index < skippedCards.length - 1 && (
-                         <Separator orientation="vertical" className="w-full bg-white/5" />
-                       )}
-                     </React.Fragment>
-                   );
-                 })}
-              </div>
+              {skippedCards.map((card, index) => {
+                const isRestoring = restoringCardId === card.id;
+                return (
+                  <React.Fragment key={card.id}>
+                    <div
+                      className={`relative h-full transition-all duration-300 ease-in-out ${
+                        isRestoring
+                          ? "transform -translate-x-full opacity-0 scale-95"
+                          : "transform translate-x-0 opacity-100 scale-100"
+                      }`}
+                    >
+                      <HomeTradesItem
+                        recommendation={card}
+                        long={card.direction === "Long"}
+                        skipped={true}
+                        handleRestoreCard={() => handleRestoreCard(card.id)}
+                      />
+                    </div>
+                    {index < skippedCards.length - 1 && (
+                      <Separator
+                        orientation="vertical"
+                        className="w-full bg-white/5"
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
           </>
         )}
       </div>
