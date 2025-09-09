@@ -80,7 +80,9 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
               : error 
               ? "Error loading limits" 
               : currentLimit 
-              ? `${currentLimit.remaining}/${currentLimit.limit} Analysis Left` 
+              ? currentLimit.limit === 9999
+                ? "∞ Analysis"
+                : `${currentLimit.remaining}/${currentLimit.limit} Analysis Left`
               : "- Analysis Left"}
           </Text14>
         </div>

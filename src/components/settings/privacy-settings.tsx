@@ -1,6 +1,6 @@
 import ChangePasswordSection from "./change-password-section";
 import FASecuritySection from "./fa-security-section";
-import SessionsSection from "./sessions-section";
+// import SessionsSection from "./sessions-section";
 
 export default function PrivacySettings() {
   return (
@@ -8,7 +8,7 @@ export default function PrivacySettings() {
       <div className="space-y-8">
         <ChangePasswordSection />
         <FASecuritySection />
-        <SessionsSection />
+        {/* <SessionsSection /> */}
       </div>
     </div>
   );

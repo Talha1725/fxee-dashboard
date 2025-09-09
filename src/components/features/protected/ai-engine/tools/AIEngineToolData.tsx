@@ -72,13 +72,13 @@ export default function AIEngineToolData({
   const formattedFullData = formatAnalysisData.formatFullData(toolData.fullData);
 
   return (
-    <div className={`flex flex-col items-start gap-6 w-full p-8 rounded-[20px] ${theme === "dark" ? "bg-tab-dark-gradient border border-[#FFFFFF0D]" : "border border-[#0000001A] bg-card-main-dashboard-gradient"} min-h-[400px] max-h-[800px] overflow-y-auto scrollbar-hide w-full`}>
+    <div className={`flex flex-col items-start gap-6 w-full min-h-[400px] max-h-[800px] overflow-y-auto scrollbar-hide`}>
       
       {/* Header Section */}
       <div className="w-full">
         {/* Timestamp info */}
         {timeInfo && (
-          <div className={`flex items-center gap-3 p-3 rounded-[12px] ${theme === "dark" ? "bg-white/5" : "bg-black/5"} mb-4`}>
+          <div className={`flex items-center gap-3 mb-4`}>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-black/60 dark:text-white/60" />
               <Text14 className="text-black/80 dark:text-white/80 font-satoshi-medium">{timeInfo.date}</Text14>
@@ -95,14 +95,14 @@ export default function AIEngineToolData({
           <div className={`p-2 rounded-[8px] ${theme === "dark" ? "bg-white/10" : "bg-black/5"}`}>
             <Brain className="w-5 h-5 text-black/80 dark:text-white/80" />
           </div>
-          <Text24 className="font-satoshi-medium text-black dark:text-white">
+          <Text16 className="font-satoshi-medium text-black dark:text-white">
             {toolData.toolName} - {analysisData?.symbol || 'Analysis'}
-          </Text24>
+          </Text16>
         </div>
       </div>
 
       {/* Summary */}
-      <div className={`w-full p-5 rounded-[16px] ${theme === "dark" ? "bg-white/5 border border-white/10" : "bg-black/5 border border-black/10"}`}>
+      <div className={`w-full`}>
         <div className="flex items-center gap-2 mb-3">
           <div className={`p-1.5 rounded-[6px] ${theme === "dark" ? "bg-white/10" : "bg-black/10"}`}>
             <CheckCircle className="w-4 h-4 text-black/80 dark:text-white/80" />
@@ -115,7 +115,7 @@ export default function AIEngineToolData({
       </div>
 
       {/* Key Points */}
-      <div className={`w-full p-5 rounded-[16px] ${theme === "dark" ? "bg-white/5 border border-white/10" : "bg-black/5 border border-black/10"}`}>
+      <div className={`w-full`}>
         <div className="flex items-center gap-2 mb-3">
           <div className={`p-1.5 rounded-[6px] ${theme === "dark" ? "bg-white/10" : "bg-black/10"}`}>
             <TrendingUp className="w-4 h-4 text-black/80 dark:text-white/80" />
@@ -133,7 +133,7 @@ export default function AIEngineToolData({
       </div>
 
       {/* AI Insight */}
-      <div className={`w-full p-5 rounded-[16px] ${theme === "dark" ? "bg-gradient-to-r from-blue-500/10 to-green-500/10 border border-blue-500/20" : "bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200"}`}>
+      <div className={`w-full`}>
         <div className="flex items-center gap-2 mb-3">
           <div className={`p-1.5 rounded-[6px] ${theme === "dark" ? "bg-blue-500/20" : "bg-blue-100"}`}>
             <Brain className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -146,7 +146,7 @@ export default function AIEngineToolData({
       </div>
 
       {/* Confidence Score */}
-      <div className={`w-full p-5 rounded-[16px] ${theme === "dark" ? "bg-white/5 border border-white/10" : "bg-black/5 border border-black/10"}`}>
+      <div className={`w-full`}>
         <div className="flex items-center gap-2 mb-3">
           <div className={`p-1.5 rounded-[6px] ${theme === "dark" ? "bg-white/10" : "bg-black/10"}`}>
             <BarChart3 className="w-4 h-4 text-black/80 dark:text-white/80" />
@@ -179,7 +179,7 @@ export default function AIEngineToolData({
 
       {/* Detailed Analysis - Only show if there's meaningful additional data */}
       {Object.keys(formattedFullData).length > 0 && (
-        <div className={`w-full p-5 rounded-[16px] ${theme === "dark" ? "bg-white/5 border border-white/10" : "bg-black/5 border border-black/10"}`}>
+        <div className={`w-full`}>
           <div className="flex items-center gap-2 mb-4">
             <div className={`p-1.5 rounded-[6px] ${theme === "dark" ? "bg-white/10" : "bg-black/10"}`}>
               <BarChart3 className="w-4 h-4 text-black/80 dark:text-white/80" />
@@ -190,7 +190,7 @@ export default function AIEngineToolData({
             {Object.entries(formattedFullData)
               .filter(([label, value]) => value && value.trim() !== '')
               .map(([label, value]) => (
-              <div key={label} className={`p-4 rounded-[12px] ${theme === "dark" ? "bg-white/5 border-l-4 border-blue-500/30" : "bg-black/5 border-l-4 border-blue-300"}`}>
+              <div key={label}>
                 <Text14 className="font-satoshi-medium text-black/90 dark:text-white/90 mb-2 capitalize">
                   {label.replace(/([A-Z])/g, ' $1').trim()}:
                 </Text14>

@@ -187,7 +187,7 @@ export default function NavbarProfile() {
               )}
               <div>
                 <div className="flex items-center gap-1 cursor-pointer">
-                  <div className="flex items-center gap-1 sm:gap-2 relative">
+                  <div className="flex items-center gap-1.5 sm:gap-2 relative">
                     <Avatar className="w-8 h-8 sm:w-10 sm:h-10">
                       <AvatarImage src={user?.picture || undefined} />
                       <AvatarFallback className="text-xs sm:text-sm">{getUserInitials()}</AvatarFallback>
@@ -200,7 +200,7 @@ export default function NavbarProfile() {
                         {user?.email || "user@example.com"}
                       </span>
                     </div>
-                    <PopularBadge className="flex justify-center items-center gap-1.5 sm:gap-2.5 p-[2px] sm:p-[3px] absolute left-[16px] sm:left-[21px] bottom-0 rounded-[3px] text-xs">
+                    <PopularBadge className="flex justify-center items-center gap-1.5 sm:gap-2.5 p-[2px] sm:p-[3px] absolute left-[18px] sm:left-[21px] bottom-0 rounded-[3px] text-[8px] w-4 h-4">
                       Pro
                     </PopularBadge>
                   </div>
@@ -209,7 +209,7 @@ export default function NavbarProfile() {
             </div>
           </div>
           
-          <DropdownMenuSeparator className="md:hidden dark:bg-white/10 bg-black/10 mt-2" />
+          <DropdownMenuSeparator className="md:hidden dark:bg-white/10 bg-black/10 mt-2 mb-2" />
           
           <div className="flex flex-col gap-2">
             <NavbarAccountSwitch className="text-[12px] sm:text-[14px] md:hidden" dropdown={true} />
