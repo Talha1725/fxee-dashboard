@@ -38,7 +38,7 @@ export default function DashboardChatbotInput({
               : "Ask about trading strategies, risk management..."
           }
           disabled={isSending}
-          className="w-full !p-4 gap-3 border-none text-white placeholder:text-white"
+          className="w-full !p-3 md:!p-4 gap-3 border-none text-white placeholder:text-white"
           backIcon={
             <div className="flex items-center gap-3">
               <IconSend width={20} height={20} opacity={1} className="text-white/60 cursor-pointer" onClick={handleSendMessage} />
