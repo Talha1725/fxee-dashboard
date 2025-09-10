@@ -22,6 +22,7 @@ export const recommendationsApi = baseApi.injectEndpoints({
     getMyAnalyses: builder.query<CustomAnalysesResponse, {
       limit?: number;
       offset?: number;
+      excludeRecommendationTrades?: boolean;
     }>({
       query: (params) => ({
         url: "/recommendations/custom/my-analyses",
@@ -57,6 +58,15 @@ export const recommendationsApi = baseApi.injectEndpoints({
       query: () => "/recommendations/daily",
       providesTags: ["Recommendation"],
     }),
+
+    analyzeRecommendation: builder.mutation<any, { id: number; direction: 'long' | 'short' }>({
+      query: ({ id, direction }) => ({
+        url: `/recommendations/${id}/analyze`,
+        method: "POST",
+        body: { direction },
+      }),
+      invalidatesTags: ["Recommendation", "ProposedTrade"],
+    }),
   }),
 }) as any;
 
@@ -67,4 +77,5 @@ export const {
   useGetSupportedSymbolsQuery,
   useGetActiveRecommendationsQuery,
   useGetDailyRecommendationsQuery,
+  useAnalyzeRecommendationMutation,
 } = recommendationsApi;

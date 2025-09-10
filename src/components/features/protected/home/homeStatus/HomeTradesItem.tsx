@@ -20,6 +20,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
+import { useAnalyzeRecommendationMutation } from "@/lib/redux/features/recommendations/recommendationsApi";
 
 interface HomeTradesItemProps {
   long?: boolean;
@@ -37,6 +38,29 @@ export default function HomeTradesItem({
   handleRestoreCard,
 }: HomeTradesItemProps) {
   const router = useRouter();
+  const [analyzeRecommendation, { isLoading: isAnalyzing }] = useAnalyzeRecommendationMutation();
+  
+  // Handle Long/Short button click
+  const handleAnalyzeClick = async (clickedDirection: 'long' | 'short') => {
+    if (!recommendation?.id) {
+      console.error('No recommendation ID available');
+      return;
+    }
+    
+    try {
+      await analyzeRecommendation({
+        id: recommendation.id,
+        direction: clickedDirection
+      }).unwrap();
+      
+      // Navigate to dashboard to see results
+      router.push("/dashboard");
+    } catch (error: any) {
+      console.error('Failed to analyze recommendation:', error);
+      // Handle error - you might want to show a toast or error message
+    }
+  };
+
   // Helper function to get time ago
   const getTimeAgo = (createdAt: string) => {
     const now = new Date();
@@ -259,12 +283,13 @@ export default function HomeTradesItem({
 
         <div className="flex items-start self-stretch gap-2.5">
           <Button
-            onClick={() => router.push("/dashboard#open-trades")}
+            onClick={() => handleAnalyzeClick(direction.toLowerCase() as 'long' | 'short')}
             variant={direction === "Long" ? "green" : "danger"}
             size="default"
+            disabled={isAnalyzing}
             className="text-white flex-[1_0_0] font-satoshi-medium"
           >
-            <p>{direction}</p>
+            <p>{isAnalyzing ? 'Analyzing...' : direction}</p>
             {direction === "Long" ? (
               <IconTradeUp width={20} height={20} color="#FFF" />
             ) : (

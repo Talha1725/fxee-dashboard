@@ -10,9 +10,10 @@ import { useGetMyAnalysesQuery } from "@/lib/redux/features/recommendations/reco
 function AIEngineContent() {
   const { setAnalysisData, refreshTrigger } = useAnalysis();
   
-  // Auto-load the latest analysis when component mounts
+  // Auto-load the latest analysis when component mounts (exclude recommendation trades for AI Engine)
   const { data: analysesData, isSuccess, refetch } = useGetMyAnalysesQuery({ 
-    limit: 1 // Get only the most recent analysis
+    limit: 1, // Get only the most recent analysis
+    excludeRecommendationTrades: true // Exclude analyses from recommendation trades
   });
 
   // Listen for refresh trigger and refetch data

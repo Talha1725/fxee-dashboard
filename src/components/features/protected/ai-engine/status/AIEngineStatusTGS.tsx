@@ -25,7 +25,6 @@ import {
 } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 import {
   useCreateCustomAnalysisMutation,
-  useGetMyAnalysesQuery,
 } from "@/lib/redux/features/recommendations/recommendationsApi";
 import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 import type { ProposedTrade, CustomAnalysisRequest } from "@/types/redux";
@@ -85,16 +84,13 @@ export default function AIEngineStatusTGS({
     { isLoading: isCustomAnalysisLoading, error: customAnalysisError },
   ] = useCreateCustomAnalysisMutation();
 
-  // Query for refetching latest analysis after creation
-  const { refetch: refetchLatestAnalysis } = useGetMyAnalysesQuery({
-    limit: 1,
-  });
-
   // Query for refetching usage limits
   const { refetch: refetchUsageLimits } = useGetUsageLimitsQuery();
 
-  // Query for getting last proposed trade
-  const { data: lastTradeData } = useGetLastProposedTradeQuery();
+  // Query for getting last proposed trade (exclude recommendation trades for AI Engine)
+  const { data: lastTradeData } = useGetLastProposedTradeQuery({ 
+    excludeRecommendationTrades: true 
+  });
 
   // State for editable detail fields (Best Trade)
   const [potentialProfit, setPotentialProfit] = useState("$5,000.00");
@@ -104,21 +100,54 @@ export default function AIEngineStatusTGS({
   // Set bestTrade from last trade data when available and auto-select tab
   useEffect(() => {
     if (lastTradeData?.data && !bestTrade) {
-      setBestTrade(lastTradeData.data);
+      const tradeData = lastTradeData.data;
+      setBestTrade(tradeData);
       
       // Auto-select tab based on last trade's analysisType
-      if (lastTradeData.data.analysisType === 'custom_analysis') {
+      if (tradeData.analysisType === 'custom_analysis') {
         setActiveTab('custom_goal');
-      } else if (lastTradeData.data.analysisType === 'best_trade') {
+        
+        // Pre-fill custom goal values
+        if (tradeData.profitTarget) {
+          setProfitTargetValue(parseFloat(tradeData.profitTarget));
+        }
+        if (tradeData.maximumRisk) {
+          setMaxRiskValue(parseFloat(tradeData.maximumRisk));
+        }
+        if (tradeData.potentialProfit) {
+          setCustomPotentialProfit(`$${parseFloat(tradeData.potentialProfit).toFixed(2)}`);
+        }
+        if (tradeData.maximumLoss) {
+          setCustomMaximumLoss(`$${parseFloat(tradeData.maximumLoss).toFixed(2)}`);
+        }
+        if (tradeData.riskRewardRatio) {
+          setCustomRiskReward(tradeData.riskRewardRatio);
+        }
+        if (tradeData.riskLevel) {
+          setSelectedRiskLevel(tradeData.riskLevel === 'medium' ? 'mid' : tradeData.riskLevel as 'low' | 'high');
+        }
+        if (tradeData.tradingType) {
+          setSelectedTradingType(tradeData.tradingType);
+        }
+        if (tradeData.tradingVersion) {
+          setSelectedTradingVersion(tradeData.tradingVersion);
+        }
+        if (tradeData.symbol) {
+          setCustomTradingPair(tradeData.symbol);
+        }
+        if (tradeData.timeframe) {
+          setCustomTimeframe(tradeData.timeframe);
+        }
+      } else if (tradeData.analysisType === 'best_trade') {
         setActiveTab('best_trade');
       }
       
       // Update selected trading pair and timeframe if available
-      if (lastTradeData.data.symbol) {
-        setSelectedTradingPair(lastTradeData.data.symbol);
+      if (tradeData.symbol) {
+        setSelectedTradingPair(tradeData.symbol);
       }
-      if (lastTradeData.data.timeframe) {
-        setSelectedTimeframe(lastTradeData.data.timeframe);
+      if (tradeData.timeframe) {
+        setSelectedTimeframe(tradeData.timeframe);
       }
     }
   }, [lastTradeData, bestTrade, setActiveTab]);
@@ -177,26 +206,8 @@ export default function AIEngineStatusTGS({
         // Create the analysis
         await createCustomAnalysis(customAnalysisData).unwrap();
 
-        // After successful creation, fetch the latest analysis using GET endpoint
-        const latestAnalysisResponse = await refetchLatestAnalysis();
-
-        if (
-          latestAnalysisResponse.data?.success &&
-          latestAnalysisResponse.data?.data
-        ) {
-          // Handle both array format (my-analyses) and single object format (latest analysis)
-          const latestAnalysis = Array.isArray(latestAnalysisResponse.data.data)
-            ? latestAnalysisResponse.data.data[0]
-            : latestAnalysisResponse.data.data;
-
-          if (latestAnalysis) {
-            // Set the analysis data in context
-            setAnalysisData(latestAnalysis);
-
-            // Also set local state for the status component
-            setCustomAnalysis(latestAnalysis);
-          }
-        }
+        // Trigger refresh of analysis data in the main component
+        triggerRefresh();
 
         // Refetch usage limits to update the UI
         refetchUsageLimits();

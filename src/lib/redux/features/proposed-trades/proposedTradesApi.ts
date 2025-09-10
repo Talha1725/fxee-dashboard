@@ -18,10 +18,11 @@ export const proposedTradesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["ProposedTrade"],
     }),
-    getLastProposedTrade: builder.query<ProposedTradesResponse, void>({
-      query: () => ({
+    getLastProposedTrade: builder.query<ProposedTradesResponse, { excludeRecommendationTrades?: boolean } | void>({
+      query: (params) => ({
         url: "/proposed-trades/last",
         method: "GET",
+        params: params,
       }),
       providesTags: ["ProposedTrade"],
     }),
