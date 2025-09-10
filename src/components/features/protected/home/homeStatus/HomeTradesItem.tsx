@@ -28,6 +28,8 @@ interface HomeTradesItemProps {
   onSkip?: () => void;
   skipped?: boolean;
   handleRestoreCard?: () => void;
+  onAnalyzeStart?: () => void;
+  onAnalyzeEnd?: () => void;
 }
 
 export default function HomeTradesItem({
@@ -36,9 +38,11 @@ export default function HomeTradesItem({
   onSkip,
   skipped = false,
   handleRestoreCard,
+  onAnalyzeStart,
+  onAnalyzeEnd,
 }: HomeTradesItemProps) {
   const router = useRouter();
-  const [analyzeRecommendation, { isLoading: isAnalyzing }] = useAnalyzeRecommendationMutation();
+  const [analyzeRecommendation] = useAnalyzeRecommendationMutation();
   
   // Handle Long/Short button click
   const handleAnalyzeClick = async (clickedDirection: 'long' | 'short') => {
@@ -48,6 +52,7 @@ export default function HomeTradesItem({
     }
     
     try {
+      onAnalyzeStart?.();
       await analyzeRecommendation({
         id: recommendation.id,
         direction: clickedDirection
@@ -58,6 +63,8 @@ export default function HomeTradesItem({
     } catch (error: any) {
       console.error('Failed to analyze recommendation:', error);
       // Handle error - you might want to show a toast or error message
+    } finally {
+      onAnalyzeEnd?.();
     }
   };
 
@@ -100,9 +107,6 @@ export default function HomeTradesItem({
   const displaySymbol = symbol.includes("/") ? symbol : `${symbol}/USD`;
   const direction = recommendation?.direction || (long ? "Long" : "Short");
   const riskRewardRatio = recommendation?.riskRewardRatio || "1:3 RR";
-  const timeAgo = recommendation
-    ? getTimeAgo(recommendation.createdAt)
-    : "4 Minutes Ago";
   const description =
     recommendation?.title ||
     "Bearish outlook on gold; current market trends indicate a possible downturn approaching!";
@@ -286,10 +290,9 @@ export default function HomeTradesItem({
             onClick={() => handleAnalyzeClick(direction.toLowerCase() as 'long' | 'short')}
             variant={direction === "Long" ? "green" : "danger"}
             size="default"
-            disabled={isAnalyzing}
             className="text-white flex-[1_0_0] font-satoshi-medium"
           >
-            <p>{isAnalyzing ? 'Analyzing...' : direction}</p>
+            <p>{direction}</p>
             {direction === "Long" ? (
               <IconTradeUp width={20} height={20} color="#FFF" />
             ) : (

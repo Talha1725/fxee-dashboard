@@ -28,6 +28,7 @@ export default function HomeTrades({
   const [activeCards, setActiveCards] = useState<any[]>([]);
   const [skippingCardId, setSkippingCardId] = useState<string | null>(null);
   const [restoringCardId, setRestoringCardId] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const handleScrollRight = () => {
     if (scrollContainerRef.current) {
@@ -168,8 +169,20 @@ export default function HomeTrades({
         theme === "dark"
           ? "bg-card-green-gradient"
           : "bg-card-green-gradient-light"
-      } border-none min-h-[460px] sm:min-h-[481px] ${className}`}
+      } border-none min-h-[460px] sm:min-h-[481px] ${className} overflow-hidden`}
     >
+      {isAnalyzing && (
+        <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 w-full bg-black/20 backdrop-blur-lg z-[999]">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+            </div>
+          </div>
+          <p className="text-white text-sm font-satoshi-medium">Analyzing recommendation...</p>
+        </div>
+      )}
       <button
         onClick={handleScrollRight}
         disabled={!canScrollRight}
@@ -212,6 +225,8 @@ export default function HomeTrades({
                         recommendation.id?.toString() || index.toString()
                       )
                     }
+                    onAnalyzeStart={() => setIsAnalyzing(true)}
+                    onAnalyzeEnd={() => setIsAnalyzing(false)}
                   />
                 </div>
                 {index < activeCards.length - 1 && (
