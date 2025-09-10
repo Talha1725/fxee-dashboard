@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProtectedContentContainer from "@/components/features/protected/ProtectedContentContainer";
 import DashboardACP from "@/components/features/protected/dashboard/ACP/DashboardACP";
 import DashboardStatus from "@/components/features/protected/dashboard/status/DashboardStatus";
@@ -12,11 +12,28 @@ import DashboardAIPanel from "./chatbot/DashboardAIPanel";
 import DashboardChatbot from "./chatbot/DashboardChatbot";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 import { AddOnsProvider } from "@/lib/contexts/AddOnsContext";
+import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 
 export default function Dashboard() {
   const { isVirtualAccount } = useAccountType();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSymbol, setSelectedSymbol] = useState("BTCUSD");
+  
+  // Get last proposed trade to set dynamic symbol and get recommendationId
+  const { data: lastTradeData } = useGetLastProposedTradeQuery();
+  
+  // Update symbol when API data loads
+  useEffect(() => {
+    if (lastTradeData?.data?.symbol) {
+      setSelectedSymbol(lastTradeData.data.symbol);
+    }
+  }, [lastTradeData]);
+  
+  // Get recommendationId if the last trade is a recommendation trade
+  const targetRecommendationId = lastTradeData?.data?.analysisType === 'recommendation_trade' 
+    ? lastTradeData.data.recommendationId 
+    : null;
+  
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   
@@ -39,7 +56,10 @@ export default function Dashboard() {
               <DashboardWidget dashboard={true} currency={selectedSymbol} openModal={openModal} />
             </div>
             <div className="flex flex-col">
-              <HomeTrades className="bg-card-green-gradient flex-1" />
+              <HomeTrades 
+                className="bg-card-green-gradient flex-1" 
+                scrollToRecommendationId={targetRecommendationId}
+              />
               {/* <div className="w-full mt-5">
                 <CommonSelect
                 placeholder="Select a category"

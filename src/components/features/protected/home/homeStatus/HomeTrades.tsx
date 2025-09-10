@@ -9,7 +9,13 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import { ChevronRight } from "lucide-react";
 import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 
-export default function HomeTrades({ className }: { className?: string }) {
+export default function HomeTrades({ 
+  className, 
+  scrollToRecommendationId 
+}: { 
+  className?: string;
+  scrollToRecommendationId?: number | null;
+}) {
   const { theme } = useTheme();
   const {
     data: dailyRecommendations,
@@ -121,6 +127,28 @@ export default function HomeTrades({ className }: { className?: string }) {
       }, 300);
     }
   };
+
+  // Auto-scroll to target recommendation when data loads
+  useEffect(() => {
+    if (scrollToRecommendationId && activeCards.length > 0 && scrollContainerRef.current) {
+      const targetIndex = activeCards.findIndex(
+        (card: any) => card.id === scrollToRecommendationId
+      );
+      
+      if (targetIndex !== -1) {
+        // Calculate scroll position - each card is approximately 300px wide + 20px gap
+        const scrollPosition = targetIndex * 320; // 300px card + 20px gap
+        
+        // Scroll to the target recommendation
+        setTimeout(() => {
+          scrollContainerRef.current?.scrollTo({
+            left: scrollPosition,
+            behavior: "smooth",
+          });
+        }, 100); // Small delay to ensure DOM is ready
+      }
+    }
+  }, [scrollToRecommendationId, activeCards]);
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
