@@ -101,10 +101,18 @@ export default function AIEngineStatusTGS({
   const [maximumLoss, setMaximumLoss] = useState("$2,000.00");
   const [riskReward, setRiskReward] = useState("1:2.50");
 
-  // Set bestTrade from last trade data when available
+  // Set bestTrade from last trade data when available and auto-select tab
   useEffect(() => {
     if (lastTradeData?.data && !bestTrade) {
       setBestTrade(lastTradeData.data);
+      
+      // Auto-select tab based on last trade's analysisType
+      if (lastTradeData.data.analysisType === 'custom_analysis') {
+        setActiveTab('custom_goal');
+      } else if (lastTradeData.data.analysisType === 'best_trade') {
+        setActiveTab('best_trade');
+      }
+      
       // Update selected trading pair and timeframe if available
       if (lastTradeData.data.symbol) {
         setSelectedTradingPair(lastTradeData.data.symbol);
@@ -113,7 +121,7 @@ export default function AIEngineStatusTGS({
         setSelectedTimeframe(lastTradeData.data.timeframe);
       }
     }
-  }, [lastTradeData, bestTrade]);
+  }, [lastTradeData, bestTrade, setActiveTab]);
 
   // State for editable detail fields (Custom Goal)
   const [customPotentialProfit, setCustomPotentialProfit] =

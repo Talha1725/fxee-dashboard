@@ -41,6 +41,7 @@ export default function TradeSelectionPanel({ className }: TradeSelectionPanelPr
     riskLevel: "medium" as const,
     tradingType: "day_trade" as const,
     tradingVersion: "basic" as const,
+    analysisType: "best_trade" as const,
     aiAnalysis: "Strong bullish momentum with RSI at 65, MACD showing positive divergence, and price breaking above key resistance at 1.0840.",
     confidence: 85,
     winRatePercentage: "68.5",

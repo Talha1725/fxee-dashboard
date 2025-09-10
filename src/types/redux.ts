@@ -375,6 +375,7 @@ export interface ProposedTrade {
   riskLevel: "low" | "medium" | "high";
   tradingType: "day_trade" | "swing_trade";
   tradingVersion: "basic" | "pro";
+  analysisType: "best_trade" | "custom_analysis";
   aiAnalysis: string;
   confidence: number;
   winRatePercentage: string;
