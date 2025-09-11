@@ -33,6 +33,7 @@ export default function HomeTrades({
   const [skippingCardId, setSkippingCardId] = useState<string | null>(null);
   const [restoringCardId, setRestoringCardId] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analyzedCards, setAnalyzedCards] = useState<Set<string>>(new Set());
 
   const handleScrollRight = () => {
     if (scrollContainerRef.current) {
@@ -133,6 +134,10 @@ export default function HomeTrades({
     }
   };
 
+  const handleCardAnalyzed = (cardId: string) => {
+    setAnalyzedCards((prev) => new Set([...prev, cardId]));
+  };
+
   // Auto-scroll to target recommendation when data loads
   useEffect(() => {
     if (scrollToRecommendationId && activeCards.length > 0 && scrollContainerRef.current) {
@@ -173,7 +178,7 @@ export default function HomeTrades({
         theme === "dark"
           ? "bg-card-green-gradient"
           : "bg-card-green-gradient-light"
-      } border-none min-h-[460px] sm:min-h-[481px] ${className} overflow-hidden`}
+      } border-none min-h-[460px] sm:min-h-[495px] ${className} overflow-hidden`}
     >
       {isAnalyzing && (
         <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 w-full bg-black/20 backdrop-blur-lg z-[999]">
@@ -239,6 +244,8 @@ export default function HomeTrades({
                     }
                     onAnalyzeStart={() => setIsAnalyzing(true)}
                     onAnalyzeEnd={() => setIsAnalyzing(false)}
+                    onAnalyzed={() => handleCardAnalyzed(recommendation.id?.toString() || index.toString())}
+                    isAnalyzed={analyzedCards.has(recommendation.id?.toString() || index.toString())}
                   />
                 </div>
                 {index < activeCards.length - 1 && (
@@ -302,6 +309,10 @@ export default function HomeTrades({
                         long={card.direction === "Long"}
                         skipped={true}
                         handleRestoreCard={() => handleRestoreCard(card.id)}
+                        onAnalyzeStart={() => setIsAnalyzing(true)}
+                        onAnalyzeEnd={() => setIsAnalyzing(false)}
+                        onAnalyzed={() => handleCardAnalyzed(card.id)}
+                        isAnalyzed={analyzedCards.has(card.id)}
                       />
                     </div>
                     {index < skippedCards.length - 1 && (
