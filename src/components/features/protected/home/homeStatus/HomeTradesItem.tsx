@@ -30,6 +30,8 @@ interface HomeTradesItemProps {
   handleRestoreCard?: () => void;
   onAnalyzeStart?: () => void;
   onAnalyzeEnd?: () => void;
+  onAnalyzed?: () => void;
+  isAnalyzed?: boolean;
 }
 
 export default function HomeTradesItem({
@@ -40,6 +42,8 @@ export default function HomeTradesItem({
   handleRestoreCard,
   onAnalyzeStart,
   onAnalyzeEnd,
+  onAnalyzed,
+  isAnalyzed = false,
 }: HomeTradesItemProps) {
   const router = useRouter();
   const [analyzeRecommendation] = useAnalyzeRecommendationMutation();
@@ -57,6 +61,9 @@ export default function HomeTradesItem({
         id: recommendation.id,
         direction: clickedDirection
       }).unwrap();
+      
+      // Mark card as analyzed
+      onAnalyzed?.();
       
       // Navigate to dashboard to see results
       router.push("/dashboard");
@@ -116,7 +123,18 @@ export default function HomeTradesItem({
 
   return (
     <TooltipProvider>
-      <div className="flex flex-col items-start gap-5 self-stretch shadow-subtle w-[300px] shrink-0 h-full">
+      <div className={`flex flex-col items-start gap-5 self-stretch shadow-subtle w-[300px] shrink-0 h-full relative transition-all duration-500`}>
+        {/* Glorification overlay for analyzed cards */}
+        {isAnalyzed && (
+          <>
+          
+            <div className="absolute top-3 right-3 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </>
+        )}
         <HomeTokenPair
           token={symbol}
           pair={displaySymbol}
