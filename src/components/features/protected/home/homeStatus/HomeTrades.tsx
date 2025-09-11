@@ -8,6 +8,7 @@ import { Text18 } from "@/components/ui/typography";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { ChevronRight } from "lucide-react";
 import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
+import { useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 
 export default function HomeTrades({ 
   className, 
@@ -22,6 +23,9 @@ export default function HomeTrades({
     error,
     isLoading,
   } = useGetDailyRecommendationsQuery();
+  
+  // Get usage limits for recommendation analysis
+  const { data: usageLimitsResponse } = useGetUsageLimitsQuery();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [skippedCards, setSkippedCards] = useState<any[]>([]);
@@ -192,10 +196,18 @@ export default function HomeTrades({
       >
         <ChevronRight className="w-8 h-8 text-white/70" />
       </button>
-      <div className="flex self-stretch">
+      <div className="flex justify-between items-center self-stretch">
         <Text18 className="font-satoshi-medium text-white">
           AI Recommended Trades
         </Text18>
+        <div className="text-sm text-white/70 font-satoshi-medium">
+          {usageLimitsResponse?.data?.usageLimits?.recommendation_analysis ? 
+            usageLimitsResponse.data.usageLimits.recommendation_analysis.limit === 9999
+              ? "∞ Analysis"
+              : `${usageLimitsResponse.data.usageLimits.recommendation_analysis.remaining}/${usageLimitsResponse.data.usageLimits.recommendation_analysis.limit} Left`
+            : "Loading..."
+          }
+        </div>
       </div>
       <div
         ref={scrollContainerRef}

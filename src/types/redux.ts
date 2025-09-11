@@ -423,10 +423,11 @@ export interface UsageLimit {
 
 export interface UsageLimitsData {
   usageLimits: {
-    proposed_trade: UsageLimit;
+    best_trade: UsageLimit;
     hourly_analysis: UsageLimit;
     daily_analysis: UsageLimit;
     custom_analysis: UsageLimit;
+    recommendation_analysis: UsageLimit;
   };
   date: string;
 }

@@ -24,7 +24,7 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
   // Get the appropriate limit based on active tab
   const currentLimit = activeTab === "custom_goal" 
     ? usageLimitsResponse?.data?.usageLimits?.custom_analysis
-    : usageLimitsResponse?.data?.usageLimits?.proposed_trade;
+    : usageLimitsResponse?.data?.usageLimits?.best_trade;
     
   // Format last analysis timestamp
   const getLastAnalysisTime = () => {
