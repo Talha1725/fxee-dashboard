@@ -55,7 +55,6 @@ export default function SignVerificationForm() {
         setVerificationState('success');
         setMessage(response.message || 'Email verified successfully!');
         setUserData(response.data || {});
-        showToast.success('Email verified successfully!');
         
       } catch (error: any) {
         console.error('Email verification error:', error);
