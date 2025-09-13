@@ -22,7 +22,7 @@ const baseQueryWithAuth = fetchBaseQuery({
         if (typeof window !== 'undefined') {
           const currentPath = window.location.pathname;
           const isOnAuthPage = currentPath.includes('/signin') || currentPath.includes('/signup') || 
-                              currentPath.includes('/forgot-password') || currentPath.includes('/reset-password');
+          currentPath.includes('/forgot-password') || currentPath.includes('/reset-password');
           
           if (!isOnAuthPage) {
             showToast.apiError('Your session has expired. Please log in again.');
@@ -59,7 +59,8 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
     if (typeof window !== 'undefined') {
       const currentPath = window.location.pathname;
       const isOnAuthPage = currentPath.includes('/signin') || currentPath.includes('/signup') || 
-                          currentPath.includes('/forgot-password') || currentPath.includes('/reset-password');
+      currentPath.includes('/forgot-password') || currentPath.includes('/reset-password') ||
+      currentPath.includes('/verify-email') || currentPath.includes('/congrat-singup');
       
       if (!isOnAuthPage) {
         showToast.apiError('Your session has expired. Please log in again.');
