@@ -81,8 +81,8 @@ export default function SignVerificationForm() {
     handleVerification();
   }, [token, verifyEmail]);
 
-  const handleContinueToOnboarding = () => {
-    router.replace('/onboard/1');
+  const handleContinueToLogin = () => {
+    router.replace('/signin');
   };
 
   const handleGoToLogin = () => {
@@ -159,11 +159,11 @@ export default function SignVerificationForm() {
             </div>
             
             <Button 
-              onClick={handleContinueToOnboarding}
+              onClick={handleContinueToLogin}
               variant="fancy" 
               className="w-full"
             >
-              Continue to Setup
+              Continue to Login
             </Button>
           </div>
         );

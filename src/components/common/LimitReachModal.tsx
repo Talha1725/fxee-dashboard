@@ -15,6 +15,7 @@ import { Text14 } from "../ui/typography";
 import { Button } from "../ui/button";
 import chartBlack from "@/public/images/modal-chart-black.svg";
 import chartWhite from "@/public/images/modal-chart-white.svg";
+import { useRouter } from "next/navigation";
 
 export default function LimitReachModal({
   isOpenLimitReach,
@@ -24,6 +25,12 @@ export default function LimitReachModal({
   onCloseLimitReach: () => void;
 }) {
   const { theme } = useTheme();
+  const router = useRouter();
+
+  const handleUpgradeClick = () => {
+    router.push('/onboard/1');
+    onCloseLimitReach();
+  };
 
   return (
     <Dialog open={isOpenLimitReach} onOpenChange={onCloseLimitReach}>
@@ -140,6 +147,7 @@ export default function LimitReachModal({
           <Button
             variant={theme === "dark" ? "white" : "black"}
             className="font-satoshi-bold w-full mt-5 btn-shadow text-base"
+            onClick={handleUpgradeClick}
           >
             Upgrade Plan
           </Button>
