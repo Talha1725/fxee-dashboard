@@ -32,8 +32,8 @@ export default function DashboardStatusDetailTA() {
   const proposedTrade = lastTradeData?.data;
 
   return (
-    <DashboardStatusDetailCardContainer className="py-3.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
-      <div className="flex flex-col items-start gap-5 self-stretch">
+    <DashboardStatusDetailCardContainer className="py-1.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col items-start gap-3 self-stretch">
         <DashboardStatusDetailCardHead
           title="Trade Analysis"
           icon={<IconTA width={14} height={14} />}
@@ -77,12 +77,12 @@ export default function DashboardStatusDetailTA() {
           </DashboardStatusDetailSubcardContainer>
         </div>
       </div>
-      <div className="flex flex-col items-start gap-5 self-stretch">
+      <div className="flex flex-col items-start gap-3 self-stretch">
         <DashboardStatusDetailCardHead
           title="Win Rate Analysis"
           icon={<IconWinRate width={14} height={14} />}
         />
-        <div className="flex items-center gap-1 self-stretch">
+        <div className="flex items-center gap-0.5 self-stretch">
           <DashboardStatusDetailSubcardContainer className="py-3 px-3">
             <Text12 className="font-satoshi-medium dark:text-white text-black">Wins</Text12>
             <Text16 className="dark:text-green text-[#079744] font-satoshi-medium">
@@ -102,7 +102,7 @@ export default function DashboardStatusDetailTA() {
             </Text16>
           </DashboardStatusDetailSubcardContainer>
         </div>
-        <DashboardStatusDetailSubcardContainer className="bg-white dark:bg-white/3 min-h-[193px] px-0 overflow-hidden">
+        <DashboardStatusDetailSubcardContainer className="bg-white dark:bg-white/3 min-h-[170px] px-0 overflow-hidden">
           <div className="inline-flex flex-col items-start gap-1.5 px-2">
 
             <div className="flex items-end gap-1.5 self-stretch">
@@ -120,7 +120,7 @@ export default function DashboardStatusDetailTA() {
           </div>
         </DashboardStatusDetailSubcardContainer>
       </div>
-      <div className="flex flex-col items-start gap-5 self-stretch">
+      <div className="flex flex-col items-start gap-3 self-stretch">
         <DashboardStatusDetailCardHead
           title="Analysis Usage"
           icon={<IconAnalysisUsage width={14} height={14} />}
@@ -132,7 +132,7 @@ export default function DashboardStatusDetailTA() {
             </Text22>
             <Text12 className="dark:text-white text-black font-satoshi-medium">In Total</Text12>
           </div>
-          <div className="flex flex-col items-start gap-3.5 self-stretch">
+          <div className="flex flex-col items-start gap-3 self-stretch">
             <div className="flex justify-between items-center self-stretch">
               <div className="flex flex-col items-center">
                 <Text16 className="dark:bg-picton-blue bg-picton-blue text-transparent bg-clip-text font-satoshi-medium">
@@ -151,7 +151,7 @@ export default function DashboardStatusDetailTA() {
           </div>
         </DashboardStatusDetailSubcardContainer>
       </div>
-      <div className="flex flex-col items-start gap-5 self-stretch">
+      <div className="flex flex-col items-start gap-3 self-stretch">
         <div className="flex justify-between items-center self-stretch">
           <DashboardStatusDetailCardHead
             title="Performance Metrics"
@@ -166,7 +166,7 @@ export default function DashboardStatusDetailTA() {
         </div>
         <div className="flex items-center gap-2.5 self-stretch">
           <DashboardStatusDetailSubcardContainer className="gap-1">
-            <div className="flex flex-col items-start gap-3.5 self-stretch">
+            <div className="flex flex-col items-start gap-3 self-stretch">
               <Text14 className="font-satoshi-medium dark:text-white text-black">Total Profit</Text14>
               <Text20 className="dark:text-green text-[#079744] font-satoshi-medium">
                 ${proposedTrade ? parseFloat(proposedTrade.totalProfit).toFixed(0) : "28,750"}
@@ -177,7 +177,7 @@ export default function DashboardStatusDetailTA() {
             </Text10>
           </DashboardStatusDetailSubcardContainer>
           <DashboardStatusDetailSubcardContainer className="gap-1">
-            <div className="flex flex-col items-start gap-3.5 self-stretch">
+            <div className="flex flex-col items-start gap-3 self-stretch">
               <Text14 className="font-satoshi-medium dark:text-white text-black">Avg. Per Trade</Text14>
               <Text20 className="dark:text-green text-[#079744] font-satoshi-medium">
                 ${proposedTrade ? parseFloat(proposedTrade.averagePerTrade).toFixed(2) : "184.29"}

@@ -39,8 +39,8 @@ export default function DashboardStatusDetailPT() {
   };
 
   return (
-    <DashboardStatusDetailCardContainer className="py-3.5 px-3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
-      <div className="flex flex-col items-start gap-5 self-stretch">
+    <DashboardStatusDetailCardContainer className="py-1.5 px-3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col items-start gap-3 self-stretch">
         <DashboardStatusDetailCardHead
           title="Proposed Trade"
           icon={<IconCardPT width={14} height={14} />}
@@ -51,7 +51,7 @@ export default function DashboardStatusDetailPT() {
           </Text14>
         </div>
       </div>
-      <div className="flex flex-col items-start gap-2.5 self-stretch">
+      <div className="flex flex-col items-start gap-2 self-stretch">
         <div className="flex items-start gap-2 self-stretch">
           <DashboardStatusDetailSubcardContainer>
             <Text12 className="dark:text-green text-[#079744] font-satoshi-medium">Entry Price</Text12>
@@ -81,7 +81,7 @@ export default function DashboardStatusDetailPT() {
           </DashboardStatusDetailSubcardContainer>
         </div>
       </div>
-      <div className="flex flex-col items-start gap-5 self-stretch">
+      <div className="flex flex-col items-start gap-3 self-stretch">
         <DashboardStatusDetailCardHead
           title="Add-Ons"
           icon={<IconAddOns width={14} height={14} />}
@@ -126,7 +126,7 @@ export default function DashboardStatusDetailPT() {
           )}
         </div>
       </div>
-      <div className="flex flex-col items-start gap-2.5 self-stretch">
+      <div className="flex flex-col items-start gap-2 self-stretch">
         {/* <div className="flex flex-wrap items-start content-start gap-[10px] self-stretch">
           {proToolsData.map((proTool) => (
             <DashboardStatusDetailBadge
