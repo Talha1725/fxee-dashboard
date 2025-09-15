@@ -49,7 +49,7 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
   
   const lastAnalysisTime = getLastAnalysisTime();
   return (
-    <div className="flex items-start gap-2 self-stretch">
+    <div className="flex items-center gap-2 self-stretch">
       <DashboardHeadBadge>
         <IconACP width={14} height={14} />
       </DashboardHeadBadge>
@@ -66,7 +66,7 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
         <div className="flex md:flex-row flex-col items-center md:gap-2">
           <Button 
             variant="white" 
-            className="py-2 md:py-2.5 md:px-[25px] px-2 md:text-base text-xs" 
+            className="py-[3px] md:py-2.5 md:px-[25px] px-2 md:text-base text-[8px]" 
             onClick={onRunAnalysis}
             disabled={isAnalyzing}
           >
