@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { addOnsData } from '@/lib/constants';
 import { useGetUserAIToolsQuery, useUpdateUserAIToolsMutation } from '@/lib/redux/features/ai-tools/aiToolsApi';
 import { showToast } from '@/lib/utils/toast';
@@ -44,7 +45,14 @@ const ADDON_TO_TOOL_MAP: Record<string, string> = {
 const AddOnsContext = createContext<AddOnsContextType | undefined>(undefined);
 
 export function AddOnsProvider({ children }: { children: React.ReactNode }) {
-  const { data: aiToolsData, isLoading, error } = useGetUserAIToolsQuery();
+  const pathname = usePathname();
+  
+  // Only enable the query when on dashboard or ai-engine pages
+  const shouldFetchAITools = pathname === '/dashboard' || pathname === '/ai-engine';
+  
+  const { data: aiToolsData, isLoading, error } = useGetUserAIToolsQuery(undefined, {
+    skip: !shouldFetchAITools
+  });
   const [updateAITools, { isLoading: isUpdating }] = useUpdateUserAIToolsMutation();
   
   // Initialize with all tools inactive until API responds
@@ -61,6 +69,16 @@ export function AddOnsProvider({ children }: { children: React.ReactNode }) {
 
   // Update add-ons state when API data changes or fails
   useEffect(() => {
+    // If query is skipped (not on dashboard/ai-engine pages), use defaults
+    if (!shouldFetchAITools) {
+      setPendingAddOns(initialAddOns);
+      setSavedAddOns(initialAddOns);
+      setEnginePower(33);
+      setSavedEnginePower(33);
+      setIsInitialized(true);
+      return;
+    }
+    
     // Handle API loading completion (success or error)
     if (!isLoading) {
       let updatedAddOns = initialAddOns; // Default to all inactive
@@ -99,7 +117,7 @@ export function AddOnsProvider({ children }: { children: React.ReactNode }) {
       setSavedEnginePower(currentEnginePower);
       setIsInitialized(true);
     }
-  }, [aiToolsData, isLoading, error]);
+  }, [aiToolsData, isLoading, error, shouldFetchAITools]);
 
   const toggleAddOn = (title: string) => {
     setPendingAddOns(prev => 
