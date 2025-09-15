@@ -104,10 +104,10 @@ export default function LimitReachModal({
             >
               <div className="h-[4px] w-full md:w-[80%] left-1/2 -translate-x-1/2 absolute bottom-0 mx-auto rounded-tr-lg rounded-tl-lg overflow-hidden bg-popular-gradient"></div>
               <h1 className="font-satoshi-bold text-md md:text-lg dark:text-white/50 text-black/40 uppercase text-start">
-                VIP Platinum Plan
+                VIP Plan
               </h1>
               <h1 className="font-satoshi-bold text-2xl md:text-4xl dark:text-white text-black mt-2 text-start">
-                $199/mo
+                $399/mo
               </h1>
               <div className="mt-3">
                 <div

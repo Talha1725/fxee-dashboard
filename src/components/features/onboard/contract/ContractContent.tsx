@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
@@ -12,11 +12,21 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useOnboarding } from "@/lib/contexts/OnboardingContext";
 import { SUBSCRIPTION_PLANS } from "@/lib/constants";
 import { RootState } from "@/lib/redux/store";
+import { showToast } from "@/lib/utils/toast";
 
 export default function ContractContent() {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.auth.user);
   const { selectedPlan, selectedAddOns } = useOnboarding();
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+
+  const handleProceedToPayment = () => {
+    if (!isTermsAccepted) {
+      showToast.error("Please accept the Terms & Privacy Policy to proceed.");
+      return;
+    }
+    router.push("/onboard/5");
+  };
 
   // Get the selected plan configuration
   const planConfig = selectedPlan ? SUBSCRIPTION_PLANS.find(plan => plan.type === selectedPlan) : null;
@@ -136,7 +146,11 @@ export default function ContractContent() {
           value={user?.phoneNumber || "Not provided"} 
         />
         <div className="flex items-center gap-[5px]">
-          <Checkbox className="border-green-gradient border-none bg-[#EDF2FF] dark:bg-transparent" />
+          <Checkbox 
+            className="border-green-gradient border-none bg-[#EDF2FF] dark:bg-transparent" 
+            checked={isTermsAccepted}
+            onCheckedChange={(checked) => setIsTermsAccepted(checked as boolean)}
+          />
           <p className="text-[12px] dark:text-white/60 text-black/60 liga font-regular font-normal tracking-[-0.072px]">
             By proceeding, you agree to our{" "}
             <span className="text-foreground underline">Terms</span> &{" "}
@@ -145,8 +159,9 @@ export default function ContractContent() {
         </div>
         <Button
           variant="fancy"
-          onClick={() => router.push("/onboard/5")}
+          onClick={handleProceedToPayment}
           className="w-full"
+          disabled={!isTermsAccepted}
         >
           Proceed to Payment
         </Button>

@@ -35,7 +35,7 @@ import { Select, SelectItem, SelectTrigger, SelectContent, SelectGroup } from "@
 import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
 import { useUpdateLanguageMutation } from "@/lib/redux/services/userApi";
 import { updateUser } from "@/lib/redux/features/auth/authSlice";
-import LimitReachModal from "@/components/common/LimitReachModal";
+// import LimitReachModal from "@/components/common/LimitReachModal";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 
 export default function NavbarProfile() {
@@ -43,17 +43,17 @@ export default function NavbarProfile() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
-  const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
+  // const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
 
   const { isDemoAccountEnabled } = useAccountType();
   
   const handleOpenUpgradeModal = () => {
-    setIsOpenLimitReach(true);
+    router.push('/onboard/1');
   };
 
-  const handleCloseUpgradeModal = () => {
-    setIsOpenLimitReach(false);
-  };
+  // const handleCloseUpgradeModal = () => {
+  //   setIsOpenLimitReach(false);
+  // };
 
   const handleLogout = () => {
     // Clear token from localStorage
@@ -259,10 +259,10 @@ export default function NavbarProfile() {
         </DropdownMenuContent>
       </DropdownMenu>
       
-      <LimitReachModal
+      {/* <LimitReachModal
         isOpenLimitReach={isOpenLimitReach}
         onCloseLimitReach={handleCloseUpgradeModal}
-      />
+      /> */}
     </div>
   );
 }
