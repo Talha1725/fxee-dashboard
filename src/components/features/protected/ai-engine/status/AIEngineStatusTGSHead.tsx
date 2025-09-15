@@ -49,11 +49,11 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
   
   const lastAnalysisTime = getLastAnalysisTime();
   return (
-    <div className="flex items-start gap-2 self-stretch">
+    <div className="flex items-center gap-2 self-stretch">
       <DashboardHeadBadge>
         <IconACP width={14} height={14} />
       </DashboardHeadBadge>
-      <div className="flex flex-col sm:flex-row items-start gap-2 flex-[1_0_0]">
+      <div className="flex flex-row items-start gap-2 flex-[1_0_0]">
         <div className="flex flex-col justify-center items-start gap-1 flex-[1_0_0]">
           <Text16 className="text-white dark:text-white">Trade Goal Setting</Text16>
           <Text14 className="font-satoshi-regular text-white/80 dark:text-white/80">
@@ -63,10 +63,10 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
             }
           </Text14>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex md:flex-row flex-col items-center md:gap-2">
           <Button 
             variant="white" 
-            className="py-2.5 px-[25px]" 
+            className="py-[3px] md:py-2.5 md:px-[25px] px-2 md:text-base text-[8px]" 
             onClick={onRunAnalysis}
             disabled={isAnalyzing}
           >

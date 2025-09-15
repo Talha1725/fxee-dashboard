@@ -1,58 +1,17 @@
 "use client";
-import { useState, useRef } from "react";
-import Image from "next/image";
 import LandingMax1440Container from "./LandingMax1440Container";
-import thumbnail from "@/public/images/thumbnail.png";
-import playIcon from "@/public/images/play.svg";
 
 export default function LandingVideoSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-  };
-
   return (
     <LandingMax1440Container className="mb-24">
-      <div className="w-full max-w-[1100px] mx-auto aspect-video object-cover rounded-gradient-border-2 overflow-hidden relative">
-        {!isPlaying ? (
-          <div className="w-full h-full object-cover bg-black rounded-md relative flex items-center justify-center">
-            <Image
-              src={thumbnail}
-              alt="Video thumbnail"
-              fill
-              className="object-cover rounded-md w-full h-full absolute top-0 left-0"
-            />
-            {/* Play button overlay */}
-            
-              <button
-                className="hover:scale-105 transition-transform duration-300 cursor-pointer z-50"
-                onClick={handlePlay}
-              >
-                <Image 
-                  src={playIcon} 
-                  alt="Play icon" 
-                  width={76}
-                  height={76}
-                  className="w-[76px] h-[76px] z-50" 
-                />
-              </button>
-          </div>
-        ) : (
-          <video
-            ref={videoRef}
-            src="/"
-            autoPlay
-            muted
-            loop
-            controls
-            className="w-full h-full aspect-video object-cover bg-black rounded-md"
-          />
-        )}
+      <div className="w-full max-w-[1100px] mx-auto aspect-video rounded-gradient-border-2 overflow-hidden relative">
+        <iframe
+          src="https://player.vimeo.com/video/1118737788?h=5af4127672&badge=0&autopause=0&player_id=0&app_id=58479&controls=1&muted=0&autoplay=0&loop=0&portrait=0&title=0&byline=0&responsive=1"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          title="Vimeo Video"
+          className="w-full h-full"
+        />
       </div>
     </LandingMax1440Container>
   );

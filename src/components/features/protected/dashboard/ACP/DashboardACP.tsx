@@ -67,13 +67,6 @@ export default function DashboardACP() {
           description={error ? "API Error" : "Last 100 signals"}
         />
       </div>
-      {error && (
-        <div className="text-center p-2">
-          <p className="text-sm text-red-500 dark:text-red-400">
-            Unable to connect to AI services. Displaying default values.
-          </p>
-        </div>
-      )}
     </div>
   );
 }

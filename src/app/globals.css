@@ -1,6 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* iOS Performance Optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -832,6 +845,23 @@ body {
 
   /* Slow down on hover */
   .marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+  }
+
+  .marquee-container2 {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-content2 {
+    display: flex;
+    animation: marquee 40s linear infinite;
+    white-space: nowrap;
+  }
+
+  /* Slow down on hover */
+  .marquee-container2:hover .marquee-content2 {
     animation-play-state: paused;
   }
 
