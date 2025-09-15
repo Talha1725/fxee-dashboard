@@ -12,7 +12,8 @@ export default function AuthInitializer() {
   
   // Memoize the decision to fetch profile to prevent unnecessary re-renders
   const shouldFetchProfile = useMemo(() => {
-    return !!token && !user;
+    // Force fetch if user doesn't have subscription data or no user at all
+    return !!token && (!user || !user.subscriptionTier);
   }, [token, user]);
   
   // Check localStorage token on component mount and restore if needed

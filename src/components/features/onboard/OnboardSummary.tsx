@@ -160,9 +160,10 @@ export default function OnboardSummary({
           </div>
         )}
       </div>
-      <Text18 className="text-right w-full flex justify-end gap-1 items-end leading-1 my-4">
-        Total <Title24 className="text-nowrap text-black dark:text-white">${total.toFixed(2)}</Title24>
-      </Text18>
+      <div className="text-right w-full flex justify-end gap-1 items-end leading-1 my-4">
+        <Text18>Total</Text18>
+        <Title24 className="text-nowrap text-black dark:text-white">${total.toFixed(2)}</Title24>
+      </div>
       <Button
         variant="fancy"
         onClick={handleCheckout}

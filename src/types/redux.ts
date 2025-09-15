@@ -14,6 +14,10 @@ export interface User {
   emailVerified?: boolean;
   createdAt: string;
   updatedAt: string;
+  // Subscription info
+  subscriptionTier?: "free" | "premium" | "vip" | null;
+  subscriptionIsActive?: boolean;
+  subscriptionEndDate?: string | null;
 }
 
 export interface AuthState {

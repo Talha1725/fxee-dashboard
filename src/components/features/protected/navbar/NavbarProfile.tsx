@@ -47,6 +47,10 @@ export default function NavbarProfile() {
 
   const { isDemoAccountEnabled } = useAccountType();
   
+  // Check if user is premium based on actual subscription data from backend
+  const isPremium = user?.subscriptionTier === 'premium' || user?.subscriptionTier === 'vip';
+  const isVIP = user?.subscriptionTier === 'vip' && user?.subscriptionIsActive;
+  
   const handleOpenUpgradeModal = () => {
     router.push('/onboard/1');
   };
@@ -122,7 +126,7 @@ export default function NavbarProfile() {
 
   return (
     <div className="flex items-center gap-1.5 p-1 rounded-[10px]">
-      {!isDemoAccountEnabled && (
+      {!isDemoAccountEnabled && !isPremium && (
       <Button
         variant="ghost"
         className="bg-black text-white dark:!text-black dark:bg-white font-[700] dark:hover:bg-white/80 hover:bg-black/80 py-2 md:flex hidden"
@@ -146,9 +150,11 @@ export default function NavbarProfile() {
               <Label className="dark:text-white text-black lg:block hidden">
                 {user?.fullName || user?.userName || "User"}
               </Label>
-              <PopularBadge className="flex justify-center items-center gap-2.5 p-[3px] absolute left-[21px] bottom-0 rounded-[3px]">
-                Pro
-              </PopularBadge>
+              {isVIP && (
+                <PopularBadge className="flex justify-center items-center gap-2.5 p-[3px] absolute left-[21px] bottom-0 rounded-[3px]">
+                  VIP
+                </PopularBadge>
+              )}
             </div>
             <ChevronDown size={20} />
           </div>
@@ -176,7 +182,7 @@ export default function NavbarProfile() {
 
           <div className="flex flex-col gap-1 sm:gap-2 dark:text-white text-black md:hidden">
             <div className="flex items-center gap-2">
-              {!isDemoAccountEnabled && (
+              {!isDemoAccountEnabled && !isPremium && (
               <Button
                 variant={theme === "dark" ? "white" : "black"}
                 className="font-satoshi-medium w-[120px] sm:w-[141px] text-xs sm:text-sm"
@@ -200,9 +206,11 @@ export default function NavbarProfile() {
                         {user?.email || "user@example.com"}
                       </span>
                     </div>
-                    <PopularBadge className="flex justify-center items-center gap-1.5 sm:gap-2.5 p-[2px] sm:p-[3px] absolute left-[18px] sm:left-[21px] bottom-0 rounded-[3px] text-[8px] w-4 h-4">
-                      Pro
-                    </PopularBadge>
+                    {isVIP && (
+                      <PopularBadge className="flex justify-center items-center gap-1.5 sm:gap-2.5 p-[2px] sm:p-[3px] absolute left-[18px] sm:left-[21px] bottom-0 rounded-[3px] text-[8px] w-4 h-4">
+                        VIP
+                      </PopularBadge>
+                    )}
                   </div>
                 </div>
               </div>

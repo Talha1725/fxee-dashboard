@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -166,91 +165,89 @@ export default function SymbolModal({
           />
         </div>
 
-        <DialogDescription>
-          <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
-              <table className="w-full font-satoshi">
-                <tbody>
-                  {filteredData.map((item, index) => {
-                    const isSelected = currentSymbol === item.tradingViewSymbol;
-                    return (
-                      <tr
-                        key={item.id}
-                        className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer ${
-                          isSelected 
-                            ? "bg-black/10 dark:bg-white/10" 
-                            : index % 2 === 1 
-                              ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" 
-                              : ""
-                        }`}
-                        onClick={() => {
-                          onSelectSymbol?.(item.tradingViewSymbol);
-                          onClose();
-                        }}
-                      >
-                      {/* Symbol + Icon */}
-                      <td className="flex items-center gap-1 min-h-[40px] w-[80px] md:w-[100px]">
-                        <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
-                          {item.icon ? (
-                            <Image
-                              src={item.icon}
-                              alt="symbol"
-                              width={20}
-                              height={20}
-                              className="object-cover w-full h-full"
-                            />
-                          ) : item.currency ? (
-                            <CurrencyToCountryFlagConverter
-                              currency={item.currency}
-                            />
-                          ) : item.iconEmoji ? (
-                            <span className="text-sm md:text-base">{item.iconEmoji}</span>
-                          ) : (
-                            <div className="w-full h-full bg-gray-300 rounded-full"></div>
-                          )}
-                        </div>
-                        <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
-                          {truncateText(item.symbol, 6)}
-                        </p>
-                      </td>
+        <div className="max-h-[400px] overflow-y-auto scrollbar-hide">
+            <table className="w-full font-satoshi">
+              <tbody>
+                {filteredData.map((item, index) => {
+                  const isSelected = currentSymbol === item.tradingViewSymbol;
+                  return (
+                    <tr
+                      key={item.id}
+                      className={`hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer ${
+                        isSelected 
+                          ? "bg-black/10 dark:bg-white/10" 
+                          : index % 2 === 1 
+                            ? "bg-gradient-to-r from-black/0 via-black/5 to-black/0 dark:bg-gradient-to-r dark:from-white/0 dark:via-white/5 dark:to-white/0" 
+                            : ""
+                      }`}
+                      onClick={() => {
+                        onSelectSymbol?.(item.tradingViewSymbol);
+                        onClose();
+                      }}
+                    >
+                    {/* Symbol + Icon */}
+                    <td className="flex items-center gap-1 min-h-[40px] w-[80px] md:w-[100px]">
+                      <div className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] flex-shrink-0 flex items-center justify-center">
+                        {item.icon ? (
+                          <Image
+                            src={item.icon}
+                            alt="symbol"
+                            width={20}
+                            height={20}
+                            className="object-cover w-full h-full"
+                          />
+                        ) : item.currency ? (
+                          <CurrencyToCountryFlagConverter
+                            currency={item.currency}
+                          />
+                        ) : item.iconEmoji ? (
+                          <span className="text-sm md:text-base">{item.iconEmoji}</span>
+                        ) : (
+                          <div className="w-full h-full bg-gray-300 rounded-full"></div>
+                        )}
+                      </div>
+                      <p className="font-satoshi dark:text-white text-black text-xs md:text-base font-medium">
+                        {truncateText(item.symbol, 6)}
+                      </p>
+                    </td>
 
-                      {/* Name */}
-                      <td className="hidden sm:table-cell w-[50%]">
-                        <p className="dark:text-white text-black text-xs md:text-base">
-                          {item.name}
-                        </p>
-                      </td>
-                      <td className="sm:hidden w-[50%] text-start">
-                        <p className="dark:text-white text-black text-xs">
-                          {truncateText(item.name, 6)}
-                        </p>
-                      </td>
+                    {/* Name */}
+                    <td className="hidden sm:table-cell w-[50%]">
+                      <p className="dark:text-white text-black text-xs md:text-base">
+                        {item.name}
+                      </p>
+                    </td>
+                    <td className="sm:hidden w-[50%] text-start">
+                      <p className="dark:text-white text-black text-xs">
+                        {truncateText(item.name, 6)}
+                      </p>
+                    </td>
 
-                      {/* Category */}
-                      <td className="text-start w-[60px] md:w-[100px]">
-                        {/* Mobile */}
-                        <p className="dark:text-white text-black text-xs md:hidden">
-                          {truncateText(item.category, 5)}
-                        </p>
-                        {/* Desktop */}
-                        <p className="dark:text-white text-black text-sm hidden md:block">
-                          {item.category}
-                        </p>
-                      </td>
-                    </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                    {/* Category */}
+                    <td className="text-start w-[60px] md:w-[100px]">
+                      {/* Mobile */}
+                      <p className="dark:text-white text-black text-xs md:hidden">
+                        {truncateText(item.category, 5)}
+                      </p>
+                      {/* Desktop */}
+                      <p className="dark:text-white text-black text-sm hidden md:block">
+                        {item.category}
+                      </p>
+                    </td>
+                  </tr>
+                  );
+                })}
+              </tbody>
+            </table>
 
-              {filteredData.length === 0 && (
-                <div className="text-center py-8">
-                  <p className="dark:text-white/60 text-black/60 text-sm">
-                    No symbols found
-                  </p>
-                </div>
-              )}
-            </div>
-          </DialogDescription>
+            {filteredData.length === 0 && (
+              <div className="text-center py-8">
+                <p className="dark:text-white/60 text-black/60 text-sm">
+                  No symbols found
+                </p>
+              </div>
+            )}
+          </div>
       </DialogContent>
     </Dialog>
   );
