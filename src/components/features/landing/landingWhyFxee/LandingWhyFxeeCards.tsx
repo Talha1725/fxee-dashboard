@@ -25,7 +25,7 @@ export default function LandingWhyFxeeCards() {
         const nextIndex = (currentIndex + 1) % cardIds.length;
         return cardIds[nextIndex];
       });
-    }, 3000); // Change card every 3 seconds
+    }, 4000); // Change card every 4 seconds
 
     return () => clearInterval(interval);
   }, [isUserInteracting, cardIds]);
@@ -73,7 +73,7 @@ export default function LandingWhyFxeeCards() {
           isActive={activeCard === 'ai-dashboard'}
         />
       </div>
-      <div className="border border-white/20 w-full md:w-[550px] h-[300px] min-[405px]:h-[350px] min-[505px]:h-[400px] sm:h-[500px] md:h-[400px] lg:h-[468px] rounded-md bg-white/5 relative overflow-hidden">
+      <div className="border border-white/20 w-full md:w-[550px] h-[300px] min-[405px]:h-[350px] min-[505px]:h-[400px] sm:h-[500px] md:h-[400px] lg:h-[468px] rounded-md bg-white/5 relative overflow-hidden" style={{ contain: 'layout style paint' }}>
         <Image src={transparentBg} alt="transparent bg" className="absolute w-full bottom-0 left-0 z-50" />
         
         {/* AI Trade Advisor */}
