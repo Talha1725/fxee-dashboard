@@ -126,16 +126,21 @@ export default function NavbarProfile() {
 
   return (
     <div className="flex items-center gap-1.5 p-1 rounded-[10px]">
-      {!isDemoAccountEnabled && !isPremium && (
+      {!isDemoAccountEnabled && (
       <Button
         variant="ghost"
-        className="bg-black text-white dark:!text-black dark:bg-white font-[700] dark:hover:bg-white/80 hover:bg-black/80 py-2 md:flex hidden"
-        onClick={handleOpenUpgradeModal}
+        className={`py-2 md:flex hidden font-[700] ${
+          isPremium 
+            ? "bg-gray-400 text-gray-600 dark:bg-gray-600 dark:text-gray-400 cursor-not-allowed" 
+            : "bg-black text-white dark:!text-black dark:bg-white dark:hover:bg-white/80 hover:bg-black/80"
+        }`}
+        onClick={isPremium ? undefined : handleOpenUpgradeModal}
+        disabled={isPremium}
       >
         Upgrade
         <ChevronUp
           size={20}
-          className={theme === "dark" ? "text-black" : "text-white"}
+          className={isPremium ? "text-gray-600 dark:text-gray-400" : (theme === "dark" ? "text-black" : "text-white")}
         />
       </Button>
       )}
@@ -182,13 +187,22 @@ export default function NavbarProfile() {
 
           <div className="flex flex-col gap-1 sm:gap-2 dark:text-white text-black md:hidden">
             <div className="flex items-center gap-2">
-              {!isDemoAccountEnabled && !isPremium && (
+              {!isDemoAccountEnabled && (
               <Button
-                variant={theme === "dark" ? "white" : "black"}
-                className="font-satoshi-medium w-[120px] sm:w-[141px] text-xs sm:text-sm"
-                onClick={handleOpenUpgradeModal}
+                variant={isPremium ? "ghost" : (theme === "dark" ? "white" : "black")}
+                className={`font-satoshi-medium w-[120px] sm:w-[141px] text-xs sm:text-sm ${
+                  isPremium 
+                    ? "bg-gray-400 text-gray-600 dark:bg-gray-600 dark:text-gray-400 cursor-not-allowed" 
+                    : ""
+                }`}
+                onClick={isPremium ? undefined : handleOpenUpgradeModal}
+                disabled={isPremium}
               >
-                <p>Upgrade</p> <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 dark:text-black text-white" />
+                <p>Upgrade</p> <ArrowUp className={`w-3 h-3 sm:w-4 sm:h-4 ${
+                  isPremium 
+                    ? "text-gray-600 dark:text-gray-400" 
+                    : "dark:text-black text-white"
+                }`} />
               </Button>
               )}
               <div>
