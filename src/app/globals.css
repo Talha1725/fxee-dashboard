@@ -835,6 +835,23 @@ body {
     animation-play-state: paused;
   }
 
+  .marquee-container2 {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-content2 {
+    display: flex;
+    animation: marquee 40s linear infinite;
+    white-space: nowrap;
+  }
+
+  /* Slow down on hover */
+  .marquee-container2:hover .marquee-content2 {
+    animation-play-state: paused;
+  }
+
   @keyframes marquee {
     0% {
       transform: translateX(0);
