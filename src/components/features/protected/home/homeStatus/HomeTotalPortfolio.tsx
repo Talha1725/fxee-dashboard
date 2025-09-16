@@ -7,13 +7,15 @@ import {
   TextSuccess,
 } from "@/components/ui/typography";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomeTotalPortfolio() {
   const { isVirtualAccount } = useAccountType();
+  const { t } = useLocalization();
 
   return (
     <div className="flex flex-col items-start gap-5">
-      <Description18 className="font-satoshi-medium text-black/50 dark:text-white/50 z-10">Total Portfolio</Description18>
+      <Description18 className="font-satoshi-medium text-black/50 dark:text-white/50 z-10">{t("total_portfolio")}</Description18>
       <div className="relative">
         <Title40 className="font-satoshi text-black dark:text-white">$24,982.00</Title40>
       </div>

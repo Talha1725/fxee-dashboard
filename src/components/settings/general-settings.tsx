@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useLocalization } from "@/components/localization-provider";
 import CommonSelect from "../ui/common-select";
 import { IconInfoFilled, IconMoon, IconSun } from "../ui/icon";
 import { Text14, Text16, Text20 } from "../ui/typography";
@@ -17,6 +18,7 @@ import { toast } from "sonner";
 
 export default function GeneralSettings() {
   const { theme, setTheme } = useTheme();
+  const { t } = useLocalization();
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.auth);
   const [updateGeneralSettings, { isLoading }] = useUpdateGeneralSettingsMutation();
@@ -237,7 +239,7 @@ export default function GeneralSettings() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <Text16 className="font-satoshi">Light Mode</Text16>
+                  <Text16 className="font-satoshi">{t("light_mode")}</Text16>
                   <Text14 className="font-satoshi dark:text-white/70 text-black/70">
                     Pick a clean and classic light theme.
                   </Text14>
@@ -282,7 +284,7 @@ export default function GeneralSettings() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <Text16 className="font-satoshi">Dark Mode</Text16>
+                  <Text16 className="font-satoshi">{t("dark_mode")}</Text16>
                   <Text14 className="font-satoshi dark:text-white/70 text-black/70">
                     Select a sleek and modern dark theme.
                   </Text14>

@@ -9,13 +9,15 @@ import HomeScoreItem from "@/components/features/protected/home/homeTopScore/Hom
 import { Text18 } from "@/components/ui/typography";
 import { Separator } from "@/components/ui/separator";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomeScore() {
   const { theme } = useTheme();
+  const { t } = useLocalization();
   return (
     <ProtectedCardContainer className={`border-black/5 ${theme === "dark" ? "bg-card-main-gradient" : "bg-white"} db:max-w-[397px] h-[471px] flex flex-col items-center`}>
       <div className="flex flex-col self-stretch gap-2">
-        <Text18 className="font-satoshi-medium">Consistency Score</Text18>
+        <Text18 className="font-satoshi-medium">{t("consistency_score")}</Text18>
       </div>
       <HomeScorePie score={66} />
       <HomeScoreColor />

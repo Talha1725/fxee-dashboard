@@ -10,17 +10,25 @@ import { LockOverlay } from "@/components/ui/lock-overlay";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import BlurOverlay from "@/components/common/BlurOverlay";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomePortfolio() {
   const [viewportWidth, setViewportWidth] = useState<number | null>(null);
+  const [forceUpdate, setForceUpdate] = useState(0);
   const { isVirtualAccount } = useAccountType();
   const { theme } = useTheme();
+  const { t, locale } = useLocalization();
   useEffect(() => {
     const update = () => setViewportWidth(window.innerWidth);
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  // Force re-render when locale changes
+  useEffect(() => {
+    setForceUpdate(prev => prev + 1);
+  }, [locale]);
 
   const chartHeight = (viewportWidth ?? 0) > 880 ? 300 : 240;
 
@@ -42,7 +50,7 @@ export default function HomePortfolio() {
           disabled={isVirtualAccount}
         >
           <IconAIMagic />
-          Start AI Trading
+          {t("start_ai_trading")}
         </Button>
       </div>
       <div className="relative w-full h-full">

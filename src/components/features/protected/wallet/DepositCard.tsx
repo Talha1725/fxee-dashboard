@@ -10,9 +10,11 @@ import CommonSelect from '@/components/ui/common-select'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Image from 'next/image'
+import { useLocalization } from '@/components/localization-provider'
 
 export default function DepositCard() {
   const { theme } = useTheme()
+  const { t } = useLocalization()
   const [depositType, setDepositType] = useState<'crypto' | 'card'>('crypto')
 
   return (
@@ -148,7 +150,7 @@ export default function DepositCard() {
                 options={[
                   { value: "USDT", label: "USDT - Tether" },
                   { value: "BTC", label: "BTC - Bitcoin" },
-                  { value: "ETH", label: "ETH - Ethereum" }
+                  { value: "ETH", label: `ETH - ${t("eth")}` }
                 ]}
                 className="w-full px-[14px] py-[10px] placeholder:dark:text-white placeholder:text-black rounded-lg font-satoshi-regular text-[16px] border min-w-0 max-w-none"
               />

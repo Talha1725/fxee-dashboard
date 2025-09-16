@@ -20,6 +20,7 @@ import {
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 import { DailyRecommendation } from "@/types/redux";
+import { useLocalization } from "@/components/localization-provider";
 
 interface TableRowItemProps {
   currency: string;
@@ -40,12 +41,57 @@ const TableRowItem = ({
   recommendation,
 }: TableRowItemProps) => {
   const { theme } = useTheme();
+  const { t } = useLocalization();
+
+  // Function to translate currency pairs
+  const translateCurrencyPair = (pair: string) => {
+    const pairLower = pair.toLowerCase();
+    
+    // Map currency pairs to translation keys
+    const pairMap: Record<string, string> = {
+      'usdtry': 'usdtry',
+      'usdcad': 'usdcad',
+      'usdjpy': 'usdjpy',
+      'usdchf': 'usdchf',
+      'usdzar': 'usdzar',
+      'usdgbp': 'usdgbp',
+      'usdaud': 'usdaud',
+      'usdeur': 'usdeur',
+      'audusd': 'audusd',
+      'eurusd': 'eurusd',
+      'gbpusd': 'gbpusd',
+      'nzdusd': 'nzdusd',
+      'usd/try': 'usdtry',
+      'usd/cad': 'usdcad',
+      'usd/jpy': 'usdjpy',
+      'usd/chf': 'usdchf',
+      'usd/zar': 'usdzar',
+      'usd/gbp': 'usdgbp',
+      'usd/aud': 'usdaud',
+      'usd/eur': 'usdeur',
+      'aud/usd': 'audusd',
+      'eur/usd': 'eurusd',
+      'gbp/usd': 'gbpusd',
+      'nzd/usd': 'nzdusd',
+      'usdcad/usd': 'usdcad',
+      'usdtry/usd': 'usdtry',
+      'usdjpy/usd': 'usdjpy',
+      'usdchf/usd': 'usdchf',
+      'gbpusd/usd': 'gbpusd',
+    };
+    
+    const translationKey = pairMap[pairLower];
+    return translationKey ? t(translationKey as any) : pair;
+  };
+
+  const translatedCurrency = translateCurrencyPair(currency);
+
   return (
     <TableRow className="hover:bg-transparent border-none">
       <TableCell>
         <div className="flex items-center gap-1">
           <CurrencyToCountryFlagConverter currency={currency} />
-          {currency}
+          {translatedCurrency}
         </div>
       </TableCell>
       <TableCell>{recommendation ? parseFloat(recommendation.entryPrice).toFixed(5) : last}</TableCell>
@@ -76,12 +122,35 @@ const TableRowItemCrypto = ({
   isUp,
   showArrow = true,
 }: TableRowItemProps) => {
+  const { t } = useLocalization();
+
+  // Function to translate crypto symbols
+  const translateCryptoSymbol = (symbol: string) => {
+    const symbolLower = symbol.toLowerCase();
+    
+    // Map crypto symbols to translation keys
+    const symbolMap: Record<string, string> = {
+      'bitcoin': 'bitcoin',
+      'ethereum': 'eth',
+      'ETH': 'eth',
+      'ripple': 'ripple',
+      'bnb': 'bnb',
+      'dogecoin': 'dogecoin',
+      'solana': 'solana',
+    };
+    
+    const translationKey = symbolMap[symbolLower];
+    return translationKey ? t(translationKey as any) : symbol;
+  };
+
+  const translatedCurrency = translateCryptoSymbol(currency);
+
   return (
     <TableRow className="hover:bg-transparent border-none">
       <TableCell>
         <div className="flex items-center gap-1">
           <TokenIcon symbol={currency} variant="branded" size="20" />
-          {currency}
+          {translatedCurrency}
         </div>
       </TableCell>
       <TableCell>{last}</TableCell>
@@ -110,6 +179,7 @@ interface HomeTopPicksBodyProps {
 
 export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBodyProps) {
   const { data: dailyRecommendations, error, isLoading } = useGetDailyRecommendationsQuery();
+  const { t } = useLocalization();
 
   // Helper function to categorize recommendations
   const categorizeRecommendations = () => {
@@ -135,10 +205,10 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent font-satoshi-medium">
-          <TableHead className="text-[12px] font-satoshi">Symbols</TableHead>
-          <TableHead className="text-[12px] font-satoshi">Entry</TableHead>
-          <TableHead className="text-[12px] font-satoshi">Profit %</TableHead>
-          <TableHead className="text-[12px] font-satoshi">Confidence</TableHead>
+          <TableHead className="text-[12px] font-satoshi">{t("symbols")}</TableHead>
+          <TableHead className="text-[12px] font-satoshi">{t("entry")}</TableHead>
+          <TableHead className="text-[12px] font-satoshi">{t("profit_percent")}</TableHead>
+          <TableHead className="text-[12px] font-satoshi">{t("confidence")}</TableHead>
           {showArrows && <TableHead className="text-[12px] font-satoshi text-right"></TableHead>}
         </TableRow>
       </TableHeader>
@@ -146,7 +216,7 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
         <TableRow className="hover:bg-transparent border-none">
           <TableCell colSpan={showArrows ? 5 : 4}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
-              <Text14 className="dark:text-white text-black">Forex</Text14>
+              <Text14 className="dark:text-white text-black">{t("forex")}</Text14>
               <IconChevronDown width={16} height={16} className="rotate-180" />
             </div>
           </TableCell>
@@ -187,7 +257,7 @@ export default function HomeTopPicksBody({ showArrows = true }: HomeTopPicksBody
         <TableRow className="hover:bg-transparent border-none">
           <TableCell colSpan={showArrows ? 5 : 4}>
             <div className="flex items-center gap-1 p-1.5 opacity-60">
-              <Text14 className="dark:text-white text-black">Crypto</Text14>
+              <Text14 className="dark:text-white text-black">{t("crypto")}</Text14>
               <IconChevronDown width={16} height={16} className="rotate-180" />
             </div>
           </TableCell>

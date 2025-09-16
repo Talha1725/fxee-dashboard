@@ -11,6 +11,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_OAUTH_CONFIG } from '@/lib/config/google';
 import AuthInitializer from '@/components/auth/AuthInitializer';
+import { LocalizationProvider } from '@/components/localization-provider';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -59,26 +60,28 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ReduxProvider>
-          <AuthInitializer />
-          <ThemeProvider>
-            <AccountTypeProvider>
-              <UserProvider>
-                <AddOnsProvider>
-                {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
-                  <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
-                    {children}
-                    <Toaster />
-                  </GoogleOAuthProvider>
-                ) : (
-                  <>
-                    {children}
-                    <Toaster />
-                  </>
-                )}
-                </AddOnsProvider>
-              </UserProvider>
-            </AccountTypeProvider>
-          </ThemeProvider>
+          <LocalizationProvider>
+            <AuthInitializer />
+            <ThemeProvider>
+              <AccountTypeProvider>
+                <UserProvider>
+                  <AddOnsProvider>
+                  {GOOGLE_OAUTH_CONFIG.CLIENT_ID ? (
+                    <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CONFIG.CLIENT_ID}>
+                      {children}
+                      <Toaster />
+                    </GoogleOAuthProvider>
+                  ) : (
+                    <>
+                      {children}
+                      <Toaster />
+                    </>
+                  )}
+                  </AddOnsProvider>
+                </UserProvider>
+              </AccountTypeProvider>
+            </ThemeProvider>
+          </LocalizationProvider>
         </ReduxProvider>
       </body>
     </html>

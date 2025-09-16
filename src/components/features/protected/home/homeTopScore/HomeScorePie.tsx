@@ -5,11 +5,14 @@ import * as d3 from "d3";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomeScorePie({ score }: { score: number }) {
   const isMobile = useMediaQuery("(max-width: 641px)");
   const svgRef = useRef<SVGSVGElement>(null);
   const { theme } = useTheme();
+  const { t } = useLocalization();
+  
   const getColor = (score: number) => {
     if (score < 30) return "var(--color-score30)";
     if (score < 80) return "var(--color-score80)";
@@ -94,13 +97,13 @@ export default function HomeScorePie({ score }: { score: number }) {
       .attr("class", "score-label")
       .style("font-size", isMobile ? "16px" : "16px")
       .style("fill", theme === "dark" ? "#FFFFFF66" : "#00000066")
-      .text("Average")
+      .text(t("average"))
       .style("opacity", 0)
       .transition()
       .duration(1000)
       .delay(750)
       .style("opacity", 1);
-  }, [score, isMobile, theme]);
+  }, [score, isMobile, theme, t]);
 
   return (
     <div className="flex flex-col items-center justify-center font-satoshi-medium">

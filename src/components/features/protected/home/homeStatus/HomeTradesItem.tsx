@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 import { useAnalyzeRecommendationMutation } from "@/lib/redux/features/recommendations/recommendationsApi";
+import { useLocalization } from "@/components/localization-provider";
 
 interface HomeTradesItemProps {
   long?: boolean;
@@ -43,6 +44,7 @@ export default function HomeTradesItem({
 }: HomeTradesItemProps) {
   const router = useRouter();
   const [analyzeRecommendation] = useAnalyzeRecommendationMutation();
+  const { t } = useLocalization();
   
   // Handle Long/Short button click
   const handleAnalyzeClick = async (clickedDirection: 'long' | 'short') => {
@@ -76,29 +78,81 @@ export default function HomeTradesItem({
       (now.getTime() - created.getTime()) / (1000 * 60)
     );
 
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    if (diffInMinutes < 1) return t("just_now");
+    if (diffInMinutes < 60) return `${diffInMinutes}${t("minutes_ago_short")}`;
     const diffInHours = Math.floor(diffInMinutes / 60);
-    if (diffInHours < 24) return `${diffInHours}h ago`;
+    if (diffInHours < 24) return `${diffInHours}${t("hours_ago")}`;
     const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays}d ago`;
+    return `${diffInDays}${t("days_ago")}`;
   };
 
-  // Helper function to get profit tier color and label
+  // Function to translate trading symbols
+  const translateSymbol = (symbol: string) => {
+    const symbolLower = symbol.toLowerCase();
+    
+    // Map symbols to translation keys
+    const symbolMap: Record<string, string> = {
+      'usdtry': 'usdtry',
+      'usdcad': 'usdcad',
+      'usdjpy': 'usdjpy',
+      'usdchf': 'usdchf',
+      'usdzar': 'usdzar',
+      'usdgbp': 'usdgbp',
+      'usdaud': 'usdaud',
+      'usdeur': 'usdeur',
+      'audusd': 'audusd',
+      'eurusd': 'eurusd',
+      'gbpusd': 'gbpusd',
+      'nzdusd': 'nzdusd',
+      'usdcad/usd': 'usdcad',
+      'usdtry/usd': 'usdtry',
+      'usdjpy/usd': 'usdjpy',
+      'usdchf/usd': 'usdchf',
+      'brent/usd': 'brent',
+      'gbpusd/usd': 'gbpusd',
+      'brent': 'brent',
+      'crude': 'crude',
+      'goldind': 'goldind',
+      'xagusd': 'xagusd',
+      'xauusd': 'xauusd',
+      'bitcoin': 'bitcoin',
+      'bnb': 'bnb',
+      'dogecoin': 'dogecoin',
+      'ethereum': 'eth',
+      'ripple': 'ripple',
+      'solana': 'solana',
+      'xrp': 'ripple',
+      'btc': 'bitcoin',
+    };
+    
+    const translationKey = symbolMap[symbolLower];
+    return translationKey ? t(translationKey as any) : symbol;
+  };
+
+  // Helper function to translate analysis titles
+  const translateAnalysisTitle = (title: string, symbol: string, profitTier: string) => {
+    if (!title) return t("bearish_outlook_on_gold");
+    
+    // Extract profit tier from the title if it contains profit information
+    const profitTierTranslated = getProfitTierInfo(profitTier).label;
+    
+    // Create a generic translated analysis title
+    return `${translateSymbol(symbol)} ${t("analysis")} - ${profitTierTranslated} ${t("signal")}`;
+  };
   const getProfitTierInfo = (profitTier: string) => {
     switch (profitTier) {
       case "GREAT_PROFIT":
-        return { color: "#22C55E", label: "Great Profit" };
+        return { color: "#22C55E", label: t("great_profit") };
       case "HIGH_PROFIT":
-        return { color: "#3EDC81", label: "High Profit" };
+        return { color: "#3EDC81", label: t("high_profit") };
       case "MEDIUM_PROFIT":
-        return { color: "#F59E0B", label: "Medium Profit" };
+        return { color: "#F59E0B", label: t("medium_profit") };
       case "LOW_PROFIT":
-        return { color: "#EF4444", label: "Low Profit" };
+        return { color: "#EF4444", label: t("low_profit") };
       case "VERY_LOW_PROFIT":
-        return { color: "#DC2626", label: "Very Low Profit" };
+        return { color: "#DC2626", label: t("very_low_profit") };
       default:
-        return { color: "#6B7280", label: "Standard" };
+        return { color: "#6B7280", label: t("standard") };
     }
   };
 
@@ -107,9 +161,9 @@ export default function HomeTradesItem({
   const displaySymbol = symbol.includes("/") ? symbol : `${symbol}/USD`;
   const direction = recommendation?.direction || (long ? "Long" : "Short");
   const riskRewardRatio = recommendation?.riskRewardRatio || "1:3 RR";
-  const description =
-    recommendation?.title ||
-    "Bearish outlook on gold; current market trends indicate a possible downturn approaching!";
+  const description = recommendation
+    ? translateAnalysisTitle(recommendation.title, symbol, recommendation.profitTier)
+    : t("bearish_outlook_on_gold");
   const profitTierInfo = recommendation
     ? getProfitTierInfo(recommendation.profitTier)
     : { color: "#6B7280", label: "Standard" };
@@ -134,11 +188,11 @@ export default function HomeTradesItem({
             </TooltipTrigger>
             <TooltipContent>
               <p>
-                Risk-Reward Ratio
+                {t("risk_reward_ratio")}
                 <br />
-                Potential profit vs loss.
+                {t("potential_profit_vs_loss")}
                 <br />
-                {riskRewardRatio} = gain ratio per $1 risked
+                {riskRewardRatio} {t("gain_ratio_per_dollar_risked")}
               </p>
             </TooltipContent>
           </Tooltip>
@@ -156,11 +210,11 @@ export default function HomeTradesItem({
             </TooltipTrigger>
             <TooltipContent>
               <p>
-                AI Confidence Level
+                {t("ai_confidence_level")}
                 <br />
-                Algorithm's confidence in
+                {t("algorithms_confidence_in")}
                 <br />
-                this trading recommendation
+                {t("this_trading_recommendation")}
               </p>
             </TooltipContent>
           </Tooltip>
@@ -169,7 +223,7 @@ export default function HomeTradesItem({
             <TooltipTrigger asChild>
               <div className="cursor-pointer">
                 <HomeTradesItemBadge
-                  text={direction}
+                  text={direction === "Long" ? t("long") : t("short")}
                   icon={
                     direction === "Long" ? (
                       <IconTradeUp width={20} height={20} color="#22C55E" />
@@ -182,11 +236,11 @@ export default function HomeTradesItem({
             </TooltipTrigger>
             <TooltipContent>
               <p>
-                Trade Direction
+                {t("trade_direction")}
                 <br />
                 {direction === "Long"
-                  ? "Long = Buy expecting price rise"
-                  : "Short = Sell expecting price fall"}
+                  ? t("long_buy_expecting_price_rise")
+                  : t("short_sell_expecting_price_fall")}
               </p>
             </TooltipContent>
           </Tooltip>
@@ -209,11 +263,9 @@ export default function HomeTradesItem({
               </TooltipTrigger>
               <TooltipContent>
                 <p>
-                  Profit Tier
+                  {t("profit_tier")}
                   <br />
-                  {profitTierInfo.label} expected
-                  <br />
-                  profit potential level
+                  {profitTierInfo.label} {t("expected_profit_potential_level")}
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -229,7 +281,7 @@ export default function HomeTradesItem({
           <div className="w-full bg-white/5 rounded-lg p-3">
             <div className="grid grid-cols-3 gap-2 text-center px-2">
               <div>
-                <p className="text-white/60 text-xs font-satoshi">Entry</p>
+                <p className="text-white/60 text-xs font-satoshi">{t("entry")}</p>
                 <p className="text-white text-sm font-satoshi-medium">
                   {parseFloat(recommendation.entryPrice).toFixed(
                     recommendation.symbol.includes("USD") &&
@@ -240,7 +292,7 @@ export default function HomeTradesItem({
                 </p>
               </div>
               <div>
-                <p className="text-green-400/80 text-xs font-satoshi">Target</p>
+                <p className="text-green-400/80 text-xs font-satoshi">{t("target")}</p>
                 <p className="text-green-400 text-sm font-satoshi-medium">
                   {parseFloat(recommendation.targetPrice).toFixed(
                     recommendation.symbol.includes("USD") &&
@@ -252,7 +304,7 @@ export default function HomeTradesItem({
               </div>
               <div>
                 <p className="text-red-400/80 text-xs font-satoshi">
-                  Stop Loss
+                  {t("stop_loss")}
                 </p>
                 <p className="text-red-400 text-sm font-satoshi-medium">
                   {parseFloat(recommendation.stopLoss).toFixed(
@@ -266,14 +318,14 @@ export default function HomeTradesItem({
             </div>
             <div className="mt-2 grid grid-cols-3 gap-2 px-2 text-center">
               <div>
-                <p className="text-white/60 text-xs font-satoshi">Risk Level</p>
+                <p className="text-white/60 text-xs font-satoshi">{t("risk_level")}</p>
                 <p className="text-white font-satoshi-medium capitalize text-sm">
                   {recommendation.riskLevel}
                 </p>
               </div>
               <div>{/* Empty middle section for spacing */}</div>
               <div>
-                <p className="text-white/60 text-xs font-satoshi">Profit</p>
+                <p className="text-white/60 text-xs font-satoshi">{t("profit")}</p>
                 <p
                   style={{ color: profitTierInfo.color }}
                   className="font-satoshi-medium text-sm"
@@ -292,7 +344,7 @@ export default function HomeTradesItem({
             size="default"
             className="text-white flex-[1_0_0] font-satoshi-medium"
           >
-            <p>{direction}</p>
+            <p>{direction === "Long" ? t("long") : t("short")}</p>
             {direction === "Long" ? (
               <IconTradeUp width={20} height={20} color="#FFF" />
             ) : (
@@ -318,7 +370,7 @@ export default function HomeTradesItem({
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                 />
               </svg>
-              Restore
+              {t("restore")}
             </Button>
           ) : (
             <Button
@@ -327,7 +379,7 @@ export default function HomeTradesItem({
               className="flex-[1_0_0] font-satoshi-medium text-white/80"
               onClick={onSkip}
             >
-              <p>Skip</p>
+              <p>{t("skip")}</p>
               <IconCancel width={20} height={20} />
             </Button>
           )}

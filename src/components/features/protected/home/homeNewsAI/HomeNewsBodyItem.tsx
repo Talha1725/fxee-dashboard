@@ -3,6 +3,7 @@ import React from "react";
 import CurrencyToCountryFlagConverter from "@/components/features/CurrencyToCountryFlagConverter";
 import { Text14, Text16 } from "@/components/ui/typography";
 import { IconCircle, IconChevronRight } from "@/components/ui/icon";
+import { useLocalization } from "@/components/localization-provider";
 
 interface HomeNewsBodyItemProps {
   currency: string;
@@ -17,22 +18,22 @@ export default function HomeNewsBodyItem({
   readTime,
   source,
 }: HomeNewsBodyItemProps) {
+  const { t } = useLocalization();
   return (
     <div className="flex items-center gap-1.5 self-stretch">
       <div className="flex flex-col items-start gap-1.5 flex-[1_0_0]">
         <div className="flex items-center gap-2.5 self-stretch">
           <div className="flex items-center gap-[5px]">
             <CurrencyToCountryFlagConverter currency={currency} />
-            <Text14 className="dark:text-white/40 text-black/40 shrink-0">{time}minutes Ago</Text14>
+            <Text14 className="dark:text-white/40 text-black/40 shrink-0">{time}{t("minutes_ago")}</Text14>
             <IconCircle width={2} height={2} />
-            <Text14 className="dark:text-white/40 text-black/40 shrink-0">{readTime}min read</Text14>
+            <Text14 className="dark:text-white/40 text-black/40 shrink-0">{readTime}{t("min_read")}</Text14>
             <IconCircle width={2} height={2} />
             <Text14 className="shrink-0 dark:text-white text-black">{source}</Text14>
           </div>
         </div>
         <Text16 className="dark:text-white text-black">
-          AUD/USD: Australian Dollar Strengthens Amid Optimism Over China’s
-          Economic Recovery
+          {t("australian_dollar_strengthens")}
         </Text16>
       </div>
       <IconChevronRight width={20} height={20} className="shrink-0 dark:text-white/40 text-black/40" />

@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+import { useLocalization } from "@/components/localization-provider";
 import SidebarItem from "@/components/features/protected/sidebar/SidebarItem";
 import {
   IconCandle,
@@ -21,46 +22,47 @@ import {
 } from "@/components/ui/icon";
 
 export default function SidebarMainContent() {
+  const { t } = useLocalization();
   const sidebarItems = useMemo(
     () => [
       {
-        title: "Home",
+        title: t("home"),
         icon: IconHome,
         iconFill: IconHomeFill,
         href: "/home",
       },
       {
-        title: "Dashboard",
+        title: t("dashboard"),
         icon: IconDashboard,
         iconFill: IconDashboardFill,
         href: "/dashboard",
       },
       {
-        title: "AI Engine",
+        title: t("ai_engine"),
         icon: IconStars,
         iconFill: IconStarsFill,
         href: "/ai-engine",
       },
       {
-        title: "Copy Trading",
+        title: t("copy_trading"),
         icon: IconCandle,
         iconFill: IconCandleFill,
         href: "/copy-trading",
       },
       {
-        title: "Performance History",
+        title: t("performance_history"),
         icon: IconClock,
         iconFill: IconClockFill,
         href: "/performance-history",
       },
       {
-        title: "Trades",
+        title: t("trades"),
         icon: IconTrade,
         iconFill: IconTradeFill,
         href: "/trades",
       },
     ],
-    []
+    [t]
   );
 
   const pathname = usePathname();

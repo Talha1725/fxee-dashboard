@@ -9,6 +9,7 @@ import {
 import { IconBitcoin } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { TRADING_SYMBOLS, FOREX_SYMBOLS, COMMODITIES_SYMBOLS, CRYPTO_SYMBOLS } from "@/lib/constants";
+import { useLocalization } from "@/components/localization-provider";
 
 // Get icon based on symbol type
 const getSymbolIcon = (type: string) => {
@@ -37,6 +38,44 @@ export default function AIEngineStatusTGSPairSelect({
   onValueChange, 
   defaultValue 
 }: AIEngineStatusTGSPairSelectProps) {
+  const { t } = useLocalization();
+
+  // Function to translate symbol display names
+  const translateSymbolDisplayName = (symbol: string, displayName: string) => {
+    const symbolLower = symbol.toLowerCase();
+    
+    // Map all symbols to translation keys
+    const symbolMap: Record<string, string> = {
+      // Forex pairs
+      'usdtry': 'usdtry',
+      'usdcad': 'usdcad',
+      'usdjpy': 'usdjpy',
+      'usdchf': 'usdchf',
+      'usdzar': 'usdzar',
+      'audusd': 'audusd',
+      'eurusd': 'eurusd',
+      'gbpusd': 'gbpusd',
+      'nzdusd': 'nzdusd',
+      
+      // Commodities
+      'brent': 'brent',
+      'crude': 'crude',
+      'goldind': 'goldind',
+      'xagusd': 'xagusd',
+      'xauusd': 'xauusd',
+      
+      // Crypto
+      'bitcoin': 'bitcoin',
+      'bnb': 'bnb',
+      'dogecoin': 'dogecoin',
+      'ethereum': 'eth',
+      'ripple': 'ripple',
+      'solana': 'solana',
+    };
+    
+    const translationKey = symbolMap[symbolLower];
+    return translationKey ? t(translationKey as any) : displayName;
+  };
   return (
     <Select 
       defaultValue={defaultValue || "USDCAD"} 
@@ -62,7 +101,7 @@ export default function AIEngineStatusTGSPairSelect({
             >
               <div className="flex items-center gap-2">
                 <span>{getSymbolIcon(symbol.type)}</span>
-                <span>{symbol.displayName}</span>
+                <span>{translateSymbolDisplayName(symbol.symbol, symbol.displayName)}</span>
               </div>
             </SelectItem>
           ))}
@@ -79,7 +118,7 @@ export default function AIEngineStatusTGSPairSelect({
             >
               <div className="flex items-center gap-2">
                 <span>{getSymbolIcon(symbol.type)}</span>
-                <span>{symbol.displayName}</span>
+                <span>{translateSymbolDisplayName(symbol.symbol, symbol.displayName)}</span>
               </div>
             </SelectItem>
           ))}
@@ -96,7 +135,7 @@ export default function AIEngineStatusTGSPairSelect({
             >
               <div className="flex items-center gap-2">
                 <span>{getSymbolIcon(symbol.type)}</span>
-                <span>{symbol.displayName}</span>
+                <span>{translateSymbolDisplayName(symbol.symbol, symbol.displayName)}</span>
               </div>
             </SelectItem>
           ))}

@@ -6,9 +6,11 @@ import LandingATIHead from "@/components/features/landing/landingATI/LandingATIH
 import LandingATIContent from "@/components/features/landing/landingATI/LandingATIContent";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function LandingATI() {
   const router = useRouter();
+  const { t } = useLocalization();
   return (
     <div className="relative">
       <LandingMax1440Container className="lg:px-32 gap-12.5 sm:gap-[70px]">
@@ -18,7 +20,7 @@ export default function LandingATI() {
         onClick={() => router.push('/home')}
           variant="white"
           className="relative font-satoshi-medium"
-        >Explore the Platform</Button>
+        >{t("explore_platform")}</Button>
       </LandingMax1440Container>
     </div>
   );

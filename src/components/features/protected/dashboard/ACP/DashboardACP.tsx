@@ -6,11 +6,9 @@ import DashboardAPL from "@/components/features/protected/dashboard/ACP/Dashboar
 import DashboardActiveAddons from "./DashboardActiveAddons";
 import DashboardACPDetail from "./DashboardACPDetail";
 // import DashboardPlanSwitcher from "./DashboardPlanSwitcher";
-import { useTheme } from "@/lib/contexts/ThemeContext";
-import { useAddOns } from "@/lib/contexts/AddOnsContext";
+import { useLocalization } from "@/components/localization-provider";
 
-export default function DashboardACP() {
-  const { theme } = useTheme();
+  const { t } = useLocalization();
   const { enginePower, setEnginePower, isLoading, error } = useAddOns();
   const [aiPowerLevel, setAiPowerLevel] = useState<number>(0);
 
@@ -58,7 +56,7 @@ export default function DashboardACP() {
         <DashboardACPDetail
           title="Response Time"
           value={`${responseTime}ms`}
-          description={error ? "API Error" : "Average Latency"}
+          description={error ? "API Error" : t("average_latency")}
           isGreen={!error}
         />
         <DashboardACPDetail

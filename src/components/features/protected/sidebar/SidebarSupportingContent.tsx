@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 
+import { useLocalization } from "@/components/localization-provider";
 import SidebarItem from "@/components/features/protected/sidebar/SidebarItem";
 import {
   IconHeadphone,
@@ -16,22 +17,23 @@ import {
 } from "@/components/ui/icon";
 
 export default function SidebarSupportingContent() {
+  const { t } = useLocalization();
   const pathname = usePathname();
   const Items = [
     {
-      title: "Support",
+      title: t("support"),
       icon: IconHeadphone,
       iconFill: IconHeadphoneFill,
       href: "/support",
     },
     {
-      title: "Tutorial",
+      title: t("tutorial"),
       icon: IconAIbook,
       iconFill: IconAIbookFill,
       href: "/tutorial",
     },
     {
-      title: "Settings",
+      title: t("settings"),
       icon: IconSetting,
       iconFill: IconSettingFill,
       href: "/settings",

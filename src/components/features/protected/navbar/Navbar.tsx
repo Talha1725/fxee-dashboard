@@ -9,8 +9,10 @@ import { Separator } from "@/components/ui/separator";
 import { NavbarTitle } from "@/components/ui/typography";
 import { IconLogo1Small } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function Navbar({ className, pageTitle }: { className?: string; pageTitle?: string }) {
+  const { t } = useLocalization();
   return (
     <div
       className={cn(
@@ -25,7 +27,7 @@ export default function Navbar({ className, pageTitle }: { className?: string; p
         </Link>
       </div>
       <NavbarTitle className="xl:flex-[1_0_0] hidden xl:block ">
-        {pageTitle || "Today"}
+        {pageTitle || t("today")}
       </NavbarTitle>
       <NavbarAccountSwitch className="lg:flex hidden" />
       <Separator

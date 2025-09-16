@@ -12,11 +12,7 @@ import { cn } from "@/lib/utils";
 import { useSendProposedTradeChatMessageMutation, useSendChatMessageMutation, useGetChatHistoryQuery } from "@/lib/redux/features/chatbot/chatbotApi";
 import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 import { useTrade } from "@/lib/contexts/TradeContext";
-import { useTheme } from "@/lib/contexts/ThemeContext";
-import { handleApiError } from "@/lib/utils/apiUtils";
-import { showToast } from "@/lib/utils/toast";
-import type { ChatMessage } from "@/types/redux";
-import HomeAIChat from "./HomeAIChat";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomeAIMessageBody({
   className,
@@ -24,11 +20,47 @@ export default function HomeAIMessageBody({
   className?: string;
 }) {
   const { theme } = useTheme();
+  const { t } = useLocalization();
   const { selectedTrade, setSelectedTrade } = useTrade();
   const [message, setMessage] = useState('');
   const [conversationHistory, setConversationHistory] = useState<ChatMessage[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Function to translate trading symbols
+  const translateSymbol = (symbol: string) => {
+    const symbolLower = symbol.toLowerCase();
+    
+    // Map symbols to translation keys
+    const symbolMap: Record<string, string> = {
+      'usdtry': 'usdtry',
+      'usdcad': 'usdcad',
+      'usdjpy': 'usdjpy',
+      'usdchf': 'usdchf',
+      'usdzar': 'usdzar',
+      'usdgbp': 'usdgbp',
+      'usdaud': 'usdaud',
+      'usdeur': 'usdeur',
+      'audusd': 'audusd',
+      'eurusd': 'eurusd',
+      'gbpusd': 'gbpusd',
+      'nzdusd': 'nzdusd',
+      'brent': 'brent',
+      'crude': 'crude',
+      'goldind': 'goldind',
+      'xagusd': 'xagusd',
+      'xauusd': 'xauusd',
+      'bitcoin': 'bitcoin',
+      'bnb': 'bnb',
+      'dogecoin': 'dogecoin',
+      'ethereum': 'eth',
+      'ripple': 'ripple',
+      'solana': 'solana',
+    };
+    
+    const translationKey = symbolMap[symbolLower];
+    return translationKey ? t(translationKey as any) : symbol;
+  };
   
   // API hooks
   const [sendProposedTradeMessage, { isLoading: isSendingProposedTrade }] = useSendProposedTradeChatMessageMutation();
@@ -123,10 +155,10 @@ export default function HomeAIMessageBody({
         console.log('Using mock responses (backend disabled)');
         if (tradeToUse?.id) {
           // Mock response with automatic trade context
-          const tradeContextResponse = `Based on your ${tradeToUse.symbol} trade analysis:
+          const tradeContextResponse = `Based on your ${translateSymbol(tradeToUse.symbol)} trade analysis:
 
 **Current Trade Context:**
-- Symbol: ${tradeToUse.symbol}
+- Symbol: ${translateSymbol(tradeToUse.symbol)}
 - Timeframe: ${tradeToUse.timeframe}
 - Entry Price: ${tradeToUse.entryPrice}
 - Target Price: ${tradeToUse.targetPrice}
@@ -137,7 +169,7 @@ export default function HomeAIMessageBody({
 
 **Analysis of your question: "${messageText}"**
 
-This is a mock response since the backend endpoint isn't available yet, but I can see you're asking about your ${tradeToUse.symbol} trade. When the real backend is connected, I'll provide detailed analysis based on your actual trade parameters, market conditions, and technical indicators.
+This is a mock response since the backend endpoint isn't available yet, but I can see you're asking about your ${translateSymbol(tradeToUse.symbol)} trade. When the real backend is connected, I'll provide detailed analysis based on your actual trade parameters, market conditions, and technical indicators.
 
 The AI will always consider this trade context when answering your questions, whether you're asking about risk management, entry/exit strategies, or market analysis.`;
 
@@ -162,7 +194,7 @@ The AI will always consider this trade context when answering your questions, wh
         }
       } else if (tradeToUse?.id) {
         console.log('Sending to proposed trade endpoint with tradeId:', tradeToUse.id);
-        console.log('Using trade:', tradeToUse.symbol, tradeToUse.timeframe);
+        console.log('Using trade:', translateSymbol(tradeToUse.symbol), tradeToUse.timeframe);
         
         try {
           response = await sendProposedTradeMessage({
@@ -182,10 +214,10 @@ The AI will always consider this trade context when answering your questions, wh
           } catch (regularError) {
             console.log('Both endpoints failed, using mock response with trade context:', regularError);
             // Mock response with automatic trade context
-            const tradeContextResponse = `Based on your ${tradeToUse.symbol} trade analysis:
+            const tradeContextResponse = `Based on your ${translateSymbol(tradeToUse.symbol)} trade analysis:
 
 **Current Trade Context:**
-- Symbol: ${tradeToUse.symbol}
+- Symbol: ${translateSymbol(tradeToUse.symbol)}
 - Timeframe: ${tradeToUse.timeframe}
 - Entry Price: ${tradeToUse.entryPrice}
 - Target Price: ${tradeToUse.targetPrice}
@@ -196,7 +228,7 @@ The AI will always consider this trade context when answering your questions, wh
 
 **Analysis of your question: "${messageText}"**
 
-This is a mock response since the backend endpoint isn't available yet, but I can see you're asking about your ${tradeToUse.symbol} trade. When the real backend is connected, I'll provide detailed analysis based on your actual trade parameters, market conditions, and technical indicators.
+This is a mock response since the backend endpoint isn't available yet, but I can see you're asking about your ${translateSymbol(tradeToUse.symbol)} trade. When the real backend is connected, I'll provide detailed analysis based on your actual trade parameters, market conditions, and technical indicators.
 
 The AI will always consider this trade context when answering your questions, whether you're asking about risk management, entry/exit strategies, or market analysis.`;
 
@@ -325,7 +357,7 @@ The AI will always consider this trade context when answering your questions, wh
   const getContextInfo = () => {
     if (tradeToUse) {
       const isMockData = useMockResponses && !latestTrade && !selectedTrade;
-      return `Auto-context: ${tradeToUse.symbol} (${tradeToUse.timeframe})${isMockData ? ' [Mock Data]' : ''}`;
+      return `Auto-context: ${translateSymbol(tradeToUse.symbol)} (${tradeToUse.timeframe})${isMockData ? ' [Mock Data]' : ''}`;
     }
     return "No trade data available";
   };
@@ -380,7 +412,7 @@ The AI will always consider this trade context when answering your questions, wh
                 <IconRobot width={32} height={32} className="mx-auto mb-3 opacity-50" />
                 <Text14 className="text-sm mb-4 font-medium">
                   {tradeToUse 
-                    ? `Ask me anything about your ${tradeToUse.symbol} trade setup! I'll automatically consider your trade context.`
+                    ? `Ask me anything about your ${translateSymbol(tradeToUse.symbol)} trade setup! I'll automatically consider your trade context.`
                     : "No proposed trades available yet. You can ask general trading questions, or create some proposed trades to get trade-specific analysis."
                   }
                 </Text14>
@@ -462,7 +494,7 @@ The AI will always consider this trade context when answering your questions, wh
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
                   <span className="text-white/60 dark:text-white/60">Symbol:</span>
-                  <span className="ml-1 font-medium text-white">{tradeToUse.symbol}</span>
+                  <span className="ml-1 font-medium text-white">{translateSymbol(tradeToUse.symbol)}</span>
                 </div>
                 <div>
                   <span className="text-white/60 dark:text-white/60">Timeframe:</span>

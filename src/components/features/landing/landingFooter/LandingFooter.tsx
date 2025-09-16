@@ -15,9 +15,11 @@ import { QUICK_LINKS, LEGAL_LINKS, CONTACT_INFO } from "@/lib/constants";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function LandingFooter() {
   const router = useRouter();
+  const { t } = useLocalization();
   return (
     <div className="relative">
       <LandingMax1440Container className="pt-25 pb-10 gap-10">
@@ -28,25 +30,25 @@ export default function LandingFooter() {
             </Link>
             <div className="flex flex-col items-start gap-5">
               <p className="text-white/90 text-[26px] sm:text-[34px] font-space-grotesk font-[700] tracking-[-1.02px]">
-                Trade Smarter with FXEE
+                {t("trade_smarter")}
               </p>
               <Button
               variant={"white"}
               className="font-satoshi-medium"
               onClick={() => router.push('/signup')}
               >
-                Join FXEE Today
+                {t("join_fxee")}
               </Button>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row flex-wrap lg:flex-nowrap justify-between items-start gap-10 sm:gap-20 md:gap-10 px-0 lg:px-12.5 shrink-0">
-            <LandingFooterLinks title="Quick Links" items={QUICK_LINKS} />
-            <LandingFooterLinks title="Legal Links" items={LEGAL_LINKS} />
+            <LandingFooterLinks title={t("quick_links")} items={QUICK_LINKS} />
+            <LandingFooterLinks title={t("legal_links")} items={LEGAL_LINKS} />
             <div className="flex flex-col items-start gap-12.5 shrink-0">
-              <LandingFooterLinks title="Contact Info" items={CONTACT_INFO} />
+              <LandingFooterLinks title={t("contact_info")} items={CONTACT_INFO} />
               <div className="flex flex-col items-start gap-2.5">
                 <p className="text-white/90 text-center text-[22px] font-space-grotesk font-[700] tracking-[-0.66px]">
-                  Social Links
+                  {t("social_links")}
                 </p>
                 <div className="flex items-start gap-1.5">
                   <Link href="/">
@@ -62,19 +64,7 @@ export default function LandingFooter() {
         </div>
         <Separator className="h-[1px] bg-white/10 self-stretch" />
         <p className="text-white/60 text-[12px] sm:text-[16px] font-regular tracking-[-0.32px]">
-          Trading cryptocurrencies involves significant risks, and you should
-          carefully consider your investment objectives and risk tolerance
-          before trading. The cryptocurrency market is highly volatile and can
-          be subject to sudden price fluctuations. We do not provide financial
-          advice, and you are solely responsible for your trading decisions. It
-          is important to conduct your own research and understand the risks
-          involved before trading cryptocurrencies on our platform. We are not
-          responsible for any losses incurred as a result of trading
-          cryptocurrencies on our platform. By using our platform, you
-          acknowledge and accept the risks associated with trading
-          cryptocurrencies. Please read our terms of use and privacy policy
-          carefully before using our platform. If you have any questions, please
-          contact our customer support team.
+          {t("disclaimer")}
         </p>
       </LandingMax1440Container>
     </div>

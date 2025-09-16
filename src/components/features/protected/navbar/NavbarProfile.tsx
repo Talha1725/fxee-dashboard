@@ -35,14 +35,31 @@ import { Select, SelectItem, SelectTrigger, SelectContent, SelectGroup } from "@
 import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
 import { useUpdateLanguageMutation } from "@/lib/redux/services/userApi";
 import { updateUser } from "@/lib/redux/features/auth/authSlice";
+import { useLocalization } from "@/components/localization-provider";
+import { Locale } from "@/types/translations";
 // import LimitReachModal from "@/components/common/LimitReachModal";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
+
+// Map language values to locale codes
+const LANGUAGE_TO_LOCALE_MAP: Record<string, Locale> = {
+  "English (US)": "en-us",
+  "English (UK)": "en-uk", 
+  "Spanish": "es",
+  "French": "fr",
+  "German": "de",
+  "Italian": "it",
+  "Portuguese": "pt",
+  "Russian": "ru",
+  "Chinese": "zh",
+};
 
 export default function NavbarProfile() {
   const { theme } = useTheme();
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [updateLanguage] = useUpdateLanguageMutation();
+  const { setLocale, t } = useLocalization();
   // const [isOpenLimitReach, setIsOpenLimitReach] = useState(false);
 
   const { isDemoAccountEnabled } = useAccountType();
@@ -67,9 +84,7 @@ export default function NavbarProfile() {
 
     // Redirect to signin page and prevent going back          
     router.replace("/signin");                                 
-  };                                             
-                                                             
-  const [updateLanguage] = useUpdateLanguageMutation();         
+  };         
    
   // Get user's current language or default to English (US)
   const [selectedLanguage, setSelectedLanguage] = useState(user?.language || "English (US)");
@@ -86,6 +101,12 @@ export default function NavbarProfile() {
   const handleLanguageChange = async (newLanguage: string) => {         
     try {                                   
       setSelectedLanguage(newLanguage);                    
+      
+      // Update UI language immediately
+      const newLocale = LANGUAGE_TO_LOCALE_MAP[newLanguage];
+      if (newLocale) {
+        setLocale(newLocale);
+      }
                                                                              
       // Update language via API - include required user data                   
       const result = await updateLanguage({                            
@@ -128,7 +149,7 @@ export default function NavbarProfile() {
         className="bg-black text-white dark:!text-black dark:bg-white font-[700] dark:hover:bg-white/80 hover:bg-black/80 py-2 md:flex hidden"
         onClick={handleOpenUpgradeModal}
       >
-        Upgrade
+{t("upgrade")}
         <ChevronUp
           size={20}
           className={theme === "dark" ? "text-black" : "text-white"}
@@ -182,7 +203,7 @@ export default function NavbarProfile() {
                 className="font-satoshi-medium w-[120px] sm:w-[141px] text-xs sm:text-sm"
                 onClick={handleOpenUpgradeModal}
               >
-                <p>Upgrade</p> <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 dark:text-black text-white" />
+                <p>{t("upgrade")}</p> <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 dark:text-black text-white" />
               </Button>
               )}
               <div>
@@ -253,7 +274,7 @@ export default function NavbarProfile() {
                 className="font-satoshi-medium w-full"
                 onClick={handleLogout}
               >
-                <p>Logout</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
+                <p>{t("logout")}</p> <LogOut className="w-4 h-4 dark:text-black text-white" />
               </Button>
           </div>
         </DropdownMenuContent>

@@ -20,12 +20,28 @@ import { LANGUAGES, getLanguageByValue } from "@/lib/constants/languages";
 import { useUpdateLanguageMutation } from "@/lib/redux/services/userApi";
 import { updateUser } from "@/lib/redux/features/auth/authSlice";
 import { showToast } from "@/lib/utils/toast";
+import { useLocalization } from "@/components/localization-provider";
+import { Locale } from "@/types/translations";
+
+// Map language values to locale codes
+const LANGUAGE_TO_LOCALE_MAP: Record<string, Locale> = {
+  "English (US)": "en-us",
+  "English (UK)": "en-uk", 
+  "Spanish": "es",
+  "French": "fr",
+  "German": "de",
+  "Italian": "it",
+  "Portuguese": "pt",
+  "Russian": "ru",
+  "Chinese": "zh",
+};
 
 export default function NavbarActions() {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
   const [updateLanguage] = useUpdateLanguageMutation();
+  const { setLocale } = useLocalization();
   
   // Get user's current language or default to English (US)
   const [selectedLanguage, setSelectedLanguage] = useState(user?.language || "English (US)");
@@ -42,6 +58,12 @@ export default function NavbarActions() {
   const handleLanguageChange = async (newLanguage: string) => {
     try {
       setSelectedLanguage(newLanguage);
+      
+      // Update UI language immediately
+      const newLocale = LANGUAGE_TO_LOCALE_MAP[newLanguage];
+      if (newLocale) {
+        setLocale(newLocale);
+      }
       
       // Update language via API - include required user data
       const result = await updateLanguage({ 

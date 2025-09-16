@@ -23,6 +23,7 @@ import america from "@/public/images/america-circle.svg";
 import CurrencyToCountryFlagConverter from "../features/CurrencyToCountryFlagConverter";
 import { Plus } from "lucide-react";
 import { TRADING_SYMBOLS } from "@/lib/constants";
+import { useLocalization } from "@/components/localization-provider";
 
 // Get icon based on symbol type
 const getSymbolIcon = (type: string) => {
@@ -87,8 +88,62 @@ export default function SymbolModal({
   currentSymbol?: string;
 }) {
   const { theme } = useTheme();
+  const { t } = useLocalization();
   const [selected, setSelected] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  // Function to translate symbol display names
+  const translateSymbolDisplayName = (symbol: string, displayName: string) => {
+    const symbolLower = symbol.toLowerCase();
+    
+    // Map all symbols to translation keys
+    const symbolMap: Record<string, string> = {
+      // Forex pairs
+      'usdtry': 'usdtry',
+      'usdcad': 'usdcad',
+      'usdjpy': 'usdjpy',
+      'usdchf': 'usdchf',
+      'usdzar': 'usdzar',
+      'audusd': 'audusd',
+      'eurusd': 'eurusd',
+      'gbpusd': 'gbpusd',
+      'nzdusd': 'nzdusd',
+      
+      // Commodities
+      'brent': 'brent',
+      'crude': 'crude',
+      'goldind': 'goldind',
+      'xagusd': 'xagusd',
+      'xauusd': 'xauusd',
+      
+      // Crypto
+      'bitcoin': 'bitcoin',
+      'bnb': 'bnb',
+      'dogecoin': 'dogecoin',
+      'ethereum': 'eth',
+      'ripple': 'ripple',
+      'solana': 'solana',
+    };
+    
+    const translationKey = symbolMap[symbolLower];
+    return translationKey ? t(translationKey as any) : displayName;
+  };
+
+  // Transform trading symbols data to match modal structure
+  const symbolsData = TRADING_SYMBOLS.map((symbol, index) => ({
+    id: symbol.id,
+    symbol: symbol.symbol,
+    name: translateSymbolDisplayName(symbol.symbol, symbol.displayName),
+    category: symbol.type.toLowerCase(),
+    type: symbol.type.toLowerCase(),
+    provider: "FXEE",
+    icon: null,
+    currency: symbol.type === "Forex" ? translateSymbolDisplayName(symbol.symbol, symbol.displayName) : null,
+    providerIcon: america,
+    tab: symbol.type,
+    iconEmoji: getSymbolIcon(symbol.type),
+    tradingViewSymbol: getTradingViewSymbol(symbol.symbol, symbol.type),
+  }));
 
   const tabs = [
     "All",

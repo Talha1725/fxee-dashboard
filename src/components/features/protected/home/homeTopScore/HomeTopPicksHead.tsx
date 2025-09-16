@@ -2,12 +2,14 @@ import React from "react";
 
 import { Text18 } from "@/components/ui/typography";
 import { IconAdd } from "@/components/ui/icon";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomeTopPicksHead({ openModal }: { openModal: () => void }) {
+  const { t } = useLocalization();
   return (
     <div className="flex justify-center items-center gap-2.5 self-stretch">
 
-      <Text18 className="flex-[1_0_0] font-satoshi-medium">Top Picks</Text18>
+      <Text18 className="flex-[1_0_0] font-satoshi-medium">{t("top_picks")}</Text18>
       <button onClick={openModal}>
         <IconAdd width={20} height={20} />
       </button>

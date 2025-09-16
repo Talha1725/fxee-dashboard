@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/redux/store";
@@ -8,19 +8,22 @@ import { RootState } from "@/lib/redux/store";
 import LandingMax1440Container from "@/components/features/landing/LandingMax1440Container";
 import LandingNavbarResponsiveClient from "@/components/features/landing/landingNavbar/LandingNavbarResponsiveClient";
 import { IconLogoLanding } from "@/components/ui/icon";
+import { useLocalization } from "@/components/localization-provider";
+import LanguageSelector from "@/components/ui/language-selector";
 
 export default function LandingNavbar() {
    const { isAuthenticated, token } = useSelector((state: RootState) => state.auth);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useLocalization();
 
-  const NavLinks = [
-    { href: "/", label: "Home" },
-    { href: "/how-it-works", label: "How it works" },
-    { href: "/challenge-support", label: "Challenge Support" },
-    { href: "/community", label: "Community" },
-    { href: "/about", label: "About us" },
-    { href: isAuthenticated ? "/home" : "/signin", label: isAuthenticated ? "Dashboard" : "Login" },
-  ];
+  const NavLinks = useMemo(() => [
+    { href: "/", label: t("home") },
+    { href: "/how-it-works", label: t("how_it_works") },
+    { href: "/challenge-support", label: t("challenge_support") },
+    { href: "/community", label: t("community") },
+    { href: "/about", label: t("about_us") },
+    { href: isAuthenticated ? "/home" : "/signin", label: isAuthenticated ? t("dashboard") : t("login") },
+  ], [t, isAuthenticated]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +42,7 @@ export default function LandingNavbar() {
           <IconLogoLanding color="white" className="shrink-0 w-[110px] sm:w-[134px] h-[28px] sm:h-[32px]" />
         </Link>
         <div className="flex items-center gap-2 xs:gap-3 sm:gap-7.5">
+          <LanguageSelector variant="minimal" />
           <LandingNavbarResponsiveClient navLinks={NavLinks} />
         </div>
       </LandingMax1440Container>

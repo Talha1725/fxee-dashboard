@@ -9,6 +9,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import { ChevronRight } from "lucide-react";
 import { useGetDailyRecommendationsQuery } from "@/lib/redux/features/recommendations/recommendationsApi";
 import { useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
+import { useLocalization } from "@/components/localization-provider";
 
 export default function HomeTrades({ 
   className, 
@@ -18,6 +19,7 @@ export default function HomeTrades({
   scrollToRecommendationId?: number | null;
 }) {
   const { theme } = useTheme();
+  const { t } = useLocalization();
   const {
     data: dailyRecommendations,
     error,
@@ -184,7 +186,7 @@ export default function HomeTrades({
               <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
             </div>
           </div>
-          <p className="text-white text-sm font-satoshi-medium">Analyzing recommendation...</p>
+          <p className="text-white text-sm font-satoshi-medium">{t("analyzing_recommendation")}</p>
         </div>
       )}
       <button
@@ -198,13 +200,13 @@ export default function HomeTrades({
       </button>
       <div className="flex justify-between items-center self-stretch">
         <Text18 className="font-satoshi-medium text-white">
-          AI Recommended Trades
+          {t("ai_recommended_trades")}
         </Text18>
         <div className="text-sm text-white/70 font-satoshi-medium">
           {usageLimitsResponse?.data?.usageLimits?.recommendation_analysis ? 
             usageLimitsResponse.data.usageLimits.recommendation_analysis.limit === 9999
-              ? "∞ Analysis"
-              : `${usageLimitsResponse.data.usageLimits.recommendation_analysis.remaining}/${usageLimitsResponse.data.usageLimits.recommendation_analysis.limit} Left`
+              ? `∞ ${t("analysis")}`
+              : `${usageLimitsResponse.data.usageLimits.recommendation_analysis.remaining}/${usageLimitsResponse.data.usageLimits.recommendation_analysis.limit} ${t("left")}`
             : "Loading..."
           }
         </div>

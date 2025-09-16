@@ -4,32 +4,33 @@ import React from "react";
 import Navbar from "@/components/features/protected/navbar/Navbar";
 import { NavbarTitle } from "@/components/ui/typography";
 import { usePathname } from "next/navigation";
+import { useLocalization } from "@/components/localization-provider";
 
 // Function to get page title based on current route
-const getPageTitle = (pathname: string): string => {
+const getPageTitle = (pathname: string, t: (key: string) => string): string => {
   switch (pathname) {
     case "/home":
-      return "Today";
+      return t("today");
     case "/dashboard":
-      return "Dashboard";
+      return t("dashboard");
     case "/ai-engine":
-      return "AI Engine";
+      return t("ai_engine");
     case "/copy-trading":
-      return "Copy Trading";
+      return t("copy_trading");
     case "/performance-history":
-      return "Performance History";
+      return t("performance_history");
     case "/trades":
-      return "Trades";
+      return t("trades");
     case "/support":
-      return "Support";
+      return t("support");
     case "/tutorial":
-      return "Tutorial";
+      return t("tutorial");
     case "/settings":
-      return "Settings";
+      return t("settings");
     case "/wallet":
-      return "Wallet";
+      return t("wallet");
     default:
-      return "Today";
+      return t("today");
   }
 };
 
@@ -39,7 +40,8 @@ export default function ProtectedContainer({
   children: React.ReactNode;
 }) {
   const location = usePathname();
-  const pageTitle = getPageTitle(location);
+  const { t } = useLocalization();
+  const pageTitle = getPageTitle(location, t);
   
   return (
     <div className="flex flex-col flex-[1_0_0] self-stretch overflow-x-hidden">

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
+import { useLocalization } from "@/components/localization-provider";
 import {
   Tooltip,
   TooltipContent,
@@ -33,17 +34,23 @@ interface NavbarAccountSwitchProps {
 export default function NavbarAccountSwitch({
   className,
   dropdown,
-  items = [
-    { label: "Virtual Account", value: "virtual-account" },
-    { label: "Demo Account", value: "demo-account" }
-  ],
+  items,
   defaultValue,
   onValueChange,
   fontSize = 16,
   customPadding,
 }: NavbarAccountSwitchProps) {
   const { theme } = useTheme();
+  const { t } = useLocalization();
   const { accountType, setAccountType, isDemoAccountEnabled } = useAccountType();
+  
+  // Default items with translations
+  const defaultItems = [
+    { label: t("virtual_account"), value: "virtual-account" },
+    { label: t("demo_account"), value: "demo-account" }
+  ];
+  
+  const itemsToUse = items || defaultItems;
   const [activeTab, setActiveTab] = useState(defaultValue || accountType || "virtual-account");
 
   const handleTabChange = (value: string) => {
@@ -59,7 +66,7 @@ export default function NavbarAccountSwitch({
   return (
     <TooltipProvider>
       <NavbarSwitchContainer className={className} dropdown={dropdown} customPadding={customPadding}>
-        {items.map((item) => {
+        {itemsToUse.map((item) => {
           const isDemoAccount = item.value === "demo-account";
           const isDemoDisabled = isDemoAccount && !isDemoAccountEnabled;
           
