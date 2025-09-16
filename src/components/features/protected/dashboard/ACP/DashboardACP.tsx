@@ -7,8 +7,12 @@ import DashboardActiveAddons from "./DashboardActiveAddons";
 import DashboardACPDetail from "./DashboardACPDetail";
 // import DashboardPlanSwitcher from "./DashboardPlanSwitcher";
 import { useLocalization } from "@/components/localization-provider";
+import { useAddOns } from "@/lib/contexts/AddOnsContext";
+import { useTheme } from "@/lib/contexts/ThemeContext";
 
+export default function DashboardACP() {
   const { t } = useLocalization();
+  const { theme } = useTheme();
   const { enginePower, setEnginePower, isLoading, error } = useAddOns();
   const [aiPowerLevel, setAiPowerLevel] = useState<number>(0);
 

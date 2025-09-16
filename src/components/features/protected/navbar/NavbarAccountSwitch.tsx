@@ -45,7 +45,7 @@ export default function NavbarAccountSwitch({
   const { accountType, setAccountType, isDemoAccountEnabled } = useAccountType();
   
   // Default items with translations
-  const defaultItems = [
+  const defaultItems: SwitchItem[] = [
     { label: t("virtual_account"), value: "virtual-account" },
     { label: t("demo_account"), value: "demo-account" }
   ];

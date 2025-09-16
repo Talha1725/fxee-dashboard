@@ -26,6 +26,7 @@ export interface TranslationKeys {
   "learn_more": string;
   "contact_us": string;
   "support": string;
+  "tutorial": string;
   "how_it_works": string;
   "challenge_support": string;
   "community": string;

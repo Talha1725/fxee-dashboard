@@ -5,9 +5,10 @@ import Navbar from "@/components/features/protected/navbar/Navbar";
 import { NavbarTitle } from "@/components/ui/typography";
 import { usePathname } from "next/navigation";
 import { useLocalization } from "@/components/localization-provider";
+import { TranslationKeys } from "@/types/translations";
 
 // Function to get page title based on current route
-const getPageTitle = (pathname: string, t: (key: string) => string): string => {
+const getPageTitle = (pathname: string, t: (key: keyof TranslationKeys) => string): string => {
   switch (pathname) {
     case "/home":
       return t("today");

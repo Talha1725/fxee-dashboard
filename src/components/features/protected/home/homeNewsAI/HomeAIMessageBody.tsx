@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 import HomeAIMessageBodyIcon from "@/components/features/protected/home/homeNewsAI/HomeAIMessageBodyIcon";
 import HomeAIMessageBodyItem from "./HomeAIMessageBodyItem";
+import HomeAIChat from "./HomeAIChat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { IconSend, IconRobot, IconClose } from "@/components/ui/icon";
@@ -13,6 +14,10 @@ import { useSendProposedTradeChatMessageMutation, useSendChatMessageMutation, us
 import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 import { useTrade } from "@/lib/contexts/TradeContext";
 import { useLocalization } from "@/components/localization-provider";
+import { useTheme } from "@/lib/contexts/ThemeContext";
+import { ChatMessage } from "@/types/api";
+import { handleApiError } from "@/lib/utils/apiUtils";
+import { showToast } from "@/lib/utils/toast";
 
 export default function HomeAIMessageBody({
   className,
