@@ -33,7 +33,7 @@ export default function DashboardStatusDetailTA() {
 
   return (
     <DashboardStatusDetailCardContainer className="py-1.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
-      <div className="flex flex-col items-start gap-3 self-stretch">
+      <div className="flex flex-col items-start gap-3 self-stretch pt-4">
         <DashboardStatusDetailCardHead
           title="Trade Analysis"
           icon={<IconTA width={14} height={14} />}

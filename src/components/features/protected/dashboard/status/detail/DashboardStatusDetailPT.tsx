@@ -40,7 +40,7 @@ export default function DashboardStatusDetailPT() {
 
   return (
     <DashboardStatusDetailCardContainer className="py-1.5 px-3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
-      <div className="flex flex-col items-start gap-3 self-stretch">
+      <div className="flex flex-col items-start gap-3 self-stretch pt-4">
         <DashboardStatusDetailCardHead
           title="Proposed Trade"
           icon={<IconCardPT width={14} height={14} />}
