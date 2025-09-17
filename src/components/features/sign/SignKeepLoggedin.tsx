@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Description14 } from "@/components/ui/typography";
 
-export default function SignKeepLoggedin() {
+interface SignKeepLoggedinProps {
+  checked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+}
+
+export default function SignKeepLoggedin({ 
+  checked = false, 
+  onCheckedChange 
+}: SignKeepLoggedinProps) {
+  const [isChecked, setIsChecked] = useState(checked);
+
+  const handleCheckedChange = (newChecked: boolean) => {
+    setIsChecked(newChecked);
+    onCheckedChange?.(newChecked);
+  };
+
   return (
-    <Label className="flex items-center gap-2 flex-[1_0_0]">
-      <Checkbox className="bg-white dark:bg-black border-black dark:border-white data-[state=checked]:bg-dark-gradient data-[state=checked]:border-picton-blue" />
+    <Label className="flex items-center gap-2 flex-[1_0_0] cursor-pointer">
+      <Checkbox 
+        checked={isChecked}
+        onCheckedChange={handleCheckedChange}
+        className="bg-white dark:bg-black border-black dark:border-white data-[state=checked]:bg-dark-gradient data-[state=checked]:border-picton-blue" 
+      />
       <Description14 className="leading-5 tracking-[-0.084px]">
         Keep me logged in
       </Description14>
