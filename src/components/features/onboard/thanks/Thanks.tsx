@@ -56,7 +56,7 @@ export default function Thanks() {
   const handleGoToDashboard = () => {
     localStorage.removeItem("paymentTrackId");
     localStorage.removeItem('selectedPricingPlan');
-    router.push("/home");
+    router.push("/dashboard");
   };
 
   // Helper function to format payment status for display

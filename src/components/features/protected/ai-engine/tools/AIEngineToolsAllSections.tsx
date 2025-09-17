@@ -21,11 +21,6 @@ export default function AIEngineToolsAllSections() {
   const { isPremium } = useUser();
   const { isAnalyzing } = useAnalysis();
 
-  const accessibleActiveAddOns = savedAddOns.filter(addOn => {
-    if (!addOn.active) return false;
-    return isPremium || !addOn.isVip;
-  });
-
   // Map add-on titles to their corresponding API tool keys
   const getToolKeyForAddOn = (title: string): string => {
     const titleToKeyMap: { [key: string]: string } = {
@@ -42,6 +37,11 @@ export default function AIEngineToolsAllSections() {
     
     return titleToKeyMap[title] || title.toLowerCase().replace(/\s+/g, '_');
   };
+
+  const accessibleActiveAddOns = savedAddOns.filter(addOn => {
+    if (!addOn.active) return false;
+    return isPremium || !addOn.isVip;
+  });
 
   const renderSectionContent = (addOn: any) => {
     const toolKey = getToolKeyForAddOn(addOn.title);

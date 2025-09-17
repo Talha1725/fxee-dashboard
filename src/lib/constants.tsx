@@ -293,7 +293,7 @@ export const addOnsData = [
     icon: <IconEye width={20} height={20} />,
     title: "Market Sentiment Aggregator",
     description: "Real-time market sentiment analysis across multiple timeframes",
-    isVip: true,
+    isVip: false,
     active: false,
   },
   {

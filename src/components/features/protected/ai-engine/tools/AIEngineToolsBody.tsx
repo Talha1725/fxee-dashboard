@@ -116,15 +116,6 @@ export default function AIEngineToolsBody() {
     const { scrollLeft, scrollWidth, clientWidth } = container;
     const canScrollRightValue = scrollLeft < scrollWidth - clientWidth - 5; // Increased tolerance
 
-    console.log("Scroll Debug:", {
-      scrollLeft,
-      scrollWidth,
-      clientWidth,
-      canScrollRight: canScrollRightValue,
-      difference: scrollWidth - clientWidth,
-      isScrollable: scrollWidth > clientWidth,
-    });
-
     setCanScrollLeft(scrollLeft > 5); // Increased tolerance
     setCanScrollRight(canScrollRightValue);
   };
