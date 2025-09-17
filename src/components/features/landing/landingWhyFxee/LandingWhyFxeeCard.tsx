@@ -36,13 +36,21 @@ export default function LandingWhyFxeeCard({
 
   return (
     <LandingWhyFxeeCardContainer
-      className={`h-auto p-4 rounded-md transition-all duration-500 ease-in-out ${
+      className={`h-auto p-4 rounded-md ${
         isActive 
           ? 'opacity-100 border border-white/20 bg-gradient-to-r from-white/5 via-white/5 to-transparent' 
           : 'opacity-20'
       } hover:opacity-100 hover:border hover:border-white/20 hover:bg-gradient-to-r from-white/5 via-white/5 to-transparent ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{
+        WebkitTransition: 'opacity 0.2s linear',
+        transition: 'opacity 0.2s linear',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden',
+        WebkitTransform: 'translate3d(0, 0, 0)',
+        transform: 'translate3d(0, 0, 0)'
+      }}
     >
       <LandingWhyFxeeCardText title={title} description={description} showDescription={shouldShowDescription} />
     </LandingWhyFxeeCardContainer>

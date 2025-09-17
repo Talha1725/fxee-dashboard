@@ -35,14 +35,20 @@ export default function LandingNavbarResponsiveClient({
       <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <div className="p-1 sm:p-2 hover:bg-white/10 rounded-sm">
+            <div className="p-1 sm:p-2 hover:bg-white/10 rounded-sm transition-colors duration-200">
               <IconMenu width={24} height={24} />
             </div>
           </SheetTrigger>
           <SheetContent
             side="right"
-            className="bg-black border-white/20 py-2.5 px-4"
-            style={{ zIndex: 999 }}
+            className="bg-black border-white/20 py-2.5 px-4 will-change-transform transform-gpu"
+            style={{ 
+              zIndex: 999,
+              WebkitBackfaceVisibility: 'hidden',
+              backfaceVisibility: 'hidden',
+              WebkitTransform: 'translateZ(0)',
+              transform: 'translateZ(0)',
+            }}
           >
             <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
             <div className="flex flex-col gap-2.5 pt-8">
