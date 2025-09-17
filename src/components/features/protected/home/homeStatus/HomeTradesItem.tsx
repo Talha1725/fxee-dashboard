@@ -21,7 +21,9 @@ import {
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 import { useAnalyzeRecommendationMutation } from "@/lib/redux/features/recommendations/recommendationsApi";
+import { useGetUsageLimitsQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 import { useAnalysis } from "@/lib/contexts/AnalysisContext";
+import { showToast } from "@/lib/utils/toast";
 
 interface HomeTradesItemProps {
   long?: boolean;
@@ -44,6 +46,7 @@ export default function HomeTradesItem({
 }: HomeTradesItemProps) {
   const router = useRouter();
   const [analyzeRecommendation] = useAnalyzeRecommendationMutation();
+  const { data: usageLimitsResponse } = useGetUsageLimitsQuery();
   
   // Try to get analysis context - use optional chaining for safety
   let analysisContext = null;
@@ -61,6 +64,15 @@ export default function HomeTradesItem({
       return;
     }
     
+    // Check usage limits before analyzing recommendation
+    const recommendationLimit = usageLimitsResponse?.data?.usageLimits?.recommendation_analysis;
+    const isLimitReached = recommendationLimit && recommendationLimit.remaining <= 0 && recommendationLimit.limit !== 9999;
+    
+    if (isLimitReached) {
+      showToast.error(`Daily recommendation analysis limit reached (${recommendationLimit.current}/${recommendationLimit.limit}). Upgrade to VIP for more analyses or try again tomorrow!`);
+      return;
+    }
+    
     try {
       // Set both local and global analyzing states
       onAnalyzeStart?.();
@@ -70,6 +82,8 @@ export default function HomeTradesItem({
         id: recommendation.id,
         direction: clickedDirection
       }).unwrap();
+      
+      showToast.success("Recommendation analysis completed successfully!");
       
       // Navigate to dashboard to see results
       router.push("/dashboard");
@@ -82,6 +96,14 @@ export default function HomeTradesItem({
       
     } catch (error: any) {
       console.error('Failed to analyze recommendation:', error);
+      
+      // Check if it's a usage limit error from backend
+      if (error?.data?.error?.includes("limit reached")) {
+        showToast.error(error.data.error);
+      } else {
+        showToast.error("Failed to analyze recommendation. Please try again.");
+      }
+      
       // Reset analyzing states on error
       onAnalyzeEnd?.();
       analysisContext?.setIsAnalyzing(false);
@@ -133,6 +155,10 @@ export default function HomeTradesItem({
   const profitTierInfo = recommendation
     ? getProfitTierInfo(recommendation.profitTier)
     : { color: "#6B7280", label: "Standard" };
+    
+  // Check if recommendation analysis limit is reached
+  const recommendationLimit = usageLimitsResponse?.data?.usageLimits?.recommendation_analysis;
+  const isAnalysisLimitReached = recommendationLimit && recommendationLimit.remaining <= 0 && recommendationLimit.limit !== 9999;
 
   return (
     <TooltipProvider>
@@ -311,13 +337,15 @@ export default function HomeTradesItem({
             variant={direction === "Long" ? "green" : "danger"}
             size="default"
             className="text-white flex-[1_0_0] font-satoshi-medium"
+            disabled={isAnalysisLimitReached}
+            title={isAnalysisLimitReached ? `Daily recommendation analysis limit reached (${recommendationLimit?.current}/${recommendationLimit?.limit})` : ""}
           >
-            <p>{direction}</p>
-            {direction === "Long" ? (
+            <p>{isAnalysisLimitReached ? "Limit Reached" : direction}</p>
+            {!isAnalysisLimitReached && (direction === "Long" ? (
               <IconTradeUp width={20} height={20} color="#FFF" />
             ) : (
               <IconTradeDown width={20} height={20} color="#FFF" />
-            )}
+            ))}
           </Button>
           {skipped ? (
             <Button

@@ -27,6 +27,7 @@ import {
   useCreateCustomAnalysisMutation,
 } from "@/lib/redux/features/recommendations/recommendationsApi";
 import { useAnalysis } from "@/lib/contexts/AnalysisContext";
+import { showToast } from "@/lib/utils/toast";
 import type { ProposedTrade, CustomAnalysisRequest } from "@/types/redux";
 
 interface AIEngineStatusTGSProps {
@@ -85,7 +86,7 @@ export default function AIEngineStatusTGS({
   ] = useCreateCustomAnalysisMutation();
 
   // Query for refetching usage limits
-  const { refetch: refetchUsageLimits } = useGetUsageLimitsQuery();
+  const { data: usageLimitsResponse, refetch: refetchUsageLimits } = useGetUsageLimitsQuery();
 
   // Query for getting last proposed trade (exclude recommendation trades for AI Engine)
   const { data: lastTradeData } = useGetLastProposedTradeQuery({ 
@@ -171,6 +172,20 @@ export default function AIEngineStatusTGS({
 
   // Handle Run Analysis button click
   const handleRunAnalysis = async () => {
+    // Check usage limits before running analysis
+    const currentLimit = activeTab === "custom_goal" 
+      ? usageLimitsResponse?.data?.usageLimits?.custom_analysis
+      : usageLimitsResponse?.data?.usageLimits?.best_trade;
+    
+    // Check if limit is reached
+    const isLimitReached = currentLimit && currentLimit.remaining <= 0 && currentLimit.limit !== 9999;
+    
+    if (isLimitReached) {
+      const analysisType = activeTab === "custom_goal" ? "custom analysis" : "best trade";
+      showToast.error(`Daily ${analysisType} limit reached (${currentLimit.current}/${currentLimit.limit}). Upgrade to VIP for more analyses or try again tomorrow!`);
+      return;
+    }
+
     setIsAnalyzing(true);
       if (activeTab === "best_trade") {
       try {
@@ -179,11 +194,18 @@ export default function AIEngineStatusTGS({
           timeframe: selectedTimeframe,
         }).unwrap();
         setBestTrade(result.data || null);
+        showToast.success("Best trade analysis completed successfully!");
         // The usage limits will automatically refetch due to invalidatesTags: ["ProposedTrade"]
         // Trigger refresh of analysis data
         triggerRefresh();
-      } catch (err) {
+      } catch (err: any) {
         console.error("Failed to create proposed trades:", err);
+        // Check if it's a usage limit error from backend
+        if (err?.data?.error?.includes("limit reached")) {
+          showToast.error(err.data.error);
+        } else {
+          showToast.error("Failed to generate best trade analysis. Please try again.");
+        }
       } finally {
         setIsAnalyzing(false);
       }
@@ -205,6 +227,8 @@ export default function AIEngineStatusTGS({
 
         // Create the analysis
         await createCustomAnalysis(customAnalysisData).unwrap();
+        
+        showToast.success("Custom analysis completed successfully!");
 
         // Trigger refresh of analysis data in the main component
         triggerRefresh();
@@ -214,8 +238,14 @@ export default function AIEngineStatusTGS({
         
         // Trigger refresh of analysis data
         triggerRefresh();
-      } catch (err) {
+      } catch (err: any) {
         console.error("Failed to create custom analysis:", err);
+        // Check if it's a usage limit error from backend
+        if (err?.data?.error?.includes("limit reached")) {
+          showToast.error(err.data.error);
+        } else {
+          showToast.error("Failed to generate custom analysis. Please try again.");
+        }
       } finally {
         setIsAnalyzing(false);
       }

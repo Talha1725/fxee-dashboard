@@ -26,6 +26,9 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
     ? usageLimitsResponse?.data?.usageLimits?.custom_analysis
     : usageLimitsResponse?.data?.usageLimits?.best_trade;
     
+  // Check if limit is reached
+  const isLimitReached = currentLimit && currentLimit.remaining <= 0 && currentLimit.limit !== 9999;
+    
   // Format last analysis timestamp
   const getLastAnalysisTime = () => {
     if (activeTab === "best_trade" && lastTradeData?.data?.createdAt) {
@@ -68,10 +71,11 @@ export default function AIEngineStatusTGSHead({ onRunAnalysis, isAnalyzing, acti
             variant="white" 
             className="py-[3px] md:py-2.5 md:px-[25px] px-2 md:text-base text-[8px]" 
             onClick={onRunAnalysis}
-            disabled={isAnalyzing}
+            disabled={isAnalyzing || isLimitReached}
+            title={isLimitReached ? `Daily ${activeTab === "custom_goal" ? "custom analysis" : "best trade"} limit reached` : ""}
           >
             <Text14 className="text-[#111] dark:text-black">
-              {isAnalyzing ? "Analyzing..." : "Run Analysis"}
+              {isAnalyzing ? "Analyzing..." : isLimitReached ? "Limit Reached" : "Run Analysis"}
             </Text14>
           </Button>
           <Text14 className="text-white/80 dark:text-white/80">
