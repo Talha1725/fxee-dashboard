@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 import { useAnalyzeRecommendationMutation } from "@/lib/redux/features/recommendations/recommendationsApi";
+import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 
 interface HomeTradesItemProps {
   long?: boolean;
@@ -44,6 +45,15 @@ export default function HomeTradesItem({
   const router = useRouter();
   const [analyzeRecommendation] = useAnalyzeRecommendationMutation();
   
+  // Try to get analysis context - use optional chaining for safety
+  let analysisContext = null;
+  try {
+    analysisContext = useAnalysis();
+  } catch {
+    // Context not available - component is outside AnalysisProvider
+    analysisContext = null;
+  }
+  
   // Handle Long/Short button click
   const handleAnalyzeClick = async (clickedDirection: 'long' | 'short') => {
     if (!recommendation?.id) {
@@ -52,7 +62,10 @@ export default function HomeTradesItem({
     }
     
     try {
+      // Set both local and global analyzing states
       onAnalyzeStart?.();
+      analysisContext?.setIsAnalyzing(true);
+      
       await analyzeRecommendation({
         id: recommendation.id,
         direction: clickedDirection
@@ -60,11 +73,18 @@ export default function HomeTradesItem({
       
       // Navigate to dashboard to see results
       router.push("/dashboard");
+      
+      // Set a timer to reset the analyzing state after navigation
+      setTimeout(() => {
+        onAnalyzeEnd?.();
+        analysisContext?.setIsAnalyzing(false);
+      }, 3000); // Keep loader visible for 3 seconds on dashboard
+      
     } catch (error: any) {
       console.error('Failed to analyze recommendation:', error);
-      // Handle error - you might want to show a toast or error message
-    } finally {
+      // Reset analyzing states on error
       onAnalyzeEnd?.();
+      analysisContext?.setIsAnalyzing(false);
     }
   };
 

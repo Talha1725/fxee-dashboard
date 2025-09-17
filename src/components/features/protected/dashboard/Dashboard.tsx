@@ -12,6 +12,7 @@ import DashboardAIPanel from "./chatbot/DashboardAIPanel";
 import DashboardChatbot from "./chatbot/DashboardChatbot";
 import { useAccountType } from "@/lib/contexts/AccountTypeContext";
 import { AddOnsProvider } from "@/lib/contexts/AddOnsContext";
+import { AnalysisProvider } from "@/lib/contexts/AnalysisContext";
 import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 
 export default function Dashboard() {
@@ -49,8 +50,9 @@ export default function Dashboard() {
         onSelectSymbol={handleSelectSymbol}
         currentSymbol={selectedSymbol}
       />
-      <AddOnsProvider>
-        <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
+      <AnalysisProvider>
+        <AddOnsProvider>
+          <ProtectedContentContainer className={`sm:gap-10 ${isVirtualAccount ? "overflow-visible" : ""}`}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:items-stretch">
             <div className="lg:col-span-2">
               <DashboardWidget dashboard={true} currency={selectedSymbol} openModal={openModal} />
@@ -81,8 +83,9 @@ export default function Dashboard() {
           {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <DashboardAIPanel />
           </div> */}
-        </ProtectedContentContainer>
-      </AddOnsProvider>
+          </ProtectedContentContainer>
+        </AddOnsProvider>
+      </AnalysisProvider>
     </>
   );
 }

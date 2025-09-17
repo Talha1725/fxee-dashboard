@@ -24,15 +24,31 @@ import {
 
 import { Progress } from "@/components/ui/progress";
 import { useTheme } from "@/lib/contexts/ThemeContext";
+import { useAnalysis } from "@/lib/contexts/AnalysisContext";
 import { useGetLastProposedTradeQuery } from "@/lib/redux/features/proposed-trades/proposedTradesApi";
 
 export default function DashboardStatusDetailTA() {
   const { theme } = useTheme();
+  const { isAnalyzing } = useAnalysis();
   const { data: lastTradeData } = useGetLastProposedTradeQuery();
   const proposedTrade = lastTradeData?.data;
 
   return (
-    <DashboardStatusDetailCardContainer className="py-1.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide">
+    <DashboardStatusDetailCardContainer className="py-1.5 px-3 bg-[#ECF3F833] dark:bg-white/3 h-[350px] sm:h-[400px] lg:max-h-[900px] lg:h-[900px] overflow-y-auto scrollbar-hide relative">
+      {isAnalyzing && (
+        <div className="flex flex-col justify-center items-center h-full absolute top-0 left-0 w-full bg-black/20 backdrop-blur-sm z-[999] rounded-[16px]">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+            </div>
+          </div>
+          <div className="text-white text-sm font-satoshi">
+            Analyzing market data...
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-start gap-3 self-stretch pt-4">
         <DashboardStatusDetailCardHead
           title="Trade Analysis"
